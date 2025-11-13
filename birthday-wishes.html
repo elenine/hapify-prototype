@@ -183,6 +183,38 @@
                             <div class="text-4xl mb-2">📞</div>
                             <div class="font-semibold text-sm">Contact Info</div>
                         </button>
+                        <button data-section-type="accommodations" onclick="addSection('accommodations')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🏨</div>
+                            <div class="font-semibold text-sm">Accommodations</div>
+                        </button>
+                        <button data-section-type="socialMedia" onclick="addSection('socialMedia')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📱</div>
+                            <div class="font-semibold text-sm">Social Media</div>
+                        </button>
+                        <button data-section-type="specialInstructions" onclick="addSection('specialInstructions')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">⚠️</div>
+                            <div class="font-semibold text-sm">Special Instructions</div>
+                        </button>
+                        <button data-section-type="tribute" onclick="addSection('tribute')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">💖</div>
+                            <div class="font-semibold text-sm">Tribute/Story</div>
+                        </button>
+                        <button data-section-type="video" onclick="addSection('video')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎥</div>
+                            <div class="font-semibold text-sm">Video Message</div>
+                        </button>
+                        <button data-section-type="faq" onclick="addSection('faq')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">❓</div>
+                            <div class="font-semibold text-sm">FAQ</div>
+                        </button>
+                        <button data-section-type="thankYou" onclick="addSection('thankYou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🙏</div>
+                            <div class="font-semibold text-sm">Thank You</div>
+                        </button>
+                        <button data-section-type="memories" onclick="addSection('memories')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📸</div>
+                            <div class="font-semibold text-sm">Photo Memories</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1066,6 +1098,419 @@
                                 </a>` : ''}
                             </div>
                             ${data.message ? `<p class="text-gray-600 text-sm mt-6">${data.message}</p>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            accommodations: {
+                name: '🏨 Accommodations',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Where to Stay" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hotel 1 Name</label>
+                            <input type="text" placeholder="Grand Hotel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="hotel1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hotel 1 Details</label>
+                            <input type="text" placeholder="5 miles away, discount code: PARTY2024" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="hotel1Details" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hotel 2 Name</label>
+                            <input type="text" placeholder="Comfort Inn" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="hotel2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hotel 2 Details</label>
+                            <input type="text" placeholder="3 miles away, complimentary breakfast" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="hotel2Details" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-4">🏨</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Where to Stay'}</h2>
+                            </div>
+                            <div class="space-y-4">
+                                ${data.hotel1 ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold text-lg mb-1">${data.hotel1}</div>
+                                    ${data.hotel1Details ? `<p class="text-sm text-gray-600">${data.hotel1Details}</p>` : ''}
+                                </div>` : ''}
+                                ${data.hotel2 ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold text-lg mb-1">${data.hotel2}</div>
+                                    ${data.hotel2Details ? `<p class="text-sm text-gray-600">${data.hotel2Details}</p>` : ''}
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            socialMedia: {
+                name: '📱 Social Media',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Party Hashtag</label>
+                            <input type="text" placeholder="#SarahTurns30" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="hashtag" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Share your photos and memories..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Instagram Handle (Optional)</label>
+                            <input type="text" placeholder="@birthdayparty" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="instagram" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#f9fafb'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">📱</div>
+                            <h2 class="text-2xl font-bold mb-4">Share the Celebration</h2>
+                            ${data.message ? `<p class="text-gray-600 mb-4">${data.message}</p>` : ''}
+                            ${data.hashtag ? `<div class="text-2xl font-bold text-pink-600 mb-3">${data.hashtag}</div>` : ''}
+                            ${data.instagram ? `<div class="text-gray-600">${data.instagram}</div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            specialInstructions: {
+                name: '⚠️ Special Instructions',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                            <input type="text" placeholder="Important Information" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Instructions</label>
+                            <textarea placeholder="This is a surprise party! Please arrive by 6:45 PM..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="instructions" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Icon Type</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="iconType" onchange="updatePreview()">
+                                <option value="⚠️">Warning (⚠️)</option>
+                                <option value="🤫">Surprise (🤫)</option>
+                                <option value="ℹ️">Info (ℹ️)</option>
+                                <option value="⭐">Important (⭐)</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fef3c7" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fef3c7'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-6">
+                                <div class="text-5xl mb-4">${data.iconType || '⚠️'}</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Important Information'}</h2>
+                            </div>
+                            ${data.instructions ? `<p class="text-gray-700 leading-relaxed">${data.instructions.replace(/\n/g, '<br>')}</p>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            tribute: {
+                name: '💖 Tribute/Story',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                            <input type="text" placeholder="A Special Tribute" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Story/Message</label>
+                            <textarea placeholder="Share a heartfelt story or tribute..." rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="story" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Author (Optional)</label>
+                            <input type="text" placeholder="From the family" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="author" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-5xl mb-4">💖</div>
+                            <h2 class="text-2xl font-bold mb-6">${data.title || 'A Special Tribute'}</h2>
+                            ${data.story ? `<p class="text-gray-700 leading-relaxed text-left mb-4 italic">"${data.story}"</p>` : ''}
+                            ${data.author ? `<p class="text-gray-600 text-sm">— ${data.author}</p>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            video: {
+                name: '🎥 Video Message',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Watch Our Message" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Video URL</label>
+                            <input type="url" placeholder="https://youtube.com/watch?v=..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="videoUrl" oninput="updatePreview()">
+                            <p class="text-xs text-gray-500 mt-1">YouTube, Vimeo, or direct video link</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea placeholder="Check out this special video message..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">🎥</div>
+                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Video Message'}</h2>
+                            ${data.description ? `<p class="text-gray-600 mb-6">${data.description}</p>` : ''}
+                            ${data.videoUrl ? `
+                            <a href="${data.videoUrl}" target="_blank" class="inline-block bg-pink-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-pink-700 transition">
+                                ▶️ Watch Video
+                            </a>` : '<p class="text-gray-400 text-sm">Video link will appear here</p>'}
+                        </div>
+                    </div>
+                `
+            },
+            faq: {
+                name: '❓ FAQ',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Frequently Asked Questions" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Question 1</label>
+                            <input type="text" placeholder="What should I wear?" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="q1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Answer 1</label>
+                            <textarea placeholder="Casual attire is perfect..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="a1" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Question 2</label>
+                            <input type="text" placeholder="Can I bring a plus one?" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="q2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Answer 2</label>
+                            <textarea placeholder="Yes, please mention in your RSVP..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="a2" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Question 3</label>
+                            <input type="text" placeholder="Is there parking?" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="q3" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Answer 3</label>
+                            <textarea placeholder="Yes, free parking available..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="a3" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-4">❓</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Frequently Asked Questions'}</h2>
+                            </div>
+                            <div class="space-y-4">
+                                ${data.q1 ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold mb-2">Q: ${data.q1}</div>
+                                    ${data.a1 ? `<p class="text-sm text-gray-600">A: ${data.a1}</p>` : ''}
+                                </div>` : ''}
+                                ${data.q2 ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold mb-2">Q: ${data.q2}</div>
+                                    ${data.a2 ? `<p class="text-sm text-gray-600">A: ${data.a2}</p>` : ''}
+                                </div>` : ''}
+                                ${data.q3 ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold mb-2">Q: ${data.q3}</div>
+                                    ${data.a3 ? `<p class="text-sm text-gray-600">A: ${data.a3}</p>` : ''}
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            thankYou: {
+                name: '🙏 Thank You',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                            <input type="text" placeholder="Thank You" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Message</label>
+                            <textarea placeholder="Thank you for celebrating with me..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Signature (Optional)</label>
+                            <input type="text" placeholder="With love, Sarah" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="signature" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fdf2f8'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">🙏</div>
+                            <h2 class="text-2xl font-bold mb-6">${data.title || 'Thank You'}</h2>
+                            ${data.message ? `<p class="text-gray-700 leading-relaxed mb-4">${data.message}</p>` : ''}
+                            ${data.signature ? `<p class="text-pink-600 font-semibold text-lg">${data.signature}</p>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            memories: {
+                name: '📸 Photo Memories',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Through the Years" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestone 1 Year</label>
+                            <input type="text" placeholder="1995" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="year1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestone 1 Description</label>
+                            <input type="text" placeholder="Born in California" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="desc1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestone 2 Year</label>
+                            <input type="text" placeholder="2000" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="year2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestone 2 Description</label>
+                            <input type="text" placeholder="Started kindergarten" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="desc2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestone 3 Year</label>
+                            <input type="text" placeholder="2025" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="year3" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestone 3 Description</label>
+                            <input type="text" placeholder="Turning 30!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="desc3" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-4">📸</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Through the Years'}</h2>
+                            </div>
+                            <div class="space-y-6">
+                                ${data.year1 ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="font-bold text-pink-600">${data.year1}</span>
+                                    </div>
+                                    <div class="pt-4">
+                                        <p class="text-gray-700">${data.desc1 || ''}</p>
+                                    </div>
+                                </div>` : ''}
+                                ${data.year2 ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="font-bold text-pink-600">${data.year2}</span>
+                                    </div>
+                                    <div class="pt-4">
+                                        <p class="text-gray-700">${data.desc2 || ''}</p>
+                                    </div>
+                                </div>` : ''}
+                                ${data.year3 ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="font-bold text-pink-600">${data.year3}</span>
+                                    </div>
+                                    <div class="pt-4">
+                                        <p class="text-gray-700">${data.desc3 || ''}</p>
+                                    </div>
+                                </div>` : ''}
+                            </div>
                         </div>
                     </div>
                 `
