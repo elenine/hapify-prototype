@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Portfolio Creator - InviteGen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">InviteGen</h1>
+                        <p class="text-xs text-gray-500">Business Portfolio</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="alert('Preview')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">👁️ Preview</button>
+                    <button onclick="alert('QR Code')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">📱 QR Code</button>
+                    <button onclick="alert('Published!')" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">🚀 Publish</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="flex h-[calc(100vh-73px)]">
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Design Your Business Portfolio</h2>
+            <p class="text-sm text-gray-600 mb-6">Showcase your work professionally</p>
+            <div class="space-y-4 mb-6">
+                <div class="border border-gray-200 rounded-xl p-4">
+                    <h3 class="font-semibold mb-3">💼 Hero Section</h3>
+                    <div class="space-y-3">
+                        <input type="text" placeholder="Business Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <input type="text" placeholder="Tagline" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <textarea placeholder="Description" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+                    </div>
+                </div>
+                <div class="border border-gray-200 rounded-xl p-4">
+                    <h3 class="font-semibold mb-3">📊 Services</h3>
+                    <textarea placeholder="List your services..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+                </div>
+                <div class="border border-gray-200 rounded-xl p-4">
+                    <h3 class="font-semibold mb-3">📧 Contact</h3>
+                    <div class="space-y-3">
+                        <input type="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <input type="tel" placeholder="Phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <input type="url" placeholder="Website" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
+            <div class="h-fit">
+                <h3 class="text-lg font-semibold text-gray-700 mb-6 text-center">Live Preview</h3>
+                <div class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto">
+                        <div class="bg-gradient-to-br from-blue-600 to-cyan-600 text-white text-center py-16 px-6">
+                            <div class="text-5xl mb-4">💼</div>
+                            <h1 class="text-3xl font-bold mb-2">Business Name</h1>
+                            <p class="text-lg opacity-90">Professional Services</p>
+                        </div>
+                        <div class="p-6">
+                            <h2 class="text-xl font-bold mb-4">Our Services</h2>
+                            <div class="space-y-3 text-sm text-gray-600">
+                                <p>• Web Development</p>
+                                <p>• Mobile Apps</p>
+                                <p>• Consulting</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
