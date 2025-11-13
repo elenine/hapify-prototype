@@ -161,6 +161,41 @@
         </div>
     </div>
 
+    <!-- Floating Preview Button (Mobile Only) -->
+    <button onclick="openMobilePreview()" class="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center text-2xl">
+        👁️
+    </button>
+
+    <!-- Mobile Preview Modal -->
+    <div id="mobilePreviewModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="w-full h-full flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="text-lg font-semibold text-white">Live Preview</h3>
+                <button onclick="closeMobilePreview()" class="text-white hover:text-gray-300 text-3xl w-10 h-10 flex items-center justify-center">×</button>
+            </div>
+
+            <!-- Device Toggle -->
+            <div class="flex gap-2 justify-center mb-4">
+                <button onclick="setMobilePreviewDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn active" data-device="mobile">
+                    📱 Mobile
+                </button>
+                <button onclick="setMobilePreviewDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn" data-device="tablet">
+                    💻 Tablet
+                </button>
+            </div>
+
+            <!-- Mobile Frame -->
+            <div class="flex-1 flex items-center justify-center overflow-auto">
+                <div id="mobilePreviewFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="mobilePreviewContent">
+                        <!-- Preview content will be copied here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- QR Modal -->
     <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-8">
@@ -905,6 +940,37 @@
             }
         }
 
+        function openMobilePreview() {
+            // Copy preview content to mobile preview modal
+            const previewContent = document.getElementById('previewContent').innerHTML;
+            document.getElementById('mobilePreviewContent').innerHTML = previewContent;
+
+            // Show the modal
+            document.getElementById('mobilePreviewModal').classList.remove('hidden');
+        }
+
+        function closeMobilePreview() {
+            document.getElementById('mobilePreviewModal').classList.add('hidden');
+        }
+
+        function setMobilePreviewDevice(device) {
+            // Update active button
+            document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-pink-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-pink-600', 'text-white');
+
+            // Update frame size
+            const frame = document.getElementById('mobilePreviewFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
         // Initialize with default sections on page load
         function initializeDefaultSections() {
             // Add default sections here based on template type
@@ -927,6 +993,9 @@
         });
         document.getElementById('qrModal').addEventListener('click', (e) => {
             if (e.target.id === 'qrModal') closeQRModal();
+        });
+        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
         });
 
         // Run initialization
