@@ -155,6 +155,30 @@
                             <div class="text-4xl mb-2">📞</div>
                             <div class="font-semibold text-sm">Stay In Touch</div>
                         </button>
+                        <button data-section-type="timeline" onclick="addSection('timeline')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Career Timeline</div>
+                        </button>
+                        <button data-section-type="teammessages" onclick="addSection('teammessages')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition text-center">
+                            <div class="text-4xl mb-2">👥</div>
+                            <div class="font-semibold text-sm">Team Messages</div>
+                        </button>
+                        <button data-section-type="achievements" onclick="addSection('achievements')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition text-center">
+                            <div class="text-4xl mb-2">🏆</div>
+                            <div class="font-semibold text-sm">Achievements</div>
+                        </button>
+                        <button data-section-type="giftregistry" onclick="addSection('giftregistry')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition text-center">
+                            <div class="text-4xl mb-2">🎁</div>
+                            <div class="font-semibold text-sm">Gift Registry</div>
+                        </button>
+                        <button data-section-type="schedule" onclick="addSection('schedule')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition text-center">
+                            <div class="text-4xl mb-2">⏰</div>
+                            <div class="font-semibold text-sm">Event Schedule</div>
+                        </button>
+                        <button data-section-type="quote" onclick="addSection('quote')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-violet-500 hover:bg-violet-50 transition text-center">
+                            <div class="text-4xl mb-2">💬</div>
+                            <div class="font-semibold text-sm">Inspirational Quote</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -737,6 +761,300 @@
                                     <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="text-violet-600 hover:underline">LinkedIn Profile</a>
                                 </div>` : ''}
                             </div>
+                        </div>
+                    </div>
+                `
+            },
+            timeline: {
+                name: '📅 Career Timeline',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Journey With Us" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Timeline Events (Year|Event, one per line)</label>
+                            <textarea placeholder="2018|Joined the team as Junior Developer&#10;2020|Promoted to Senior Developer&#10;2022|Led major project launch&#10;2025|Moving to new adventures" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="events" oninput="updatePreview()"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Format: Year|Description (one per line)</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const events = data.events ? data.events.split('\n').filter(e => e.trim() && e.includes('|')).map(event => {
+                        const [year, description] = event.split('|').map(s => s.trim());
+                        return { year, description };
+                    }) : [];
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                            <div class="max-w-md mx-auto">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Journey With Us'}</h2>
+                                <div class="space-y-6 relative">
+                                    ${events.length > 0 ? `
+                                        <div class="absolute left-8 top-4 bottom-4 w-0.5 bg-violet-200"></div>
+                                        ${events.map(event => `
+                                            <div class="flex gap-4 relative">
+                                                <div class="flex-shrink-0 w-16 text-right">
+                                                    <span class="inline-block px-3 py-1 bg-violet-500 text-white rounded-full text-xs font-bold">${event.year}</span>
+                                                </div>
+                                                <div class="flex-1 pb-4">
+                                                    <div class="absolute left-8 w-3 h-3 bg-violet-500 rounded-full -ml-1.5 mt-1"></div>
+                                                    <p class="pl-8 text-gray-700">${event.description}</p>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    ` : '<p class="text-center text-gray-500">Add timeline events</p>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            teammessages: {
+                name: '👥 Team Messages',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Messages From The Team" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Team Messages (Name|Title|Message, one per line)</label>
+                            <textarea placeholder="John Smith|Manager|You've been an incredible team member!&#10;Sarah Johnson|Colleague|Will miss our brainstorming sessions.&#10;Mike Chen|Team Lead|Best of luck in your next chapter!" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="messages" oninput="updatePreview()"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Format: Name|Title|Message (one per line)</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#faf5ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const messages = data.messages ? data.messages.split('\n').filter(m => m.trim() && m.split('|').length >= 3).map(msg => {
+                        const parts = msg.split('|').map(s => s.trim());
+                        return { name: parts[0], title: parts[1], message: parts[2] };
+                    }) : [];
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#faf5ff'}">
+                            <div class="max-w-md mx-auto">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Messages From The Team'}</h2>
+                                <div class="space-y-4">
+                                    ${messages.length > 0 ? messages.map(msg => `
+                                        <div class="p-4 bg-white rounded-lg shadow-sm">
+                                            <p class="text-gray-700 italic mb-3">"${msg.message}"</p>
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-10 h-10 bg-violet-500 rounded-full flex items-center justify-center text-white font-bold">
+                                                    ${msg.name.charAt(0)}
+                                                </div>
+                                                <div>
+                                                    <p class="font-semibold text-sm">${msg.name}</p>
+                                                    <p class="text-xs text-gray-500">${msg.title}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-center text-gray-500">Add team messages</p>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            achievements: {
+                name: '🏆 Achievements',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Key Achievements" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Achievements (one per line)</label>
+                            <textarea placeholder="Led successful product launch with 150% revenue increase&#10;Mentored 12 junior developers&#10;Received Employee of the Year award 2023&#10;Implemented system that reduced costs by 30%" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="achievements" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Key Achievements'}</h2>
+                            <div class="space-y-3">
+                                ${data.achievements ? data.achievements.split('\n').filter(a => a.trim()).map((achievement, index) => `
+                                    <div class="flex items-start gap-3 p-4 bg-violet-50 rounded-lg">
+                                        <div class="flex-shrink-0 w-8 h-8 bg-violet-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                                            ${index + 1}
+                                        </div>
+                                        <p class="text-gray-700 flex-1 pt-1">${achievement}</p>
+                                    </div>
+                                `).join('') : '<p class="text-center text-gray-500">Add achievements</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            giftregistry: {
+                name: '🎁 Gift Registry',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Farewell Gift" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Your presence is gift enough, but if you'd like to contribute to a farewell gift..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gift Type</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="gifttype" onchange="updatePreview()">
+                                <option value="group">Group Gift</option>
+                                <option value="registry">Gift Registry</option>
+                                <option value="charity">Charity Donation</option>
+                                <option value="none">No Gifts Please</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contribution Link/Details</label>
+                            <input type="text" placeholder="Venmo: @username or Registry URL" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="link" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#faf5ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const giftIcons = {
+                        'group': '🎁',
+                        'registry': '📋',
+                        'charity': '❤️',
+                        'none': '🙏'
+                    };
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#faf5ff'}">
+                            <div class="max-w-md mx-auto text-center">
+                                <div class="text-5xl mb-4">${giftIcons[data.gifttype] || '🎁'}</div>
+                                <h2 class="text-2xl font-bold mb-4">${data.title || 'Farewell Gift'}</h2>
+                                <p class="text-gray-600 mb-6">${data.message || 'Your presence is gift enough'}</p>
+                                ${data.link ? `
+                                    <div class="p-4 bg-white rounded-lg inline-block">
+                                        <p class="text-sm text-gray-500 mb-2">Contribution Details</p>
+                                        <p class="font-mono text-sm text-violet-600">${data.link}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            schedule: {
+                name: '⏰ Event Schedule',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Event Schedule" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Schedule Items (Time|Activity, one per line)</label>
+                            <textarea placeholder="6:00 PM|Arrival & Welcome Drinks&#10;6:30 PM|Dinner Service&#10;7:30 PM|Speeches & Toasts&#10;8:00 PM|Memory Sharing&#10;9:00 PM|Farewell Message & Gift Presentation" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="schedule" oninput="updatePreview()"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Format: Time|Activity (one per line)</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const items = data.schedule ? data.schedule.split('\n').filter(s => s.trim() && s.includes('|')).map(item => {
+                        const [time, activity] = item.split('|').map(s => s.trim());
+                        return { time, activity };
+                    }) : [];
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                            <div class="max-w-md mx-auto">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                <div class="space-y-3">
+                                    ${items.length > 0 ? items.map(item => `
+                                        <div class="flex items-center gap-4 p-4 bg-violet-50 rounded-lg">
+                                            <div class="flex-shrink-0 w-20 text-center">
+                                                <div class="text-violet-600 font-bold text-sm">${item.time}</div>
+                                            </div>
+                                            <div class="flex-1 border-l-2 border-violet-300 pl-4">
+                                                <p class="text-gray-700">${item.activity}</p>
+                                            </div>
+                                        </div>
+                                    `).join('') : '<p class="text-center text-gray-500">Add schedule items</p>'}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            quote: {
+                name: '💬 Inspirational Quote',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Text</label>
+                            <textarea placeholder="Every ending is a new beginning..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="quote" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Author (optional)</label>
+                            <input type="text" placeholder="Unknown" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-data" data-field="author" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#faf5ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#faf5ff'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-6xl mb-6 text-violet-500">"</div>
+                            <blockquote class="text-xl italic text-gray-700 mb-4">
+                                ${data.quote || 'Every ending is a new beginning'}
+                            </blockquote>
+                            ${data.author ? `<p class="text-gray-500">— ${data.author}</p>` : ''}
                         </div>
                     </div>
                 `
