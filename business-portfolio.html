@@ -1341,6 +1341,11 @@
             }
         }
 
+        // Initialize layout section on page load
+        function initializeLayout() {
+            addSection('layout');
+        }
+
         // Initialize with default sections on page load
         function initializeDefaultSections() {
             // Add default sections here based on template type
@@ -1348,28 +1353,25 @@
             defaultSections.forEach(sectionType => addSection(sectionType));
         }
 
-        // Load default sections when page loads
-        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
+        // Load everything when DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize layout first
+            initializeLayout();
 
-        
-        // Initialize layout section on page load
-        function initializeLayout() {
-            addSection('layout');
-        }
+            // Then add default sections
+            initializeDefaultSections();
 
-        // Close modals on outside click
-        document.getElementById('sectionModal').addEventListener('click', (e) => {
-            if (e.target.id === 'sectionModal') closeSectionModal();
+            // Close modals on outside click
+            document.getElementById('sectionModal').addEventListener('click', (e) => {
+                if (e.target.id === 'sectionModal') closeSectionModal();
+            });
+            document.getElementById('qrModal').addEventListener('click', (e) => {
+                if (e.target.id === 'qrModal') closeQRModal();
+            });
+            document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+            });
         });
-        document.getElementById('qrModal').addEventListener('click', (e) => {
-            if (e.target.id === 'qrModal') closeQRModal();
-        });
-        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
-            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
-        });
-
-        // Run initialization
-        initializeLayout();
     </script>
 </body>
 </html>
