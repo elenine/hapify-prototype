@@ -6,7 +6,7 @@ InviteGen is a comprehensive web-based platform for creating beautiful, customiz
 
 ## Project Overview
 
-InviteGen provides a suite of 12 specialized template editors, each tailored for specific occasions:
+InviteGen provides a suite of 13 specialized template editors, each tailored for specific occasions:
 
 - **Wedding Invitation** - Elegant wedding announcements with ceremony details
 - **Birthday Wishes** - Celebratory birthday party invitations
@@ -20,6 +20,7 @@ InviteGen provides a suite of 12 specialized template editors, each tailored for
 - **Housewarming Party** - New home celebration invites
 - **Retirement Celebration** - Career milestone celebrations
 - **Farewell Party** - Goodbye and send-off event invites
+- **Conference & Seminar** - Professional event pages for conferences and seminars
 
 ## Key Features
 
@@ -84,6 +85,7 @@ This separation allows users to focus on content first, then customize styling w
 ├── housewarming-party.html         # Housewarming template editor
 ├── retirement-celebration.html     # Retirement template editor
 ├── farewell-party.html             # Farewell party template editor
+├── conference-seminar.html         # Conference & seminar template editor
 └── CLAUDE.md                       # This documentation file
 ```
 
@@ -173,6 +175,7 @@ Each template uses a distinct gradient for brand consistency:
 | Housewarming Party | Orange-500 to Orange-700 |
 | Retirement Celebration | Cyan-500 to Cyan-700 |
 | Farewell Party | Violet-500 to Violet-700 |
+| Conference & Seminar | Teal-600 to Emerald-600 |
 
 ## Design Principles
 
