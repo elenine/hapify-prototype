@@ -7,67 +7,80 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
                     <div>
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">InviteGen</h1>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
                         <p class="text-xs text-gray-500">Business Portfolio</p>
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <button onclick="alert('Preview')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">👁️ Preview</button>
-                    <button onclick="alert('QR Code')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">📱 QR Code</button>
-                    <button onclick="alert('Published!')" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">🚀 Publish</button>
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Main Container -->
     <div class="flex h-[calc(100vh-73px)]">
-        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto p-6">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">Design Your Business Portfolio</h2>
-            <p class="text-sm text-gray-600 mb-6">Showcase your work professionally</p>
-            <div class="space-y-4 mb-6">
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">💼 Hero Section</h3>
-                    <div class="space-y-3">
-                        <input type="text" placeholder="Business Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="text" placeholder="Tagline" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <textarea placeholder="Description" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
-                    </div>
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Design Your Business Portfolio</h2>
+                    <p class="text-sm text-gray-600 mt-1">Showcase your work professionally</p>
                 </div>
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">📊 Services</h3>
-                    <textarea placeholder="List your services..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
                 </div>
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">📧 Contact</h3>
-                    <div class="space-y-3">
-                        <input type="email" placeholder="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="tel" placeholder="Phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="url" placeholder="Website" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    </div>
-                </div>
+
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-blue-600 font-semibold hover:border-blue-400 hover:bg-blue-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
             </div>
         </div>
+
+        <!-- Right Panel - Preview -->
         <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
             <div class="h-fit">
-                <h3 class="text-lg font-semibold text-gray-700 mb-6 text-center">Live Preview</h3>
-                <div class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
-                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto">
-                        <div class="bg-gradient-to-br from-blue-600 to-cyan-600 text-white text-center py-16 px-6">
-                            <div class="text-5xl mb-4">💼</div>
-                            <h1 class="text-3xl font-bold mb-2">Business Name</h1>
-                            <p class="text-lg opacity-90">Professional Services</p>
-                        </div>
-                        <div class="p-6">
-                            <h2 class="text-xl font-bold mb-4">Our Services</h2>
-                            <div class="space-y-3 text-sm text-gray-600">
-                                <p>• Web Development</p>
-                                <p>• Mobile Apps</p>
-                                <p>• Consulting</p>
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">💼</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your business portfolio</p>
                             </div>
                         </div>
                     </div>
@@ -75,5 +88,630 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">💼</div>
+                    <div class="font-semibold text-sm">Hero Banner</div>
+                </button>
+                <button onclick="addSection('about')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">ℹ️</div>
+                    <div class="font-semibold text-sm">About Us</div>
+                </button>
+                <button onclick="addSection('services')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">⚙️</div>
+                    <div class="font-semibold text-sm">Services</div>
+                </button>
+                <button onclick="addSection('portfolio')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">📁</div>
+                    <div class="font-semibold text-sm">Portfolio</div>
+                </button>
+                <button onclick="addSection('team')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">👥</div>
+                    <div class="font-semibold text-sm">Team</div>
+                </button>
+                <button onclick="addSection('testimonials')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">💬</div>
+                    <div class="font-semibold text-sm">Testimonials</div>
+                </button>
+                <button onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">📞</div>
+                    <div class="font-semibold text-sm">Contact</div>
+                </button>
+                <button onclick="addSection('social')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">🔗</div>
+                    <div class="font-semibold text-sm">Social Media</div>
+                </button>
+                <button onclick="addSection('cta')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                    <div class="text-4xl mb-2">🎯</div>
+                    <div class="font-semibold text-sm">Call to Action</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/business123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+
+        const sectionTemplates = {
+            hero: {
+                name: '💼 Hero Banner',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Business Name</label>
+                            <input type="text" placeholder="Your Business Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent section-data" data-field="name" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tagline</label>
+                            <input type="text" placeholder="Your business tagline" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent section-data" data-field="tagline" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hero Image</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                                <div class="text-3xl mb-2">📸</div>
+                                <div class="text-sm text-gray-600">Click to upload</div>
+                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#2563eb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="text-center py-16 px-6" style="background: ${style.bg || '#2563eb'}; color: ${style.text || '#ffffff'}">
+                        ${data.image ? `<img src="${data.image}" class="w-24 h-24 rounded-lg mx-auto mb-6 object-cover border-4 border-white">` : '<div class="text-6xl mb-6">💼</div>'}
+                        <h1 class="text-3xl font-bold mb-2">${data.name || 'Business Name'}</h1>
+                        <p class="text-lg opacity-90">${data.tagline || 'Your professional tagline'}</p>
+                    </div>
+                `
+            },
+            about: {
+                name: 'ℹ️ About Us',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="About Us" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea placeholder="Tell your business story..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold text-center mb-6">${data.title || 'About Us'}</h2>
+                            <p class="text-gray-600 leading-relaxed text-center">${data.description || 'Tell your business story here...'}</p>
+                        </div>
+                    </div>
+                `
+            },
+            services: {
+                name: '⚙️ Services',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Our Services" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Services (one per line)</label>
+                            <textarea placeholder="Web Development&#10;Mobile Apps&#10;Consulting&#10;Design Services" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="services" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#eff6ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const services = data.services ? data.services.split('\n').filter(s => s.trim()) : [];
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#eff6ff'}">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Our Services'}</h2>
+                            <div class="max-w-md mx-auto space-y-3">
+                                ${services.map(service => `
+                                    <div class="flex items-center gap-3 p-4 bg-white rounded-lg">
+                                        <div class="text-xl">✓</div>
+                                        <div class="text-sm font-medium">${service}</div>
+                                    </div>
+                                `).join('')}
+                                ${services.length === 0 ? '<div class="text-center text-gray-500 text-sm">Add services to display</div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            portfolio: {
+                name: '📁 Portfolio',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Our Work" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Portfolio Images</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 cursor-pointer">
+                                <div class="text-3xl mb-2">🖼️</div>
+                                <div class="text-sm text-gray-600">Click to upload multiple images</div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Our Work'}</h2>
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-5xl mb-4">📁</div>
+                            <p class="text-gray-500 text-sm">Portfolio items will appear here</p>
+                        </div>
+                    </div>
+                `
+            },
+            team: {
+                name: '👥 Team',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Meet Our Team" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Team Members (Name - Role, one per line)</label>
+                            <textarea placeholder="John Smith - CEO&#10;Jane Doe - Lead Designer&#10;Mike Johnson - Developer" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="members" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const members = data.members ? data.members.split('\n').filter(m => m.trim()) : [];
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Meet Our Team'}</h2>
+                            <div class="max-w-md mx-auto space-y-4">
+                                ${members.map(member => {
+                                    const [name, role] = member.split('-').map(s => s.trim());
+                                    return `
+                                        <div class="p-4 bg-white rounded-lg text-center">
+                                            <div class="text-3xl mb-2">👤</div>
+                                            <div class="font-semibold">${name || member}</div>
+                                            ${role ? `<div class="text-sm text-gray-600">${role}</div>` : ''}
+                                        </div>
+                                    `;
+                                }).join('')}
+                                ${members.length === 0 ? '<div class="text-center text-gray-500 text-sm">Add team members to display</div>' : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            testimonials: {
+                name: '💬 Testimonials',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="What Clients Say" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Testimonial</label>
+                            <textarea placeholder="Add a client testimonial..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="testimonial" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Client Name</label>
+                            <input type="text" placeholder="Client Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="client" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'What Clients Say'}</h2>
+                        <div class="max-w-md mx-auto">
+                            <div class="p-6 bg-blue-50 rounded-lg">
+                                <div class="text-3xl mb-3 text-center">💬</div>
+                                <p class="text-gray-700 italic text-center mb-4">"${data.testimonial || 'Add a client testimonial...'}"</p>
+                                <div class="text-center font-semibold text-sm">- ${data.client || 'Client Name'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            contact: {
+                name: '📞 Contact',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Get In Touch" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" placeholder="contact@business.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="email" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <input type="tel" placeholder="+1 234 567 8900" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="phone" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                            <textarea placeholder="Business address..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#eff6ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#eff6ff'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Get In Touch'}</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${data.email ? `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📧</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Email</div>
+                                    <div class="font-medium text-sm">${data.email}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.phone ? `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📞</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Phone</div>
+                                    <div class="font-medium text-sm">${data.phone}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.address ? `
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📍</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Address</div>
+                                    <div class="font-medium text-sm">${data.address}</div>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            social: {
+                name: '🔗 Social Media',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Follow Us" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Facebook URL</label>
+                            <input type="url" placeholder="https://facebook.com/..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="facebook" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Instagram URL</label>
+                            <input type="url" placeholder="https://instagram.com/..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="instagram" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">LinkedIn URL</label>
+                            <input type="url" placeholder="https://linkedin.com/..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="linkedin" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold mb-6">${data.title || 'Follow Us'}</h2>
+                            <div class="flex justify-center gap-4">
+                                ${data.facebook ? `<a href="${data.facebook}" class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center text-xl">f</a>` : ''}
+                                ${data.instagram ? `<a href="${data.instagram}" class="w-12 h-12 bg-pink-600 text-white rounded-full flex items-center justify-center text-xl">📷</a>` : ''}
+                                ${data.linkedin ? `<a href="${data.linkedin}" class="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center text-xl">in</a>` : ''}
+                            </div>
+                            ${!data.facebook && !data.instagram && !data.linkedin ? '<p class="text-gray-500 text-sm">Add social media links</p>' : ''}
+                        </div>
+                    </div>
+                `
+            },
+            cta: {
+                name: '🎯 Call to Action',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Heading</label>
+                            <input type="text" placeholder="Ready to Work Together?" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="heading" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Subtext</label>
+                            <input type="text" placeholder="Let's bring your ideas to life" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="subtext" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Button Text</label>
+                            <input type="text" placeholder="Get Started" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="button" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#2563eb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-16 px-6 text-center" style="background: ${style.bg || '#2563eb'}; color: ${style.text || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold mb-3">${data.heading || 'Ready to Work Together?'}</h2>
+                            <p class="text-lg opacity-90 mb-6">${data.subtext || "Let's bring your ideas to life"}</p>
+                            <button class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                                ${data.button || 'Get Started'}
+                            </button>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function openSectionModal() {
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = `section-${sectionCounter++}`;
+
+            const sectionHTML = `
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item" data-id="${id}" data-type="${type}">
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="cursor-move text-gray-400">⋮⋮</span>
+                            <span class="font-semibold text-sm">${template.name}</span>
+                        </div>
+                        <button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        ${template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        ${template.style}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            closeSectionModal();
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            if (confirm('Remove this section?')) {
+                document.querySelector(`[data-id="${id}"]`).remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-blue-600', 'border-b-2', 'border-blue-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-blue-600', 'border-b-2', 'border-blue-600');
+            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+
+            if (sections.length === 0) {
+                html = `
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">💼</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your business portfolio</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style);
+                });
+            }
+
+            document.getElementById('previewContent').innerHTML = html;
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-blue-600', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your business portfolio?')) {
+                alert('✅ Published successfully!\n\nYour portfolio is now live!');
+            }
+        }
+
+        // Close modals on outside click
+        document.getElementById('sectionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'sectionModal') closeSectionModal();
+        });
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeQRModal();
+        });
+    </script>
 </body>
 </html>
