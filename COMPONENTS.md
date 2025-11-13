@@ -572,13 +572,13 @@ function updatePreview() {
         if (navType === 'tabview') {
             // Use Tab Navigation
             const tabNamesText = layoutSection.querySelector('[data-field="tabNames"]')?.value || '';
-            const tabNames = tabNamesText.split('\n').map(t => t.trim()).filter(t => t);
+            const navItems = tabNamesText.split('\n').map(t => t.trim()).filter(t => t);
             const tabStyle = layoutSection.querySelector('[data-field="tabStyle"]')?.value || 'underline';
             const tabAlignment = layoutSection.querySelector('[data-field="tabAlignment"]')?.value || 'left';
             const tabSize = layoutSection.querySelector('[data-field="tabSize"]')?.value || 'medium';
 
             const tabNav = NavigationHelpers.generateTabNavigation({
-                tabNames,
+                tabNames: navItems,
                 tabStyle,
                 tabAlignment,
                 tabSize
@@ -594,7 +594,7 @@ function updatePreview() {
 
             // Group sections by tab
             const sectionsByTab = {};
-            tabNames.forEach(tab => {
+            navItems.forEach(tab => {
                 sectionsByTab[tab] = [];
             });
 
@@ -615,7 +615,7 @@ function updatePreview() {
 
             const tabContainers = NavigationHelpers.generateTabContentContainers(
                 tabNav.id,
-                tabNames,
+                navItems,
                 sectionsByTab
             );
 
