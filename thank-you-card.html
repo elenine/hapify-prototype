@@ -3,107 +3,1086 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You Card - InviteGen</title>
+    <title>Thank You Card Creator - InviteGen</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-rose-600 to-amber-600 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
+                        <p class="text-xs text-gray-500">Thank You Card</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-rose-600 to-amber-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!--
-    ============================================
-    THANK YOU CARD TEMPLATE
-    ============================================
+    <!-- Main Container -->
+    <div class="flex h-[calc(100vh-73px)]">
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Create Your Thank You Card</h2>
+                    <p class="text-sm text-gray-600 mt-1">Express your gratitude beautifully</p>
+                </div>
 
-    PURPOSE:
-    This template is for expressing gratitude and appreciation to friends, family,
-    colleagues, or anyone who deserves recognition. These are heartfelt thank you
-    messages that can be sent digitally after receiving gifts, help, support, or
-    simply to show appreciation.
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
+                </div>
 
-    STRUCTURE TO FOLLOW:
-    Please follow the exact structure from business-portfolio.html:
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-rose-600 font-semibold hover:border-rose-400 hover:bg-rose-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
+            </div>
+        </div>
 
-    1. HEADER (Sticky Navigation)
-       - Logo and title
-       - Action buttons (Publish, Preview, QR)
-       - Use gradient: from-amber-400 to-orange-500 (matching home page card)
+        <!-- Right Panel - Preview -->
+        <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
+            <div class="h-fit">
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
 
-    2. MAIN CONTAINER (Split Layout)
-       - Left Panel: Editor Interface
-       - Right Panel: Live Preview
-
-    3. SECTION TEMPLATES OBJECT (JavaScript)
-       Create 9 section types appropriate for thank you messages:
-
-       Suggested sections for Thank You Cards:
-       a) coverMessage - Main thank you message with recipient name
-       b) gratitude - Detailed appreciation message explaining why you're grateful
-       c) photo - Photo related to what you're thanking them for
-       d) specificReason - Highlight the specific act of kindness
-       e) impact - Explain how their action impacted you
-       f) quote - Gratitude quote or saying
-       g) memory - Share a related positive memory
-       h) gift - If thanking for a gift, show it being used/enjoyed
-       i) signature - Personal closing and sender name
-
-    4. INFO/STYLE TABS PATTERN
-       Each section should have:
-       - Info Tab: Content fields (thank you message, recipient name, etc.)
-       - Style Tab: Visual customization (warm colors, fonts)
-
-    5. CORE FUNCTIONS (JavaScript)
-       - Same as business-portfolio.html
-       - openSectionModal() / closeSectionModal()
-       - addSection(type)
-       - removeSection(id)
-       - switchTab(event, id, tab)
-       - getSectionData(section)
-       - updatePreview()
-       - handleImageUpload(input)
-       - setDevice(device)
-       - previewFullscreen()
-       - generateQR()
-       - copyUrl()
-       - publishProject()
-
-    6. MODALS
-       - Section Selection Modal (9 section types grid)
-       - QR Code Modal (for sharing)
-
-    COLOR SCHEME:
-    - Primary gradient: from-amber-400 to-orange-500
-    - Accent colors: amber-600, orange-600
-    - Warm, appreciative tones
-
-    KEY CHARACTERISTICS:
-    - Sincere and heartfelt tone
-    - Focus on specific reasons for gratitude
-    - Personal and genuine messages
-    - Can be formal or casual depending on recipient
-    - Great for post-event appreciation, gift thanks, or general gratitude
-
-    PREVIEW RENDERING:
-    Thank you cards should render with:
-    - Elegant, readable typography
-    - Warm, inviting colors
-    - Clean layout emphasizing the message
-    - Optional photos showing appreciation
-
-    ============================================
--->
-
-<!-- TODO: Implement the full structure following business-portfolio.html -->
-
-<div class="min-h-screen flex items-center justify-center">
-    <div class="text-center">
-        <div class="text-6xl mb-4">🙏</div>
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">Thank You Card</h1>
-        <p class="text-gray-600 mb-4">Template structure coming soon...</p>
-        <p class="text-sm text-gray-500">Follow business-portfolio.html structure</p>
-        <a href="index.html" class="inline-block mt-6 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-6 py-3 rounded-lg hover:shadow-lg transition">
-            ← Back to Home
-        </a>
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">💌</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your thank you card</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
+    <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b flex bg-gray-50">
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'most-used')">
+                    ⭐ Most Used
+                </button>
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'more')">
+                    ➕ More Sections
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="overflow-y-auto flex-1">
+                <!-- Most Used Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="most-used">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">💌</div>
+                            <div class="font-semibold text-sm">Hero Message</div>
+                        </button>
+                        <button data-section-type="message" onclick="addSection('message')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">✍️</div>
+                            <div class="font-semibold text-sm">Personal Message</div>
+                        </button>
+                        <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">📸</div>
+                            <div class="font-semibold text-sm">Photo Gallery</div>
+                        </button>
+                        <button data-section-type="signature" onclick="addSection('signature')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">✒️</div>
+                            <div class="font-semibold text-sm">Signature</div>
+                        </button>
+                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">📞</div>
+                            <div class="font-semibold text-sm">Contact Info</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="gift" onclick="addSection('gift')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">🎁</div>
+                            <div class="font-semibold text-sm">Gift Acknowledgment</div>
+                        </button>
+                        <button data-section-type="event" onclick="addSection('event')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <div class="font-semibold text-sm">Event Recap</div>
+                        </button>
+                        <button data-section-type="quote" onclick="addSection('quote')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">💭</div>
+                            <div class="font-semibold text-sm">Quote</div>
+                        </button>
+                        <button data-section-type="social" onclick="addSection('social')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">🔗</div>
+                            <div class="font-semibold text-sm">Social Media</div>
+                        </button>
+                        <button data-section-type="video" onclick="addSection('video')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">🎥</div>
+                            <div class="font-semibold text-sm">Video Message</div>
+                        </button>
+                        <button data-section-type="recipients" onclick="addSection('recipients')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">👥</div>
+                            <div class="font-semibold text-sm">Multiple Recipients</div>
+                        </button>
+                        <button data-section-type="future" onclick="addSection('future')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">🔮</div>
+                            <div class="font-semibold text-sm">Future Plans</div>
+                        </button>
+                        <button data-section-type="donation" onclick="addSection('donation')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">❤️</div>
+                            <div class="font-semibold text-sm">Donation Info</div>
+                        </button>
+                        <button data-section-type="timeline" onclick="addSection('timeline')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-rose-500 hover:bg-rose-50 transition text-center">
+                            <div class="text-4xl mb-2">⏳</div>
+                            <div class="font-semibold text-sm">Memory Timeline</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Preview Button (Mobile Only) -->
+    <button onclick="openMobilePreview()" class="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gradient-to-r from-rose-600 to-amber-600 text-white rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center text-2xl">
+        👁️
+    </button>
+
+    <!-- Mobile Preview Modal -->
+    <div id="mobilePreviewModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="w-full h-full flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="text-lg font-semibold text-white">Live Preview</h3>
+                <button onclick="closeMobilePreview()" class="text-white hover:text-gray-300 text-3xl w-10 h-10 flex items-center justify-center">×</button>
+            </div>
+
+            <!-- Device Toggle -->
+            <div class="flex gap-2 justify-center mb-4">
+                <button onclick="setMobilePreviewDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn active" data-device="mobile">
+                    📱 Mobile
+                </button>
+                <button onclick="setMobilePreviewDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn" data-device="tablet">
+                    💻 Tablet
+                </button>
+            </div>
+
+            <!-- Mobile Frame -->
+            <div class="flex-1 flex items-center justify-center overflow-auto">
+                <div id="mobilePreviewFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="mobilePreviewContent">
+                        <!-- Preview content will be copied here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/thankyou123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+
+        // Section templates for thank you card
+        const sectionTemplates = {
+            hero: {
+                name: '💌 Hero Message',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Main Heading</label>
+                            <input type="text" placeholder="Thank You!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="heading" oninput="updatePreview()" value="Thank You!">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                            <input type="text" placeholder="Your kindness means the world to us" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="subtitle" oninput="updatePreview()" value="Your kindness means the world to us">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Hero Image</label>
+                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="image" onchange="handleImageUpload(this)">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fef3c7">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" onchange="updatePreview()" value="#92400e">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="textAlign" onchange="updatePreview()">
+                                <option value="left">Left</option>
+                                <option value="center" selected>Center</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+                    const textColor = style.textColor || '#92400e';
+                    const textAlign = style.textAlign || 'center';
+                    const imageHtml = data.image ? \`<img src="\${data.image}" class="w-full h-64 object-cover mb-6 rounded-lg" alt="Hero image">\` : '';
+
+                    return \`
+                        <div style="background: \${bgColor}; color: \${textColor}; padding: 3rem 1.5rem; text-align: \${textAlign};">
+                            \${imageHtml}
+                            <h1 style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">\${data.heading || 'Thank You!'}</h1>
+                            <p style="font-size: 1.25rem; opacity: 0.9;">\${data.subtitle || 'Your kindness means the world to us'}</p>
+                        </div>
+                    \`;
+                }
+            },
+            message: {
+                name: '✍️ Personal Message',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message Title</label>
+                            <input type="text" placeholder="From Our Hearts" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+                            <textarea rows="6" placeholder="Write your heartfelt message here..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#ffffff">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" onchange="updatePreview()" value="#374151">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const textColor = style.textColor || '#374151';
+
+                    return \`
+                        <div style="background: \${bgColor}; color: \${textColor}; padding: 3rem 1.5rem;">
+                            \${data.title ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">\${data.title}</h2>\` : ''}
+                            <p style="font-size: 1.125rem; line-height: 1.75; white-space: pre-wrap;">\${data.message || 'Your heartfelt message will appear here...'}</p>
+                        </div>
+                    \`;
+                }
+            },
+            gallery: {
+                name: '📸 Photo Gallery',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Title</label>
+                            <input type="text" placeholder="Cherished Memories" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Photo 1</label>
+                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="photo1" onchange="handleImageUpload(this)">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Photo 2</label>
+                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="photo2" onchange="handleImageUpload(this)">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Photo 3</label>
+                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="photo3" onchange="handleImageUpload(this)">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fef2f2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Layout</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="grid">Grid</option>
+                                <option value="masonry">Masonry</option>
+                                <option value="carousel">Carousel</option>
+                            </select>
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fef2f2';
+                    const photos = [data.photo1, data.photo2, data.photo3].filter(p => p);
+
+                    if (photos.length === 0) {
+                        return \`
+                            <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                                \${data.title ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem;">\${data.title}</h2>\` : ''}
+                                <div style="color: #9ca3af; padding: 2rem;">
+                                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">📸</div>
+                                    <p>Add photos to create your gallery</p>
+                                </div>
+                            </div>
+                        \`;
+                    }
+
+                    const photosHtml = photos.map(photo =>
+                        \`<img src="\${photo}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem;" alt="Gallery photo">\`
+                    ).join('');
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem;">
+                            \${data.title ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">\${data.title}</h2>\` : ''}
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                                \${photosHtml}
+                            </div>
+                        </div>
+                    \`;
+                }
+            },
+            signature: {
+                name: '✒️ Signature',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Closing Words</label>
+                            <input type="text" placeholder="With gratitude," class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="closing" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name(s)</label>
+                            <input type="text" placeholder="Sarah & John" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="names" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="date" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fffbeb">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="textAlign" onchange="updatePreview()">
+                                <option value="left">Left</option>
+                                <option value="center">Center</option>
+                                <option value="right" selected>Right</option>
+                            </select>
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fffbeb';
+                    const textAlign = style.textAlign || 'right';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: \${textAlign};">
+                            \${data.closing ? \`<p style="font-size: 1.125rem; font-style: italic; margin-bottom: 1rem;">\${data.closing}</p>\` : ''}
+                            \${data.names ? \`<p style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; font-family: cursive;">\${data.names}</p>\` : ''}
+                            \${data.date ? \`<p style="font-size: 0.875rem; color: #6b7280;">\${new Date(data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>\` : ''}
+                        </div>
+                    \`;
+                }
+            },
+            contact: {
+                name: '📞 Contact Info',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" placeholder="hello@example.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="email" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <input type="tel" placeholder="(555) 123-4567" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="phone" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                            <textarea rows="3" placeholder="123 Main St, City, State 12345" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#f9fafb">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" onchange="updatePreview()" value="#374151">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#f9fafb';
+                    const textColor = style.textColor || '#374151';
+
+                    return \`
+                        <div style="background: \${bgColor}; color: \${textColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem;">Stay In Touch</h2>
+                            <div style="max-width: 400px; margin: 0 auto; text-align: left;">
+                                \${data.email ? \`<p style="margin-bottom: 1rem;"><strong>📧 Email:</strong> \${data.email}</p>\` : ''}
+                                \${data.phone ? \`<p style="margin-bottom: 1rem;"><strong>📱 Phone:</strong> \${data.phone}</p>\` : ''}
+                                \${data.address ? \`<p style="margin-bottom: 1rem;"><strong>🏠 Address:</strong><br>\${data.address}</p>\` : ''}
+                            </div>
+                        </div>
+                    \`;
+                }
+            },
+            gift: {
+                name: '🎁 Gift Acknowledgment',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gift Description</label>
+                            <input type="text" placeholder="the beautiful vase" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="gift" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Message</label>
+                            <textarea rows="4" placeholder="Thank you so much for..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fef3c7">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🎁</div>
+                            \${data.gift ? \`<h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: #92400e;">Thank you for \${data.gift}</h3>\` : ''}
+                            \${data.message ? \`<p style="font-size: 1.125rem; line-height: 1.75; color: #78350f; max-width: 600px; margin: 0 auto;">\${data.message}</p>\` : ''}
+                        </div>
+                    \`;
+                }
+            },
+            event: {
+                name: '🎉 Event Recap',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Name</label>
+                            <input type="text" placeholder="My Birthday Party" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="eventName" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="eventDate" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Recap Message</label>
+                            <textarea rows="4" placeholder="What a wonderful celebration..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="recap" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#ffffff">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const eventDateStr = data.eventDate ? new Date(data.eventDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem;">
+                            <div style="text-align: center; margin-bottom: 2rem;">
+                                <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+                                \${data.eventName ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 0.5rem;">\${data.eventName}</h2>\` : ''}
+                                \${eventDateStr ? \`<p style="color: #6b7280; font-size: 0.875rem;">\${eventDateStr}</p>\` : ''}
+                            </div>
+                            \${data.recap ? \`<p style="font-size: 1.125rem; line-height: 1.75; text-align: center; max-width: 600px; margin: 0 auto;">\${data.recap}</p>\` : ''}
+                        </div>
+                    \`;
+                }
+            },
+            quote: {
+                name: '💭 Quote',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Text</label>
+                            <textarea rows="3" placeholder="Gratitude is the fairest blossom..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="quote" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Author</label>
+                            <input type="text" placeholder="Henry Ward Beecher" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="author" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fef2f2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="quoteColor" onchange="updatePreview()" value="#9f1239">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fef2f2';
+                    const quoteColor = style.quoteColor || '#9f1239';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <div style="max-width: 600px; margin: 0 auto;">
+                                <div style="font-size: 3rem; color: \${quoteColor}; margin-bottom: 1rem;">"</div>
+                                \${data.quote ? \`<p style="font-size: 1.25rem; font-style: italic; color: \${quoteColor}; line-height: 1.75; margin-bottom: 1rem;">\${data.quote}</p>\` : ''}
+                                \${data.author ? \`<p style="font-size: 0.875rem; color: #6b7280; font-weight: 600;">— \${data.author}</p>\` : ''}
+                            </div>
+                        </div>
+                    \`;
+                }
+            },
+            social: {
+                name: '🔗 Social Media',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Instagram</label>
+                            <input type="text" placeholder="@username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="instagram" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Facebook</label>
+                            <input type="text" placeholder="facebook.com/page" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="facebook" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Twitter</label>
+                            <input type="text" placeholder="@username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="twitter" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#f3f4f6">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#f3f4f6';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem;">Connect With Us</h2>
+                            <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                                \${data.instagram ? \`<a href="https://instagram.com/\${data.instagram.replace('@', '')}" style="color: #e11d48; font-size: 2rem; text-decoration: none;">📷</a>\` : ''}
+                                \${data.facebook ? \`<a href="\${data.facebook.startsWith('http') ? data.facebook : 'https://' + data.facebook}" style="color: #3b5998; font-size: 2rem; text-decoration: none;">👥</a>\` : ''}
+                                \${data.twitter ? \`<a href="https://twitter.com/\${data.twitter.replace('@', '')}" style="color: #1da1f2; font-size: 2rem; text-decoration: none;">🐦</a>\` : ''}
+                            </div>
+                        </div>
+                    \`;
+                }
+            },
+            video: {
+                name: '🎥 Video Message',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Video Title</label>
+                            <input type="text" placeholder="A Message From Us" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Video URL (YouTube/Vimeo)</label>
+                            <input type="url" placeholder="https://youtube.com/watch?v=..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="videoUrl" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#000000">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#000000';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            \${data.title ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem; color: white;">\${data.title}</h2>\` : ''}
+                            <div style="max-width: 600px; margin: 0 auto; aspect-ratio: 16/9; background: #374151; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; color: white;">
+                                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎥</div>
+                                    <p>Video player</p>
+                                    \${data.videoUrl ? \`<p style="font-size: 0.75rem; margin-top: 0.5rem; color: #9ca3af;">\${data.videoUrl}</p>\` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    \`;
+                }
+            },
+            recipients: {
+                name: '👥 Multiple Recipients',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Recipients (one per line)</label>
+                            <textarea rows="5" placeholder="John Smith\nMary Johnson\nDavid Lee" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="recipients" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Group Message</label>
+                            <textarea rows="3" placeholder="Thank you all for..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fffbeb">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fffbeb';
+                    const recipients = data.recipients ? data.recipients.split('\n').filter(r => r.trim()) : [];
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem;">Special Thanks To</h2>
+                            \${recipients.length > 0 ? \`
+                                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+                                    \${recipients.map(name => \`<span style="background: #fbbf24; padding: 0.5rem 1rem; border-radius: 9999px; font-weight: 600;">\${name}</span>\`).join('')}
+                                </div>
+                            \` : ''}
+                            \${data.message ? \`<p style="font-size: 1.125rem; line-height: 1.75; max-width: 600px; margin: 0 auto;">\${data.message}</p>\` : ''}
+                        </div>
+                    \`;
+                }
+            },
+            future: {
+                name: '🔮 Future Plans',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                            <input type="text" placeholder="Let's Stay Connected" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Future Plans</label>
+                            <textarea rows="4" placeholder="We hope to see you again soon..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="plans" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fef3c7">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">🔮</div>
+                            \${data.title ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1.5rem; color: #92400e;">\${data.title}</h2>\` : ''}
+                            \${data.plans ? \`<p style="font-size: 1.125rem; line-height: 1.75; color: #78350f; max-width: 600px; margin: 0 auto;">\${data.plans}</p>\` : ''}
+                        </div>
+                    \`;
+                }
+            },
+            donation: {
+                name: '❤️ Donation Info',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Organization Name</label>
+                            <input type="text" placeholder="Red Cross" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="orgName" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Message</label>
+                            <textarea rows="3" placeholder="Thank you for your generous donation..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Donation Amount (optional)</label>
+                            <input type="text" placeholder="$100" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="amount" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#fef2f2">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#fef2f2';
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem; text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">❤️</div>
+                            \${data.orgName ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 1rem; color: #9f1239;">Donation to \${data.orgName}</h2>\` : ''}
+                            \${data.amount ? \`<p style="font-size: 1.5rem; font-weight: bold; color: #be123c; margin-bottom: 1rem;">\${data.amount}</p>\` : ''}
+                            \${data.message ? \`<p style="font-size: 1.125rem; line-height: 1.75; color: #881337; max-width: 600px; margin: 0 auto;">\${data.message}</p>\` : ''}
+                        </div>
+                    \`;
+                }
+            },
+            timeline: {
+                name: '⏳ Memory Timeline',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Timeline Title</label>
+                            <input type="text" placeholder="Our Journey Together" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 1</label>
+                            <input type="text" placeholder="First meeting" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="event1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 2</label>
+                            <input type="text" placeholder="Became friends" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="event2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 3</label>
+                            <input type="text" placeholder="Today" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="event3" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" onchange="updatePreview()" value="#ffffff">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style, globalStyles) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const events = [data.event1, data.event2, data.event3].filter(e => e);
+
+                    return \`
+                        <div style="background: \${bgColor}; padding: 3rem 1.5rem;">
+                            \${data.title ? \`<h2 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">\${data.title}</h2>\` : ''}
+                            <div style="max-width: 600px; margin: 0 auto;">
+                                \${events.map((event, index) => \`
+                                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                                        <div style="flex-shrink: 0; width: 2.5rem; height: 2.5rem; background: linear-gradient(to right, #e11d48, #f59e0b); border-radius: 9999px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">\${index + 1}</div>
+                                        <div style="flex: 1; padding-top: 0.5rem;">
+                                            <p style="font-size: 1.125rem; color: #374151;">\${event}</p>
+                                        </div>
+                                    </div>
+                                \`).join('')}
+                            </div>
+                        </div>
+                    \`;
+                }
+            }
+        };
+
+        function openSectionModal() {
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function switchModalTab(event, tabName) {
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-rose-600', 'border-b-2', 'border-rose-600', 'bg-white');
+            });
+
+            // Hide all tab contents
+            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Activate clicked tab button
+            event.target.classList.add('active', 'text-rose-600', 'border-b-2', 'border-rose-600', 'bg-white');
+
+            // Show corresponding tab content
+            document.querySelector(\`[data-modal-tab="\${tabName}"]\`).classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = \`section-\${sectionCounter++}\`;
+
+            const sectionHTML = \`
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item" data-id="\${id}" data-type="\${type}">
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="cursor-move text-gray-400">⋮⋮</span>
+                            <span class="font-semibold text-sm">\${template.name}</span>
+                        </div>
+                        <button onclick="removeSection('\${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '\${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '\${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        \${template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        \${template.style}
+                    </div>
+                </div>
+            \`;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            closeSectionModal();
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            if (confirm('Remove this section?')) {
+                document.querySelector(\`[data-id="\${id}"]\`).remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(\`[data-id="\${sectionId}"]\`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-rose-600', 'border-b-2', 'border-rose-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-rose-600', 'border-b-2', 'border-rose-600');
+            section.querySelector(\`[data-tab="\${tab}"]\`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+
+            if (sections.length === 0) {
+                html = \`
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">💌</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your thank you card</p>
+                        </div>
+                    </div>
+                \`;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style, {});
+                });
+            }
+
+            document.getElementById('previewContent').innerHTML = html;
+
+            // Also update mobile preview if it's open
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = html;
+            }
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-rose-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-rose-600', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your thank you card?')) {
+                alert('✅ Published successfully!\n\nYour thank you card is now live!');
+            }
+        }
+
+        function openMobilePreview() {
+            // Copy preview content to mobile preview modal
+            const previewContent = document.getElementById('previewContent').innerHTML;
+            document.getElementById('mobilePreviewContent').innerHTML = previewContent;
+
+            // Show the modal
+            document.getElementById('mobilePreviewModal').classList.remove('hidden');
+        }
+
+        function closeMobilePreview() {
+            document.getElementById('mobilePreviewModal').classList.add('hidden');
+        }
+
+        function setMobilePreviewDevice(device) {
+            // Update active button
+            document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-rose-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-rose-600', 'text-white');
+
+            // Update frame size
+            const frame = document.getElementById('mobilePreviewFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        // Close modals on outside click
+        document.getElementById('sectionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'sectionModal') closeSectionModal();
+        });
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeQRModal();
+        });
+        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+        });
+    </script>
 </body>
 </html>
