@@ -1569,6 +1569,11 @@
                 `;
             } else if (navType === 'bottomnav' && navItems.length > 0) {
                 // Bottom Navigation Bar Mode
+                const navId = 'preview-nav-' + Date.now();
+
+                // Wrap everything in a flex container for sticky bottom nav
+                html += '<div class="min-h-full flex flex-col">';
+
                 // First, render hero section (always visible)
                 const heroSection = document.querySelector('[data-type="hero"]');
                 if (heroSection) {
@@ -1599,9 +1604,8 @@
                 });
 
                 // Render navigation sections (only first one visible)
-                const navId = 'preview-nav-' + Date.now();
                 html += `
-                    <div class="nav-sections-container" data-nav-container="${navId}">
+                    <div class="flex-1 nav-sections-container" data-nav-container="${navId}">
                         ${navItems.map((item, index) => {
                             return `
                                 <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
@@ -1688,16 +1692,16 @@
 
                 const navContainerClasses = bottomNavStyle === 'pills' || bottomNavStyle === 'bordered' ? 'gap-2' : 'gap-6';
                 const navAlignClass = navAlignmentClasses[bottomNavAlignment] || navAlignmentClasses.left;
-                const stickyClass = bottomNavSticky ? 'fixed bottom-0 left-0 right-0 z-10' : '';
+                const stickyClass = bottomNavSticky ? 'sticky bottom-0 z-10' : '';
 
                 // Render bottom navigation bar LAST
                 html += `
-                    <div class="${stickyClass} shadow-sm" style="background-color: ${bottomNavBgColor}; border-top: 1px solid #e5e7eb;">
+                    <div class="${stickyClass} shadow-sm mt-auto" style="background-color: ${bottomNavBgColor}; border-top: 1px solid #e5e7eb;">
                         <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
                             ${navItems.map((item, index) => generateNavButton(item, index, bottomNavStyle, bottomNavSize)).join('')}
                         </div>
                     </div>
-                `;
+                </div>`; // Close the flex container
             } else {
                 // Normal Mode (no navigation)
                 sections.forEach(section => {
