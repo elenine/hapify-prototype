@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Shower Invitation - InviteGen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-yellow-400 to-amber-600 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
+                        <p class="text-xs text-gray-500">Baby Shower</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="flex h-[calc(100vh-73px)]">
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Design Baby Shower Invitation</h2>
+                    <p class="text-sm text-gray-600 mt-1">Celebrate the upcoming arrival</p>
+                </div>
+
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
+                </div>
+
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-yellow-600 font-semibold hover:border-yellow-400 hover:bg-yellow-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Panel - Preview -->
+        <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
+            <div class="h-fit">
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">🍼</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your baby shower invitation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b flex bg-gray-50">
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'most-used')">
+                    ⭐ Most Used
+                </button>
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'more')">
+                    ➕ More Sections
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="overflow-y-auto flex-1">
+                <!-- Most Used Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="most-used">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🍼</div>
+                            <div class="font-semibold text-sm">Hero Header</div>
+                        </button>
+                        <button data-section-type="babydetails" onclick="addSection('babydetails')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">👶</div>
+                            <div class="font-semibold text-sm">Baby Details</div>
+                        </button>
+                        <button data-section-type="rsvp" onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">✉️</div>
+                            <div class="font-semibold text-sm">RSVP</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="showerinfo" onclick="addSection('showerinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <div class="font-semibold text-sm">Shower Info</div>
+                        </button>
+                        <button data-section-type="wishes" onclick="addSection('wishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💝</div>
+                            <div class="font-semibold text-sm">Wishes</div>
+                        </button>
+                        <button data-section-type="games" onclick="addSection('games')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎮</div>
+                            <div class="font-semibold text-sm">Games</div>
+                        </button>
+                        <button data-section-type="menu" onclick="addSection('menu')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🍰</div>
+                            <div class="font-semibold text-sm">Menu</div>
+                        </button>
+                        <button data-section-type="directions" onclick="addSection('directions')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">📍</div>
+                            <div class="font-semibold text-sm">Directions</div>
+                        </button>
+                        <button data-section-type="registry" onclick="addSection('registry')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎁</div>
+                            <div class="font-semibold text-sm">Registry</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Preview Button (Mobile Only) -->
+    <button onclick="openMobilePreview()" class="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gradient-to-r from-yellow-400 to-amber-600 text-white rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center text-2xl">
+        👁️
+    </button>
+
+    <!-- Mobile Preview Modal -->
+    <div id="mobilePreviewModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="w-full h-full flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="text-lg font-semibold text-white">Live Preview</h3>
+                <button onclick="closeMobilePreview()" class="text-white hover:text-gray-300 text-3xl w-10 h-10 flex items-center justify-center">×</button>
+            </div>
+
+            <!-- Device Toggle -->
+            <div class="flex gap-2 justify-center mb-4">
+                <button onclick="setMobilePreviewDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn active" data-device="mobile">
+                    📱 Mobile
+                </button>
+                <button onclick="setMobilePreviewDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn" data-device="tablet">
+                    💻 Tablet
+                </button>
+            </div>
+
+            <!-- Mobile Frame -->
+            <div class="flex-1 flex items-center justify-center overflow-auto">
+                <div id="mobilePreviewFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="mobilePreviewContent">
+                        <!-- Preview content will be copied here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/babyshower123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-yellow-500 text-white py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+
+        const sectionTemplates = {
+            layout: {
+                name: '🎨 Page Layout',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div class="text-sm text-gray-600">
+                            <p>This section controls the overall styling and appearance of your entire invitation page.</p>
+                            <p class="mt-2">Use the <strong>Style</strong> tab to customize colors, fonts, and layout.</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
+                            <input type="color" value="#9333ea" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="primaryColor" oninput="updatePreview()">
+                            <p class="text-xs text-gray-500 mt-1">Used for headings and accents</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#ec4899" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondaryColor" oninput="updatePreview()">
+                            <p class="text-xs text-gray-500 mt-1">Used for secondary elements</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bgColor" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="fontFamily" onchange="updatePreview()">
+                                <option value="system-ui, -apple-system, sans-serif">System Default</option>
+                                <option value="Georgia, serif">Georgia (Serif)</option>
+                                <option value="'Times New Roman', serif">Times New Roman</option>
+                                <option value="'Courier New', monospace">Courier New</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                                <option value="'Brush Script MT', cursive">Brush Script</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="0px">Square (No Radius)</option>
+                                <option value="4px">Small (4px)</option>
+                                <option value="8px" selected>Medium (8px)</option>
+                                <option value="16px">Large (16px)</option>
+                                <option value="24px">Extra Large (24px)</option>
+                                <option value="9999px">Pill Shape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="spacing" onchange="updatePreview()">
+                                <option value="compact">Compact</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="relaxed">Relaxed</option>
+                                <option value="spacious">Spacious</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => '' // Layout section doesn't render visible content
+            },
+            hero: {
+                name: '🍼 Hero Header',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parent's Name</label>
+                            <input type="text" placeholder="Sarah Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent section-data" data-field="parent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title Text</label>
+                            <input type="text" placeholder="Baby Shower Celebration" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Cover Photo</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-yellow-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                                <div class="text-3xl mb-2">📸</div>
+                                <div class="text-sm text-gray-600">Click to upload</div>
+                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fbbf24" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="text-center py-16 px-6" style="background: ${style.bg || '#fbbf24'}; color: ${style.text || '#ffffff'}">
+                        ${data.image ? `<img src="${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">` : '<div class="text-6xl mb-4">🍼</div>'}
+                        <h1 class="text-3xl font-bold mb-2">${data.title || 'Baby Shower'}</h1>
+                        <p class="text-xl">Celebrating ${data.parent || "Parent's Name"}</p>
+                    </div>
+                `
+            },
+            babydetails: {
+                name: '👶 Baby Details',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Expected Date</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="duedate" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Baby Gender</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="gender" oninput="updatePreview()">
+                                <option value="">Select...</option>
+                                <option value="boy">Boy</option>
+                                <option value="girl">Girl</option>
+                                <option value="surprise">Surprise</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Baby Name (if known)</label>
+                            <input type="text" placeholder="Optional" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="babyname" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold mb-6 text-center">About Baby</h2>
+                            <div class="p-6 bg-yellow-50 rounded-lg text-center">
+                                <div class="text-4xl mb-3">👶</div>
+                                ${data.babyname ? `<div class="font-bold text-lg mb-2">${data.babyname}</div>` : ''}
+                                ${data.gender ? `<div class="text-sm text-gray-600 mb-2">${data.gender === 'boy' ? '💙 Baby Boy' : data.gender === 'girl' ? '💗 Baby Girl' : '💛 It\'s a Surprise!'}</div>` : ''}
+                                ${data.duedate ? `<div class="text-sm text-gray-600">Expected: ${new Date(data.duedate).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            showerinfo: {
+                name: '🎉 Shower Info',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shower Date</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="date" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shower Time</label>
+                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="time" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Venue Name</label>
+                            <input type="text" placeholder="Home, Restaurant, etc." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="venue" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                            <textarea placeholder="Full address..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fffbeb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fffbeb'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Shower Details</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${data.date ? `
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📅</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Date</div>
+                                    <div class="font-medium">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.time ? `
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">🕐</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Time</div>
+                                    <div class="font-medium">${data.time}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.venue ? `
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">🏠</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Venue</div>
+                                    <div class="font-medium">${data.venue}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.address ? `
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📍</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Address</div>
+                                    <div class="text-sm">${data.address}</div>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            registry: {
+                name: '🎁 Registry',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Registry Title</label>
+                            <input type="text" placeholder="Baby Registry" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Registry Link</label>
+                            <input type="url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="link" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Your presence is the best gift..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">🎁</div>
+                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Baby Registry'}</h2>
+                            <p class="text-gray-600 mb-6">${data.message || 'Your presence is the best gift!'}</p>
+                            ${data.link ? `<a href="${data.link}" target="_blank" class="inline-block bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">View Registry</a>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            games: {
+                name: '🎮 Games',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Shower Games" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Games List (one per line)</label>
+                            <textarea placeholder="Baby Bingo&#10;Guess the Baby Food&#10;Diaper Raffle" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="games" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fffbeb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fffbeb'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Shower Games'}</h2>
+                        <div class="max-w-md mx-auto">
+                            ${data.games ? data.games.split('\n').filter(game => game.trim()).map(game => `
+                                <div class="flex items-start gap-3 mb-3">
+                                    <div class="text-yellow-600 mt-1">🎮</div>
+                                    <div>${game}</div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add games for your shower</p>'}
+                        </div>
+                    </div>
+                `
+            },
+            menu: {
+                name: '🍰 Menu',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Menu Title</label>
+                            <input type="text" placeholder="Refreshments" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Menu Items (one per line)</label>
+                            <textarea placeholder="Appetizers&#10;Main Course&#10;Desserts&#10;Beverages" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="items" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Menu'}</h2>
+                        <div class="max-w-md mx-auto">
+                            ${data.items ? data.items.split('\n').filter(item => item.trim()).map(item => `
+                                <div class="flex items-start gap-3 mb-3 p-3 bg-yellow-50 rounded-lg">
+                                    <div>🍰</div>
+                                    <div>${item}</div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add menu items</p>'}
+                        </div>
+                    </div>
+                `
+            },
+            rsvp: {
+                name: '✉️ RSVP',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Title</label>
+                            <input type="text" placeholder="Please RSVP" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Let us know if you can make it..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Deadline</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="deadline" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fffbeb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fffbeb'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Please RSVP'}</h2>
+                            <p class="text-gray-600 mb-6">${data.message || "Let us know if you can join the celebration"}</p>
+                            ${data.deadline ? `<p class="text-sm text-gray-500 mb-6">Deadline: ${new Date(data.deadline).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
+                            <button class="bg-yellow-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">
+                                RSVP Now
+                            </button>
+                        </div>
+                    </div>
+                `
+            },
+            directions: {
+                name: '📍 Directions',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Venue Name</label>
+                            <input type="text" placeholder="Venue or Home Address" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="venue" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Address</label>
+                            <textarea placeholder="Street, City, State, ZIP" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parking Info</label>
+                            <textarea placeholder="Where to park..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="parking" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Location & Directions</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${data.venue ? `
+                            <div class="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg">
+                                <div class="text-2xl">📍</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Venue</div>
+                                    <div class="font-medium">${data.venue}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.address ? `
+                            <div class="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg">
+                                <div class="text-2xl">🗺️</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Address</div>
+                                    <div class="text-sm">${data.address}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.parking ? `
+                            <div class="flex items-start gap-4 p-4 bg-yellow-50 rounded-lg">
+                                <div class="text-2xl">🚗</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Parking</div>
+                                    <div class="text-sm">${data.parking}</div>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            wishes: {
+                name: '💝 Wishes',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Wishes for Baby" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea placeholder="Share your wishes and advice for the new parents..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fffbeb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fffbeb'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">💝</div>
+                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Wishes for Baby'}</h2>
+                            <p class="text-gray-600 mb-6">${data.description || 'Share your wishes and advice'}</p>
+                            <button class="bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">
+                                Leave a Wish
+                            </button>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function openSectionModal() {
+            updateSectionAvailability();
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            // Get all currently added sections
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            // Update each section button in the modal
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+
+                if (isAdded && !allowMultiple) {
+                    // Disable button
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Add "Added" badge
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    // Enable button
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Remove "Added" badge if it exists
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
+        }
+
+        
+        function switchModalTab(event, tabName) {
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+            });
+
+            // Hide all tab contents
+            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Activate clicked tab button
+            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+
+            // Show corresponding tab content
+            document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = `section-${sectionCounter++}`;
+            const isLayout = type === 'layout';
+
+            // For layout section, hide remove button and drag handle
+            const removeButton = isLayout ? '' : `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`;
+            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
+
+            const sectionHTML = `
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''}">
+                        <div class="flex items-center gap-2">
+                            ${dragHandle}
+                            <span class="font-semibold text-sm">${template.name}</span>
+                            ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
+                        </div>
+                        ${removeButton}
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        ${template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        ${template.style}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            if (!isLayout) {
+                closeSectionModal();
+            }
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            if (confirm('Remove this section?')) {
+                document.querySelector(`[data-id="${id}"]`).remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-yellow-600', 'border-b-2', 'border-yellow-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-yellow-600', 'border-b-2', 'border-yellow-600');
+            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+            let globalStyles = {};
+
+            // Extract global styles from layout section
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (layoutSection) {
+                const { style } = getSectionData(layoutSection);
+                globalStyles = style;
+            }
+
+            // Apply default global styles if not set
+            globalStyles = {
+                primaryColor: globalStyles.primaryColor || '#9333ea',
+                secondaryColor: globalStyles.secondaryColor || '#ec4899',
+                bgColor: globalStyles.bgColor || '#ffffff',
+                textColor: globalStyles.textColor || '#1f2937',
+                fontFamily: globalStyles.fontFamily || 'system-ui, -apple-system, sans-serif',
+                borderRadius: globalStyles.borderRadius || '8px',
+                spacing: globalStyles.spacing || 'normal'
+            };
+
+            // Calculate spacing values
+            const spacingMap = {
+                compact: { py: 'py-8', px: 'px-4', gap: 'gap-2' },
+                normal: { py: 'py-12', px: 'px-6', gap: 'gap-4' },
+                relaxed: { py: 'py-16', px: 'px-8', gap: 'gap-6' },
+                spacious: { py: 'py-20', px: 'px-10', gap: 'gap-8' }
+            };
+
+            if (sections.length === 0 || sections.length === 1) {
+                html = `
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">🍼</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your baby shower invitation</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout') return; // Skip layout section in rendering
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style, globalStyles);
+                });
+            }
+
+            // Wrap content with global styles
+            const styledHtml = `
+                <div style="font-family: ${globalStyles.fontFamily}; color: ${globalStyles.textColor}; background: ${globalStyles.bgColor};">
+                    ${html}
+                </div>
+            `;
+
+            document.getElementById('previewContent').innerHTML = styledHtml;
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-yellow-500', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-yellow-500', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your baby shower invitation?')) {
+                alert('✅ Published successfully!\n\nYour baby shower page is now live!');
+            }
+        }
+
+        function openMobilePreview() {
+            // Copy preview content to mobile preview modal
+            const previewContent = document.getElementById('previewContent').innerHTML;
+            document.getElementById('mobilePreviewContent').innerHTML = previewContent;
+
+            // Show the modal
+            document.getElementById('mobilePreviewModal').classList.remove('hidden');
+        }
+
+        function closeMobilePreview() {
+            document.getElementById('mobilePreviewModal').classList.add('hidden');
+        }
+
+        function setMobilePreviewDevice(device) {
+            // Update active button
+            document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-amber-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-amber-600', 'text-white');
+
+            // Update frame size
+            const frame = document.getElementById('mobilePreviewFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        // Initialize with default sections on page load
+        function initializeDefaultSections() {
+            // Add default sections here based on template type
+            const defaultSections = ['hero', 'babydetails', 'showerinfo', 'rsvp'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        // Load default sections when page loads
+        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
+
+        
+        // Initialize layout section on page load
+        function initializeLayout() {
+            addSection('layout');
+        }
+
+        // Close modals on outside click
+        document.getElementById('sectionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'sectionModal') closeSectionModal();
+        });
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeQRModal();
+        });
+        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+        });
+
+        // Run initialization
+        initializeLayout();
+    </script>
+</body>
+</html>
