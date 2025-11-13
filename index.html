@@ -3,1810 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InviteGen - Digital Invitation & Portfolio Generator</title>
+    <title>InviteGen - Create Beautiful Invitations & Portfolios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #f5f5f7;
-            color: #1d1d1f;
-        }
-
-        /* Header */
-        .header {
-            background: white;
-            border-bottom: 1px solid #e5e5e7;
-            padding: 16px 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .project-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1d1d1f;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary {
-            background: #f5f5f7;
-            color: #1d1d1f;
-        }
-
-        .btn-secondary:hover {
-            background: #e8e8ed;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        /* Main Container */
-        .main-container {
-            display: flex;
-            height: calc(100vh - 65px);
-        }
-
-        /* Left Panel - Editor */
-        .left-panel {
-            width: 45%;
-            background: white;
-            border-right: 1px solid #e5e5e7;
-            overflow-y: auto;
-            padding: 24px;
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .panel-title {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .project-type-selector {
-            padding: 8px 16px;
-            border: 1px solid #e5e5e7;
-            border-radius: 8px;
-            font-size: 14px;
-            background: white;
-            cursor: pointer;
-        }
-
-        /* Section Card */
-        .section-card {
-            background: white;
-            border: 1px solid #e5e5e7;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: all 0.2s;
-        }
-
-        .section-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .section-card.dragging {
-            opacity: 0.5;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            background: #fafafa;
-            border-bottom: 1px solid #e5e5e7;
-            cursor: move;
-        }
-
-        .section-header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .drag-handle {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 3px;
-            cursor: grab;
-        }
-
-        .drag-handle span {
-            width: 100%;
-            height: 2px;
-            background: #86868b;
-            border-radius: 2px;
-        }
-
-        .section-type {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1d1d1f;
-        }
-
-        .section-header-right {
-            display: flex;
-            gap: 8px;
-        }
-
-        .icon-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .icon-btn:hover {
-            background: #e8e8ed;
-        }
-
-        .close-btn {
-            color: #86868b;
-            font-size: 20px;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid #e5e5e7;
-            background: white;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px 20px;
-            border: none;
-            background: transparent;
-            font-size: 14px;
-            font-weight: 500;
-            color: #86868b;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .tab.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }
-
-        .tab:hover {
-            color: #1d1d1f;
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            padding: 20px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #1d1d1f;
-            margin-bottom: 8px;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e5e5e7;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: all 0.2s;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .image-upload {
-            border: 2px dashed #e5e5e7;
-            border-radius: 8px;
-            padding: 32px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .image-upload:hover {
-            border-color: #667eea;
-            background: #fafbff;
-        }
-
-        .upload-icon {
-            font-size: 32px;
-            color: #86868b;
-            margin-bottom: 8px;
-        }
-
-        .upload-text {
-            font-size: 14px;
-            color: #86868b;
-        }
-
-        /* Style Options */
-        .style-presets {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .style-preset {
-            padding: 16px;
-            border: 2px solid #e5e5e7;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .style-preset:hover {
-            border-color: #667eea;
-        }
-
-        .style-preset.active {
-            border-color: #667eea;
-            background: #fafbff;
-        }
-
-        .style-preset-preview {
-            width: 100%;
-            height: 60px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-        }
-
-        .style-preset-name {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .color-picker-group {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .color-input {
-            width: 50px;
-            height: 50px;
-            border: 2px solid #e5e5e7;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .color-value {
-            font-size: 13px;
-            color: #86868b;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Add Section Button */
-        .add-section-btn {
-            width: 100%;
-            padding: 16px;
-            border: 2px dashed #e5e5e7;
-            border-radius: 12px;
-            background: transparent;
-            color: #667eea;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .add-section-btn:hover {
-            border-color: #667eea;
-            background: #fafbff;
-        }
-
-        /* Right Panel - Preview */
-        .right-panel {
-            width: 55%;
-            background: #f5f5f7;
-            padding: 32px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .preview-header {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .preview-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .device-selector {
-            display: flex;
-            gap: 8px;
-        }
-
-        .device-btn {
-            width: 36px;
-            height: 36px;
-            border: 1px solid #e5e5e7;
-            background: white;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-        }
-
-        .device-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        /* Mobile Preview Frame */
-        .mobile-frame {
-            width: 375px;
-            height: 667px;
-            background: #1d1d1f;
-            border-radius: 36px;
-            padding: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .mobile-notch {
-            position: absolute;
-            top: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 24px;
-            background: #1d1d1f;
-            border-radius: 0 0 16px 16px;
-            z-index: 10;
-        }
-
-        .mobile-screen {
-            width: 100%;
-            height: 100%;
-            background: white;
-            border-radius: 28px;
-            overflow-y: auto;
-            overflow-x: hidden;
-        }
-
-        /* Preview Content Styles */
-        .preview-section {
-            padding: 32px 24px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .preview-section:last-child {
-            border-bottom: none;
-        }
-
-        .preview-header-section {
-            text-align: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 48px 24px;
-        }
-
-        .preview-title-text {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .preview-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .preview-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            margin: 0 auto 16px;
-            border: 4px solid white;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .preview-text-section {
-            padding: 24px;
-        }
-
-        .preview-heading {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #1d1d1f;
-        }
-
-        .preview-text {
-            font-size: 15px;
-            line-height: 1.6;
-            color: #515154;
-        }
-
-        .preview-info-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .preview-icon {
-            width: 40px;
-            height: 40px;
-            background: #f5f5f7;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .preview-info-text {
-            flex: 1;
-        }
-
-        .preview-info-label {
-            font-size: 12px;
-            color: #86868b;
-            margin-bottom: 2px;
-        }
-
-        .preview-info-value {
-            font-size: 14px;
-            font-weight: 500;
-            color: #1d1d1f;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .modal-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .section-type-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .section-type-card {
-            padding: 20px;
-            border: 2px solid #e5e5e7;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-        }
-
-        .section-type-card:hover {
-            border-color: #667eea;
-            background: #fafbff;
-        }
-
-        .section-type-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .section-type-name {
-            font-size: 13px;
-            font-weight: 500;
-            color: #1d1d1f;
-        }
-
-        /* QR Modal */
-        .qr-display {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .qr-code {
-            width: 256px;
-            height: 256px;
-            margin: 20px auto;
-            background: white;
-            border: 2px solid #e5e5e7;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #86868b;
-        }
-
-        .qr-url {
-            background: #f5f5f7;
-            padding: 12px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            word-break: break-all;
-            margin: 16px 0;
-        }
-
-        /* Scrollbar Styles */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f5f5f7;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #d2d2d7;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #b8b8bd;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .main-container {
-                flex-direction: column;
-            }
-
-            .left-panel,
-            .right-panel {
-                width: 100%;
-            }
-
-            .mobile-frame {
-                width: 100%;
-                max-width: 375px;
-            }
-
-            .section-type-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .header {
-                padding: 12px 16px;
-            }
-
-            .header-left {
-                gap: 12px;
-            }
-
-            .project-name {
-                display: none;
-            }
-
-            .section-type-grid {
-                grid-template-columns: 1fr;
-            }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
         }
     </style>
 </head>
-<body>
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 min-h-screen">
     <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <div class="logo">InviteGen</div>
-            <div class="project-name" id="projectName">Untitled Project</div>
-        </div>
-        <div class="header-right">
-            <button class="btn btn-secondary" onclick="previewProject()">👁️ Preview</button>
-            <button class="btn btn-secondary" onclick="generateQR()">📱 Generate QR</button>
-            <button class="btn btn-primary" onclick="publishProject()">🚀 Publish</button>
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-3xl">🎨</div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                        InviteGen
+                    </h1>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#features" class="text-gray-600 hover:text-purple-600 transition">Features</a>
+                    <a href="#templates" class="text-gray-600 hover:text-purple-600 transition">Templates</a>
+                    <a href="#about" class="text-gray-600 hover:text-purple-600 transition">About</a>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <div class="main-container">
-        <!-- Left Panel - Editor -->
-        <div class="left-panel">
-            <div class="panel-header">
-                <h1 class="panel-title">Design Your Content</h1>
-                <select class="project-type-selector" onchange="changeProjectType(this.value)">
-                    <option value="">Select Type</option>
-                    <option value="wedding">Wedding Invitation</option>
-                    <option value="birthday">Birthday Wishes</option>
-                    <option value="business">Business Portfolio</option>
-                    <option value="event">Event Invitation</option>
-                    <option value="baby-shower">Baby Shower Invitation</option>
-                    <option value="birth">Birth Announcement</option>
-                    <option value="engagement">Engagement Announcement</option>
-                    <option value="anniversary">Anniversary Wishes</option>
-                    <option value="graduation">Graduation Ceremony</option>
-                    <option value="housewarming">Housewarming Party</option>
-                    <option value="retirement">Retirement Celebration</option>
-                    <option value="farewell">Farewell Party</option>
-                </select>
-            </div>
-
-            <div id="sections-container">
-                <!-- Sections will be dynamically added here -->
-            </div>
-
-            <!-- Add Section Button -->
-            <button class="add-section-btn" onclick="openAddSectionModal()">
-                <span style="font-size: 20px;">+</span>
-                Add Section
-            </button>
-        </div>
-
-        <!-- Right Panel - Preview -->
-        <div class="right-panel">
-            <div class="preview-header">
-                <h2 class="preview-title">Live Preview</h2>
-                <div class="device-selector">
-                    <button class="device-btn active" title="Mobile" onclick="setDeviceView('mobile')">📱</button>
-                    <button class="device-btn" title="Tablet" onclick="setDeviceView('tablet')">💻</button>
-                </div>
-            </div>
-
-            <div class="mobile-frame" id="deviceFrame">
-                <div class="mobile-notch"></div>
-                <div class="mobile-screen" id="preview-content">
-                    <div style="text-align: center; padding: 64px 24px; color: #86868b;">
-                        <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Start Creating</div>
-                        <div style="font-size: 14px;">Add sections to build your invitation or portfolio</div>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-16 md:py-24">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="text-6xl mb-6 float-animation">📱</div>
+            <h2 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                Create Stunning Digital Invitations
+                <span class="block mt-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                    In Minutes
+                </span>
+            </h2>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Design beautiful, mobile-friendly invitations and portfolios with QR code sharing.
+                No design skills required!
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#templates" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition">
+                    Get Started Free
+                </a>
+                <a href="#features" class="bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold border-2 border-purple-600 hover:bg-purple-50 transition">
+                    Learn More
+                </a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Add Section Modal -->
-    <div class="modal" id="addSectionModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Add New Section</h2>
-                <button class="icon-btn close-btn" onclick="closeAddSectionModal()">✕</button>
-            </div>
-            <div class="section-type-grid">
-                <div class="section-type-card" onclick="addSection('header')">
-                    <div class="section-type-icon">🎯</div>
-                    <div class="section-type-name">Header</div>
+    <!-- Features Section -->
+    <section id="features" class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+                Why Choose InviteGen?
+            </h3>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h4 class="text-xl font-bold mb-3">Lightning Fast</h4>
+                    <p class="text-gray-600">Create professional invitations in minutes with our intuitive drag-and-drop builder</p>
                 </div>
-                <div class="section-type-card" onclick="addSection('details')">
-                    <div class="section-type-icon">📋</div>
-                    <div class="section-type-name">Event Details</div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h4 class="text-xl font-bold mb-3">Mobile Optimized</h4>
+                    <p class="text-gray-600">All designs are responsive and look perfect on any device</p>
                 </div>
-                <div class="section-type-card" onclick="addSection('message')">
-                    <div class="section-type-icon">💬</div>
-                    <div class="section-type-name">Message</div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <h4 class="text-xl font-bold mb-3">Fully Customizable</h4>
+                    <p class="text-gray-600">Customize colors, fonts, images, and layouts to match your style</p>
                 </div>
-                <div class="section-type-card" onclick="addSection('gallery')">
-                    <div class="section-type-icon">🖼️</div>
-                    <div class="section-type-name">Photo Gallery</div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">🔗</div>
+                    <h4 class="text-xl font-bold mb-3">QR Code Sharing</h4>
+                    <p class="text-gray-600">Generate QR codes for easy sharing and tracking</p>
                 </div>
-                <div class="section-type-card" onclick="addSection('schedule')">
-                    <div class="section-type-icon">⏰</div>
-                    <div class="section-type-name">Schedule</div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">💾</div>
+                    <h4 class="text-xl font-bold mb-3">Real-time Preview</h4>
+                    <p class="text-gray-600">See changes instantly with live mobile preview</p>
                 </div>
-                <div class="section-type-card" onclick="addSection('rsvp')">
-                    <div class="section-type-icon">✉️</div>
-                    <div class="section-type-name">RSVP Form</div>
-                </div>
-                <div class="section-type-card" onclick="addSection('map')">
-                    <div class="section-type-icon">🗺️</div>
-                    <div class="section-type-name">Location Map</div>
-                </div>
-                <div class="section-type-card" onclick="addSection('contact')">
-                    <div class="section-type-icon">📞</div>
-                    <div class="section-type-name">Contact Info</div>
-                </div>
-                <div class="section-type-card" onclick="addSection('countdown')">
-                    <div class="section-type-icon">⏱️</div>
-                    <div class="section-type-name">Countdown</div>
-                </div>
-                <div class="section-type-card" onclick="addSection('testimonials')">
-                    <div class="section-type-icon">⭐</div>
-                    <div class="section-type-name">Testimonials</div>
-                </div>
-                <div class="section-type-card" onclick="addSection('about')">
-                    <div class="section-type-icon">👤</div>
-                    <div class="section-type-name">About</div>
-                </div>
-                <div class="section-type-card" onclick="addSection('custom')">
-                    <div class="section-type-icon">✨</div>
-                    <div class="section-type-name">Custom</div>
+                <div class="text-center p-6">
+                    <div class="text-5xl mb-4">🎯</div>
+                    <h4 class="text-xl font-bold mb-3">Multiple Templates</h4>
+                    <p class="text-gray-600">12+ professional templates for every occasion</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- QR Code Modal -->
-    <div class="modal" id="qrModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">QR Code Generated</h2>
-                <button class="icon-btn close-btn" onclick="closeQRModal()">✕</button>
-            </div>
-            <div class="qr-display">
-                <div class="qr-code" id="qrCodeDisplay">
-                    QR Code will appear here
-                </div>
-                <div style="font-size: 14px; color: #86868b; margin-bottom: 8px;">Share this URL:</div>
-                <div class="qr-url" id="shareUrl">https://invitegen.com/view/example123</div>
-                <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="copyUrl()">📋 Copy URL</button>
+    <!-- Templates Section -->
+    <section id="templates" class="py-16 bg-gradient-to-br from-gray-50 to-white">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+                Choose Your Template
+            </h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Select from our professionally designed templates and customize them to match your needs
+            </p>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <!-- Business Portfolio -->
+                <a href="business-portfolio.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-blue-500 to-blue-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">💼</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Business Portfolio</h4>
+                        <p class="text-gray-600 text-sm mb-4">Showcase your work and services professionally</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Birthday Wishes -->
+                <a href="birthday-wishes.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-pink-500 to-pink-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">🎂</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Birthday Wishes</h4>
+                        <p class="text-gray-600 text-sm mb-4">Celebrate special birthdays in style</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Wedding Invitation -->
+                <a href="wedding-invitation.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">💒</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Wedding Invitation</h4>
+                        <p class="text-gray-600 text-sm mb-4">Beautiful invites for your special day</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Event Invitation -->
+                <a href="event-invitation.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-green-500 to-green-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">🎉</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Event Invitation</h4>
+                        <p class="text-gray-600 text-sm mb-4">Perfect for any celebration or gathering</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Baby Shower -->
+                <a href="baby-shower.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">🍼</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Baby Shower</h4>
+                        <p class="text-gray-600 text-sm mb-4">Adorable invitations for baby celebrations</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Birth Announcement -->
+                <a href="birth-announcement.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-teal-400 to-teal-600 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">👶</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Birth Announcement</h4>
+                        <p class="text-gray-600 text-sm mb-4">Share your bundle of joy with the world</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Engagement Announcement -->
+                <a href="engagement-announcement.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-rose-500 to-rose-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">💍</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Engagement</h4>
+                        <p class="text-gray-600 text-sm mb-4">Announce your engagement in style</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Anniversary Wishes -->
+                <a href="anniversary-wishes.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-red-500 to-red-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">❤️</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Anniversary</h4>
+                        <p class="text-gray-600 text-sm mb-4">Celebrate milestone years together</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Graduation -->
+                <a href="graduation-ceremony.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">🎓</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Graduation</h4>
+                        <p class="text-gray-600 text-sm mb-4">Honor academic achievements</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Housewarming -->
+                <a href="housewarming-party.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-orange-500 to-orange-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">🏠</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Housewarming</h4>
+                        <p class="text-gray-600 text-sm mb-4">Welcome friends to your new home</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Retirement -->
+                <a href="retirement-celebration.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-cyan-500 to-cyan-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">🌴</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Retirement</h4>
+                        <p class="text-gray-600 text-sm mb-4">Celebrate a well-deserved retirement</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
+
+                <!-- Farewell Party -->
+                <a href="farewell-party.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
+                    <div class="bg-gradient-to-br from-violet-500 to-violet-700 h-48 flex items-center justify-center">
+                        <div class="text-7xl group-hover:scale-110 transition-transform">👋</div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2 text-gray-900">Farewell Party</h4>
+                        <p class="text-gray-600 text-sm mb-4">Send off colleagues and friends</p>
+                        <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Global state
-        let sectionIdCounter = 0;
-
-        // Project type templates
-        const projectTemplates = {
-            wedding: {
-                name: 'Wedding Invitation',
-                defaultSections: ['header', 'details', 'message', 'rsvp']
-            },
-            birthday: {
-                name: 'Birthday Wishes',
-                defaultSections: ['header', 'message', 'details', 'gallery']
-            },
-            business: {
-                name: 'Business Portfolio',
-                defaultSections: ['header', 'about', 'gallery', 'contact']
-            },
-            event: {
-                name: 'Event Invitation',
-                defaultSections: ['header', 'details', 'message', 'map']
-            },
-            'baby-shower': {
-                name: 'Baby Shower Invitation',
-                defaultSections: ['header', 'details', 'message', 'rsvp']
-            },
-            birth: {
-                name: 'Birth Announcement',
-                defaultSections: ['header', 'message', 'gallery']
-            },
-            engagement: {
-                name: 'Engagement Announcement',
-                defaultSections: ['header', 'message', 'details', 'gallery']
-            },
-            anniversary: {
-                name: 'Anniversary Wishes',
-                defaultSections: ['header', 'message', 'gallery', 'details']
-            },
-            graduation: {
-                name: 'Graduation Ceremony',
-                defaultSections: ['header', 'details', 'message', 'schedule']
-            },
-            housewarming: {
-                name: 'Housewarming Party',
-                defaultSections: ['header', 'details', 'message', 'map']
-            },
-            retirement: {
-                name: 'Retirement Celebration',
-                defaultSections: ['header', 'message', 'details', 'testimonials']
-            },
-            farewell: {
-                name: 'Farewell Party',
-                defaultSections: ['header', 'details', 'message', 'testimonials']
-            }
-        };
-
-        // Section templates
-        const sectionTemplates = {
-            header: {
-                name: 'Header Section',
-                icon: '🎯',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Main Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., John & Sarah" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Subtitle</label>
-                        <input type="text" class="form-input section-data" data-field="subtitle" placeholder="e.g., Are Getting Married" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Cover Image</label>
-                        <div class="image-upload" onclick="this.querySelector('input').click()">
-                            <div class="upload-icon">📸</div>
-                            <div class="upload-text">Click to upload image</div>
-                            <input type="file" class="section-data" data-field="image" style="display: none;" accept="image/*" onchange="handleImageUpload(this)">
+    <!-- About Section -->
+    <section id="about" class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    How It Works
+                </h3>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-purple-600">1</span>
                         </div>
+                        <h4 class="font-bold mb-2">Choose Template</h4>
+                        <p class="text-gray-600 text-sm">Select from our beautiful pre-designed templates</p>
                     </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Choose Style</label>
-                        <div class="style-presets">
-                            <div class="style-preset active" onclick="selectPreset(this, 'gradient1')">
-                                <div class="style-preset-preview" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
-                                <div class="style-preset-name">Purple Dream</div>
-                            </div>
-                            <div class="style-preset" onclick="selectPreset(this, 'gradient2')">
-                                <div class="style-preset-preview" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
-                                <div class="style-preset-name">Pink Passion</div>
-                            </div>
-                            <div class="style-preset" onclick="selectPreset(this, 'gradient3')">
-                                <div class="style-preset-preview" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
-                                <div class="style-preset-name">Ocean Blue</div>
-                            </div>
-                            <div class="style-preset" onclick="selectPreset(this, 'gradient4')">
-                                <div class="style-preset-preview" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
-                                <div class="style-preset-name">Fresh Green</div>
-                            </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-pink-600">2</span>
                         </div>
+                        <h4 class="font-bold mb-2">Customize</h4>
+                        <p class="text-gray-600 text-sm">Add your content and personalize the design</p>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#667eea" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#667eea</span>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-blue-600">3</span>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Text Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="textColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-header-section" style="background: ${style.bgColor || '#667eea'}; color: ${style.textColor || '#ffffff'};">
-                        ${data.image ? `<div class="preview-image" style="background-image: url(${data.image});"></div>` : '<div class="preview-image"></div>'}
-                        <h1 class="preview-title-text">${data.title || 'Your Title Here'}</h1>
-                        <p class="preview-subtitle">${data.subtitle || 'Your subtitle'}</p>
-                    </div>
-                `
-            },
-            details: {
-                name: 'Event Details',
-                icon: '📋',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Event Date</label>
-                        <input type="date" class="form-input section-data" data-field="date" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Event Time</label>
-                        <input type="time" class="form-input section-data" data-field="time" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Venue Name</label>
-                        <input type="text" class="form-input section-data" data-field="venue" placeholder="e.g., Grand Ballroom" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Address</label>
-                        <textarea class="form-textarea section-data" data-field="address" placeholder="Full venue address" onchange="updatePreview()"></textarea>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Icon Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="iconColor" value="#667eea" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#667eea</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#ffffff'};">
-                        ${data.date ? `
-                        <div class="preview-info-row">
-                            <div class="preview-icon" style="color: ${style.iconColor || '#667eea'};">📅</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Date</div>
-                                <div class="preview-info-value">${formatDate(data.date)}</div>
-                            </div>
-                        </div>` : ''}
-                        ${data.time ? `
-                        <div class="preview-info-row">
-                            <div class="preview-icon" style="color: ${style.iconColor || '#667eea'};">🕐</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Time</div>
-                                <div class="preview-info-value">${formatTime(data.time)}</div>
-                            </div>
-                        </div>` : ''}
-                        ${data.venue ? `
-                        <div class="preview-info-row">
-                            <div class="preview-icon" style="color: ${style.iconColor || '#667eea'};">📍</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Venue</div>
-                                <div class="preview-info-value">${data.venue}</div>
-                            </div>
-                        </div>` : ''}
-                        ${data.address ? `
-                        <div class="preview-info-row" style="border-bottom: none;">
-                            <div class="preview-icon" style="color: ${style.iconColor || '#667eea'};">🏠</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Address</div>
-                                <div class="preview-info-value">${data.address}</div>
-                            </div>
-                        </div>` : ''}
-                    </div>
-                `
-            },
-            message: {
-                name: 'Message Section',
-                icon: '💬',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Heading</label>
-                        <input type="text" class="form-input section-data" data-field="heading" placeholder="Section heading" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Message Content</label>
-                        <textarea class="form-textarea section-data" data-field="content" placeholder="Your message here..." onchange="updatePreview()"></textarea>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Text Alignment</label>
-                        <select class="form-select section-style" data-style="alignment" onchange="updatePreview()">
-                            <option value="left">Left</option>
-                            <option value="center" selected>Center</option>
-                            <option value="right">Right</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#f9f9f9" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#f9f9f9</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="text-align: ${style.alignment || 'center'}; background: ${style.bgColor || '#f9f9f9'};">
-                        ${data.heading ? `<h2 class="preview-heading">${data.heading}</h2>` : ''}
-                        ${data.content ? `<p class="preview-text">${data.content}</p>` : ''}
-                    </div>
-                `
-            },
-            gallery: {
-                name: 'Photo Gallery',
-                icon: '🖼️',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Gallery Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., Our Story" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Upload Photos</label>
-                        <div class="image-upload" onclick="this.querySelector('input').click()">
-                            <div class="upload-icon">📸</div>
-                            <div class="upload-text">Click to upload photos</div>
-                            <input type="file" class="section-data" data-field="photos" style="display: none;" accept="image/*" multiple onchange="handleMultipleImageUpload(this)">
-                        </div>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Gallery Layout</label>
-                        <select class="form-select section-style" data-style="layout" onchange="updatePreview()">
-                            <option value="grid">Grid</option>
-                            <option value="carousel">Carousel</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#ffffff'};">
-                        ${data.title ? `<h2 class="preview-heading" style="text-align: center;">${data.title}</h2>` : ''}
-                        <div style="text-align: center; color: #86868b; padding: 32px;">
-                            <div style="font-size: 48px; margin-bottom: 8px;">🖼️</div>
-                            <div style="font-size: 14px;">Gallery photos will appear here</div>
-                        </div>
-                    </div>
-                `
-            },
-            schedule: {
-                name: 'Schedule',
-                icon: '⏰',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Schedule Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., Event Timeline" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Schedule Items (one per line)</label>
-                        <textarea class="form-textarea section-data" data-field="items" placeholder="10:00 AM - Registration&#10;11:00 AM - Opening Ceremony" onchange="updatePreview()"></textarea>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => {
-                    const items = data.items ? data.items.split('\n').filter(item => item.trim()) : [];
-                    return `
-                        <div class="preview-section" style="background: ${style.bgColor || '#ffffff'};">
-                            ${data.title ? `<h2 class="preview-heading">${data.title}</h2>` : ''}
-                            ${items.map(item => `
-                                <div class="preview-info-row">
-                                    <div class="preview-icon">⏰</div>
-                                    <div class="preview-info-text">
-                                        <div class="preview-info-value">${item}</div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                            ${items.length === 0 ? '<div style="text-align: center; color: #86868b; padding: 16px;">Add schedule items</div>' : ''}
-                        </div>
-                    `;
-                }
-            },
-            rsvp: {
-                name: 'RSVP Form',
-                icon: '✉️',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Form Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., Please RSVP" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-textarea section-data" data-field="description" placeholder="Let us know if you'll be joining us..." onchange="updatePreview()"></textarea>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#f9f9f9" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#f9f9f9</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Button Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="btnColor" value="#667eea" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#667eea</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#f9f9f9'};">
-                        ${data.title ? `<h2 class="preview-heading" style="text-align: center;">${data.title}</h2>` : ''}
-                        ${data.description ? `<p class="preview-text" style="text-align: center; margin-bottom: 20px;">${data.description}</p>` : ''}
-                        <button class="btn btn-primary" style="background: ${style.btnColor || '#667eea'}; width: 100%;">RSVP Now</button>
-                    </div>
-                `
-            },
-            map: {
-                name: 'Location Map',
-                icon: '🗺️',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Location Name</label>
-                        <input type="text" class="form-input section-data" data-field="name" placeholder="e.g., Venue Name" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Google Maps Link</label>
-                        <input type="url" class="form-input section-data" data-field="mapUrl" placeholder="Paste Google Maps URL" onchange="updatePreview()">
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#ffffff'};">
-                        ${data.name ? `<h2 class="preview-heading" style="text-align: center;">${data.name}</h2>` : ''}
-                        <div style="text-align: center; color: #86868b; padding: 32px;">
-                            <div style="font-size: 48px; margin-bottom: 8px;">🗺️</div>
-                            <div style="font-size: 14px;">Map will appear here</div>
-                            ${data.mapUrl ? `<a href="${data.mapUrl}" target="_blank" style="color: #667eea; text-decoration: none; display: block; margin-top: 12px;">View on Google Maps</a>` : ''}
-                        </div>
-                    </div>
-                `
-            },
-            contact: {
-                name: 'Contact Information',
-                icon: '📞',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Contact Name</label>
-                        <input type="text" class="form-input section-data" data-field="name" placeholder="e.g., Event Coordinator" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Phone Number</label>
-                        <input type="tel" class="form-input section-data" data-field="phone" placeholder="+1 234 567 8900" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input section-data" data-field="email" placeholder="contact@example.com" onchange="updatePreview()">
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#ffffff'};">
-                        <h2 class="preview-heading" style="text-align: center;">Contact Us</h2>
-                        ${data.name ? `<div class="preview-info-row">
-                            <div class="preview-icon">👤</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Contact Person</div>
-                                <div class="preview-info-value">${data.name}</div>
-                            </div>
-                        </div>` : ''}
-                        ${data.phone ? `<div class="preview-info-row">
-                            <div class="preview-icon">📞</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Phone</div>
-                                <div class="preview-info-value">${data.phone}</div>
-                            </div>
-                        </div>` : ''}
-                        ${data.email ? `<div class="preview-info-row" style="border-bottom: none;">
-                            <div class="preview-icon">📧</div>
-                            <div class="preview-info-text">
-                                <div class="preview-info-label">Email</div>
-                                <div class="preview-info-value">${data.email}</div>
-                            </div>
-                        </div>` : ''}
-                    </div>
-                `
-            },
-            countdown: {
-                name: 'Countdown Timer',
-                icon: '⏱️',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Countdown Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., Days Until the Big Day" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Target Date</label>
-                        <input type="date" class="form-input section-data" data-field="date" onchange="updatePreview()">
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#667eea" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#667eea</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Text Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="textColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#667eea'}; color: ${style.textColor || '#ffffff'}; text-align: center;">
-                        ${data.title ? `<h2 class="preview-heading" style="color: inherit;">${data.title}</h2>` : ''}
-                        <div style="font-size: 48px; font-weight: 700; margin: 20px 0;">⏱️</div>
-                        <div style="font-size: 14px; opacity: 0.9;">Countdown timer will appear here</div>
-                    </div>
-                `
-            },
-            testimonials: {
-                name: 'Testimonials',
-                icon: '⭐',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Section Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., What People Say" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Testimonials (one per line, format: "Quote" - Author)</label>
-                        <textarea class="form-textarea section-data" data-field="items" placeholder='"Amazing experience!" - John Doe' onchange="updatePreview()"></textarea>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#f9f9f9" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#f9f9f9</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => {
-                    const items = data.items ? data.items.split('\n').filter(item => item.trim()) : [];
-                    return `
-                        <div class="preview-section" style="background: ${style.bgColor || '#f9f9f9'};">
-                            ${data.title ? `<h2 class="preview-heading" style="text-align: center;">${data.title}</h2>` : ''}
-                            ${items.map(item => `
-                                <div style="padding: 16px; margin-bottom: 12px; background: white; border-radius: 8px; border-left: 4px solid #667eea;">
-                                    <div style="font-size: 14px; line-height: 1.6;">${item}</div>
-                                </div>
-                            `).join('')}
-                            ${items.length === 0 ? '<div style="text-align: center; color: #86868b; padding: 16px;">Add testimonials</div>' : ''}
-                        </div>
-                    `;
-                }
-            },
-            about: {
-                name: 'About Section',
-                icon: '👤',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="e.g., About Us" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-textarea section-data" data-field="description" placeholder="Tell your story..." onchange="updatePreview()"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Profile Image</label>
-                        <div class="image-upload" onclick="this.querySelector('input').click()">
-                            <div class="upload-icon">👤</div>
-                            <div class="upload-text">Click to upload image</div>
-                            <input type="file" class="section-data" data-field="image" style="display: none;" accept="image/*" onchange="handleImageUpload(this)">
-                        </div>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#ffffff'}; text-align: center;">
-                        ${data.image ? `<div class="preview-image" style="background-image: url(${data.image}); border: 4px solid #667eea;"></div>` : ''}
-                        ${data.title ? `<h2 class="preview-heading">${data.title}</h2>` : ''}
-                        ${data.description ? `<p class="preview-text">${data.description}</p>` : ''}
-                    </div>
-                `
-            },
-            custom: {
-                name: 'Custom Section',
-                icon: '✨',
-                infoFields: `
-                    <div class="form-group">
-                        <label class="form-label">Section Title</label>
-                        <input type="text" class="form-input section-data" data-field="title" placeholder="Enter title" onchange="updatePreview()">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Content</label>
-                        <textarea class="form-textarea section-data" data-field="content" placeholder="Enter your custom content..." onchange="updatePreview()"></textarea>
-                    </div>
-                `,
-                styleFields: `
-                    <div class="form-group">
-                        <label class="form-label">Background Color</label>
-                        <div class="color-picker-group">
-                            <input type="color" class="color-input section-style" data-style="bgColor" value="#ffffff" onchange="updateColorValue(this); updatePreview()">
-                            <span class="color-value">#ffffff</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Text Alignment</label>
-                        <select class="form-select section-style" data-style="alignment" onchange="updatePreview()">
-                            <option value="left">Left</option>
-                            <option value="center">Center</option>
-                            <option value="right">Right</option>
-                        </select>
-                    </div>
-                `,
-                renderPreview: (data, style) => `
-                    <div class="preview-section" style="background: ${style.bgColor || '#ffffff'}; text-align: ${style.alignment || 'left'};">
-                        ${data.title ? `<h2 class="preview-heading">${data.title}</h2>` : ''}
-                        ${data.content ? `<p class="preview-text">${data.content}</p>` : ''}
-                    </div>
-                `
-            }
-        };
-
-        // Tab Switching
-        function switchTab(element, index) {
-            const card = element.closest('.section-card');
-            const tabs = card.querySelectorAll('.tab');
-            const contents = card.querySelectorAll('.tab-content');
-
-            tabs.forEach(tab => tab.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
-
-            element.classList.add('active');
-            contents[index].classList.add('active');
-        }
-
-        // Style Preset Selection
-        function selectPreset(element, presetId) {
-            const presets = element.parentElement.querySelectorAll('.style-preset');
-            presets.forEach(preset => preset.classList.remove('active'));
-            element.classList.add('active');
-            updatePreview();
-        }
-
-        // Remove Section
-        function removeSection(button) {
-            if (confirm('Are you sure you want to remove this section?')) {
-                button.closest('.section-card').remove();
-                updatePreview();
-            }
-        }
-
-        // Add Section Modal
-        function openAddSectionModal() {
-            document.getElementById('addSectionModal').classList.add('active');
-        }
-
-        function closeAddSectionModal() {
-            document.getElementById('addSectionModal').classList.remove('active');
-        }
-
-        // Add Section
-        function addSection(type) {
-            const template = sectionTemplates[type];
-            if (!template) return;
-
-            const sectionId = `section-${sectionIdCounter++}`;
-            const newSection = document.createElement('div');
-            newSection.className = 'section-card';
-            newSection.draggable = true;
-            newSection.dataset.sectionId = sectionId;
-            newSection.dataset.sectionType = type;
-
-            newSection.innerHTML = `
-                <div class="section-header">
-                    <div class="section-header-left">
-                        <div class="drag-handle">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <span class="section-type">${template.icon} ${template.name}</span>
-                    </div>
-                    <div class="section-header-right">
-                        <button class="icon-btn close-btn" onclick="removeSection(this)">✕</button>
+                        <h4 class="font-bold mb-2">Share</h4>
+                        <p class="text-gray-600 text-sm">Generate QR code and share with guests</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="tabs">
-                    <button class="tab active" onclick="switchTab(this, 0)">Info</button>
-                    <button class="tab" onclick="switchTab(this, 1)">Style</button>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-3 mb-4">
+                    <div class="text-3xl">🎨</div>
+                    <h1 class="text-2xl font-bold">InviteGen</h1>
                 </div>
-
-                <div class="tab-content active">
-                    ${template.infoFields}
+                <p class="text-gray-400 mb-6">Create beautiful digital invitations in minutes</p>
+                <div class="text-sm text-gray-500">
+                    © 2025 InviteGen. All rights reserved.
                 </div>
-
-                <div class="tab-content">
-                    ${template.styleFields}
-                </div>
-            `;
-
-            document.getElementById('sections-container').appendChild(newSection);
-            closeAddSectionModal();
-
-            // Initialize drag and drop for new section
-            initializeDragAndDrop(newSection);
-            updatePreview();
-        }
-
-        // Drag and Drop
-        function initializeDragAndDrop(element) {
-            element.addEventListener('dragstart', function(e) {
-                this.classList.add('dragging');
-            });
-
-            element.addEventListener('dragend', function(e) {
-                this.classList.remove('dragging');
-                updatePreview();
-            });
-        }
-
-        // Initialize drag and drop for container
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('sections-container');
-
-            container.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                const afterElement = getDragAfterElement(container, e.clientY);
-                const dragging = document.querySelector('.dragging');
-                if (dragging) {
-                    if (afterElement == null) {
-                        container.appendChild(dragging);
-                    } else {
-                        container.insertBefore(dragging, afterElement);
-                    }
-                }
-            });
-        });
-
-        function getDragAfterElement(container, y) {
-            const draggableElements = [...container.querySelectorAll('.section-card:not(.dragging)')];
-
-            return draggableElements.reduce((closest, child) => {
-                const box = child.getBoundingClientRect();
-                const offset = y - box.top - box.height / 2;
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                } else {
-                    return closest;
-                }
-            }, { offset: Number.NEGATIVE_INFINITY }).element;
-        }
-
-        // Get section data
-        function getSectionData(sectionCard) {
-            const data = {};
-            const style = {};
-
-            sectionCard.querySelectorAll('.section-data').forEach(input => {
-                const field = input.dataset.field;
-                if (input.type === 'file') {
-                    // File inputs are handled separately
-                    if (input.dataset.imageData) {
-                        data[field] = input.dataset.imageData;
-                    }
-                } else {
-                    data[field] = input.value;
-                }
-            });
-
-            sectionCard.querySelectorAll('.section-style').forEach(input => {
-                const styleField = input.dataset.style;
-                style[styleField] = input.value;
-            });
-
-            return { data, style };
-        }
-
-        // Update Preview
-        function updatePreview() {
-            const previewContent = document.getElementById('preview-content');
-            const sections = document.querySelectorAll('.section-card');
-
-            if (sections.length === 0) {
-                previewContent.innerHTML = `
-                    <div style="text-align: center; padding: 64px 24px; color: #86868b;">
-                        <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
-                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Start Creating</div>
-                        <div style="font-size: 14px;">Add sections to build your invitation or portfolio</div>
-                    </div>
-                `;
-                return;
-            }
-
-            let previewHTML = '';
-
-            sections.forEach(section => {
-                const type = section.dataset.sectionType;
-                const template = sectionTemplates[type];
-                if (template) {
-                    const { data, style } = getSectionData(section);
-                    previewHTML += template.renderPreview(data, style);
-                }
-            });
-
-            previewContent.innerHTML = previewHTML;
-        }
-
-        // Project Type Change
-        function changeProjectType(type) {
-            if (!type) return;
-
-            const template = projectTemplates[type];
-            if (!template) return;
-
-            // Update project name
-            document.getElementById('projectName').textContent = template.name;
-
-            // Clear existing sections
-            const container = document.getElementById('sections-container');
-            if (confirm(`Load ${template.name} template? This will replace your current content.`)) {
-                container.innerHTML = '';
-
-                // Add default sections
-                template.defaultSections.forEach(sectionType => {
-                    addSection(sectionType);
-                });
-            }
-        }
-
-        // Image Upload Handler
-        function handleImageUpload(input) {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    input.dataset.imageData = e.target.result;
-
-                    // Update upload display
-                    const uploadDiv = input.closest('.image-upload');
-                    if (uploadDiv) {
-                        uploadDiv.innerHTML = `
-                            <div style="position: relative;">
-                                <img src="${e.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
-                                <div style="margin-top: 8px; font-size: 12px; color: #86868b;">Click to change image</div>
-                            </div>
-                            <input type="file" class="section-data" data-field="${input.dataset.field}" style="display: none;" accept="image/*" onchange="handleImageUpload(this)">
-                        `;
-                        // Re-attach the data
-                        uploadDiv.querySelector('input').dataset.imageData = e.target.result;
-                    }
-
-                    updatePreview();
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function handleMultipleImageUpload(input) {
-            const files = input.files;
-            if (files.length > 0) {
-                const uploadDiv = input.closest('.image-upload');
-                uploadDiv.innerHTML = `
-                    <div class="upload-icon">✓</div>
-                    <div>${files.length} photo(s) uploaded</div>
-                    <div style="margin-top: 8px; font-size: 12px; color: #86868b;">Click to change</div>
-                    <input type="file" class="section-data" data-field="${input.dataset.field}" style="display: none;" accept="image/*" multiple onchange="handleMultipleImageUpload(this)">
-                `;
-                updatePreview();
-            }
-        }
-
-        // Color picker update
-        function updateColorValue(input) {
-            const valueDisplay = input.nextElementSibling;
-            if (valueDisplay && valueDisplay.classList.contains('color-value')) {
-                valueDisplay.textContent = input.value;
-            }
-        }
-
-        // Device view
-        function setDeviceView(device) {
-            const frame = document.getElementById('deviceFrame');
-            const buttons = document.querySelectorAll('.device-btn');
-
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.closest('.device-btn').classList.add('active');
-
-            if (device === 'tablet') {
-                frame.style.width = '768px';
-                frame.style.height = '1024px';
-            } else {
-                frame.style.width = '375px';
-                frame.style.height = '667px';
-            }
-        }
-
-        // Utility functions
-        function formatDate(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-        }
-
-        function formatTime(timeString) {
-            if (!timeString) return '';
-            const [hours, minutes] = timeString.split(':');
-            const hour = parseInt(hours);
-            const ampm = hour >= 12 ? 'PM' : 'AM';
-            const displayHour = hour % 12 || 12;
-            return `${displayHour}:${minutes} ${ampm}`;
-        }
-
-        // Header Actions
-        function previewProject() {
-            window.open('#', '_blank');
-            alert('Full screen preview would open in a new window');
-        }
-
-        function generateQR() {
-            const uniqueId = Math.random().toString(36).substring(7);
-            const url = `https://invitegen.com/view/${uniqueId}`;
-
-            document.getElementById('shareUrl').textContent = url;
-            document.getElementById('qrCodeDisplay').innerHTML = `
-                <div style="font-size: 14px; color: #86868b;">
-                    QR Code for:<br>
-                    <strong style="color: #1d1d1f;">${url}</strong><br><br>
-                    <div style="font-size: 64px;">📱</div>
-                    (QR code would be generated here)
-                </div>
-            `;
-            document.getElementById('qrModal').classList.add('active');
-        }
-
-        function closeQRModal() {
-            document.getElementById('qrModal').classList.remove('active');
-        }
-
-        function copyUrl() {
-            const url = document.getElementById('shareUrl').textContent;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('URL copied to clipboard!');
-            });
-        }
-
-        function publishProject() {
-            if (confirm('Publish your project? It will be accessible via QR code and link.')) {
-                const uniqueId = Math.random().toString(36).substring(7);
-                alert(`✅ Published successfully!\n\nYour content is now live at:\nhttps://invitegen.com/view/${uniqueId}`);
-            }
-        }
-
-        // Close modals on outside click
-        document.getElementById('addSectionModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeAddSectionModal();
-            }
-        });
-
-        document.getElementById('qrModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeQRModal();
-            }
-        });
-    </script>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
