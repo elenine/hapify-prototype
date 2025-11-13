@@ -1327,7 +1327,7 @@
 
                 // Group sections by tabs
                 const sectionsByTab = {};
-                tabNames.forEach(tab => {
+                navItems.forEach(tab => {
                     sectionsByTab[tab] = [];
                 });
 
@@ -1419,11 +1419,11 @@
                 html += `
                     <div class="sticky top-0 z-10 bg-white ${tabStyle !== 'pills' && tabStyle !== 'buttons' ? 'border-b' : ''} shadow-sm">
                         <div class="flex overflow-x-auto ${containerClasses} ${alignClass} p-2">
-                            ${tabNames.map((tab, index) => generateTabButton(tab, index, tabStyle, tabSize)).join('')}
+                            ${navItems.map((tab, index) => generateTabButton(tab, index, tabStyle, tabSize)).join('')}
                         </div>
                     </div>
                     <div class="preview-tab-contents" data-tab-container="${tabId}">
-                        ${tabNames.map((tab, index) => `
+                        ${navItems.map((tab, index) => `
                             <div class="preview-tab-content ${index === 0 ? '' : 'hidden'}" data-tab-id="${tabId}" data-tab-name="${tab}">
                                 ${sectionsByTab[tab].length > 0
                                     ? sectionsByTab[tab].map(s => s.html).join('')
