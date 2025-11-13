@@ -89,50 +89,74 @@
         </div>
     </div>
 
-    <!-- Add Section Modal -->
+                <!-- Add Section Modal -->
     <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center bg-white">
                 <h3 class="text-2xl font-bold">Add New Section</h3>
                 <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
-            <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">🎓</div>
-                    <div class="font-semibold text-sm">Hero Header</div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b flex bg-gray-50">
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'most-used')">
+                    ⭐ Most Used
                 </button>
-                <button onclick="addSection('graduateinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">👨‍🎓</div>
-                    <div class="font-semibold text-sm">Graduate Info</div>
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'more')">
+                    ➕ More Sections
                 </button>
-                <button onclick="addSection('achievements')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">🏆</div>
-                    <div class="font-semibold text-sm">Achievements</div>
-                </button>
-                <button onclick="addSection('ceremonydetails')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">🎉</div>
-                    <div class="font-semibold text-sm">Ceremony Details</div>
-                </button>
-                <button onclick="addSection('celebrationparty')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">🥳</div>
-                    <div class="font-semibold text-sm">Celebration Party</div>
-                </button>
-                <button onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">🙏</div>
-                    <div class="font-semibold text-sm">Thank You</div>
-                </button>
-                <button onclick="addSection('futureplans')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">🚀</div>
-                    <div class="font-semibold text-sm">Future Plans</div>
-                </button>
-                <button onclick="addSection('photogallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">📸</div>
-                    <div class="font-semibold text-sm">Photo Gallery</div>
-                </button>
-                <button onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
-                    <div class="text-4xl mb-2">📞</div>
-                    <div class="font-semibold text-sm">Contact Info</div>
-                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="overflow-y-auto flex-1">
+                <!-- Most Used Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="most-used">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">🎓</div>
+                            <div class="font-semibold text-sm">Hero Header</div>
+                        </button>
+                        <button data-section-type="graduateinfo" onclick="addSection('graduateinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">👨‍🎓</div>
+                            <div class="font-semibold text-sm">Graduate Info</div>
+                        </button>
+                        <button data-section-type="ceremonydetails" onclick="addSection('ceremonydetails')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <div class="font-semibold text-sm">Ceremony Details</div>
+                        </button>
+                        <button data-section-type="photogallery" onclick="addSection('photogallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">📸</div>
+                            <div class="font-semibold text-sm">Photo Gallery</div>
+                        </button>
+                        <button data-section-type="celebrationparty" onclick="addSection('celebrationparty')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">🥳</div>
+                            <div class="font-semibold text-sm">Celebration Party</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">📞</div>
+                            <div class="font-semibold text-sm">Contact Info</div>
+                        </button>
+                        <button data-section-type="achievements" onclick="addSection('achievements')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">🏆</div>
+                            <div class="font-semibold text-sm">Achievements</div>
+                        </button>
+                        <button data-section-type="thankyou" onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">🙏</div>
+                            <div class="font-semibold text-sm">Thank You</div>
+                        </button>
+                        <button data-section-type="futureplans" onclick="addSection('futureplans')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-indigo-500 hover:bg-indigo-50 transition text-center">
+                            <div class="text-4xl mb-2">🚀</div>
+                            <div class="font-semibold text-sm">Future Plans</div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -165,8 +189,76 @@
         let sectionCounter = 0;
 
         const sectionTemplates = {
+            layout: {
+                name: '🎨 Page Layout',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div class="text-sm text-gray-600">
+                            <p>This section controls the overall styling and appearance of your entire invitation page.</p>
+                            <p class="mt-2">Use the <strong>Style</strong> tab to customize colors, fonts, and layout.</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
+                            <input type="color" value="#9333ea" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="primaryColor" oninput="updatePreview()">
+                            <p class="text-xs text-gray-500 mt-1">Used for headings and accents</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#ec4899" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondaryColor" oninput="updatePreview()">
+                            <p class="text-xs text-gray-500 mt-1">Used for secondary elements</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bgColor" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="fontFamily" onchange="updatePreview()">
+                                <option value="system-ui, -apple-system, sans-serif">System Default</option>
+                                <option value="Georgia, serif">Georgia (Serif)</option>
+                                <option value="'Times New Roman', serif">Times New Roman</option>
+                                <option value="'Courier New', monospace">Courier New</option>
+                                <option value="Arial, sans-serif">Arial</option>
+                                <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                                <option value="'Brush Script MT', cursive">Brush Script</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="0px">Square (No Radius)</option>
+                                <option value="4px">Small (4px)</option>
+                                <option value="8px" selected>Medium (8px)</option>
+                                <option value="16px">Large (16px)</option>
+                                <option value="24px">Extra Large (24px)</option>
+                                <option value="9999px">Pill Shape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="spacing" onchange="updatePreview()">
+                                <option value="compact">Compact</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="relaxed">Relaxed</option>
+                                <option value="spacious">Spacious</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => '' // Layout section doesn't render visible content
+            },
             hero: {
                 name: '🎓 Hero Header',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -209,6 +301,7 @@
             },
             graduateinfo: {
                 name: '👨‍🎓 Graduate Info',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -249,6 +342,7 @@
             },
             achievements: {
                 name: '🏆 Achievements',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -285,6 +379,7 @@
             },
             ceremonydetails: {
                 name: '🎉 Ceremony Details',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -355,6 +450,7 @@
             },
             celebrationparty: {
                 name: '🥳 Celebration Party',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -392,6 +488,7 @@
             },
             thankyou: {
                 name: '🙏 Thank You',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -425,6 +522,7 @@
             },
             futureplans: {
                 name: '🚀 Future Plans',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -461,6 +559,7 @@
             },
             photogallery: {
                 name: '📸 Photo Gallery',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -513,6 +612,7 @@
             },
             contact: {
                 name: '📞 Contact Info',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -570,7 +670,72 @@
         };
 
         function openSectionModal() {
+            updateSectionAvailability();
             document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            // Get all currently added sections
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            // Update each section button in the modal
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+
+                if (isAdded && !allowMultiple) {
+                    // Disable button
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Add "Added" badge
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    // Enable button
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Remove "Added" badge if it exists
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
+        }
+
+        
+        function switchModalTab(event, tabName) {
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+            });
+
+            // Hide all tab contents
+            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Activate clicked tab button
+            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+
+            // Show corresponding tab content
+            document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
         }
 
         function closeSectionModal() {
@@ -580,15 +745,21 @@
         function addSection(type) {
             const template = sectionTemplates[type];
             const id = `section-${sectionCounter++}`;
+            const isLayout = type === 'layout';
+
+            // For layout section, hide remove button and drag handle
+            const removeButton = isLayout ? '' : `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`;
+            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
 
             const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item" data-id="${id}" data-type="${type}">
-                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center">
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''}">
                         <div class="flex items-center gap-2">
-                            <span class="cursor-move text-gray-400">⋮⋮</span>
+                            ${dragHandle}
                             <span class="font-semibold text-sm">${template.name}</span>
+                            ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
                         </div>
-                        <button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>
+                        ${removeButton}
                     </div>
                     <div class="border-b flex">
                         <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
@@ -608,7 +779,9 @@
             `;
 
             document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
-            closeSectionModal();
+            if (!isLayout) {
+                closeSectionModal();
+            }
             updatePreview();
         }
 
@@ -651,8 +824,35 @@
         function updatePreview() {
             const sections = document.querySelectorAll('.section-item');
             let html = '';
+            let globalStyles = {};
 
-            if (sections.length === 0) {
+            // Extract global styles from layout section
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (layoutSection) {
+                const { style } = getSectionData(layoutSection);
+                globalStyles = style;
+            }
+
+            // Apply default global styles if not set
+            globalStyles = {
+                primaryColor: globalStyles.primaryColor || '#9333ea',
+                secondaryColor: globalStyles.secondaryColor || '#ec4899',
+                bgColor: globalStyles.bgColor || '#ffffff',
+                textColor: globalStyles.textColor || '#1f2937',
+                fontFamily: globalStyles.fontFamily || 'system-ui, -apple-system, sans-serif',
+                borderRadius: globalStyles.borderRadius || '8px',
+                spacing: globalStyles.spacing || 'normal'
+            };
+
+            // Calculate spacing values
+            const spacingMap = {
+                compact: { py: 'py-8', px: 'px-4', gap: 'gap-2' },
+                normal: { py: 'py-12', px: 'px-6', gap: 'gap-4' },
+                relaxed: { py: 'py-16', px: 'px-8', gap: 'gap-6' },
+                spacious: { py: 'py-20', px: 'px-10', gap: 'gap-8' }
+            };
+
+            if (sections.length === 0 || sections.length === 1) {
                 html = `
                     <div class="flex items-center justify-center h-full text-center p-8">
                         <div>
@@ -665,13 +865,21 @@
             } else {
                 sections.forEach(section => {
                     const type = section.dataset.type;
+                    if (type === 'layout') return; // Skip layout section in rendering
                     const template = sectionTemplates[type];
                     const { data, style } = getSectionData(section);
-                    html += template.render(data, style);
+                    html += template.render(data, style, globalStyles);
                 });
             }
 
-            document.getElementById('previewContent').innerHTML = html;
+            // Wrap content with global styles
+            const styledHtml = `
+                <div style="font-family: ${globalStyles.fontFamily}; color: ${globalStyles.textColor}; background: ${globalStyles.bgColor};">
+                    ${html}
+                </div>
+            `;
+
+            document.getElementById('previewContent').innerHTML = styledHtml;
         }
 
         function handleImageUpload(input) {
@@ -738,6 +946,12 @@
         // Load default sections when page loads
         window.addEventListener('DOMContentLoaded', initializeDefaultSections);
 
+        
+        // Initialize layout section on page load
+        function initializeLayout() {
+            addSection('layout');
+        }
+
         // Close modals on outside click
         document.getElementById('sectionModal').addEventListener('click', (e) => {
             if (e.target.id === 'sectionModal') closeSectionModal();
@@ -745,6 +959,9 @@
         document.getElementById('qrModal').addEventListener('click', (e) => {
             if (e.target.id === 'qrModal') closeQRModal();
         });
+
+        // Run initialization
+        initializeLayout();
     </script>
 </body>
 </html>
