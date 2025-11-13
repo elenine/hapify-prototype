@@ -155,6 +155,34 @@
                             <div class="text-4xl mb-2">🎁</div>
                             <div class="font-semibold text-sm">Gift Registry</div>
                         </button>
+                        <button data-section-type="theme" onclick="addSection('theme')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎨</div>
+                            <div class="font-semibold text-sm">Party Theme</div>
+                        </button>
+                        <button data-section-type="schedule" onclick="addSection('schedule')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Event Schedule</div>
+                        </button>
+                        <button data-section-type="dressCode" onclick="addSection('dressCode')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">👔</div>
+                            <div class="font-semibold text-sm">Dress Code</div>
+                        </button>
+                        <button data-section-type="directions" onclick="addSection('directions')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🗺️</div>
+                            <div class="font-semibold text-sm">Directions</div>
+                        </button>
+                        <button data-section-type="food" onclick="addSection('food')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🍰</div>
+                            <div class="font-semibold text-sm">Food & Drinks</div>
+                        </button>
+                        <button data-section-type="activities" onclick="addSection('activities')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎮</div>
+                            <div class="font-semibold text-sm">Games & Activities</div>
+                        </button>
+                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📞</div>
+                            <div class="font-semibold text-sm">Contact Info</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -667,6 +695,377 @@
                             <button class="bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-pink-700 transition">
                                 Leave a Wish
                             </button>
+                        </div>
+                    </div>
+                `
+            },
+            theme: {
+                name: '🎨 Party Theme',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Theme Name</label>
+                            <input type="text" placeholder="Tropical Paradise" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="themeName" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Theme Description</label>
+                            <textarea placeholder="Join us for a tropical celebration..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Theme Image</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-pink-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                                <div class="text-3xl mb-2">🖼️</div>
+                                <div class="text-sm text-gray-600">Click to upload theme image</div>
+                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-5xl mb-4">🎨</div>
+                            <h2 class="text-2xl font-bold mb-4">${data.themeName || 'Party Theme'}</h2>
+                            ${data.image ? `<img src="${data.image}" class="w-full h-48 object-cover rounded-lg mb-4">` : ''}
+                            <p class="text-gray-600 leading-relaxed">${data.description || 'Come dressed for the theme!'}</p>
+                        </div>
+                    </div>
+                `
+            },
+            schedule: {
+                name: '📅 Event Schedule',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Schedule Title</label>
+                            <input type="text" placeholder="Timeline" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 1 Time</label>
+                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="time1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 1 Name</label>
+                            <input type="text" placeholder="Arrival & Cocktails" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="event1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 2 Time</label>
+                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="time2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 2 Name</label>
+                            <input type="text" placeholder="Dinner" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="event2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 3 Time</label>
+                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="time3" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event 3 Name</label>
+                            <input type="text" placeholder="Cake & Dancing" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="event3" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                            <div class="space-y-4">
+                                ${data.time1 && data.event1 ? `
+                                <div class="flex items-center gap-4 p-4 bg-pink-50 rounded-lg">
+                                    <div class="text-2xl">🕐</div>
+                                    <div class="flex-1">
+                                        <div class="font-bold">${data.time1}</div>
+                                        <div class="text-sm text-gray-600">${data.event1}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.time2 && data.event2 ? `
+                                <div class="flex items-center gap-4 p-4 bg-pink-50 rounded-lg">
+                                    <div class="text-2xl">🕑</div>
+                                    <div class="flex-1">
+                                        <div class="font-bold">${data.time2}</div>
+                                        <div class="text-sm text-gray-600">${data.event2}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.time3 && data.event3 ? `
+                                <div class="flex items-center gap-4 p-4 bg-pink-50 rounded-lg">
+                                    <div class="text-2xl">🕒</div>
+                                    <div class="flex-1">
+                                        <div class="font-bold">${data.time3}</div>
+                                        <div class="text-sm text-gray-600">${data.event3}</div>
+                                    </div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            dressCode: {
+                name: '👔 Dress Code',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dress Code</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="code" onchange="updatePreview()">
+                                <option value="">Select dress code...</option>
+                                <option value="Casual">Casual</option>
+                                <option value="Smart Casual">Smart Casual</option>
+                                <option value="Business Casual">Business Casual</option>
+                                <option value="Cocktail Attire">Cocktail Attire</option>
+                                <option value="Formal">Formal</option>
+                                <option value="Black Tie">Black Tie</option>
+                                <option value="Costume Party">Costume Party</option>
+                                <option value="Themed">Themed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Details</label>
+                            <textarea placeholder="Please wear comfortable shoes for dancing..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="details" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fdf2f8'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">👔</div>
+                            <h2 class="text-2xl font-bold mb-4">Dress Code</h2>
+                            ${data.code ? `<div class="text-xl font-semibold text-pink-600 mb-3">${data.code}</div>` : ''}
+                            ${data.details ? `<p class="text-gray-600">${data.details}</p>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            directions: {
+                name: '🗺️ Directions',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Location Name</label>
+                            <input type="text" placeholder="Sunset Beach Resort" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="location" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Address</label>
+                            <textarea placeholder="123 Main Street..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Google Maps Link</label>
+                            <input type="url" placeholder="https://maps.google.com/..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="mapLink" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parking Instructions</label>
+                            <textarea placeholder="Free parking available..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="parking" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-6">
+                                <div class="text-5xl mb-4">🗺️</div>
+                                <h2 class="text-2xl font-bold">Getting There</h2>
+                            </div>
+                            ${data.location ? `<div class="text-lg font-semibold mb-2">${data.location}</div>` : ''}
+                            ${data.address ? `<div class="text-gray-600 mb-4">${data.address}</div>` : ''}
+                            ${data.mapLink ? `<a href="${data.mapLink}" target="_blank" class="inline-block bg-pink-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-pink-700 transition mb-4">Open in Maps 📍</a>` : ''}
+                            ${data.parking ? `<div class="mt-4 p-4 bg-gray-50 rounded-lg"><div class="text-sm font-medium mb-1">🅿️ Parking</div><div class="text-sm text-gray-600">${data.parking}</div></div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            food: {
+                name: '🍰 Food & Drinks',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Menu" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Food Description</label>
+                            <textarea placeholder="Delicious buffet, appetizers, main course..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="foodDetails" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Drinks Description</label>
+                            <textarea placeholder="Open bar, soft drinks, cocktails..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="drinkDetails" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dietary Options</label>
+                            <input type="text" placeholder="Vegetarian, vegan, gluten-free available" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="dietary" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-4">🍰</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Food & Drinks'}</h2>
+                            </div>
+                            <div class="space-y-4">
+                                ${data.foodDetails ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold mb-2">🍽️ Food</div>
+                                    <p class="text-sm text-gray-600">${data.foodDetails}</p>
+                                </div>` : ''}
+                                ${data.drinkDetails ? `
+                                <div class="p-4 bg-white rounded-lg">
+                                    <div class="font-semibold mb-2">🥂 Drinks</div>
+                                    <p class="text-sm text-gray-600">${data.drinkDetails}</p>
+                                </div>` : ''}
+                                ${data.dietary ? `
+                                <div class="text-center text-sm text-gray-600 pt-4">
+                                    <span class="font-medium">Dietary Options:</span> ${data.dietary}
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            activities: {
+                name: '🎮 Games & Activities',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Fun & Games" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Activity 1</label>
+                            <input type="text" placeholder="Photo Booth" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="activity1" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Activity 2</label>
+                            <input type="text" placeholder="Karaoke" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="activity2" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Activity 3</label>
+                            <input type="text" placeholder="Dance Floor" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="activity3" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Info</label>
+                            <textarea placeholder="Special games, entertainment details..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="details" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-5xl mb-4">🎮</div>
+                            <h2 class="text-2xl font-bold mb-8">${data.title || 'Games & Activities'}</h2>
+                            <div class="grid grid-cols-1 gap-3">
+                                ${data.activity1 ? `<div class="p-4 bg-pink-50 rounded-lg font-medium">🎯 ${data.activity1}</div>` : ''}
+                                ${data.activity2 ? `<div class="p-4 bg-pink-50 rounded-lg font-medium">🎤 ${data.activity2}</div>` : ''}
+                                ${data.activity3 ? `<div class="p-4 bg-pink-50 rounded-lg font-medium">💃 ${data.activity3}</div>` : ''}
+                            </div>
+                            ${data.details ? `<p class="text-gray-600 text-sm mt-6">${data.details}</p>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            contact: {
+                name: '📞 Contact Info',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contact Person</label>
+                            <input type="text" placeholder="John Doe" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="name" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" placeholder="+1 (555) 123-4567" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="phone" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" placeholder="contact@email.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="email" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Message</label>
+                            <textarea placeholder="Feel free to reach out with any questions..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-5xl mb-4">📞</div>
+                            <h2 class="text-2xl font-bold mb-6">Questions?</h2>
+                            ${data.name ? `<div class="font-semibold text-lg mb-4">${data.name}</div>` : ''}
+                            <div class="space-y-3">
+                                ${data.phone ? `
+                                <a href="tel:${data.phone}" class="flex items-center justify-center gap-3 p-3 bg-pink-50 rounded-lg hover:bg-pink-100 transition">
+                                    <span>📱</span>
+                                    <span class="font-medium">${data.phone}</span>
+                                </a>` : ''}
+                                ${data.email ? `
+                                <a href="mailto:${data.email}" class="flex items-center justify-center gap-3 p-3 bg-pink-50 rounded-lg hover:bg-pink-100 transition">
+                                    <span>✉️</span>
+                                    <span class="font-medium">${data.email}</span>
+                                </a>` : ''}
+                            </div>
+                            ${data.message ? `<p class="text-gray-600 text-sm mt-6">${data.message}</p>` : ''}
                         </div>
                     </div>
                 `
