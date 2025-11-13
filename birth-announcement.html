@@ -7,77 +7,80 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
                     <div>
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">InviteGen</h1>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-teal-400 to-teal-600 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
                         <p class="text-xs text-gray-500">Birth Announcement</p>
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <button onclick="alert('Preview')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">👁️ Preview</button>
-                    <button onclick="alert('QR Code')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">📱 QR Code</button>
-                    <button onclick="alert('Published!')" class="px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">🚀 Publish</button>
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-teal-400 to-teal-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Main Container -->
     <div class="flex h-[calc(100vh-73px)]">
-        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto p-6">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">Create Birth Announcement</h2>
-            <p class="text-sm text-gray-600 mb-6">Share your bundle of joy</p>
-            <div class="space-y-4 mb-6">
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">👶 Baby Info</h3>
-                    <div class="space-y-3">
-                        <input type="text" placeholder="Baby's Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="date" placeholder="Birth Date" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="text" placeholder="Weight" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="text" placeholder="Length" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    </div>
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Design Birth Announcement</h2>
+                    <p class="text-sm text-gray-600 mt-1">Share your bundle of joy</p>
                 </div>
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">👨‍👩‍👦 Parents</h3>
-                    <div class="space-y-3">
-                        <input type="text" placeholder="Parent Names" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    </div>
+
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
                 </div>
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">📸 Baby Photo</h3>
-                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                        <div class="text-3xl mb-2">📸</div>
-                        <div class="text-sm text-gray-600">Upload baby photo</div>
-                    </div>
-                </div>
+
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-teal-600 font-semibold hover:border-teal-400 hover:bg-teal-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
             </div>
         </div>
+
+        <!-- Right Panel - Preview -->
         <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
             <div class="h-fit">
-                <h3 class="text-lg font-semibold text-gray-700 mb-6 text-center">Live Preview</h3>
-                <div class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
-                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto">
-                        <div class="bg-gradient-to-br from-teal-400 to-cyan-500 text-white text-center py-12 px-6">
-                            <div class="w-32 h-32 bg-white bg-opacity-20 rounded-full mx-auto mb-4"></div>
-                            <h1 class="text-3xl font-bold mb-2">Welcome</h1>
-                            <p class="text-2xl font-bold">Baby Emma</p>
-                        </div>
-                        <div class="p-6 space-y-3 text-center">
-                            <div class="p-4 bg-teal-50 rounded-lg">
-                                <div class="text-xs text-gray-500 mb-1">Born</div>
-                                <div class="font-bold">January 1, 2026</div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="p-3 bg-teal-50 rounded-lg">
-                                    <div class="text-xs text-gray-500 mb-1">Weight</div>
-                                    <div class="font-medium">7 lbs</div>
-                                </div>
-                                <div class="p-3 bg-teal-50 rounded-lg">
-                                    <div class="text-xs text-gray-500 mb-1">Length</div>
-                                    <div class="font-medium">20 in</div>
-                                </div>
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">👶</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your birth announcement</p>
                             </div>
                         </div>
                     </div>
@@ -85,5 +88,639 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">👶</div>
+                    <div class="font-semibold text-sm">Hero Header</div>
+                </button>
+                <button onclick="addSection('stats')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">📊</div>
+                    <div class="font-semibold text-sm">Baby Stats</div>
+                </button>
+                <button onclick="addSection('parents')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">👨‍👩‍👦</div>
+                    <div class="font-semibold text-sm">Parents Info</div>
+                </button>
+                <button onclick="addSection('story')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">📖</div>
+                    <div class="font-semibold text-sm">Birth Story</div>
+                </button>
+                <button onclick="addSection('message')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">💌</div>
+                    <div class="font-semibold text-sm">Family Message</div>
+                </button>
+                <button onclick="addSection('visiting')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">🏥</div>
+                    <div class="font-semibold text-sm">Visiting Hours</div>
+                </button>
+                <button onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">🙏</div>
+                    <div class="font-semibold text-sm">Thank You</div>
+                </button>
+                <button onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">📸</div>
+                    <div class="font-semibold text-sm">Photo Gallery</div>
+                </button>
+                <button onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                    <div class="text-4xl mb-2">📞</div>
+                    <div class="font-semibold text-sm">Contact</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/birth123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-teal-500 text-white py-3 rounded-lg font-semibold hover:bg-teal-600 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+
+        const sectionTemplates = {
+            hero: {
+                name: '👶 Hero Header',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Baby's Name</label>
+                            <input type="text" placeholder="Emma Rose" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent section-data" data-field="name" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Announcement Title</label>
+                            <input type="text" placeholder="Welcome to the World" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Baby Photo</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                                <div class="text-3xl mb-2">📸</div>
+                                <div class="text-sm text-gray-600">Click to upload</div>
+                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="text-center py-16 px-6" style="background: ${style.bg || '#14b8a6'}; color: ${style.text || '#ffffff'}">
+                        ${data.image ? `<img src="${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">` : '<div class="text-6xl mb-4">👶</div>'}
+                        <h1 class="text-3xl font-bold mb-2">${data.title || 'Welcome to the World'}</h1>
+                        <p class="text-2xl">${data.name || "Baby's Name"}</p>
+                    </div>
+                `
+            },
+            stats: {
+                name: '📊 Baby Stats',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Birth Date</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="date" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Birth Time</label>
+                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="time" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Weight</label>
+                            <input type="text" placeholder="7 lbs 8 oz" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="weight" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Length</label>
+                            <input type="text" placeholder="20 inches" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="length" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold mb-6 text-center">Baby's First Stats</h2>
+                            <div class="space-y-3">
+                                ${data.date ? `
+                                <div class="p-4 bg-teal-50 rounded-lg">
+                                    <div class="text-xs text-gray-500 mb-1">Born</div>
+                                    <div class="font-bold">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                                </div>` : ''}
+                                ${data.time ? `
+                                <div class="p-4 bg-teal-50 rounded-lg">
+                                    <div class="text-xs text-gray-500 mb-1">Time</div>
+                                    <div class="font-bold">${data.time}</div>
+                                </div>` : ''}
+                                <div class="grid grid-cols-2 gap-3">
+                                    ${data.weight ? `
+                                    <div class="p-4 bg-teal-50 rounded-lg">
+                                        <div class="text-xs text-gray-500 mb-1">Weight</div>
+                                        <div class="font-medium">${data.weight}</div>
+                                    </div>` : ''}
+                                    ${data.length ? `
+                                    <div class="p-4 bg-teal-50 rounded-lg">
+                                        <div class="text-xs text-gray-500 mb-1">Length</div>
+                                        <div class="font-medium">${data.length}</div>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            parents: {
+                name: '👨‍👩‍👦 Parents Info',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mother's Name</label>
+                            <input type="text" placeholder="Sarah Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="mother" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Father's Name</label>
+                            <input type="text" placeholder="Michael Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="father" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Siblings (if any)</label>
+                            <input type="text" placeholder="Big brother Jake" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="siblings" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#f0fdfa'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Proud Parents</h2>
+                        <div class="max-w-md mx-auto text-center space-y-4">
+                            ${data.mother || data.father ? `
+                            <div class="p-4 bg-white rounded-lg">
+                                <div class="text-3xl mb-2">👨‍👩‍👦</div>
+                                ${data.mother ? `<div class="font-medium mb-1">${data.mother}</div>` : ''}
+                                ${data.father ? `<div class="font-medium mb-1">${data.father}</div>` : ''}
+                            </div>` : ''}
+                            ${data.siblings ? `
+                            <div class="p-4 bg-white rounded-lg">
+                                <div class="text-xs text-gray-500 mb-1">Siblings</div>
+                                <div class="font-medium">${data.siblings}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            story: {
+                name: '📖 Birth Story',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Story Title</label>
+                            <input type="text" placeholder="Our Birth Story" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Birth Story</label>
+                            <textarea placeholder="Share your special birth story..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="story" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center text-4xl mb-4">📖</div>
+                            <h2 class="text-2xl font-bold mb-6 text-center">${data.title || 'Our Birth Story'}</h2>
+                            <div class="p-6 bg-teal-50 rounded-lg">
+                                <p class="text-gray-700 leading-relaxed">${data.story || 'Share your special birth story here...'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            message: {
+                name: '💌 Family Message',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message Title</label>
+                            <input type="text" placeholder="A Message from Our Hearts" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Share your feelings and gratitude..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#f0fdfa'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">💌</div>
+                            <h2 class="text-2xl font-bold mb-6">${data.title || 'A Message from Our Hearts'}</h2>
+                            <p class="text-gray-700 leading-relaxed">${data.message || 'We are overjoyed to welcome our little one into the world and grateful for all the love and support.'}</p>
+                        </div>
+                    </div>
+                `
+            },
+            visiting: {
+                name: '🏥 Visiting Hours',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                            <input type="text" placeholder="Hospital/Home" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="location" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Visiting Hours</label>
+                            <textarea placeholder="Daily 2PM - 6PM" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="hours" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Special Instructions</label>
+                            <textarea placeholder="Please call ahead..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="instructions" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Visiting Information</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${data.location ? `
+                            <div class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+                                <div class="text-2xl">🏥</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Location</div>
+                                    <div class="font-medium">${data.location}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.hours ? `
+                            <div class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+                                <div class="text-2xl">🕐</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Hours</div>
+                                    <div class="text-sm">${data.hours}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.instructions ? `
+                            <div class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
+                                <div class="text-2xl">ℹ️</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Instructions</div>
+                                    <div class="text-sm">${data.instructions}</div>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `
+            },
+            thankyou: {
+                name: '🙏 Thank You',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Title</label>
+                            <input type="text" placeholder="Thank You" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Message</label>
+                            <textarea placeholder="Thank you for all the love and support..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#f0fdfa'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">🙏</div>
+                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Thank You'}</h2>
+                            <p class="text-gray-700 leading-relaxed">${data.message || 'Thank you for celebrating this special moment with us and for all your love and support.'}</p>
+                        </div>
+                    </div>
+                `
+            },
+            gallery: {
+                name: '📸 Photo Gallery',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Title</label>
+                            <input type="text" placeholder="More Photos" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Description</label>
+                            <textarea placeholder="Check out more photos of our little one..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'More Photos'}</h2>
+                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                        <div class="max-w-md mx-auto grid grid-cols-3 gap-3">
+                            <div class="aspect-square bg-teal-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
+                            <div class="aspect-square bg-teal-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
+                            <div class="aspect-square bg-teal-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
+                        </div>
+                    </div>
+                `
+            },
+            contact: {
+                name: '📞 Contact',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contact Person</label>
+                            <input type="text" placeholder="Sarah Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="person" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" placeholder="contact@email.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="email" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                            <input type="tel" placeholder="+1 (555) 123-4567" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="phone" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => `
+                    <div class="py-12 px-6" style="background: ${style.bg || '#f0fdfa'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Get in Touch</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${data.person ? `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">👤</div>
+                                <div class="font-medium">${data.person}</div>
+                            </div>` : ''}
+                            ${data.email ? `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📧</div>
+                                <div class="text-sm">${data.email}</div>
+                            </div>` : ''}
+                            ${data.phone ? `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📞</div>
+                                <div class="text-sm">${data.phone}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function openSectionModal() {
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = `section-${sectionCounter++}`;
+
+            const sectionHTML = `
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item" data-id="${id}" data-type="${type}">
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="cursor-move text-gray-400">⋮⋮</span>
+                            <span class="font-semibold text-sm">${template.name}</span>
+                        </div>
+                        <button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        ${template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        ${template.style}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            closeSectionModal();
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            if (confirm('Remove this section?')) {
+                document.querySelector(`[data-id="${id}"]`).remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-teal-600', 'border-b-2', 'border-teal-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-teal-600', 'border-b-2', 'border-teal-600');
+            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+
+            if (sections.length === 0) {
+                html = `
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">👶</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your birth announcement</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style);
+                });
+            }
+
+            document.getElementById('previewContent').innerHTML = html;
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-teal-500', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-teal-500', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your birth announcement?')) {
+                alert('✅ Published successfully!\n\nYour birth announcement is now live!');
+            }
+        }
+
+        // Close modals on outside click
+        document.getElementById('sectionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'sectionModal') closeSectionModal();
+        });
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeQRModal();
+        });
+    </script>
 </body>
 </html>
