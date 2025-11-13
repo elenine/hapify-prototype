@@ -89,7 +89,7 @@
         </div>
     </div>
 
-        <!-- Add Section Modal -->
+                <!-- Add Section Modal -->
     <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             <!-- Header -->
@@ -100,24 +100,18 @@
 
             <!-- Tab Navigation -->
             <div class="border-b flex bg-gray-50">
-                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'basic')">
-                    📝 Basic
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'most-used')">
+                    ⭐ Most Used
                 </button>
-                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'content')">
-                    ✍️ Content
-                </button>
-                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'media')">
-                    🖼️ Media
-                </button>
-                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'interactive')">
-                    🎯 Interactive
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'more')">
+                    ➕ More Sections
                 </button>
             </div>
 
             <!-- Tab Content Container -->
             <div class="overflow-y-auto flex-1">
-                <!-- Basic Tab -->
-                <div class="modal-tab-content p-6" data-modal-tab="basic">
+                <!-- Most Used Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="most-used">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
                             <div class="text-4xl mb-2">🍼</div>
@@ -127,16 +121,24 @@
                             <div class="text-4xl mb-2">👶</div>
                             <div class="font-semibold text-sm">Baby Details</div>
                         </button>
-                        <button data-section-type="showerinfo" onclick="addSection('showerinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🎉</div>
-                            <div class="font-semibold text-sm">Shower Info</div>
+                        <button data-section-type="rsvp" onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">✉️</div>
+                            <div class="font-semibold text-sm">RSVP</div>
                         </button>
                     </div>
                 </div>
 
-                <!-- Content Tab -->
-                <div class="modal-tab-content p-6 hidden" data-modal-tab="content">
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="showerinfo" onclick="addSection('showerinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <div class="font-semibold text-sm">Shower Info</div>
+                        </button>
+                        <button data-section-type="wishes" onclick="addSection('wishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💝</div>
+                            <div class="font-semibold text-sm">Wishes</div>
+                        </button>
                         <button data-section-type="games" onclick="addSection('games')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
                             <div class="text-4xl mb-2">🎮</div>
                             <div class="font-semibold text-sm">Games</div>
@@ -149,29 +151,9 @@
                             <div class="text-4xl mb-2">📍</div>
                             <div class="font-semibold text-sm">Directions</div>
                         </button>
-                        <button data-section-type="wishes" onclick="addSection('wishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">💝</div>
-                            <div class="font-semibold text-sm">Wishes</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Media Tab -->
-                <div class="modal-tab-content p-6 hidden" data-modal-tab="media">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    </div>
-                </div>
-
-                <!-- Interactive Tab -->
-                <div class="modal-tab-content p-6 hidden" data-modal-tab="interactive">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button data-section-type="registry" onclick="addSection('registry')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
                             <div class="text-4xl mb-2">🎁</div>
                             <div class="font-semibold text-sm">Registry</div>
-                        </button>
-                        <button data-section-type="rsvp" onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">✉️</div>
-                            <div class="font-semibold text-sm">RSVP</div>
                         </button>
                     </div>
                 </div>
