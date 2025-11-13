@@ -97,39 +97,39 @@
                 <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
             <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="hero" onclick="addSection(\'hero\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">💼</div>
                     <div class="font-semibold text-sm">Hero Banner</div>
                 </button>
-                <button onclick="addSection('about')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="about" onclick="addSection(\'about\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">ℹ️</div>
                     <div class="font-semibold text-sm">About Us</div>
                 </button>
-                <button onclick="addSection('services')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="services" onclick="addSection(\'services\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">⚙️</div>
                     <div class="font-semibold text-sm">Services</div>
                 </button>
-                <button onclick="addSection('portfolio')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="portfolio" onclick="addSection(\'portfolio\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">📁</div>
                     <div class="font-semibold text-sm">Portfolio</div>
                 </button>
-                <button onclick="addSection('team')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="team" onclick="addSection(\'team\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">👥</div>
                     <div class="font-semibold text-sm">Team</div>
                 </button>
-                <button onclick="addSection('testimonials')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="testimonials" onclick="addSection(\'testimonials\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">💬</div>
                     <div class="font-semibold text-sm">Testimonials</div>
                 </button>
-                <button onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="contact" onclick="addSection(\'contact\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">📞</div>
                     <div class="font-semibold text-sm">Contact</div>
                 </button>
-                <button onclick="addSection('social')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="social" onclick="addSection(\'social\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">🔗</div>
                     <div class="font-semibold text-sm">Social Media</div>
                 </button>
-                <button onclick="addSection('cta')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                <button data-section-type="cta" onclick="addSection(\'cta\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                     <div class="text-4xl mb-2">🎯</div>
                     <div class="font-semibold text-sm">Call to Action</div>
                 </button>
@@ -167,6 +167,7 @@
         const sectionTemplates = {
             layout: {
                 name: '🎨 Page Layout',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div class="text-sm text-gray-600">
@@ -233,6 +234,7 @@
             },
             hero: {
                 name: '💼 Hero Banner',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -275,6 +277,7 @@
             },
             about: {
                 name: 'ℹ️ About Us',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -306,6 +309,7 @@
             },
             services: {
                 name: '⚙️ Services',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -346,6 +350,7 @@
             },
             portfolio: {
                 name: '📁 Portfolio',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -381,6 +386,7 @@
             },
             team: {
                 name: '👥 Team',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -425,6 +431,7 @@
             },
             testimonials: {
                 name: '💬 Testimonials',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -464,6 +471,7 @@
             },
             contact: {
                 name: '📞 Contact',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -526,6 +534,7 @@
             },
             social: {
                 name: '🔗 Social Media',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -570,6 +579,7 @@
             },
             cta: {
                 name: '🎯 Call to Action',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -613,7 +623,53 @@
         };
 
         function openSectionModal() {
+            updateSectionAvailability();
             document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            // Get all currently added sections
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            // Update each section button in the modal
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+
+                if (isAdded && !allowMultiple) {
+                    // Disable button
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Add "Added" badge
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    // Enable button
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Remove "Added" badge if it exists
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
         }
 
         function closeSectionModal() {

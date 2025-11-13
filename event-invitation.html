@@ -97,39 +97,39 @@
                 <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
             <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="hero" onclick="addSection(\'hero\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">🎉</div>
                     <div class="font-semibold text-sm">Hero Header</div>
                 </button>
-                <button onclick="addSection('details')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="details" onclick="addSection(\'details\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">📋</div>
                     <div class="font-semibold text-sm">Event Details</div>
                 </button>
-                <button onclick="addSection('schedule')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="schedule" onclick="addSection(\'schedule\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">⏰</div>
                     <div class="font-semibold text-sm">Schedule</div>
                 </button>
-                <button onclick="addSection('speakers')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="speakers" onclick="addSection(\'speakers\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">🎤</div>
                     <div class="font-semibold text-sm">Speakers</div>
                 </button>
-                <button onclick="addSection('location')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="location" onclick="addSection(\'location\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">📍</div>
                     <div class="font-semibold text-sm">Location</div>
                 </button>
-                <button onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="rsvp" onclick="addSection(\'rsvp\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">✉️</div>
                     <div class="font-semibold text-sm">RSVP</div>
                 </button>
-                <button onclick="addSection('agenda')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="agenda" onclick="addSection(\'agenda\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">📝</div>
                     <div class="font-semibold text-sm">Agenda</div>
                 </button>
-                <button onclick="addSection('sponsors')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="sponsors" onclick="addSection(\'sponsors\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">🤝</div>
                     <div class="font-semibold text-sm">Sponsors</div>
                 </button>
-                <button onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
+                <button data-section-type="contact" onclick="addSection(\'contact\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-green-500 hover:bg-green-50 transition text-center">
                     <div class="text-4xl mb-2">📞</div>
                     <div class="font-semibold text-sm">Contact Info</div>
                 </button>
@@ -167,6 +167,7 @@
         const sectionTemplates = {
             layout: {
                 name: '🎨 Page Layout',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div class="text-sm text-gray-600">
@@ -233,6 +234,7 @@
             },
             hero: {
                 name: '🎉 Hero Header',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -275,6 +277,7 @@
             },
             details: {
                 name: '📋 Event Details',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -343,6 +346,7 @@
             },
             schedule: {
                 name: '⏰ Schedule',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -379,6 +383,7 @@
             },
             speakers: {
                 name: '🎤 Speakers',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -417,6 +422,7 @@
             },
             location: {
                 name: '📍 Location',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -475,6 +481,7 @@
             },
             rsvp: {
                 name: '✉️ RSVP',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -514,6 +521,7 @@
             },
             agenda: {
                 name: '📝 Agenda',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -550,6 +558,7 @@
             },
             sponsors: {
                 name: '🤝 Sponsors',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -583,6 +592,7 @@
             },
             contact: {
                 name: '📞 Contact Info',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -633,7 +643,53 @@
         };
 
         function openSectionModal() {
+            updateSectionAvailability();
             document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            // Get all currently added sections
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            // Update each section button in the modal
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+
+                if (isAdded && !allowMultiple) {
+                    // Disable button
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Add "Added" badge
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    // Enable button
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Remove "Added" badge if it exists
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
         }
 
         function closeSectionModal() {

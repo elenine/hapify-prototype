@@ -97,39 +97,39 @@
                 <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
             <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="hero" onclick="addSection(\'hero\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">❤️</div>
                     <div class="font-semibold text-sm">Hero Header</div>
                 </button>
-                <button onclick="addSection('milestone')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="milestone" onclick="addSection(\'milestone\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">🎊</div>
                     <div class="font-semibold text-sm">Milestone Info</div>
                 </button>
-                <button onclick="addSection('journey')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="journey" onclick="addSection(\'journey\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">🛤️</div>
                     <div class="font-semibold text-sm">Journey Together</div>
                 </button>
-                <button onclick="addSection('lovestory')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="lovestory" onclick="addSection(\'lovestory\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">💕</div>
                     <div class="font-semibold text-sm">Love Story</div>
                 </button>
-                <button onclick="addSection('celebration')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="celebration" onclick="addSection(\'celebration\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">🎉</div>
                     <div class="font-semibold text-sm">Celebration Details</div>
                 </button>
-                <button onclick="addSection('vowrenewal')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="vowrenewal" onclick="addSection(\'vowrenewal\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">💍</div>
                     <div class="font-semibold text-sm">Vow Renewal</div>
                 </button>
-                <button onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="rsvp" onclick="addSection(\'rsvp\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">✉️</div>
                     <div class="font-semibold text-sm">RSVP</div>
                 </button>
-                <button onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="gallery" onclick="addSection(\'gallery\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">📸</div>
                     <div class="font-semibold text-sm">Memory Gallery</div>
                 </button>
-                <button onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
+                <button data-section-type="thankyou" onclick="addSection(\'thankyou\')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-red-500 hover:bg-red-50 transition text-center">
                     <div class="text-4xl mb-2">🙏</div>
                     <div class="font-semibold text-sm">Thank You</div>
                 </button>
@@ -167,6 +167,7 @@
         const sectionTemplates = {
             layout: {
                 name: '🎨 Page Layout',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div class="text-sm text-gray-600">
@@ -233,6 +234,7 @@
             },
             hero: {
                 name: '❤️ Hero Header',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -275,6 +277,7 @@
             },
             milestone: {
                 name: '🎊 Milestone Info',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -315,6 +318,7 @@
             },
             journey: {
                 name: '🛤️ Journey Together',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -351,6 +355,7 @@
             },
             lovestory: {
                 name: '💕 Love Story',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -387,6 +392,7 @@
             },
             celebration: {
                 name: '🎉 Celebration Details',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -457,6 +463,7 @@
             },
             vowrenewal: {
                 name: '💍 Vow Renewal',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -494,6 +501,7 @@
             },
             rsvp: {
                 name: '✉️ RSVP',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -533,6 +541,7 @@
             },
             gallery: {
                 name: '📸 Memory Gallery',
+                allowMultiple: true,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -585,6 +594,7 @@
             },
             thankyou: {
                 name: '🙏 Thank You',
+                allowMultiple: false,
                 info: `
                     <div class="space-y-4">
                         <div>
@@ -619,7 +629,53 @@
         };
 
         function openSectionModal() {
+            updateSectionAvailability();
             document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            // Get all currently added sections
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            // Update each section button in the modal
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+
+                if (isAdded && !allowMultiple) {
+                    // Disable button
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Add "Added" badge
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    // Enable button
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Remove "Added" badge if it exists
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
         }
 
         function closeSectionModal() {
