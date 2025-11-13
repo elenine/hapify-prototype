@@ -64,5 +64,27 @@ window.dynamicItemTemplates = {
             <input type='text' placeholder='Value (e.g. 500+)' class='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='stat-value-${id}' oninput='updatePreview()'>
             <input type='text' placeholder='Label (e.g. Projects)' class='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='stat-label-${id}' oninput='updatePreview()'>
         </div>
+    `,
+    timeline: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Milestone ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Date (e.g. June 2020)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='date' oninput='updatePreview()'>
+            <input type='text' placeholder='Milestone Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='title' oninput='updatePreview()'>
+            <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='description' oninput='updatePreview()'></textarea>
+        </div>
+    `,
+    moments: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Moment ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Emoji (e.g. ✨)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='emoji' oninput='updatePreview()'>
+            <input type='text' placeholder='Moment Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='title' oninput='updatePreview()'>
+            <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='description' oninput='updatePreview()'></textarea>
+        </div>
     `
 };
