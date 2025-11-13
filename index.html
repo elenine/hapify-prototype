@@ -13,6 +13,55 @@
         .float-animation {
             animation: float 3s ease-in-out infinite;
         }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        .template-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .template-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .template-card:focus-within {
+            outline: 3px solid #9333ea;
+            outline-offset: 2px;
+        }
+        #mobileMenu {
+            transition: transform 0.3s ease-in-out;
+        }
+        .search-highlight {
+            background-color: #fef3c7;
+            border: 2px solid #f59e0b;
+        }
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #9333ea, #ec4899);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #7e22ce, #db2777);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 min-h-screen">
@@ -21,41 +70,87 @@
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
-                    <div class="text-3xl">🎨</div>
+                    <div class="text-3xl" role="img" aria-label="InviteGen logo">🎨</div>
                     <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                         InviteGen
                     </h1>
                 </div>
-                <nav class="hidden md:flex space-x-6">
-                    <a href="#features" class="text-gray-600 hover:text-purple-600 transition">Features</a>
-                    <a href="#templates" class="text-gray-600 hover:text-purple-600 transition">Templates</a>
-                    <a href="#about" class="text-gray-600 hover:text-purple-600 transition">About</a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6" aria-label="Main navigation">
+                    <a href="#features" class="text-gray-600 hover:text-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-500 rounded px-2 py-1">Features</a>
+                    <a href="#templates" class="text-gray-600 hover:text-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-500 rounded px-2 py-1">Templates</a>
+                    <a href="#testimonials" class="text-gray-600 hover:text-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-500 rounded px-2 py-1">Reviews</a>
+                    <a href="#about" class="text-gray-600 hover:text-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-500 rounded px-2 py-1">About</a>
                 </nav>
+
+                <!-- Mobile Menu Button -->
+                <button
+                    id="mobileMenuBtn"
+                    class="md:hidden p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                    aria-label="Toggle mobile menu"
+                    aria-expanded="false"
+                    aria-controls="mobileMenu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path id="closeIcon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
             </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 slide-in">
+            <nav class="container mx-auto px-4 py-4 flex flex-col space-y-3" aria-label="Mobile navigation">
+                <a href="#features" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition px-4 py-3 rounded-lg text-center font-medium">Features</a>
+                <a href="#templates" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition px-4 py-3 rounded-lg text-center font-medium">Templates</a>
+                <a href="#testimonials" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition px-4 py-3 rounded-lg text-center font-medium">Reviews</a>
+                <a href="#about" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition px-4 py-3 rounded-lg text-center font-medium">About</a>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="container mx-auto px-4 py-16 md:py-24">
-        <div class="text-center max-w-4xl mx-auto">
-            <div class="text-6xl mb-6 float-animation">📱</div>
-            <h2 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+    <section class="container mx-auto px-4 py-12 md:py-24" role="banner">
+        <div class="text-center max-w-4xl mx-auto fade-in">
+            <div class="text-6xl md:text-7xl mb-6 float-animation" role="img" aria-label="Mobile device">📱</div>
+            <h2 class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Create Stunning Greeting Cards & Invitations
                 <span class="block mt-2 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
                     In Minutes
                 </span>
             </h2>
-            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
                 Design beautiful greeting cards to send directly, or create event invitations with QR codes.
                 No design skills required!
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#templates" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#templates"
+                   class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-1 transition focus:outline-none focus:ring-4 focus:ring-purple-300 min-h-[44px] flex items-center justify-center"
+                   aria-label="Get started with InviteGen for free">
                     Get Started Free
                 </a>
-                <a href="#features" class="bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold border-2 border-purple-600 hover:bg-purple-50 transition">
+                <a href="#features"
+                   class="w-full sm:w-auto bg-white text-purple-600 px-8 py-4 rounded-lg font-semibold border-2 border-purple-600 hover:bg-purple-50 transition focus:outline-none focus:ring-4 focus:ring-purple-300 min-h-[44px] flex items-center justify-center"
+                   aria-label="Learn more about InviteGen features">
                     Learn More
                 </a>
+            </div>
+
+            <!-- Trust Indicators -->
+            <div class="mt-12 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-500">
+                <div class="flex items-center gap-2">
+                    <span class="text-yellow-400 text-xl">★★★★★</span>
+                    <span class="font-semibold text-gray-700">4.9/5 Rating</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">✓</span>
+                    <span>100% Free to Use</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">🎨</span>
+                    <span>19+ Templates</span>
+                </div>
             </div>
         </div>
     </section>
@@ -107,19 +202,50 @@
             <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
                 Choose Your Template
             </h3>
-            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
                 Select from our professionally designed templates and customize them to match your needs
             </p>
 
+            <!-- Search and Filter -->
+            <div class="max-w-4xl mx-auto mb-12">
+                <div class="relative mb-6">
+                    <input
+                        type="text"
+                        id="templateSearch"
+                        placeholder="Search templates... (e.g., birthday, wedding, business)"
+                        class="w-full px-6 py-4 pr-12 text-lg border-2 border-gray-200 rounded-xl focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-200 transition"
+                        aria-label="Search templates">
+                    <svg class="absolute right-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+
+                <!-- Category Filter Pills -->
+                <div class="flex flex-wrap justify-center gap-3" role="group" aria-label="Template categories">
+                    <button class="category-filter px-5 py-2 rounded-full bg-purple-600 text-white font-medium hover:bg-purple-700 transition focus:outline-none focus:ring-2 focus:ring-purple-500 active" data-category="all">
+                        All Templates
+                    </button>
+                    <button class="category-filter px-5 py-2 rounded-full bg-white text-gray-700 border-2 border-gray-200 font-medium hover:border-purple-500 hover:text-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-500" data-category="greeting">
+                        Greeting Cards
+                    </button>
+                    <button class="category-filter px-5 py-2 rounded-full bg-white text-gray-700 border-2 border-gray-200 font-medium hover:border-purple-500 hover:text-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-500" data-category="event">
+                        Event Invitations
+                    </button>
+                </div>
+
+                <!-- Results Counter -->
+                <div id="resultsCounter" class="text-center mt-4 text-gray-600 font-medium"></div>
+            </div>
+
             <!-- Sendable Greeting Cards Section -->
-            <div class="mb-16">
+            <div class="mb-16" data-category="greeting">
                 <div class="flex items-center justify-center mb-8">
                     <div class="flex-grow h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
                     <div class="px-6">
                         <h4 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                            <span class="text-3xl">💌</span>
+                            <span class="text-3xl" role="img" aria-label="Letter">💌</span>
                             Sendable Greeting Cards
-                            <span class="text-3xl">💌</span>
+                            <span class="text-3xl" role="img" aria-label="Letter">💌</span>
                         </h4>
                         <p class="text-center text-gray-500 text-sm mt-2">Send personalized messages directly to friends and loved ones</p>
                     </div>
@@ -128,14 +254,24 @@
 
                 <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
                     <!-- Birthday Greetings Card -->
-                    <a href="birthday-greeting-card.html" class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2">
-                        <div class="bg-gradient-to-br from-pink-400 to-rose-500 h-48 flex items-center justify-center">
-                            <div class="text-7xl group-hover:scale-110 transition-transform">🎂</div>
+                    <a href="birthday-greeting-card.html"
+                       class="template-card group bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden focus:outline-none"
+                       data-category="greeting"
+                       data-name="birthday greetings"
+                       aria-label="Create a birthday greeting card">
+                        <div class="bg-gradient-to-br from-pink-400 to-rose-500 h-48 flex items-center justify-center relative overflow-hidden">
+                            <div class="text-7xl group-hover:scale-110 transition-transform duration-300" role="img" aria-hidden="true">🎂</div>
+                            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity"></div>
                         </div>
                         <div class="p-6">
-                            <h4 class="text-xl font-bold mb-2 text-gray-900">Birthday Greetings</h4>
-                            <p class="text-gray-600 text-sm mb-4">Send warm birthday wishes and messages</p>
-                            <span class="text-purple-600 font-semibold text-sm">Create Now →</span>
+                            <h4 class="text-xl font-bold mb-2 text-gray-900 group-hover:text-purple-600 transition">Birthday Greetings</h4>
+                            <p class="text-gray-600 text-sm mb-4 leading-relaxed">Send warm birthday wishes and messages</p>
+                            <span class="text-purple-600 font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                                Create Now
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
                         </div>
                     </a>
 
@@ -202,14 +338,14 @@
             </div>
 
             <!-- Event Invitations & Announcements Section -->
-            <div>
+            <div data-category="event">
                 <div class="flex items-center justify-center mb-8">
                     <div class="flex-grow h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent"></div>
                     <div class="px-6">
                         <h4 class="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                            <span class="text-3xl">📋</span>
+                            <span class="text-3xl" role="img" aria-label="Clipboard">📋</span>
                             Event Invitations & Announcements
-                            <span class="text-3xl">📋</span>
+                            <span class="text-3xl" role="img" aria-label="Clipboard">📋</span>
                         </h4>
                         <p class="text-center text-gray-500 text-sm mt-2">Professional event invitations with QR codes for print and display</p>
                     </div>
@@ -377,6 +513,77 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
+                Loved by Thousands
+            </h3>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                See what our users are saying about InviteGen
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">★★★★★</div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic leading-relaxed">
+                        "InviteGen made creating my wedding invitation so easy! The templates are beautiful and the customization options are perfect."
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            SJ
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">Sarah Johnson</p>
+                            <p class="text-sm text-gray-500">Wedding Planner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">★★★★★</div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic leading-relaxed">
+                        "As a small business owner, the business portfolio template helped me create a professional online presence in minutes!"
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            MC
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">Michael Chen</p>
+                            <p class="text-sm text-gray-500">Entrepreneur</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">★★★★★</div>
+                    </div>
+                    <p class="text-gray-700 mb-4 italic leading-relaxed">
+                        "Perfect for someone like me who has zero design skills. The interface is intuitive and the results look professional!"
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-teal-400 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            EP
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">Emily Parker</p>
+                            <p class="text-sm text-gray-500">Event Organizer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- About Section -->
     <section id="about" class="bg-white py-16">
         <div class="container mx-auto px-4">
@@ -389,42 +596,245 @@
                         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl font-bold text-purple-600">1</span>
                         </div>
-                        <h4 class="font-bold mb-2">Choose Template</h4>
-                        <p class="text-gray-600 text-sm">Select from our beautiful pre-designed templates</p>
+                        <h4 class="font-bold mb-2 text-lg">Choose Template</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">Select from our beautiful pre-designed templates</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl font-bold text-pink-600">2</span>
                         </div>
-                        <h4 class="font-bold mb-2">Customize</h4>
-                        <p class="text-gray-600 text-sm">Add your content and personalize the design</p>
+                        <h4 class="font-bold mb-2 text-lg">Customize</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">Add your content and personalize the design</p>
                     </div>
                     <div class="text-center">
                         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-2xl font-bold text-blue-600">3</span>
                         </div>
-                        <h4 class="font-bold mb-2">Share</h4>
-                        <p class="text-gray-600 text-sm">Generate QR code and share with guests</p>
+                        <h4 class="font-bold mb-2 text-lg">Share</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">Generate QR code and share with guests</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Scroll to Top Button -->
+    <button
+        id="scrollToTop"
+        class="fixed bottom-8 right-8 bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 opacity-0 pointer-events-none z-50 focus:outline-none focus:ring-4 focus:ring-purple-300"
+        aria-label="Scroll to top">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="text-center">
                 <div class="flex items-center justify-center space-x-3 mb-4">
-                    <div class="text-3xl">🎨</div>
+                    <div class="text-3xl" role="img" aria-label="InviteGen logo">🎨</div>
                     <h1 class="text-2xl font-bold">InviteGen</h1>
                 </div>
                 <p class="text-gray-400 mb-6">Create beautiful greeting cards and digital invitations in minutes</p>
+                <div class="flex justify-center gap-6 mb-6">
+                    <a href="#features" class="text-gray-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-white rounded">Features</a>
+                    <a href="#templates" class="text-gray-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-white rounded">Templates</a>
+                    <a href="#testimonials" class="text-gray-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-white rounded">Reviews</a>
+                    <a href="#about" class="text-gray-400 hover:text-white transition focus:outline-none focus:ring-2 focus:ring-white rounded">About</a>
+                </div>
                 <div class="text-sm text-gray-500">
                     © 2025 InviteGen. All rights reserved.
                 </div>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+
+            if (isOpen) {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Search and Filter Functionality
+        const searchInput = document.getElementById('templateSearch');
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        const templateCards = document.querySelectorAll('.template-card');
+        const greetingSection = document.querySelector('[data-category="greeting"]');
+        const eventSection = document.querySelector('[data-category="event"]');
+        const resultsCounter = document.getElementById('resultsCounter');
+
+        let currentCategory = 'all';
+        let currentSearchTerm = '';
+
+        function filterTemplates() {
+            let visibleCount = 0;
+            let greetingVisible = false;
+            let eventVisible = false;
+
+            templateCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                const cardName = card.getAttribute('data-name').toLowerCase();
+
+                const matchesCategory = currentCategory === 'all' || cardCategory === currentCategory;
+                const matchesSearch = currentSearchTerm === '' || cardName.includes(currentSearchTerm.toLowerCase());
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = '';
+                    card.classList.remove('search-highlight');
+                    visibleCount++;
+
+                    if (cardCategory === 'greeting') greetingVisible = true;
+                    if (cardCategory === 'event') eventVisible = true;
+
+                    if (currentSearchTerm !== '') {
+                        card.classList.add('search-highlight');
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide section headers
+            if (greetingSection) {
+                greetingSection.style.display = greetingVisible ? '' : 'none';
+            }
+            if (eventSection) {
+                eventSection.style.display = eventVisible ? '' : 'none';
+            }
+
+            // Update results counter
+            if (currentSearchTerm !== '' || currentCategory !== 'all') {
+                resultsCounter.textContent = `Showing ${visibleCount} template${visibleCount !== 1 ? 's' : ''}`;
+            } else {
+                resultsCounter.textContent = '';
+            }
+        }
+
+        // Search input handler
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value;
+            filterTemplates();
+        });
+
+        // Category filter handlers
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', (e) => {
+                // Update active state
+                categoryFilters.forEach(f => {
+                    f.classList.remove('bg-purple-600', 'text-white', 'active');
+                    f.classList.add('bg-white', 'text-gray-700', 'border-2', 'border-gray-200');
+                });
+
+                e.target.classList.remove('bg-white', 'text-gray-700', 'border-2', 'border-gray-200');
+                e.target.classList.add('bg-purple-600', 'text-white', 'active');
+
+                currentCategory = e.target.getAttribute('data-category');
+                filterTemplates();
+            });
+        });
+
+        // Scroll to Top Button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Keyboard accessibility for scroll to top
+        scrollToTopBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Add data attributes to all template cards for filtering (for remaining cards)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add greeting category to greeting cards that don't have template-card class
+            const greetingCards = greetingSection?.querySelectorAll('a:not(.template-card)');
+            greetingCards?.forEach(card => {
+                card.classList.add('template-card');
+                card.setAttribute('data-category', 'greeting');
+                const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
+                card.setAttribute('data-name', title);
+            });
+
+            // Add event category to event cards
+            const eventCards = eventSection?.querySelectorAll('a:not(.template-card)');
+            eventCards?.forEach(card => {
+                card.classList.add('template-card');
+                card.setAttribute('data-category', 'event');
+                const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
+                card.setAttribute('data-name', title);
+            });
+
+            // Initial count
+            filterTemplates();
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for animation
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
