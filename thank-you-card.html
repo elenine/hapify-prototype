@@ -7,103 +7,778 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
+                        <p class="text-xs text-gray-500">Thank You Card</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 Share
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        ✓ Complete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!--
-    ============================================
-    THANK YOU CARD TEMPLATE
-    ============================================
+    <!-- Main Container -->
+    <div class="flex h-[calc(100vh-73px)]">
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Create Thank You Card</h2>
+                    <p class="text-sm text-gray-600 mt-1">Express your gratitude and appreciation</p>
+                </div>
 
-    PURPOSE:
-    This template is for expressing gratitude and appreciation to friends, family,
-    colleagues, or anyone who deserves recognition. These are heartfelt thank you
-    messages that can be sent digitally after receiving gifts, help, support, or
-    simply to show appreciation.
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
+                </div>
 
-    STRUCTURE TO FOLLOW:
-    Please follow the exact structure from business-portfolio.html:
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-amber-600 font-semibold hover:border-amber-400 hover:bg-amber-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
+            </div>
+        </div>
 
-    1. HEADER (Sticky Navigation)
-       - Logo and title
-       - Action buttons (Publish, Preview, QR)
-       - Use gradient: from-amber-400 to-orange-500 (matching home page card)
+        <!-- Right Panel - Preview -->
+        <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
+            <div class="h-fit">
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
 
-    2. MAIN CONTAINER (Split Layout)
-       - Left Panel: Editor Interface
-       - Right Panel: Live Preview
-
-    3. SECTION TEMPLATES OBJECT (JavaScript)
-       Create 9 section types appropriate for thank you messages:
-
-       Suggested sections for Thank You Cards:
-       a) coverMessage - Main thank you message with recipient name
-       b) gratitude - Detailed appreciation message explaining why you're grateful
-       c) photo - Photo related to what you're thanking them for
-       d) specificReason - Highlight the specific act of kindness
-       e) impact - Explain how their action impacted you
-       f) quote - Gratitude quote or saying
-       g) memory - Share a related positive memory
-       h) gift - If thanking for a gift, show it being used/enjoyed
-       i) signature - Personal closing and sender name
-
-    4. INFO/STYLE TABS PATTERN
-       Each section should have:
-       - Info Tab: Content fields (thank you message, recipient name, etc.)
-       - Style Tab: Visual customization (warm colors, fonts)
-
-    5. CORE FUNCTIONS (JavaScript)
-       - Same as business-portfolio.html
-       - openSectionModal() / closeSectionModal()
-       - addSection(type)
-       - removeSection(id)
-       - switchTab(event, id, tab)
-       - getSectionData(section)
-       - updatePreview()
-       - handleImageUpload(input)
-       - setDevice(device)
-       - previewFullscreen()
-       - generateQR()
-       - copyUrl()
-       - publishProject()
-
-    6. MODALS
-       - Section Selection Modal (9 section types grid)
-       - QR Code Modal (for sharing)
-
-    COLOR SCHEME:
-    - Primary gradient: from-amber-400 to-orange-500
-    - Accent colors: amber-600, orange-600
-    - Warm, appreciative tones
-
-    KEY CHARACTERISTICS:
-    - Sincere and heartfelt tone
-    - Focus on specific reasons for gratitude
-    - Personal and genuine messages
-    - Can be formal or casual depending on recipient
-    - Great for post-event appreciation, gift thanks, or general gratitude
-
-    PREVIEW RENDERING:
-    Thank you cards should render with:
-    - Elegant, readable typography
-    - Warm, inviting colors
-    - Clean layout emphasizing the message
-    - Optional photos showing appreciation
-
-    ============================================
--->
-
-<!-- TODO: Implement the full structure following business-portfolio.html -->
-
-<div class="min-h-screen flex items-center justify-center">
-    <div class="text-center">
-        <div class="text-6xl mb-4">🙏</div>
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">Thank You Card</h1>
-        <p class="text-gray-600 mb-4">Template structure coming soon...</p>
-        <p class="text-sm text-gray-500">Follow business-portfolio.html structure</p>
-        <a href="index.html" class="inline-block mt-6 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-6 py-3 rounded-lg hover:shadow-lg transition">
-            ← Back to Home
-        </a>
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">🙏</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to create your thank you card</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
+    <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+
+            <!-- Content -->
+            <div class="overflow-y-auto flex-1 p-6">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🙏</div>
+                        <div class="font-semibold text-sm">Cover Message</div>
+                    </button>
+                    <button onclick="addSection('gratitude')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">💛</div>
+                        <div class="font-semibold text-sm">Gratitude Message</div>
+                    </button>
+                    <button onclick="addSection('specificReason')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🎯</div>
+                        <div class="font-semibold text-sm">Specific Reason</div>
+                    </button>
+                    <button onclick="addSection('impact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">💫</div>
+                        <div class="font-semibold text-sm">Impact</div>
+                    </button>
+                    <button onclick="addSection('photo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">📷</div>
+                        <div class="font-semibold text-sm">Photo</div>
+                    </button>
+                    <button onclick="addSection('memory')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">✨</div>
+                        <div class="font-semibold text-sm">Special Memory</div>
+                    </button>
+                    <button onclick="addSection('gift')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🎁</div>
+                        <div class="font-semibold text-sm">Gift Appreciation</div>
+                    </button>
+                    <button onclick="addSection('quote')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">💭</div>
+                        <div class="font-semibold text-sm">Gratitude Quote</div>
+                    </button>
+                    <button onclick="addSection('signature')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">✍️</div>
+                        <div class="font-semibold text-sm">Signature</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Preview Button (Mobile Only) -->
+    <button onclick="openMobilePreview()" class="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center text-2xl">
+        👁️
+    </button>
+
+    <!-- Mobile Preview Modal -->
+    <div id="mobilePreviewModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="w-full h-full flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="text-lg font-semibold text-white">Live Preview</h3>
+                <button onclick="closeMobilePreview()" class="text-white hover:text-gray-300 text-3xl w-10 h-10 flex items-center justify-center">×</button>
+            </div>
+
+            <!-- Device Toggle -->
+            <div class="flex gap-2 justify-center mb-4">
+                <button onclick="setMobilePreviewDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn active" data-device="mobile">
+                    📱 Mobile
+                </button>
+                <button onclick="setMobilePreviewDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn" data-device="tablet">
+                    💻 Tablet
+                </button>
+            </div>
+
+            <!-- Mobile Frame -->
+            <div class="flex-1 flex items-center justify-center overflow-auto">
+                <div id="mobilePreviewFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="mobilePreviewContent">
+                        <!-- Preview content will be copied here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Share Your Card</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">🙏</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/cards/thankyou123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-amber-500 text-white py-3 rounded-lg font-semibold hover:bg-amber-600 transition mb-2">
+                    📋 Copy Link
+                </button>
+                <p class="text-xs text-gray-500">Share this link to express your gratitude</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+
+        const sectionTemplates = {
+            hero: {
+                name: '🙏 Cover Message',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Recipient's Name</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="name" onchange="updatePreview()" placeholder="Sarah">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Main Thank You Message</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="message" rows="3" onchange="updatePreview()" placeholder="Thank you so much for your kindness and generosity"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Icon Emoji</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="emoji" onchange="updatePreview()" placeholder="🙏" value="🙏">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" value="#92400e" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
+                                <option value="center">Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+                    const textColor = style.textColor || '#92400e';
+                    const align = style.align || 'center';
+                    const name = data.name || 'Friend';
+                    const message = data.message || 'Thank you so much';
+                    const emoji = data.emoji || '🙏';
+
+                    return `
+                        <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor}; color: ${textColor}; text-align: ${align};">
+                            <div>
+                                <div class="text-6xl mb-4">${emoji}</div>
+                                <h2 class="text-3xl font-bold mb-4">Thank You</h2>
+                                <h3 class="text-2xl font-semibold mb-4">${name}</h3>
+                                <p class="text-lg">${message}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            gratitude: {
+                name: '💛 Gratitude Message',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Detailed Gratitude Message</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="message" rows="5" onchange="updatePreview()" placeholder="I am truly grateful for your support and kindness. Your thoughtfulness has meant the world to me..."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" value="#1f2937" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const textColor = style.textColor || '#1f2937';
+                    const message = data.message || 'I am truly grateful for everything you have done';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor}; color: ${textColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4 text-center">💛</div>
+                                <p class="text-lg leading-relaxed">${message}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            specificReason: {
+                name: '🎯 Specific Reason',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">What are you thanking them for?</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="reason" rows="4" onchange="updatePreview()" placeholder="Thank you for helping me move to my new apartment. Your time and effort made the day so much easier and more enjoyable."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fffbeb" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fffbeb';
+                    const reason = data.reason || 'Thank you for your help';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4">🎯</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                <p class="text-gray-700">${reason}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            impact: {
+                name: '💫 Impact',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">How did their action impact you?</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="impact" rows="4" onchange="updatePreview()" placeholder="Your support during this difficult time has given me strength and hope. I couldn't have gotten through it without you."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+                    const impact = data.impact || 'Your kindness has made a real difference';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4">💫</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
+                                <p class="text-gray-700 leading-relaxed">${impact}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            photo: {
+                name: '📷 Photo',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Photo</label>
+                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="image" onchange="handleImageUpload(this)">
+                            <p class="text-xs text-gray-500 mt-1">Upload a photo of the gift, event, or memory</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Caption (Optional)</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="caption" onchange="updatePreview()" placeholder="Enjoying the wonderful gift you gave me">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="imageStyle" onchange="updatePreview()">
+                                <option value="rounded">Rounded</option>
+                                <option value="circle">Circle</option>
+                                <option value="square">Square</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const imageStyle = style.imageStyle || 'rounded';
+                    const caption = data.caption || '';
+                    const image = data.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fef3c7" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="60"%3E🙏%3C/text%3E%3C/svg%3E';
+
+                    const borderRadius = imageStyle === 'circle' ? '50%' : imageStyle === 'rounded' ? '12px' : '0';
+
+                    return `
+                        <div class="p-8 bg-white">
+                            <div class="max-w-md mx-auto">
+                                <img src="${image}" alt="Photo" class="w-full h-64 object-cover shadow-lg" style="border-radius: ${borderRadius};">
+                                ${caption ? `<p class="text-center text-gray-600 mt-4">${caption}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            memory: {
+                name: '✨ Special Memory',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Share a Special Memory</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="memory" rows="4" onchange="updatePreview()" placeholder="I'll always remember the time we spent together that day..."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffedd5" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#ffedd5';
+                    const memory = data.memory || 'I cherish the memories we have created together';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4">✨</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900">A Special Memory</h3>
+                                <p class="text-gray-700 italic">${memory}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            gift: {
+                name: '🎁 Gift Appreciation',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gift Description</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="giftName" onchange="updatePreview()" placeholder="the beautiful necklace">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">How you're enjoying/using it</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="enjoyment" rows="3" onchange="updatePreview()" placeholder="I wear it every day and think of you. It goes perfectly with everything!"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fed7aa" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fed7aa';
+                    const giftName = data.giftName || 'the wonderful gift';
+                    const enjoyment = data.enjoyment || 'I absolutely love it!';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-4xl mb-4">🎁</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900">Thank you for ${giftName}</h3>
+                                <p class="text-gray-700">${enjoyment}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            quote: {
+                name: '💭 Gratitude Quote',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Text</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="quote" rows="3" onchange="updatePreview()" placeholder="Gratitude is the memory of the heart."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Author (Optional)</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="author" onchange="updatePreview()" placeholder="Jean Baptiste Massieu">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef9e7" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef9e7';
+                    const quote = data.quote || 'Feeling gratitude and not expressing it is like wrapping a present and not giving it.';
+                    const author = data.author || 'William Arthur Ward';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-4xl mb-4">💭</div>
+                                <blockquote class="text-xl italic text-gray-700 mb-3">"${quote}"</blockquote>
+                                ${author ? `<p class="text-gray-600">— ${author}</p>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            signature: {
+                name: '✍️ Signature',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Closing Message</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="closing" onchange="updatePreview()" placeholder="With heartfelt thanks">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="name" onchange="updatePreview()" placeholder="Your Name">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
+                                <option value="center">Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const align = style.align || 'center';
+                    const closing = data.closing || 'With gratitude';
+                    const name = data.name || 'Your Friend';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
+                            <div class="max-w-lg mx-auto">
+                                <p class="text-lg text-gray-700 mb-2">${closing},</p>
+                                <p class="text-xl font-semibold text-gray-900">${name}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        };
+
+        function openSectionModal() {
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = `section-${sectionCounter++}`;
+
+            const sectionHTML = `
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item" data-id="${id}" data-type="${type}">
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="cursor-move text-gray-400">⋮⋮</span>
+                            <span class="font-semibold text-sm">${template.name}</span>
+                        </div>
+                        <button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        ${template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        ${template.style}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            closeSectionModal();
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            if (confirm('Remove this section?')) {
+                document.querySelector(`[data-id="${id}"]`).remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-amber-600', 'border-b-2', 'border-amber-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-amber-600', 'border-b-2', 'border-amber-600');
+            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+
+            if (sections.length === 0) {
+                html = `
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">🙏</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to create your thank you card</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style);
+                });
+            }
+
+            document.getElementById('previewContent').innerHTML = html;
+
+            // Also update mobile preview if it's open
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = html;
+            }
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-amber-500', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-amber-500', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('Link copied to clipboard! You can now share your thank you card.');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Complete your thank you card?')) {
+                alert('✅ Your thank you card is ready!\n\nYou can now share the link or QR code to express your gratitude.');
+            }
+        }
+
+        function openMobilePreview() {
+            // Copy preview content to mobile preview modal
+            const previewContent = document.getElementById('previewContent').innerHTML;
+            document.getElementById('mobilePreviewContent').innerHTML = previewContent;
+
+            // Show the modal
+            document.getElementById('mobilePreviewModal').classList.remove('hidden');
+        }
+
+        function closeMobilePreview() {
+            document.getElementById('mobilePreviewModal').classList.add('hidden');
+        }
+
+        function setMobilePreviewDevice(device) {
+            // Update active button
+            document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-amber-500', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-amber-500', 'text-white');
+
+            // Update frame size
+            const frame = document.getElementById('mobilePreviewFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        // Close modals on outside click
+        document.getElementById('sectionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'sectionModal') closeSectionModal();
+        });
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeQRModal();
+        });
+        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+        });
+
+        // Initialize with a default hero section
+        window.addEventListener('DOMContentLoaded', () => {
+            addSection('hero');
+        });
+    </script>
 </body>
 </html>
