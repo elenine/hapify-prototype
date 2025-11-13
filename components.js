@@ -945,7 +945,7 @@ window.generateNavigationAssignmentDropdown = function(currentValue = '') {
         <div class="mt-4 pt-4 border-t">
             <label class="block text-sm font-medium text-gray-700 mb-2">${label}</label>
             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data"
-                    data-field="${navType === 'tabview' ? 'assignedTab' : 'assignedNavItem'}"
+                    data-field="assignedNavItem"
                     onchange="updatePreview()">
                 <option value="">${placeholder}</option>
                 ${items.map(item => `<option value="${item}" ${item === currentValue ? 'selected' : ''}>${item}</option>`).join('')}
@@ -969,7 +969,7 @@ window.updateSectionNavigationDropdowns = function() {
         if (!infoTab) return;
 
         // Get current value
-        const currentDropdown = infoTab.querySelector('[data-field="assignedTab"], [data-field="assignedNavItem"]');
+        const currentDropdown = infoTab.querySelector('[data-field="assignedNavItem"]');
         const currentValue = currentDropdown?.value || '';
 
         // Find or create the dropdown container

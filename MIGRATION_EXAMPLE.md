@@ -258,6 +258,14 @@ function updatePreview() {
                     tabSize
                 });
 
+                // First, render hero section (always visible, before tabs)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
                 // Group sections by assigned tab
                 const sectionsByTab = {};
                 tabNames.forEach(tab => {
@@ -266,9 +274,9 @@ function updatePreview() {
 
                 sections.forEach(section => {
                     const type = section.dataset.type;
-                    if (type === 'layout') return;
+                    if (type === 'layout' || type === 'hero') return;
 
-                    const assignedTab = section.querySelector('[data-field="assignedTab"]')?.value;
+                    const assignedTab = section.querySelector('[data-field="assignedNavItem"]')?.value;
                     if (assignedTab && sectionsByTab[assignedTab]) {
                         const template = sectionTemplates[type];
                         const { data, style } = getSectionData(section);
@@ -286,7 +294,7 @@ function updatePreview() {
                     sectionsByTab
                 );
 
-                html = tabNav.html + tabContainers;
+                html += tabNav.html + tabContainers;
             }
         } else if (navType === 'topnav') {
             // === TOP NAVIGATION MODE ===
