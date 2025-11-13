@@ -220,6 +220,9 @@
         </div>
     </div>
 
+    <!-- Include Reusable Components Library -->
+    <script src="components.js"></script>
+
     <script>
         let sectionCounter = 0;
 
@@ -743,38 +746,50 @@
             const id = `section-${sectionCounter++}`;
             const isLayout = type === 'layout';
 
-            // For layout section, hide remove button and drag handle
-            const removeButton = isLayout ? '' : `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`;
-            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
+            // Extract icon from template name (first emoji) or use default
+            const icon = template.name.match(/[\u{1F300}-\u{1F9FF}]/u)?.[0] || '📝';
+            const title = template.name.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
 
-            const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
-                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''}">
-                        <div class="flex items-center gap-2">
-                            ${dragHandle}
-                            <span class="font-semibold text-sm">${template.name}</span>
-                            ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
-                        </div>
-                        ${removeButton}
-                    </div>
-                    <div class="border-b flex">
-                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
-                            Info
-                        </button>
-                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
-                            Style
-                        </button>
-                    </div>
-                    <div class="p-4 tab-content" data-tab="info">
-                        ${template.info}
-                    </div>
-                    <div class="p-4 tab-content hidden" data-tab="style">
-                        ${template.style}
-                    </div>
-                </div>
-            `;
+            // Create section wrapper element using the reusable web component
+            const sectionWrapper = document.createElement('section-wrapper');
+            sectionWrapper.setAttribute('section-title', title);
+            sectionWrapper.setAttribute('section-icon', icon);
+            sectionWrapper.setAttribute('section-id', id);
+            sectionWrapper.setAttribute('section-type', type);
+            sectionWrapper.classList.add('section-wrapper');
+            sectionWrapper.dataset.id = id;
+            sectionWrapper.dataset.type = type;
 
-            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            // Mark permanent sections
+            if (isLayout) {
+                sectionWrapper.dataset.permanent = 'true';
+            }
+
+            // Create info slot content
+            const infoSlot = document.createElement('div');
+            infoSlot.slot = 'info';
+            infoSlot.innerHTML = template.info;
+
+            // Create style slot content
+            const styleSlot = document.createElement('div');
+            styleSlot.slot = 'style';
+            styleSlot.innerHTML = template.style;
+
+            sectionWrapper.appendChild(infoSlot);
+            sectionWrapper.appendChild(styleSlot);
+
+            document.getElementById('sectionsContainer').appendChild(sectionWrapper);
+
+            // Hide delete button for permanent sections
+            setTimeout(() => {
+                if (isLayout) {
+                    const deleteBtn = sectionWrapper.shadowRoot?.querySelector('.delete-btn');
+                    if (deleteBtn) {
+                        deleteBtn.style.display = 'none';
+                    }
+                }
+            }, 0);
+
             if (!isLayout) {
                 closeSectionModal();
             }
@@ -788,22 +803,51 @@
             }
         }
 
-        function switchTab(event, sectionId, tab) {
-            const section = document.querySelector(`[data-id="${sectionId}"]`);
-            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600'));
-            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-
-            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600');
-            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
-        }
+        // switchTab function is now handled by the section-wrapper web component
 
         function getSectionData(section) {
             const data = {};
             const style = {};
 
+            // For section-wrapper elements, we need to look in the slotted content
+            const infoSlot = section.querySelector('[slot="info"]');
+            const styleSlot = section.querySelector('[slot="style"]');
+
+            // Get data from info slot
+            if (infoSlot) {
+                infoSlot.querySelectorAll('.section-data').forEach(input => {
+                    const field = input.dataset.field;
+                    if (input.type === 'checkbox') {
+                        data[field] = input.checked;
+                    } else if (input.type === 'radio') {
+                        if (input.checked) {
+                            data[field] = input.value;
+                        }
+                    } else if (input.type === 'file' && input.dataset.imageData) {
+                        data[field] = input.dataset.imageData;
+                    } else {
+                        data[field] = input.value;
+                    }
+                });
+            }
+
+            // Get style from style slot
+            if (styleSlot) {
+                styleSlot.querySelectorAll('.section-style').forEach(input => {
+                    style[input.dataset.style] = input.value;
+                });
+            }
+
+            // Also check direct children for backward compatibility
             section.querySelectorAll('.section-data').forEach(input => {
                 const field = input.dataset.field;
-                if (input.type === 'file' && input.dataset.imageData) {
+                if (input.type === 'checkbox') {
+                    data[field] = input.checked;
+                } else if (input.type === 'radio') {
+                    if (input.checked) {
+                        data[field] = input.value;
+                    }
+                } else if (input.type === 'file' && input.dataset.imageData) {
                     data[field] = input.dataset.imageData;
                 } else {
                     data[field] = input.value;
@@ -818,7 +862,7 @@
         }
 
         function updatePreview() {
-            const sections = document.querySelectorAll('.section-item');
+            const sections = document.querySelectorAll('.section-wrapper');
             let html = '';
             let globalStyles = {};
 
@@ -967,6 +1011,22 @@
         function initializeLayout() {
             addSection('layout');
         }
+
+        // Listen for section deletion events from section-wrapper components
+        document.getElementById('sectionsContainer').addEventListener('section-delete', (e) => {
+            const sectionId = e.detail.id;
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+
+            if (section && section.dataset.permanent === 'true') {
+                alert('This section cannot be removed.');
+                return;
+            }
+
+            if (confirm('Remove this section?')) {
+                section.remove();
+                updatePreview();
+            }
+        });
 
         // Close modals on outside click
         document.getElementById('sectionModal').addEventListener('click', (e) => {

@@ -220,6 +220,9 @@
         </div>
     </div>
 
+    <!-- Include Reusable Components Library -->
+    <script src="components.js"></script>
+
     <script>
         let sectionCounter = 0;
 
@@ -948,51 +951,57 @@
             const navType = navTypeRadio?.value || 'none';
             const navEnabled = navType !== 'none';
 
-            // For layout and hero section when navigation is enabled, hide remove button
-            const canRemove = !isLayout && !(isHero && navEnabled);
-            const removeButton = canRemove ? `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>` : '';
-            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
+            // Extract icon from template name (first emoji) or use default
+            const icon = template.name.match(/[\u{1F300}-\u{1F9FF}]/u)?.[0] || '📝';
+            const title = template.name.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
 
             // Add navigation selector for non-hero, non-layout sections when navigation is enabled
-            const navSelector = (!isLayout && !isHero && navEnabled) ? `
-                <div class="px-4 pt-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">${navType === 'tabview' ? 'Assign to Tab' : 'Assign to Navigation Item'}</label>
-                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
-                        <option value="">${navType === 'tabview' ? 'Select a tab...' : 'Select a navigation item...'}</option>
-                    </select>
-                </div>
-            ` : '';
+            const navSelector = (!isLayout && !isHero && navEnabled) ? generateNavigationAssignmentDropdown() : '';
 
-            const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''} ${isHero ? 'border-blue-300' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''} ${(isHero && navEnabled) ? 'data-mandatory="true"' : ''}>
-                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''} ${isHero ? 'bg-blue-50' : ''}">
-                        <div class="flex items-center gap-2">
-                            ${dragHandle}
-                            <span class="font-semibold text-sm">${template.name}</span>
-                            ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
-                            ${(isHero && navEnabled) ? '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>' : ''}
-                        </div>
-                        ${removeButton}
-                    </div>
-                    ${navSelector}
-                    <div class="border-b flex">
-                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
-                            Info
-                        </button>
-                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
-                            Style
-                        </button>
-                    </div>
-                    <div class="p-4 tab-content" data-tab="info">
-                        ${template.info}
-                    </div>
-                    <div class="p-4 tab-content hidden" data-tab="style">
-                        ${template.style}
-                    </div>
-                </div>
-            `;
+            // Create section wrapper element using the reusable web component
+            const sectionWrapper = document.createElement('section-wrapper');
+            sectionWrapper.setAttribute('section-title', title);
+            sectionWrapper.setAttribute('section-icon', icon);
+            sectionWrapper.setAttribute('section-id', id);
+            sectionWrapper.setAttribute('section-type', type);
+            sectionWrapper.classList.add('section-wrapper');
+            sectionWrapper.dataset.id = id;
+            sectionWrapper.dataset.type = type;
 
-            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            // Mark permanent/mandatory sections
+            if (isLayout) {
+                sectionWrapper.dataset.permanent = 'true';
+            }
+            if (isHero && navEnabled) {
+                sectionWrapper.dataset.mandatory = 'true';
+            }
+
+            // Create info slot content
+            const infoSlot = document.createElement('div');
+            infoSlot.slot = 'info';
+            infoSlot.innerHTML = template.info + navSelector;
+
+            // Create style slot content
+            const styleSlot = document.createElement('div');
+            styleSlot.slot = 'style';
+            styleSlot.innerHTML = template.style;
+
+            sectionWrapper.appendChild(infoSlot);
+            sectionWrapper.appendChild(styleSlot);
+
+            document.getElementById('sectionsContainer').appendChild(sectionWrapper);
+
+            // Hide delete button for permanent/mandatory sections
+            // We need to wait for the shadow DOM to be rendered
+            setTimeout(() => {
+                if (isLayout || (isHero && navEnabled)) {
+                    const deleteBtn = sectionWrapper.shadowRoot?.querySelector('.delete-btn');
+                    if (deleteBtn) {
+                        deleteBtn.style.display = 'none';
+                    }
+                }
+            }, 0);
+
             if (!isLayout) {
                 closeSectionModal();
             }
@@ -1130,8 +1139,13 @@
             const layoutSection = document.querySelector('[data-type="layout"]');
             if (!layoutSection) return;
 
-            // Get the selected navigation type
-            const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+            // Get the selected navigation type - need to check in slotted content for section-wrapper
+            let navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+            if (!navTypeRadio) {
+                // Try to find in slot content
+                const infoSlot = layoutSection.querySelector('[slot="info"]');
+                navTypeRadio = infoSlot?.querySelector('[data-field="navType"]:checked');
+            }
             const navType = navTypeRadio?.value;
 
             if (!navType || navType === 'none') return;
@@ -1141,17 +1155,29 @@
             let placeholderText = '';
 
             if (navType === 'tabview') {
-                const tabNamesTextarea = layoutSection.querySelector('[data-field="tabNames"]');
+                let tabNamesTextarea = layoutSection.querySelector('[data-field="tabNames"]');
+                if (!tabNamesTextarea) {
+                    const infoSlot = layoutSection.querySelector('[slot="info"]');
+                    tabNamesTextarea = infoSlot?.querySelector('[data-field="tabNames"]');
+                }
                 navItems = tabNamesTextarea?.value.split('\n').filter(name => name.trim()) || [];
                 labelText = 'Assign to Tab';
                 placeholderText = 'Select a tab...';
             } else if (navType === 'topnav') {
-                const navItemsTextarea = layoutSection.querySelector('[data-field="navItems"]');
+                let navItemsTextarea = layoutSection.querySelector('[data-field="navItems"]');
+                if (!navItemsTextarea) {
+                    const infoSlot = layoutSection.querySelector('[slot="info"]');
+                    navItemsTextarea = infoSlot?.querySelector('[data-field="navItems"]');
+                }
                 navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
                 labelText = 'Assign to Navigation Item';
                 placeholderText = 'Select a navigation item...';
             } else if (navType === 'bottomnav') {
-                const navItemsTextarea = layoutSection.querySelector('[data-field="bottomNavItems"]');
+                let navItemsTextarea = layoutSection.querySelector('[data-field="bottomNavItems"]');
+                if (!navItemsTextarea) {
+                    const infoSlot = layoutSection.querySelector('[slot="info"]');
+                    navItemsTextarea = infoSlot?.querySelector('[data-field="bottomNavItems"]');
+                }
                 navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
                 labelText = 'Assign to Navigation Item';
                 placeholderText = 'Select a navigation item...';
@@ -1172,11 +1198,14 @@
                 });
             });
 
-            // Add navigation selectors to sections that don't have them (except hero and layout)
-            document.querySelectorAll('.section-item').forEach(section => {
+            // Add navigation selectors to section-wrapper elements that don't have them (except hero and layout)
+            document.querySelectorAll('.section-wrapper').forEach(section => {
                 const type = section.dataset.type;
                 if (type === 'layout' || type === 'hero') return;
-                if (section.querySelector('.nav-selector')) return; // Already has one
+
+                const infoSlot = section.querySelector('[slot="info"]');
+                if (!infoSlot) return;
+                if (infoSlot.querySelector('.nav-selector')) return; // Already has one
 
                 const selectorHTML = `
                     <div class="px-4 pt-4">
@@ -1188,27 +1217,55 @@
                     </div>
                 `;
 
-                const header = section.querySelector('.bg-gray-50');
-                header.insertAdjacentHTML('afterend', selectorHTML);
+                infoSlot.insertAdjacentHTML('beforeend', selectorHTML);
             });
         }
 
-        function switchTab(event, sectionId, tab) {
-            const section = document.querySelector(`[data-id="${sectionId}"]`);
-            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-blue-600', 'border-b-2', 'border-blue-600'));
-            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
-
-            event.target.classList.add('active', 'text-blue-600', 'border-b-2', 'border-blue-600');
-            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
-        }
+        // switchTab function is now handled by the section-wrapper web component
 
         function getSectionData(section) {
             const data = {};
             const style = {};
 
+            // For section-wrapper elements, we need to look in the slotted content
+            const infoSlot = section.querySelector('[slot="info"]');
+            const styleSlot = section.querySelector('[slot="style"]');
+
+            // Get data from info slot
+            if (infoSlot) {
+                infoSlot.querySelectorAll('.section-data').forEach(input => {
+                    const field = input.dataset.field;
+                    if (input.type === 'checkbox') {
+                        data[field] = input.checked;
+                    } else if (input.type === 'radio') {
+                        if (input.checked) {
+                            data[field] = input.value;
+                        }
+                    } else if (input.type === 'file' && input.dataset.imageData) {
+                        data[field] = input.dataset.imageData;
+                    } else {
+                        data[field] = input.value;
+                    }
+                });
+            }
+
+            // Get style from style slot
+            if (styleSlot) {
+                styleSlot.querySelectorAll('.section-style').forEach(input => {
+                    style[input.dataset.style] = input.value;
+                });
+            }
+
+            // Also check direct children for backward compatibility
             section.querySelectorAll('.section-data').forEach(input => {
                 const field = input.dataset.field;
-                if (input.type === 'file' && input.dataset.imageData) {
+                if (input.type === 'checkbox') {
+                    data[field] = input.checked;
+                } else if (input.type === 'radio') {
+                    if (input.checked) {
+                        data[field] = input.value;
+                    }
+                } else if (input.type === 'file' && input.dataset.imageData) {
                     data[field] = input.dataset.imageData;
                 } else {
                     data[field] = input.value;
@@ -1223,7 +1280,7 @@
         }
 
         function updatePreview() {
-            const sections = document.querySelectorAll('.section-item');
+            const sections = document.querySelectorAll('.section-wrapper');
             let html = '';
             let globalStyles = {};
 
@@ -1950,6 +2007,27 @@
 
             // Then add default sections
             initializeDefaultSections();
+
+            // Listen for section deletion events from section-wrapper components
+            document.getElementById('sectionsContainer').addEventListener('section-delete', (e) => {
+                const sectionId = e.detail.id;
+                const section = document.querySelector(`[data-id="${sectionId}"]`);
+
+                if (section && section.dataset.mandatory === 'true') {
+                    alert('This section is mandatory and cannot be removed when navigation is enabled.');
+                    return;
+                }
+
+                if (section && section.dataset.permanent === 'true') {
+                    alert('This section cannot be removed.');
+                    return;
+                }
+
+                if (confirm('Remove this section?')) {
+                    section.remove();
+                    updatePreview();
+                }
+            });
 
             // Close modals on outside click
             document.getElementById('sectionModal').addEventListener('click', (e) => {
