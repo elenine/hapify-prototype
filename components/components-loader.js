@@ -4,6 +4,8 @@
 // Initialize the components object if it doesn't exist
 window.sectionComponents = window.sectionComponents || {};
 
+console.log('🔄 Component loader started');
+
 // List of all available components
 const componentFiles = [
     'layout', 'hero', 'about', 'services', 'portfolio', 'team',
@@ -14,6 +16,7 @@ const componentFiles = [
 
 // Function to check if all components are loaded
 function checkComponentsLoaded() {
+    console.log('🔍 Checking if components are loaded...');
     const loaded = componentFiles.filter(name => window.sectionComponents[name]);
     const missing = componentFiles.filter(name => !window.sectionComponents[name]);
 

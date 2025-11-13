@@ -1432,22 +1432,45 @@
             });
         }
 
+        // Track if app has been initialized
+        let appInitialized = false;
+
+        // Safe initialization wrapper
+        function safeInitializeApp() {
+            if (appInitialized) {
+                console.log('⚠️ App already initialized, skipping...');
+                return;
+            }
+
+            if (!window.sectionComponents || Object.keys(window.sectionComponents).length === 0) {
+                console.warn('⚠️ Cannot initialize: components not loaded yet');
+                return;
+            }
+
+            appInitialized = true;
+            console.log('✅ Initializing app with', Object.keys(window.sectionComponents).length, 'components');
+            initializeApp();
+        }
+
         // Listen for components ready event
         window.addEventListener('componentsReady', () => {
             console.log('✅ Components ready event received');
-            initializeApp();
+            safeInitializeApp();
         });
 
-        // Fallback: Also listen to DOMContentLoaded in case components loaded before listener was attached
-        window.addEventListener('DOMContentLoaded', () => {
-            // Wait a bit for component scripts to execute
+        // Immediate check: if components are already loaded, initialize now
+        if (window.sectionComponents && Object.keys(window.sectionComponents).length > 0) {
+            console.log('✅ Components already loaded, initializing immediately');
+            safeInitializeApp();
+        } else {
+            // Fallback: Wait a bit and try again
             setTimeout(() => {
-                if (window.sectionComponents && Object.keys(sectionTemplates).length === 0) {
-                    console.log('⚠️ Initializing from DOMContentLoaded fallback');
-                    initializeApp();
+                if (!appInitialized) {
+                    console.log('⚠️ Fallback: checking for components after timeout');
+                    safeInitializeApp();
                 }
-            }, 100);
-        });
+            }, 150);
+        }
     </script>
 </body>
 </html>
