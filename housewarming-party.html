@@ -7,69 +7,80 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
         <div class="container mx-auto px-4 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-3">
                     <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
                     <div>
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">InviteGen</h1>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-orange-500 to-orange-700 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
                         <p class="text-xs text-gray-500">Housewarming Party</p>
                     </div>
                 </div>
                 <div class="flex gap-3">
-                    <button onclick="alert('Preview')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">👁️ Preview</button>
-                    <button onclick="alert('QR Code')" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">📱 QR Code</button>
-                    <button onclick="alert('Published!')" class="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">🚀 Publish</button>
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-700 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Main Container -->
     <div class="flex h-[calc(100vh-73px)]">
-        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto p-6">
-            <h2 class="text-2xl font-bold text-gray-900 mb-2">Create Housewarming Invitation</h2>
-            <p class="text-sm text-gray-600 mb-6">Welcome friends to your new home</p>
-            <div class="space-y-4 mb-6">
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">🏠 New Home</h3>
-                    <div class="space-y-3">
-                        <input type="text" placeholder="Host Name(s)" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <textarea placeholder="New Address" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
-                    </div>
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Design Housewarming Invitation</h2>
+                    <p class="text-sm text-gray-600 mt-1">Welcome friends to your new home</p>
                 </div>
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">🎉 Party Details</h3>
-                    <div class="space-y-3">
-                        <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                        <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                    </div>
+
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
                 </div>
-                <div class="border border-gray-200 rounded-xl p-4">
-                    <h3 class="font-semibold mb-3">💬 Message</h3>
-                    <textarea placeholder="Invitation message..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
-                </div>
+
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-orange-600 font-semibold hover:border-orange-400 hover:bg-orange-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
             </div>
         </div>
+
+        <!-- Right Panel - Preview -->
         <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
             <div class="h-fit">
-                <h3 class="text-lg font-semibold text-gray-700 mb-6 text-center">Live Preview</h3>
-                <div class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
-                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto">
-                        <div class="bg-gradient-to-br from-orange-500 to-amber-600 text-white text-center py-16 px-6">
-                            <div class="text-6xl mb-4">🏠</div>
-                            <h1 class="text-3xl font-bold mb-2">New Home</h1>
-                            <p class="text-xl">Housewarming Party</p>
-                            <p class="text-lg opacity-90 mt-2">The Smith Family</p>
-                        </div>
-                        <div class="p-6 space-y-4">
-                            <div class="p-4 bg-orange-50 rounded-lg">
-                                <div class="text-sm text-gray-600 text-center">Join us as we celebrate our new home! We'd love to have you share in this special milestone.</div>
-                            </div>
-                            <div class="p-3 bg-orange-50 rounded-lg">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-xl">📍</span>
-                                    <div><div class="text-xs text-gray-500">New Address</div><div class="font-medium text-sm">123 Main Street</div></div>
-                                </div>
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">🏠</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your housewarming invitation</p>
                             </div>
                         </div>
                     </div>
@@ -77,5 +88,627 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <button onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🏠</div>
+                    <div class="font-semibold text-sm">Hero Header</div>
+                </button>
+                <button onclick="addSection('homedetails')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🏡</div>
+                    <div class="font-semibold text-sm">New Home Details</div>
+                </button>
+                <button onclick="addSection('partyinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🎉</div>
+                    <div class="font-semibold text-sm">Party Info</div>
+                </button>
+                <button onclick="addSection('housetour')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🚪</div>
+                    <div class="font-semibold text-sm">House Tour</div>
+                </button>
+                <button onclick="addSection('directions')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🗺️</div>
+                    <div class="font-semibold text-sm">Directions</div>
+                </button>
+                <button onclick="addSection('whattobring')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🎁</div>
+                    <div class="font-semibold text-sm">What to Bring</div>
+                </button>
+                <button onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">✉️</div>
+                    <div class="font-semibold text-sm">RSVP</div>
+                </button>
+                <button onclick="addSection('homephotos')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">📸</div>
+                    <div class="font-semibold text-sm">Home Photos</div>
+                </button>
+                <button onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                    <div class="text-4xl mb-2">🙏</div>
+                    <div class="font-semibold text-sm">Thank You</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/housewarming123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sectionCounter = 0;
+
+        const sectionTemplates = {
+            hero: {
+                name: '🏠 Hero Header',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Host Names</label>
+                            <input type="text" placeholder="The Smith Family" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent section-data" data-field="hosts" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title Text</label>
+                            <input type="text" placeholder="Housewarming Party" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Home Photo</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-orange-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                                <div class="text-3xl mb-2">📸</div>
+                                <div class="text-sm text-gray-600">Click to upload home photo</div>
+                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
+                            </div>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="text-center py-16 px-6" style="background: \${style.bg || '#f97316'}; color: \${style.text || '#ffffff'}">
+                        \${data.image ? \`<img src="\${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">\` : '<div class="text-6xl mb-4">🏠</div>'}
+                        <h1 class="text-3xl font-bold mb-2">\${data.title || 'Housewarming Party'}</h1>
+                        <p class="text-xl">\${data.hosts || "Host Names"}</p>
+                    </div>
+                \`
+            },
+            homedetails: {
+                name: '🏡 New Home Details',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Home Address</label>
+                            <textarea placeholder="123 Main Street, City, State ZIP" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Home Description</label>
+                            <textarea placeholder="Beautiful 3-bedroom home in quiet neighborhood..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <h2 class="text-2xl font-bold mb-6">Our New Home</h2>
+                            <div class="p-6 bg-orange-50 rounded-lg">
+                                <div class="text-4xl mb-3">🏡</div>
+                                \${data.address ? \`<div class="font-medium text-lg mb-3">\${data.address}</div>\` : ''}
+                                \${data.description ? \`<p class="text-gray-700 text-sm">\${data.description}</p>\` : ''}
+                            </div>
+                        </div>
+                    </div>
+                \`
+            },
+            partyinfo: {
+                name: '🎉 Party Info',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Party Date</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="date" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Party Time</label>
+                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="time" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Special Notes</label>
+                            <textarea placeholder="Casual attire, food and drinks provided..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="notes" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fff7ed'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Party Details</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            \${data.date ? \`
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">📅</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Date</div>
+                                    <div class="font-medium">\${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                                </div>
+                            </div>\` : ''}
+                            \${data.time ? \`
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">🕐</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Time</div>
+                                    <div class="font-medium">\${data.time}</div>
+                                </div>
+                            </div>\` : ''}
+                            \${data.notes ? \`
+                            <div class="p-4 bg-white rounded-lg">
+                                <p class="text-sm text-gray-700">\${data.notes}</p>
+                            </div>\` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            housetour: {
+                name: '🚪 House Tour',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tour Schedule</label>
+                            <input type="text" placeholder="Tours starting at 2 PM" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="schedule" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tour Details</label>
+                            <textarea placeholder="Feel free to explore all rooms..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="details" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="text-5xl mb-4">🚪</div>
+                            <h2 class="text-2xl font-bold mb-4">House Tour</h2>
+                            \${data.schedule ? \`<p class="text-lg text-gray-700 mb-4">\${data.schedule}</p>\` : ''}
+                            \${data.details ? \`<div class="p-4 bg-orange-50 rounded-lg"><p class="text-gray-600 text-sm">\${data.details}</p></div>\` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            directions: {
+                name: '🗺️ Directions & Parking',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Driving Directions</label>
+                            <textarea placeholder="From highway, take exit 5..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="directions" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parking Info</label>
+                            <textarea placeholder="Street parking available, driveway..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="parking" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fff7ed'}">
+                        <h2 class="text-2xl font-bold text-center mb-8">Directions & Parking</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            \${data.directions ? \`
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">🗺️</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Directions</div>
+                                    <div class="text-sm">\${data.directions}</div>
+                                </div>
+                            </div>\` : ''}
+                            \${data.parking ? \`
+                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
+                                <div class="text-2xl">🚗</div>
+                                <div>
+                                    <div class="text-xs text-gray-500 mb-1">Parking</div>
+                                    <div class="text-sm">\${data.parking}</div>
+                                </div>
+                            </div>\` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            whattobring: {
+                name: '🎁 What to Bring',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="What to Bring" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Your presence is the best gift! If you'd like to bring something..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6 text-center" style="background: \${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">🎁</div>
+                            <h2 class="text-2xl font-bold mb-4">\${data.title || 'What to Bring'}</h2>
+                            <p class="text-gray-700">\${data.message || 'Your presence is the best gift!'}</p>
+                        </div>
+                    </div>
+                \`
+            },
+            rsvp: {
+                name: '✉️ RSVP',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Title</label>
+                            <input type="text" placeholder="Please RSVP" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea placeholder="Please let us know if you can join us..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Deadline</label>
+                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="deadline" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6 text-center" style="background: \${style.bg || '#fff7ed'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold mb-4">\${data.title || 'Please RSVP'}</h2>
+                            <p class="text-gray-600 mb-6">\${data.message || "Let us know if you can join us"}</p>
+                            \${data.deadline ? \`<p class="text-sm text-gray-500 mb-6">Please respond by \${new Date(data.deadline).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>\` : ''}
+                            <button class="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-600 transition">
+                                RSVP Now
+                            </button>
+                        </div>
+                    </div>
+                \`
+            },
+            homephotos: {
+                name: '📸 Home Photos',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Title</label>
+                            <input type="text" placeholder="Home Tour" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea placeholder="Sneak peek of our new place..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Photos</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-orange-400 cursor-pointer">
+                                <div class="text-3xl mb-2">📸</div>
+                                <div class="text-sm text-gray-600">Click to upload photos</div>
+                            </div>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#ffffff'}">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-2xl font-bold text-center mb-4">\${data.title || 'Home Photos'}</h2>
+                            \${data.description ? \`<p class="text-center text-gray-600 mb-6">\${data.description}</p>\` : ''}
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="aspect-square bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <span class="text-4xl">📷</span>
+                                </div>
+                                <div class="aspect-square bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <span class="text-4xl">📷</span>
+                                </div>
+                                <div class="aspect-square bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <span class="text-4xl">📷</span>
+                                </div>
+                                <div class="aspect-square bg-orange-100 rounded-lg flex items-center justify-center">
+                                    <span class="text-4xl">📷</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                \`
+            },
+            thankyou: {
+                name: '🙏 Thank You',
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Message</label>
+                            <textarea placeholder="Thank you for helping us celebrate our new home..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Closing</label>
+                            <input type="text" placeholder="See you soon!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="closing" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6 text-center" style="background: \${style.bg || '#fff7ed'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-5xl mb-4">🙏</div>
+                            <h2 class="text-2xl font-bold mb-6">Thank You</h2>
+                            <p class="text-gray-700 text-lg mb-6">\${data.message || 'Thank you for helping us celebrate our new home!'}</p>
+                            \${data.closing ? \`<p class="text-gray-600 italic">\${data.closing}</p>\` : ''}
+                        </div>
+                    </div>
+                \`
+            }
+        };
+
+        function openSectionModal() {
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = \`section-\${sectionCounter++}\`;
+
+            const sectionHTML = \`
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item" data-id="\${id}" data-type="\${type}">
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center">
+                        <div class="flex items-center gap-2">
+                            <span class="cursor-move text-gray-400">⋮⋮</span>
+                            <span class="font-semibold text-sm">\${template.name}</span>
+                        </div>
+                        <button onclick="removeSection('\${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '\${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '\${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        \${template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        \${template.style}
+                    </div>
+                </div>
+            \`;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            closeSectionModal();
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            if (confirm('Remove this section?')) {
+                document.querySelector(\`[data-id="\${id}"]\`).remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(\`[data-id="\${sectionId}"]\`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-orange-600', 'border-b-2', 'border-orange-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-orange-600', 'border-b-2', 'border-orange-600');
+            section.querySelector(\`[data-tab="\${tab}"]\`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+
+            if (sections.length === 0) {
+                html = \`
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">🏠</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your housewarming invitation</p>
+                        </div>
+                    </div>
+                \`;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style);
+                });
+            }
+
+            document.getElementById('previewContent').innerHTML = html;
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-orange-500', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-orange-500', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your housewarming invitation?')) {
+                alert('✅ Published successfully!\n\nYour housewarming page is now live!');
+            }
+        }
+
+        // Initialize with default sections on page load
+        function initializeDefaultSections() {
+            // Add default sections here based on template type
+            const defaultSections = ['hero', 'homedetails', 'partyinfo', 'rsvp'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        // Load default sections when page loads
+        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
+
+        // Close modals on outside click
+        document.getElementById('sectionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'sectionModal') closeSectionModal();
+        });
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeQRModal();
+        });
+    </script>
 </body>
 </html>
