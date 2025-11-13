@@ -89,50 +89,92 @@
         </div>
     </div>
 
-    <!-- Add Section Modal -->
+        <!-- Add Section Modal -->
     <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b flex justify-between items-center sticky top-0 bg-white">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center bg-white">
                 <h3 class="text-2xl font-bold">Add New Section</h3>
                 <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
             </div>
-            <div class="p-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">💼</div>
-                    <div class="font-semibold text-sm">Hero Banner</div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b flex bg-gray-50">
+                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'basic')">
+                    📝 Basic
                 </button>
-                <button data-section-type="about" onclick="addSection('about')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">ℹ️</div>
-                    <div class="font-semibold text-sm">About Us</div>
+                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'content')">
+                    ✍️ Content
                 </button>
-                <button data-section-type="services" onclick="addSection('services')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">⚙️</div>
-                    <div class="font-semibold text-sm">Services</div>
+                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'media')">
+                    🖼️ Media
                 </button>
-                <button data-section-type="portfolio" onclick="addSection('portfolio')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">📁</div>
-                    <div class="font-semibold text-sm">Portfolio</div>
+                <button class="flex-1 px-6 py-3 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'interactive')">
+                    🎯 Interactive
                 </button>
-                <button data-section-type="team" onclick="addSection('team')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">👥</div>
-                    <div class="font-semibold text-sm">Team</div>
-                </button>
-                <button data-section-type="testimonials" onclick="addSection('testimonials')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">💬</div>
-                    <div class="font-semibold text-sm">Testimonials</div>
-                </button>
-                <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">📞</div>
-                    <div class="font-semibold text-sm">Contact</div>
-                </button>
-                <button data-section-type="social" onclick="addSection('social')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">🔗</div>
-                    <div class="font-semibold text-sm">Social Media</div>
-                </button>
-                <button data-section-type="cta" onclick="addSection('cta')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                    <div class="text-4xl mb-2">🎯</div>
-                    <div class="font-semibold text-sm">Call to Action</div>
-                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="overflow-y-auto flex-1">
+                <!-- Basic Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="basic">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">💼</div>
+                            <div class="font-semibold text-sm">Hero Banner</div>
+                        </button>
+                        <button data-section-type="about" onclick="addSection('about')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">ℹ️</div>
+                            <div class="font-semibold text-sm">About Us</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Content Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="content">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="services" onclick="addSection('services')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">⚙️</div>
+                            <div class="font-semibold text-sm">Services</div>
+                        </button>
+                        <button data-section-type="portfolio" onclick="addSection('portfolio')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">📁</div>
+                            <div class="font-semibold text-sm">Portfolio</div>
+                        </button>
+                        <button data-section-type="team" onclick="addSection('team')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">👥</div>
+                            <div class="font-semibold text-sm">Team</div>
+                        </button>
+                        <button data-section-type="testimonials" onclick="addSection('testimonials')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">💬</div>
+                            <div class="font-semibold text-sm">Testimonials</div>
+                        </button>
+                        <button data-section-type="social" onclick="addSection('social')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">🔗</div>
+                            <div class="font-semibold text-sm">Social Media</div>
+                        </button>
+                        <button data-section-type="cta" onclick="addSection('cta')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">🎯</div>
+                            <div class="font-semibold text-sm">Call to Action</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Media Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="media">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    </div>
+                </div>
+
+                <!-- Interactive Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="interactive">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">📞</div>
+                            <div class="font-semibold text-sm">Contact</div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -670,6 +712,25 @@
                     if (badge) badge.remove();
                 }
             });
+        }
+
+        
+        function switchModalTab(event, tabName) {
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+            });
+
+            // Hide all tab contents
+            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Activate clicked tab button
+            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+
+            // Show corresponding tab content
+            document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
         }
 
         function closeSectionModal() {
