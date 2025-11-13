@@ -253,6 +253,13 @@
                                         <div class="text-xs text-gray-600">Fixed navigation bar at the top</div>
                                     </div>
                                 </label>
+                                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="navType" value="bottomnav" class="section-data" data-field="navType" onchange="toggleNavigationSettings(this); updatePreview()">
+                                    <div>
+                                        <div class="font-medium text-sm">⬇️ Bottom Navigation Bar</div>
+                                        <div class="text-xs text-gray-600">Fixed navigation bar at the bottom</div>
+                                    </div>
+                                </label>
                             </div>
                         </div>
 
@@ -344,6 +351,60 @@
                                         <label class="flex items-center gap-2">
                                             <input type="checkbox" class="w-5 h-5 rounded section-data" data-field="navSticky" onchange="updatePreview()" checked>
                                             <span class="text-sm font-medium text-gray-700">Sticky Navigation (fixed at top)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Navigation Settings -->
+                        <div id="bottomNavSettings" class="space-y-4 hidden">
+                            <h4 class="text-sm font-semibold text-gray-700 border-b pb-2">Bottom Navigation Bar Configuration</h4>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Navigation Items (one per line)</label>
+                                <textarea placeholder="Home&#10;About&#10;Services&#10;Contact" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="bottomNavItems" oninput="updatePreview(); updateSectionNavigationDropdowns()"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Define the navigation menu items</p>
+                            </div>
+                            <div class="border-t pt-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3">Navigation Bar Style</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Navigation Style</label>
+                                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="bottomNavStyle" onchange="updatePreview()">
+                                            <option value="simple" selected>Simple</option>
+                                            <option value="underline">Underline Active</option>
+                                            <option value="pills">Pills</option>
+                                            <option value="bordered">Bordered</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Navigation Alignment</label>
+                                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="bottomNavAlignment" onchange="updatePreview()">
+                                            <option value="left" selected>Left</option>
+                                            <option value="center">Center</option>
+                                            <option value="right">Right</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Navigation Size</label>
+                                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="bottomNavSize" onchange="updatePreview()">
+                                            <option value="small">Small</option>
+                                            <option value="medium" selected>Medium</option>
+                                            <option value="large">Large</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Navbar Background</label>
+                                        <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-data" data-field="bottomNavBgColor" oninput="updatePreview()">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Navbar Text Color</label>
+                                        <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-data" data-field="bottomNavTextColor" oninput="updatePreview()">
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" class="w-5 h-5 rounded section-data" data-field="bottomNavSticky" onchange="updatePreview()" checked>
+                                            <span class="text-sm font-medium text-gray-700">Sticky Navigation (fixed at bottom)</span>
                                         </label>
                                     </div>
                                 </div>
@@ -957,11 +1018,13 @@
             const navType = radio.value;
             const tabViewSettings = document.getElementById('tabViewSettings');
             const topNavSettings = document.getElementById('topNavSettings');
+            const bottomNavSettings = document.getElementById('bottomNavSettings');
             const heroSection = document.querySelector('[data-type="hero"]');
 
             // Hide all navigation settings first
             tabViewSettings.classList.add('hidden');
             topNavSettings.classList.add('hidden');
+            bottomNavSettings.classList.add('hidden');
 
             // Remove all navigation selectors
             document.querySelectorAll('.nav-selector').forEach(selector => {
@@ -1035,6 +1098,31 @@
 
                 // Add navigation item selectors to existing sections
                 updateSectionNavigationDropdowns();
+            } else if (navType === 'bottomnav') {
+                // Show bottom navigation settings
+                bottomNavSettings.classList.remove('hidden');
+
+                // Make hero section mandatory
+                if (heroSection) {
+                    heroSection.dataset.mandatory = 'true';
+                    const removeBtn = heroSection.querySelector('button[onclick^="removeSection"]');
+                    if (removeBtn) removeBtn.remove();
+
+                    // Add mandatory badge
+                    const header = heroSection.querySelector('.bg-gray-50');
+                    if (header && !header.querySelector('.bg-blue-200')) {
+                        header.classList.add('bg-blue-50');
+                        const titleDiv = header.querySelector('div');
+                        titleDiv.insertAdjacentHTML('beforeend', '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>');
+                    }
+                    heroSection.classList.add('border-blue-300');
+                } else {
+                    // Add hero section if it doesn't exist
+                    addSection('hero');
+                }
+
+                // Add navigation item selectors to existing sections
+                updateSectionNavigationDropdowns();
             }
         }
 
@@ -1059,6 +1147,11 @@
                 placeholderText = 'Select a tab...';
             } else if (navType === 'topnav') {
                 const navItemsTextarea = layoutSection.querySelector('[data-field="navItems"]');
+                navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            } else if (navType === 'bottomnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="bottomNavItems"]');
                 navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
                 labelText = 'Assign to Navigation Item';
                 placeholderText = 'Select a navigation item...';
@@ -1152,6 +1245,14 @@
             let navTextColor = '#1f2937';
             let navSticky = true;
 
+            // Bottom navigation settings
+            let bottomNavStyle = 'simple';
+            let bottomNavAlignment = 'left';
+            let bottomNavSize = 'medium';
+            let bottomNavBgColor = '#ffffff';
+            let bottomNavTextColor = '#1f2937';
+            let bottomNavSticky = true;
+
             if (layoutSection) {
                 const { data, style } = getSectionData(layoutSection);
                 globalStyles = style;
@@ -1179,6 +1280,17 @@
                     navBgColor = layoutSection.querySelector('[data-field="navBgColor"]')?.value || '#ffffff';
                     navTextColor = layoutSection.querySelector('[data-field="navTextColor"]')?.value || '#1f2937';
                     navSticky = layoutSection.querySelector('[data-field="navSticky"]')?.checked !== false;
+                } else if (navType === 'bottomnav') {
+                    const navItemsValue = layoutSection.querySelector('[data-field="bottomNavItems"]')?.value || '';
+                    navItems = navItemsValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get bottom navigation style settings
+                    bottomNavStyle = layoutSection.querySelector('[data-field="bottomNavStyle"]')?.value || 'simple';
+                    bottomNavAlignment = layoutSection.querySelector('[data-field="bottomNavAlignment"]')?.value || 'left';
+                    bottomNavSize = layoutSection.querySelector('[data-field="bottomNavSize"]')?.value || 'medium';
+                    bottomNavBgColor = layoutSection.querySelector('[data-field="bottomNavBgColor"]')?.value || '#ffffff';
+                    bottomNavTextColor = layoutSection.querySelector('[data-field="bottomNavTextColor"]')?.value || '#1f2937';
+                    bottomNavSticky = layoutSection.querySelector('[data-field="bottomNavSticky"]')?.checked !== false;
                 }
             }
 
@@ -1453,6 +1565,137 @@
                                 </div>
                             `;
                         }).join('')}
+                    </div>
+                `;
+            } else if (navType === 'bottomnav' && navItems.length > 0) {
+                // Bottom Navigation Bar Mode
+                // First, render hero section (always visible)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by navigation items
+                const sectionsByNavItem = {};
+                navItems.forEach(item => {
+                    sectionsByNavItem[item] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByNavItem[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Render navigation sections (only first one visible)
+                const navId = 'preview-nav-' + Date.now();
+                html += `
+                    <div class="nav-sections-container" data-nav-container="${navId}">
+                        ${navItems.map((item, index) => {
+                            return `
+                                <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
+                                    ${sectionsByNavItem[item].length > 0
+                                        ? sectionsByNavItem[item].map(s => s.html).join('')
+                                        : `<div class="py-16 text-center text-gray-500">
+                                            <div class="text-4xl mb-3">📋</div>
+                                            <p>No sections assigned to "${item}" yet</p>
+                                           </div>`
+                                    }
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                // Define size classes
+                const navSizeClasses = {
+                    small: 'px-3 py-2 text-xs',
+                    medium: 'px-4 py-3 text-sm',
+                    large: 'px-6 py-4 text-base'
+                };
+
+                // Define alignment classes
+                const navAlignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                // Generate navigation buttons based on style
+                const generateNavButton = (item, index, navStyle, navSize) => {
+                    const sizeClass = navSizeClasses[navSize] || navSizeClasses.medium;
+                    const baseClasses = 'font-medium transition cursor-pointer preview-nav-btn';
+
+                    switch(navStyle) {
+                        case 'underline':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} border-t-2 ${index === 0 ? 'border-blue-600' : 'border-transparent hover:border-gray-400'}"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="underline">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'pills':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-blue-600 text-white' : 'hover:bg-gray-200'}"
+                                   style="color: ${index === 0 ? '#ffffff' : bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="pills">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'bordered':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-lg border ${index === 0 ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:bg-gray-50'}"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="bordered">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'simple':
+                        default:
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} hover:opacity-70"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="simple">
+                                    ${item}
+                                </button>
+                            `;
+                    }
+                };
+
+                const navContainerClasses = bottomNavStyle === 'pills' || bottomNavStyle === 'bordered' ? 'gap-2' : 'gap-6';
+                const navAlignClass = navAlignmentClasses[bottomNavAlignment] || navAlignmentClasses.left;
+                const stickyClass = bottomNavSticky ? 'fixed bottom-0 left-0 right-0 z-10' : '';
+
+                // Render bottom navigation bar LAST
+                html += `
+                    <div class="${stickyClass} shadow-sm" style="background-color: ${bottomNavBgColor}; border-top: 1px solid #e5e7eb;">
+                        <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
+                            ${navItems.map((item, index) => generateNavButton(item, index, bottomNavStyle, bottomNavSize)).join('')}
+                        </div>
                     </div>
                 `;
             } else {
