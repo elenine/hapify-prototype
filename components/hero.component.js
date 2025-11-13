@@ -4,7 +4,7 @@ window.sectionComponents = window.sectionComponents || {};
 
 window.sectionComponents.hero = {
                 name: '💼 Hero Banner',
-                allowMultiple: false,
+                allowMultiple: false,  // Only one hero section allowed
                 info: `
                     <div class="space-y-4">
                         <div>

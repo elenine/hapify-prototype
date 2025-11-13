@@ -376,8 +376,8 @@
             const navType = navTypeRadio?.value || 'none';
             const navEnabled = navType !== 'none';
 
-            // For layout and hero section when navigation is enabled, hide remove button
-            const canRemove = !isLayout && !(isHero && navEnabled);
+            // For layout and hero section, always hide remove button (both are permanent)
+            const canRemove = !isLayout && !isHero;
             const removeButton = canRemove ? `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>` : '';
             const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
 
@@ -392,13 +392,13 @@
             ` : '';
 
             const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''} ${isHero ? 'border-blue-300' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''} ${(isHero && navEnabled) ? 'data-mandatory="true"' : ''}>
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''} ${isHero ? 'border-blue-300 bg-blue-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout || isHero ? 'data-permanent="true"' : ''}>
                     <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''} ${isHero ? 'bg-blue-50' : ''}">
                         <div class="flex items-center gap-2">
                             ${dragHandle}
                             <span class="font-semibold text-sm">${template.name}</span>
                             ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
-                            ${(isHero && navEnabled) ? '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>' : ''}
+                            ${isHero ? '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Required</span>' : ''}
                         </div>
                         ${removeButton}
                     </div>
@@ -432,8 +432,15 @@
 
         function removeSection(id) {
             const section = document.querySelector(`[data-id="${id}"]`);
-            if (section && section.dataset.mandatory === 'true') {
-                alert('This section is mandatory and cannot be removed when tab view is enabled.');
+            if (section && section.dataset.permanent === 'true') {
+                const sectionType = section.dataset.type;
+                if (sectionType === 'layout') {
+                    alert('The Layout section contains global settings and cannot be removed.');
+                } else if (sectionType === 'hero') {
+                    alert('The Hero Banner is required and cannot be removed.');
+                } else {
+                    alert('This section is required and cannot be removed.');
+                }
                 return;
             }
             if (confirm('Remove this section?')) {
@@ -459,43 +466,12 @@
                 selector.closest('div').remove();
             });
 
-            // Reset hero section mandatory status
-            if (heroSection) {
-                heroSection.dataset.mandatory = 'false';
-                const mandatoryBadge = heroSection.querySelector('.bg-blue-200');
-                if (mandatoryBadge) mandatoryBadge.remove();
-                heroSection.classList.remove('border-blue-300');
-                const header = heroSection.querySelector('.bg-blue-50');
-                if (header) header.classList.remove('bg-blue-50');
-
-                // Add back remove button if it doesn't exist
-                const headerDiv = heroSection.querySelector('.bg-gray-50');
-                if (headerDiv && !headerDiv.querySelector('button[onclick^="removeSection"]')) {
-                    const id = heroSection.dataset.id;
-                    headerDiv.insertAdjacentHTML('beforeend', `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`);
-                }
-            }
-
             if (navType === 'tabview') {
                 // Show tab view settings
                 tabViewSettings.classList.remove('hidden');
 
-                // Make hero section mandatory
-                if (heroSection) {
-                    heroSection.dataset.mandatory = 'true';
-                    const removeBtn = heroSection.querySelector('button[onclick^="removeSection"]');
-                    if (removeBtn) removeBtn.remove();
-
-                    // Add mandatory badge
-                    const header = heroSection.querySelector('.bg-gray-50');
-                    if (header && !header.querySelector('.bg-blue-200')) {
-                        header.classList.add('bg-blue-50');
-                        const titleDiv = header.querySelector('div');
-                        titleDiv.insertAdjacentHTML('beforeend', '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>');
-                    }
-                    heroSection.classList.add('border-blue-300');
-                } else {
-                    // Add hero section if it doesn't exist
+                // Ensure hero section exists
+                if (!heroSection) {
                     addSection('hero');
                 }
 
@@ -505,22 +481,8 @@
                 // Show top navigation settings
                 topNavSettings.classList.remove('hidden');
 
-                // Make hero section mandatory
-                if (heroSection) {
-                    heroSection.dataset.mandatory = 'true';
-                    const removeBtn = heroSection.querySelector('button[onclick^="removeSection"]');
-                    if (removeBtn) removeBtn.remove();
-
-                    // Add mandatory badge
-                    const header = heroSection.querySelector('.bg-gray-50');
-                    if (header && !header.querySelector('.bg-blue-200')) {
-                        header.classList.add('bg-blue-50');
-                        const titleDiv = header.querySelector('div');
-                        titleDiv.insertAdjacentHTML('beforeend', '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>');
-                    }
-                    heroSection.classList.add('border-blue-300');
-                } else {
-                    // Add hero section if it doesn't exist
+                // Ensure hero section exists
+                if (!heroSection) {
                     addSection('hero');
                 }
 
@@ -530,22 +492,8 @@
                 // Show bottom navigation settings
                 bottomNavSettings.classList.remove('hidden');
 
-                // Make hero section mandatory
-                if (heroSection) {
-                    heroSection.dataset.mandatory = 'true';
-                    const removeBtn = heroSection.querySelector('button[onclick^="removeSection"]');
-                    if (removeBtn) removeBtn.remove();
-
-                    // Add mandatory badge
-                    const header = heroSection.querySelector('.bg-gray-50');
-                    if (header && !header.querySelector('.bg-blue-200')) {
-                        header.classList.add('bg-blue-50');
-                        const titleDiv = header.querySelector('div');
-                        titleDiv.insertAdjacentHTML('beforeend', '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>');
-                    }
-                    heroSection.classList.add('border-blue-300');
-                } else {
-                    // Add hero section if it doesn't exist
+                // Ensure hero section exists
+                if (!heroSection) {
                     addSection('hero');
                 }
 
