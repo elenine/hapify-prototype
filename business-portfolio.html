@@ -1326,35 +1326,6 @@
                 `;
             } else if (navType === 'topnav' && navItems.length > 0) {
                 // Top Navigation Bar Mode
-                // First, render hero section (always visible)
-                const heroSection = document.querySelector('[data-type="hero"]');
-                if (heroSection) {
-                    const template = sectionTemplates['hero'];
-                    const { data, style } = getSectionData(heroSection);
-                    html += template.render(data, style, globalStyles);
-                }
-
-                // Group sections by navigation items
-                const sectionsByNavItem = {};
-                navItems.forEach(item => {
-                    sectionsByNavItem[item] = [];
-                });
-
-                sections.forEach(section => {
-                    const type = section.dataset.type;
-                    if (type === 'layout' || type === 'hero') return;
-
-                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
-                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
-                        const template = sectionTemplates[type];
-                        const { data, style } = getSectionData(section);
-                        sectionsByNavItem[assignedNavItem].push({
-                            html: template.render(data, style, globalStyles),
-                            type: type
-                        });
-                    }
-                });
-
                 // Define size classes
                 const navSizeClasses = {
                     small: 'px-3 py-2 text-xs',
@@ -1416,12 +1387,46 @@
                 const navAlignClass = navAlignmentClasses[navAlignment] || navAlignmentClasses.left;
                 const stickyClass = navSticky ? 'sticky top-0 z-10' : '';
 
+                // Render top navigation bar FIRST
                 html += `
                     <div class="${stickyClass} shadow-sm" style="background-color: ${navBgColor}; border-bottom: 1px solid #e5e7eb;">
                         <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
                             ${navItems.map((item, index) => generateNavButton(item, index, navStyle, navSize)).join('')}
                         </div>
                     </div>
+                `;
+
+                // Then render hero section (always visible, not in navigation sections)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by navigation items
+                const sectionsByNavItem = {};
+                navItems.forEach(item => {
+                    sectionsByNavItem[item] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByNavItem[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Render navigation sections
+                html += `
                     <div class="nav-sections">
                         ${navItems.map((item) => {
                             const itemId = `nav-item-${item.replace(/\s+/g, '-')}`;
