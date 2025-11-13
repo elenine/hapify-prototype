@@ -967,35 +967,28 @@
             pricing: {
                 name: '💰 Pricing Plans',
                 allowMultiple: false,
-                info: `
+                info: (sectionId) => `
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" placeholder="Pricing Plans" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
                         </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Plan 1</h4>
-                            <div class="space-y-3">
-                                <input type="text" placeholder="Basic" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan1Name" oninput="updatePreview()">
-                                <input type="text" placeholder="$99/mo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan1Price" oninput="updatePreview()">
-                                <textarea placeholder="Feature 1&#10;Feature 2&#10;Feature 3" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan1Features" oninput="updatePreview()"></textarea>
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">Plans</h4>
+                                <button onclick="addDynamicItem('${sectionId}', 'plans', (id, num) => \`
+                                    <div class='flex justify-between items-center mb-3'>
+                                        <h5 class='font-medium text-gray-600'>Plan \${num}</h5>
+                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                                    </div>
+                                    <div class='space-y-3'>
+                                        <input type='text' placeholder='Plan Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-name-\${id}' oninput='updatePreview()'>
+                                        <input type='text' placeholder='$99/mo' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-price-\${id}' oninput='updatePreview()'>
+                                        <textarea placeholder='Feature 1\nFeature 2\nFeature 3' rows='3' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-features-\${id}' oninput='updatePreview()'></textarea>
+                                    </div>
+                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Plan</button>
                             </div>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Plan 2</h4>
-                            <div class="space-y-3">
-                                <input type="text" placeholder="Pro" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan2Name" oninput="updatePreview()">
-                                <input type="text" placeholder="$199/mo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan2Price" oninput="updatePreview()">
-                                <textarea placeholder="Feature 1&#10;Feature 2&#10;Feature 3" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan2Features" oninput="updatePreview()"></textarea>
-                            </div>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Plan 3</h4>
-                            <div class="space-y-3">
-                                <input type="text" placeholder="Enterprise" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan3Name" oninput="updatePreview()">
-                                <input type="text" placeholder="$399/mo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan3Price" oninput="updatePreview()">
-                                <textarea placeholder="Feature 1&#10;Feature 2&#10;Feature 3" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan3Features" oninput="updatePreview()"></textarea>
-                            </div>
+                            <div data-items-container="plans"></div>
                         </div>
                     </div>
                 `,
@@ -1012,11 +1005,18 @@
                     </div>
                 `,
                 render: (data, style) => {
-                    const plans = [
-                        { name: data.plan1Name, price: data.plan1Price, features: data.plan1Features },
-                        { name: data.plan2Name, price: data.plan2Price, features: data.plan2Features },
-                        { name: data.plan3Name, price: data.plan3Price, features: data.plan3Features }
-                    ].filter(p => p.name || p.price);
+                    const plans = [];
+                    Object.keys(data).forEach(key => {
+                        const match = key.match(/^plan-name-(.+)$/);
+                        if (match) {
+                            const id = match[1];
+                            plans.push({
+                                name: data[`plan-name-${id}`],
+                                price: data[`plan-price-${id}`],
+                                features: data[`plan-features-${id}`]
+                            });
+                        }
+                    });
 
                     return `
                         <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
@@ -1050,31 +1050,27 @@
             faq: {
                 name: '❓ FAQ',
                 allowMultiple: false,
-                info: `
+                info: (sectionId) => `
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" placeholder="Frequently Asked Questions" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
                         </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Question 1</h4>
-                            <input type="text" placeholder="What services do you offer?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q1" oninput="updatePreview()">
-                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a1" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Question 2</h4>
-                            <input type="text" placeholder="How long does a project take?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q2" oninput="updatePreview()">
-                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a2" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Question 3</h4>
-                            <input type="text" placeholder="What are your rates?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q3" oninput="updatePreview()">
-                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a3" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Question 4</h4>
-                            <input type="text" placeholder="Do you offer support?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q4" oninput="updatePreview()">
-                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a4" oninput="updatePreview()"></textarea>
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">Questions</h4>
+                                <button onclick="addDynamicItem('${sectionId}', 'faqs', (id, num) => \`
+                                    <div class='flex justify-between items-center mb-3'>
+                                        <h5 class='font-medium text-gray-600'>Question \${num}</h5>
+                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                                    </div>
+                                    <div class='space-y-3'>
+                                        <input type='text' placeholder='Question' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='faq-q-\${id}' oninput='updatePreview()'>
+                                        <textarea placeholder='Answer...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='faq-a-\${id}' oninput='updatePreview()'></textarea>
+                                    </div>
+                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Question</button>
+                            </div>
+                            <div data-items-container="faqs"></div>
                         </div>
                     </div>
                 `,
@@ -1087,12 +1083,17 @@
                     </div>
                 `,
                 render: (data, style) => {
-                    const faqs = [
-                        { q: data.q1, a: data.a1 },
-                        { q: data.q2, a: data.a2 },
-                        { q: data.q3, a: data.a3 },
-                        { q: data.q4, a: data.a4 }
-                    ].filter(faq => faq.q || faq.a);
+                    const faqs = [];
+                    Object.keys(data).forEach(key => {
+                        const match = key.match(/^faq-q-(.+)$/);
+                        if (match) {
+                            const id = match[1];
+                            faqs.push({
+                                q: data[`faq-q-${id}`],
+                                a: data[`faq-a-${id}`]
+                            });
+                        }
+                    });
 
                     return `
                         <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
@@ -1301,29 +1302,28 @@
             awards: {
                 name: '🏆 Awards',
                 allowMultiple: false,
-                info: `
+                info: (sectionId) => `
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" placeholder="Awards & Recognition" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
                         </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Award 1</h4>
-                            <input type="text" placeholder="Award Name" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award1Name" oninput="updatePreview()">
-                            <input type="text" placeholder="Year" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award1Year" oninput="updatePreview()">
-                            <textarea placeholder="Description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award1Desc" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Award 2</h4>
-                            <input type="text" placeholder="Award Name" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award2Name" oninput="updatePreview()">
-                            <input type="text" placeholder="Year" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award2Year" oninput="updatePreview()">
-                            <textarea placeholder="Description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award2Desc" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Award 3</h4>
-                            <input type="text" placeholder="Award Name" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award3Name" oninput="updatePreview()">
-                            <input type="text" placeholder="Year" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award3Year" oninput="updatePreview()">
-                            <textarea placeholder="Description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="award3Desc" oninput="updatePreview()"></textarea>
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">Awards</h4>
+                                <button onclick="addDynamicItem('${sectionId}', 'awards', (id, num) => \`
+                                    <div class='flex justify-between items-center mb-3'>
+                                        <h5 class='font-medium text-gray-600'>Award \${num}</h5>
+                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                                    </div>
+                                    <div class='space-y-3'>
+                                        <input type='text' placeholder='Award Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='award-name-\${id}' oninput='updatePreview()'>
+                                        <input type='text' placeholder='Year' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='award-year-\${id}' oninput='updatePreview()'>
+                                        <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='award-desc-\${id}' oninput='updatePreview()'></textarea>
+                                    </div>
+                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Award</button>
+                            </div>
+                            <div data-items-container="awards"></div>
                         </div>
                     </div>
                 `,
@@ -1336,11 +1336,18 @@
                     </div>
                 `,
                 render: (data, style) => {
-                    const awards = [
-                        { name: data.award1Name, year: data.award1Year, desc: data.award1Desc },
-                        { name: data.award2Name, year: data.award2Year, desc: data.award2Desc },
-                        { name: data.award3Name, year: data.award3Year, desc: data.award3Desc }
-                    ].filter(a => a.name || a.year);
+                    const awards = [];
+                    Object.keys(data).forEach(key => {
+                        const match = key.match(/^award-name-(.+)$/);
+                        if (match) {
+                            const id = match[1];
+                            awards.push({
+                                name: data[`award-name-${id}`],
+                                year: data[`award-year-${id}`],
+                                desc: data[`award-desc-${id}`]
+                            });
+                        }
+                    });
 
                     return `
                         <div class="py-12 px-6" style="background: ${style.bg || '#fffbeb'}">
@@ -1419,67 +1426,28 @@
             features: {
                 name: '✨ Features',
                 allowMultiple: false,
-                info: `
+                info: (sectionId) => `
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" placeholder="Why Choose Us" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 1 Icon</label>
-                                <input type="text" placeholder="⚡" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat1Icon" oninput="updatePreview()">
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">Features</h4>
+                                <button onclick="addDynamicItem('${sectionId}', 'features', (id, num) => \`
+                                    <div class='flex justify-between items-center mb-3'>
+                                        <h5 class='font-medium text-gray-600'>Feature \${num}</h5>
+                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                                    </div>
+                                    <div class='space-y-3'>
+                                        <input type='text' placeholder='Icon (emoji)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-icon-\${id}' oninput='updatePreview()'>
+                                        <input type='text' placeholder='Feature Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-title-\${id}' oninput='updatePreview()'>
+                                        <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-desc-\${id}' oninput='updatePreview()'></textarea>
+                                    </div>
+                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Feature</button>
                             </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 1 Title</label>
-                                <input type="text" placeholder="Fast Delivery" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat1Title" oninput="updatePreview()">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 1 Description</label>
-                                <textarea placeholder="Description..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat1Desc" oninput="updatePreview()"></textarea>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 border-t pt-4">
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 2 Icon</label>
-                                <input type="text" placeholder="💎" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat2Icon" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 2 Title</label>
-                                <input type="text" placeholder="Premium Quality" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat2Title" oninput="updatePreview()">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 2 Description</label>
-                                <textarea placeholder="Description..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat2Desc" oninput="updatePreview()"></textarea>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 border-t pt-4">
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 3 Icon</label>
-                                <input type="text" placeholder="🛡️" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat3Icon" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 3 Title</label>
-                                <input type="text" placeholder="Secure & Reliable" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat3Title" oninput="updatePreview()">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 3 Description</label>
-                                <textarea placeholder="Description..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat3Desc" oninput="updatePreview()"></textarea>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 border-t pt-4">
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 4 Icon</label>
-                                <input type="text" placeholder="🎯" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat4Icon" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 4 Title</label>
-                                <input type="text" placeholder="Targeted Solutions" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat4Title" oninput="updatePreview()">
-                            </div>
-                            <div class="col-span-2">
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Feature 4 Description</label>
-                                <textarea placeholder="Description..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="feat4Desc" oninput="updatePreview()"></textarea>
-                            </div>
+                            <div data-items-container="features"></div>
                         </div>
                     </div>
                 `,
@@ -1500,12 +1468,18 @@
                     </div>
                 `,
                 render: (data, style) => {
-                    const features = [
-                        { icon: data.feat1Icon, title: data.feat1Title, desc: data.feat1Desc },
-                        { icon: data.feat2Icon, title: data.feat2Title, desc: data.feat2Desc },
-                        { icon: data.feat3Icon, title: data.feat3Title, desc: data.feat3Desc },
-                        { icon: data.feat4Icon, title: data.feat4Title, desc: data.feat4Desc }
-                    ].filter(f => f.title);
+                    const features = [];
+                    Object.keys(data).forEach(key => {
+                        const match = key.match(/^feature-icon-(.+)$/);
+                        if (match) {
+                            const id = match[1];
+                            features.push({
+                                icon: data[`feature-icon-${id}`],
+                                title: data[`feature-title-${id}`],
+                                desc: data[`feature-desc-${id}`]
+                            });
+                        }
+                    });
 
                     const cardStyle = style.cardStyle || 'shadow';
                     const cardClasses = {
@@ -1533,31 +1507,27 @@
             process: {
                 name: '🔄 Process',
                 allowMultiple: false,
-                info: `
+                info: (sectionId) => `
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" placeholder="Our Process" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
                         </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Step 1</h4>
-                            <input type="text" placeholder="Discovery" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step1Title" oninput="updatePreview()">
-                            <textarea placeholder="Step description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step1Desc" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Step 2</h4>
-                            <input type="text" placeholder="Planning" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step2Title" oninput="updatePreview()">
-                            <textarea placeholder="Step description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step2Desc" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Step 3</h4>
-                            <input type="text" placeholder="Execution" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step3Title" oninput="updatePreview()">
-                            <textarea placeholder="Step description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step3Desc" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div class="border-t pt-4">
-                            <h4 class="font-medium text-gray-700 mb-3">Step 4</h4>
-                            <input type="text" placeholder="Delivery" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step4Title" oninput="updatePreview()">
-                            <textarea placeholder="Step description..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="step4Desc" oninput="updatePreview()"></textarea>
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">Steps</h4>
+                                <button onclick="addDynamicItem('${sectionId}', 'steps', (id, num) => \`
+                                    <div class='flex justify-between items-center mb-3'>
+                                        <h5 class='font-medium text-gray-600'>Step \${num}</h5>
+                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                                    </div>
+                                    <div class='space-y-3'>
+                                        <input type='text' placeholder='Step Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='step-title-\${id}' oninput='updatePreview()'>
+                                        <textarea placeholder='Step description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='step-desc-\${id}' oninput='updatePreview()'></textarea>
+                                    </div>
+                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Step</button>
+                            </div>
+                            <div data-items-container="steps"></div>
                         </div>
                     </div>
                 `,
@@ -1577,12 +1547,17 @@
                     </div>
                 `,
                 render: (data, style) => {
-                    const steps = [
-                        { title: data.step1Title, desc: data.step1Desc },
-                        { title: data.step2Title, desc: data.step2Desc },
-                        { title: data.step3Title, desc: data.step3Desc },
-                        { title: data.step4Title, desc: data.step4Desc }
-                    ].filter(s => s.title);
+                    const steps = [];
+                    Object.keys(data).forEach(key => {
+                        const match = key.match(/^step-title-(.+)$/);
+                        if (match) {
+                            const id = match[1];
+                            steps.push({
+                                title: data[`step-title-${id}`],
+                                desc: data[`step-desc-${id}`]
+                            });
+                        }
+                    });
 
                     const layout = style.layout || 'vertical';
 
@@ -1749,7 +1724,7 @@
                         </button>
                     </div>
                     <div class="p-4 tab-content" data-tab="info">
-                        ${template.info}
+                        ${typeof template.info === 'function' ? template.info(id) : template.info}
                     </div>
                     <div class="p-4 tab-content hidden" data-tab="style">
                         ${template.style}
@@ -1985,6 +1960,32 @@
             });
 
             return { data, style };
+        }
+
+        // Dynamic Item Management Functions
+        function addDynamicItem(sectionId, itemType, template) {
+            const container = document.querySelector(`#${sectionId} [data-items-container="${itemType}"]`);
+            if (!container) return;
+
+            const itemCount = container.querySelectorAll('.dynamic-item').length;
+            const itemId = `${itemType}-${Date.now()}`;
+
+            const itemHtml = template(itemId, itemCount + 1);
+            const div = document.createElement('div');
+            div.className = 'dynamic-item border-t pt-4 mt-4';
+            div.dataset.itemId = itemId;
+            div.innerHTML = itemHtml;
+
+            container.appendChild(div);
+            updatePreview();
+        }
+
+        function removeDynamicItem(button) {
+            const item = button.closest('.dynamic-item');
+            if (item) {
+                item.remove();
+                updatePreview();
+            }
         }
 
         function updatePreview() {
