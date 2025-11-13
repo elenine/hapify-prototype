@@ -976,17 +976,7 @@
                         <div class="border-t pt-4 mt-4">
                             <div class="flex justify-between items-center mb-3">
                                 <h4 class="font-medium text-gray-700">Plans</h4>
-                                <button onclick="addDynamicItem('${sectionId}', 'plans', (id, num) => \`
-                                    <div class='flex justify-between items-center mb-3'>
-                                        <h5 class='font-medium text-gray-600'>Plan \${num}</h5>
-                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
-                                    </div>
-                                    <div class='space-y-3'>
-                                        <input type='text' placeholder='Plan Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-name-\${id}' oninput='updatePreview()'>
-                                        <input type='text' placeholder='$99/mo' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-price-\${id}' oninput='updatePreview()'>
-                                        <textarea placeholder='Feature 1\nFeature 2\nFeature 3' rows='3' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-features-\${id}' oninput='updatePreview()'></textarea>
-                                    </div>
-                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Plan</button>
+                                <button onclick="addDynamicItem('${sectionId}', 'plans'); return false;" type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Plan</button>
                             </div>
                             <div data-items-container="plans"></div>
                         </div>
@@ -1059,16 +1049,7 @@
                         <div class="border-t pt-4 mt-4">
                             <div class="flex justify-between items-center mb-3">
                                 <h4 class="font-medium text-gray-700">Questions</h4>
-                                <button onclick="addDynamicItem('${sectionId}', 'faqs', (id, num) => \`
-                                    <div class='flex justify-between items-center mb-3'>
-                                        <h5 class='font-medium text-gray-600'>Question \${num}</h5>
-                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
-                                    </div>
-                                    <div class='space-y-3'>
-                                        <input type='text' placeholder='Question' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='faq-q-\${id}' oninput='updatePreview()'>
-                                        <textarea placeholder='Answer...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='faq-a-\${id}' oninput='updatePreview()'></textarea>
-                                    </div>
-                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Question</button>
+                                <button onclick="addDynamicItem('${sectionId}', 'faqs'); return false;" type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Question</button>
                             </div>
                             <div data-items-container="faqs"></div>
                         </div>
@@ -1113,45 +1094,18 @@
             stats: {
                 name: '📊 Statistics',
                 allowMultiple: false,
-                info: `
+                info: (sectionId) => `
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
                             <input type="text" placeholder="Our Achievements" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 1 Value</label>
-                                <input type="text" placeholder="500+" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat1Value" oninput="updatePreview()">
+                        <div class="border-t pt-4 mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium text-gray-700">Statistics</h4>
+                                <button onclick="addDynamicItem('${sectionId}', 'stats'); return false;" type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Stat</button>
                             </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 1 Label</label>
-                                <input type="text" placeholder="Projects" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat1Label" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 2 Value</label>
-                                <input type="text" placeholder="200+" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat2Value" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 2 Label</label>
-                                <input type="text" placeholder="Clients" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat2Label" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 3 Value</label>
-                                <input type="text" placeholder="15+" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat3Value" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 3 Label</label>
-                                <input type="text" placeholder="Years" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat3Label" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 4 Value</label>
-                                <input type="text" placeholder="98%" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat4Value" oninput="updatePreview()">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 4 Label</label>
-                                <input type="text" placeholder="Satisfaction" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat4Label" oninput="updatePreview()">
-                            </div>
+                            <div data-items-container="stats"></div>
                         </div>
                     </div>
                 `,
@@ -1168,12 +1122,17 @@
                     </div>
                 `,
                 render: (data, style) => {
-                    const stats = [
-                        { value: data.stat1Value, label: data.stat1Label },
-                        { value: data.stat2Value, label: data.stat2Label },
-                        { value: data.stat3Value, label: data.stat3Label },
-                        { value: data.stat4Value, label: data.stat4Label }
-                    ].filter(s => s.value || s.label);
+                    const stats = [];
+                    Object.keys(data).forEach(key => {
+                        const match = key.match(/^stat-value-(.+)$/);
+                        if (match) {
+                            const id = match[1];
+                            stats.push({
+                                value: data[`stat-value-${id}`],
+                                label: data[`stat-label-${id}`]
+                            });
+                        }
+                    });
 
                     return `
                         <div class="py-12 px-6" style="background: ${style.bg || '#1e40af'}; color: ${style.textColor || '#ffffff'}">
@@ -1962,13 +1921,89 @@
             return { data, style };
         }
 
+        // Dynamic Item Templates
+        const dynamicItemTemplates = {
+            plans: (id, num) => `
+                <div class='flex justify-between items-center mb-3'>
+                    <h5 class='font-medium text-gray-600'>Plan ${num}</h5>
+                    <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                </div>
+                <div class='space-y-3'>
+                    <input type='text' placeholder='Plan Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-name-${id}' oninput='updatePreview()'>
+                    <input type='text' placeholder='$99/mo' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-price-${id}' oninput='updatePreview()'>
+                    <textarea placeholder='Feature 1&#10;Feature 2&#10;Feature 3' rows='3' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='plan-features-${id}' oninput='updatePreview()'></textarea>
+                </div>
+            `,
+            faqs: (id, num) => `
+                <div class='flex justify-between items-center mb-3'>
+                    <h5 class='font-medium text-gray-600'>Question ${num}</h5>
+                    <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                </div>
+                <div class='space-y-3'>
+                    <input type='text' placeholder='Question' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='faq-q-${id}' oninput='updatePreview()'>
+                    <textarea placeholder='Answer...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='faq-a-${id}' oninput='updatePreview()'></textarea>
+                </div>
+            `,
+            awards: (id, num) => `
+                <div class='flex justify-between items-center mb-3'>
+                    <h5 class='font-medium text-gray-600'>Award ${num}</h5>
+                    <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                </div>
+                <div class='space-y-3'>
+                    <input type='text' placeholder='Award Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='award-name-${id}' oninput='updatePreview()'>
+                    <input type='text' placeholder='Year' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='award-year-${id}' oninput='updatePreview()'>
+                    <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='award-desc-${id}' oninput='updatePreview()'></textarea>
+                </div>
+            `,
+            features: (id, num) => `
+                <div class='flex justify-between items-center mb-3'>
+                    <h5 class='font-medium text-gray-600'>Feature ${num}</h5>
+                    <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                </div>
+                <div class='space-y-3'>
+                    <input type='text' placeholder='Icon (emoji)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-icon-${id}' oninput='updatePreview()'>
+                    <input type='text' placeholder='Feature Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-title-${id}' oninput='updatePreview()'>
+                    <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-desc-${id}' oninput='updatePreview()'></textarea>
+                </div>
+            `,
+            steps: (id, num) => `
+                <div class='flex justify-between items-center mb-3'>
+                    <h5 class='font-medium text-gray-600'>Step ${num}</h5>
+                    <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                </div>
+                <div class='space-y-3'>
+                    <input type='text' placeholder='Step Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='step-title-${id}' oninput='updatePreview()'>
+                    <textarea placeholder='Step description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='step-desc-${id}' oninput='updatePreview()'></textarea>
+                </div>
+            `,
+            stats: (id, num) => `
+                <div class='flex justify-between items-center mb-3'>
+                    <h5 class='font-medium text-gray-600'>Stat ${num}</h5>
+                    <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+                </div>
+                <div class='grid grid-cols-2 gap-3'>
+                    <input type='text' placeholder='Value (e.g. 500+)' class='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='stat-value-${id}' oninput='updatePreview()'>
+                    <input type='text' placeholder='Label (e.g. Projects)' class='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='stat-label-${id}' oninput='updatePreview()'>
+                </div>
+            `
+        };
+
         // Dynamic Item Management Functions
-        function addDynamicItem(sectionId, itemType, template) {
+        function addDynamicItem(sectionId, itemType) {
             const container = document.querySelector(`#${sectionId} [data-items-container="${itemType}"]`);
-            if (!container) return;
+            if (!container) {
+                console.error('Container not found:', sectionId, itemType);
+                return;
+            }
 
             const itemCount = container.querySelectorAll('.dynamic-item').length;
-            const itemId = `${itemType}-${Date.now()}`;
+            const itemId = `${Date.now()}`;
+
+            const template = dynamicItemTemplates[itemType];
+            if (!template) {
+                console.error('Template not found:', itemType);
+                return;
+            }
 
             const itemHtml = template(itemId, itemCount + 1);
             const div = document.createElement('div');
