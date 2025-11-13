@@ -3,126 +3,1372 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Congratulations Card - InviteGen</title>
+    <title>Congratulations Card Creator - InviteGen</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
+                        <p class="text-xs text-gray-500">Congratulations Card</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!--
-    ============================================
-    CONGRATULATIONS CARD TEMPLATE
-    ============================================
+    <!-- Main Container -->
+    <div class="flex h-[calc(100vh-73px)]">
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Design Congratulations Card</h2>
+                    <p class="text-sm text-gray-600 mt-1">Celebrate achievements and milestones</p>
+                </div>
 
-    PURPOSE:
-    This template is for celebrating achievements, milestones, and successes.
-    Perfect for congratulating someone on a new job, promotion, graduation,
-    engagement, new home, new baby, award, or any significant accomplishment.
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
+                </div>
 
-    STRUCTURE TO FOLLOW:
-    Please follow the exact structure from business-portfolio.html:
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-purple-600 font-semibold hover:border-purple-400 hover:bg-purple-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
+            </div>
+        </div>
 
-    1. HEADER (Sticky Navigation)
-       - Logo and title
-       - Action buttons (Publish, Preview, QR)
-       - Use gradient: from-yellow-400 to-amber-500 (matching home page card)
+        <!-- Right Panel - Preview -->
+        <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
+            <div class="h-fit">
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
 
-    2. MAIN CONTAINER (Split Layout)
-       - Left Panel: Editor Interface
-       - Right Panel: Live Preview
-
-    3. SECTION TEMPLATES OBJECT (JavaScript)
-       Create 9 section types appropriate for congratulations messages:
-
-       Suggested sections for Congratulations Cards:
-       a) coverMessage - Main congratulations message with recipient name
-       b) achievement - Specific achievement being celebrated
-       c) photo - Photo of the accomplishment or celebratory image
-       d) praise - Words of admiration and recognition
-       e) journey - Acknowledge the hard work that led to this moment
-       f) quote - Motivational or celebratory quote
-       g) futureWishes - Best wishes for continued success
-       h) celebration - Suggest celebration or next steps
-       i) signature - Personal closing from sender
-
-    4. INFO/STYLE TABS PATTERN
-       Each section should have:
-       - Info Tab: Content fields (achievement details, recipient name, etc.)
-       - Style Tab: Visual customization (vibrant colors, bold fonts)
-
-    5. CORE FUNCTIONS (JavaScript)
-       - Same as business-portfolio.html
-       - openSectionModal() / closeSectionModal()
-       - addSection(type)
-       - removeSection(id)
-       - switchTab(event, id, tab)
-       - getSectionData(section)
-       - updatePreview()
-       - handleImageUpload(input)
-       - setDevice(device)
-       - previewFullscreen()
-       - generateQR()
-       - copyUrl()
-       - publishProject()
-
-    6. MODALS
-       - Section Selection Modal (9 section types grid)
-       - QR Code Modal (for sharing)
-
-    COLOR SCHEME:
-    - Primary gradient: from-yellow-400 to-amber-500
-    - Accent colors: yellow-600, amber-600
-    - Bright, celebratory, energetic tones
-
-    KEY CHARACTERISTICS:
-    - Enthusiastic and celebratory tone
-    - Focus on the specific achievement
-    - Acknowledge effort and hard work
-    - Express genuine pride and happiness
-    - Versatile for many types of accomplishments
-
-    COMMON USE CASES:
-    - New job or promotion
-    - Graduation (different from graduation ceremony invitation)
-    - Engagement or wedding
-    - New home purchase
-    - Baby birth
-    - Award or recognition
-    - Business success
-    - Personal milestone
-    - Competition win
-    - Project completion
-
-    PREVIEW RENDERING:
-    Congratulations cards should render with:
-    - Bold, celebratory typography
-    - Bright, energetic colors
-    - Eye-catching design elements
-    - Confetti or celebration graphics (optional)
-    - Clear focus on the achievement
-
-    TONE GUIDELINES:
-    - Be genuinely enthusiastic
-    - Personalize the message to the specific achievement
-    - Acknowledge the effort behind the success
-    - Keep it positive and forward-looking
-    - Balance praise with humility
-
-    ============================================
--->
-
-<!-- TODO: Implement the full structure following business-portfolio.html -->
-
-<div class="min-h-screen flex items-center justify-center">
-    <div class="text-center">
-        <div class="text-6xl mb-4">🎉</div>
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">Congratulations Card</h1>
-        <p class="text-gray-600 mb-4">Template structure coming soon...</p>
-        <p class="text-sm text-gray-500">Follow business-portfolio.html structure</p>
-        <a href="index.html" class="inline-block mt-6 bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-6 py-3 rounded-lg hover:shadow-lg transition">
-            ← Back to Home
-        </a>
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">🎉</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your congratulations card</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
+                <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b flex bg-gray-50">
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'most-used')">
+                    ⭐ Most Used
+                </button>
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'more')">
+                    ➕ More Sections
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="overflow-y-auto flex-1">
+                <!-- Most Used Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="most-used">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <div class="font-semibold text-sm">Hero Banner</div>
+                        </button>
+                        <button data-section-type="achievement" onclick="addSection('achievement')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">🏆</div>
+                            <div class="font-semibold text-sm">Achievement</div>
+                        </button>
+                        <button data-section-type="message" onclick="addSection('message')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">💝</div>
+                            <div class="font-semibold text-sm">Message</div>
+                        </button>
+                        <button data-section-type="celebration" onclick="addSection('celebration')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">🎊</div>
+                            <div class="font-semibold text-sm">Celebration</div>
+                        </button>
+                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">📞</div>
+                            <div class="font-semibold text-sm">Contact</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="milestone" onclick="addSection('milestone')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">🎯</div>
+                            <div class="font-semibold text-sm">Milestones</div>
+                        </button>
+                        <button data-section-type="timeline" onclick="addSection('timeline')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Timeline</div>
+                        </button>
+                        <button data-section-type="recognition" onclick="addSection('recognition')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">🏅</div>
+                            <div class="font-semibold text-sm">Recognition</div>
+                        </button>
+                        <button data-section-type="quote" onclick="addSection('quote')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition text-center">
+                            <div class="text-4xl mb-2">💭</div>
+                            <div class="font-semibold text-sm">Quote</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Preview Button (Mobile Only) -->
+    <button onclick="openMobilePreview()" class="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center text-2xl">
+        👁️
+    </button>
+
+    <!-- Mobile Preview Modal -->
+    <div id="mobilePreviewModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="w-full h-full flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="text-lg font-semibold text-white">Live Preview</h3>
+                <button onclick="closeMobilePreview()" class="text-white hover:text-gray-300 text-3xl w-10 h-10 flex items-center justify-center">×</button>
+            </div>
+
+            <!-- Device Toggle -->
+            <div class="flex gap-2 justify-center mb-4">
+                <button onclick="setMobilePreviewDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn active" data-device="mobile">
+                    📱 Mobile
+                </button>
+                <button onclick="setMobilePreviewDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn" data-device="tablet">
+                    💻 Tablet
+                </button>
+            </div>
+
+            <!-- Mobile Frame -->
+            <div class="flex-1 flex items-center justify-center overflow-auto">
+                <div id="mobilePreviewFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="mobilePreviewContent">
+                        <!-- Preview content will be copied here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/congratulations123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Component System -->
+    <script src="components/congratulations/dynamic-templates.js"></script>
+    <script src="components/congratulations/layout.component.js"></script>
+    <script src="components/congratulations/hero.component.js"></script>
+    <script src="components/congratulations/achievement.component.js"></script>
+    <script src="components/congratulations/message.component.js"></script>
+    <script src="components/congratulations/milestone.component.js"></script>
+    <script src="components/congratulations/timeline.component.js"></script>
+    <script src="components/congratulations/recognition.component.js"></script>
+    <script src="components/congratulations/quote.component.js"></script>
+    <script src="components/congratulations/contact.component.js"></script>
+    <script src="components/congratulations/celebration.component.js"></script>
+    <script src="components/congratulations/components-loader.js"></script>
+
+    <script>
+        let sectionCounter = 0;
+
+        // Use components from the component system
+        // Components are loaded from individual files and made available via window.sectionComponents
+        let sectionTemplates = {};
+
+        function openSectionModal() {
+            updateSectionAvailability();
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            // Get all currently added sections
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            // Update each section button in the modal
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+
+                if (isAdded && !allowMultiple) {
+                    // Disable button
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Add "Added" badge
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    // Enable button
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+
+                    // Remove "Added" badge if it exists
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
+        }
+
+
+        function switchModalTab(event, tabName) {
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+            });
+
+            // Hide all tab contents
+            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Activate clicked tab button
+            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+
+            // Show corresponding tab content
+            document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = `section-${sectionCounter++}`;
+            const isLayout = type === 'layout';
+            const isHero = type === 'hero';
+
+            // Check navigation type
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            const navTypeRadio = layoutSection ? layoutSection.querySelector('[data-field="navType"]:checked') : null;
+            const navType = navTypeRadio?.value || 'none';
+            const navEnabled = navType !== 'none';
+
+            // For layout and hero section, always hide remove button (both are permanent)
+            const canRemove = !isLayout && !isHero;
+            const removeButton = canRemove ? `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>` : '';
+            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
+
+            // Add navigation selector for non-hero, non-layout sections when navigation is enabled
+            const navSelector = (!isLayout && !isHero && navEnabled) ? `
+                <div class="px-4 pt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">${navType === 'tabview' ? 'Assign to Tab' : 'Assign to Navigation Item'}</label>
+                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
+                        <option value="">${navType === 'tabview' ? 'Select a tab...' : 'Select a navigation item...'}</option>
+                    </select>
+                </div>
+            ` : '';
+
+            const sectionHTML = `
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''} ${isHero ? 'border-blue-300 bg-blue-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout || isHero ? 'data-permanent="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'border-purple-100' : ''} ${isHero ? 'bg-blue-50' : ''}">
+                        <div class="flex items-center gap-2">
+                            ${dragHandle}
+                            <span class="font-semibold text-sm">${template.name}</span>
+                            ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
+                            ${isHero ? '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Required</span>' : ''}
+                        </div>
+                        ${removeButton}
+                    </div>
+                    ${navSelector}
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        ${typeof template.info === 'function' ? template.info(id) : template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        ${template.style}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            if (!isLayout) {
+                closeSectionModal();
+            }
+
+            // Update navigation dropdowns for all sections
+            updateSectionNavigationDropdowns();
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            const section = document.querySelector(`[data-id="${id}"]`);
+            if (section && section.dataset.permanent === 'true') {
+                const sectionType = section.dataset.type;
+                if (sectionType === 'layout') {
+                    alert('The Layout section contains global settings and cannot be removed.');
+                } else if (sectionType === 'hero') {
+                    alert('The Hero Banner is required and cannot be removed.');
+                } else {
+                    alert('This section is required and cannot be removed.');
+                }
+                return;
+            }
+            if (confirm('Remove this section?')) {
+                section.remove();
+                updatePreview();
+            }
+        }
+
+        function toggleNavigationSettings(radio) {
+            const navType = radio.value;
+            const tabViewSettings = document.getElementById('tabViewSettings');
+            const topNavSettings = document.getElementById('topNavSettings');
+            const bottomNavSettings = document.getElementById('bottomNavSettings');
+            const heroSection = document.querySelector('[data-type="hero"]');
+
+            // Hide all navigation settings first
+            tabViewSettings.classList.add('hidden');
+            topNavSettings.classList.add('hidden');
+            bottomNavSettings.classList.add('hidden');
+
+            // Remove all navigation selectors
+            document.querySelectorAll('.nav-selector').forEach(selector => {
+                selector.closest('div').remove();
+            });
+
+            if (navType === 'tabview') {
+                // Show tab view settings
+                tabViewSettings.classList.remove('hidden');
+
+                // Ensure hero section exists
+                if (!heroSection) {
+                    addSection('hero');
+                }
+
+                // Add tab selectors to existing sections
+                updateSectionNavigationDropdowns();
+            } else if (navType === 'topnav') {
+                // Show top navigation settings
+                topNavSettings.classList.remove('hidden');
+
+                // Ensure hero section exists
+                if (!heroSection) {
+                    addSection('hero');
+                }
+
+                // Add navigation item selectors to existing sections
+                updateSectionNavigationDropdowns();
+            } else if (navType === 'bottomnav') {
+                // Show bottom navigation settings
+                bottomNavSettings.classList.remove('hidden');
+
+                // Ensure hero section exists
+                if (!heroSection) {
+                    addSection('hero');
+                }
+
+                // Add navigation item selectors to existing sections
+                updateSectionNavigationDropdowns();
+            }
+        }
+
+        function updateSectionNavigationDropdowns() {
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (!layoutSection) return;
+
+            // Get the selected navigation type
+            const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+            const navType = navTypeRadio?.value;
+
+            if (!navType || navType === 'none') return;
+
+            let navItems = [];
+            let labelText = '';
+            let placeholderText = '';
+
+            if (navType === 'tabview') {
+                const tabNamesTextarea = layoutSection.querySelector('[data-field="tabNames"]');
+                navItems = tabNamesTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Tab';
+                placeholderText = 'Select a tab...';
+            } else if (navType === 'topnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="navItems"]');
+                navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            } else if (navType === 'bottomnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="bottomNavItems"]');
+                navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            }
+
+            // Update all navigation selector dropdowns
+            document.querySelectorAll('.nav-selector').forEach(selector => {
+                const currentValue = selector.value;
+                selector.innerHTML = `<option value="">${placeholderText}</option>`;
+                navItems.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.trim();
+                    option.textContent = item.trim();
+                    if (currentValue === item.trim()) {
+                        option.selected = true;
+                    }
+                    selector.appendChild(option);
+                });
+            });
+
+            // Add navigation selectors to sections that don't have them (except hero and layout)
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                if (type === 'layout' || type === 'hero') return;
+                if (section.querySelector('.nav-selector')) return; // Already has one
+
+                const selectorHTML = `
+                    <div class="px-4 pt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">${labelText}</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
+                            <option value="">${placeholderText}</option>
+                            ${navItems.map(item => `<option value="${item.trim()}">${item.trim()}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+
+                const header = section.querySelector('.bg-gray-50');
+                header.insertAdjacentHTML('afterend', selectorHTML);
+            });
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600');
+            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        // Dynamic Item Management Functions
+        // Templates are loaded from components/birthday/dynamic-templates.js
+        function addDynamicItem(sectionId, itemType) {
+            const container = document.querySelector(`#${sectionId} [data-items-container="${itemType}"]`);
+            if (!container) {
+                console.error('Container not found:', sectionId, itemType);
+                return;
+            }
+
+            const itemCount = container.querySelectorAll('.dynamic-item').length;
+            const itemId = `${Date.now()}`;
+
+            const template = window.dynamicItemTemplates[itemType];
+            if (!template) {
+                console.error('Template not found:', itemType);
+                return;
+            }
+
+            const itemHtml = template(itemId, itemCount + 1);
+            const div = document.createElement('div');
+            div.className = 'dynamic-item border-t pt-4 mt-4';
+            div.dataset.itemId = itemId;
+            div.innerHTML = itemHtml;
+
+            container.appendChild(div);
+            updatePreview();
+        }
+
+        function removeDynamicItem(button) {
+            const item = button.closest('.dynamic-item');
+            if (item) {
+                item.remove();
+                updatePreview();
+            }
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+            let globalStyles = {};
+
+            // Extract global styles and layout settings from layout section
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            let navType = 'none';
+            let navItems = [];
+
+            // Tab view settings
+            let tabStyle = 'underline';
+            let tabAlignment = 'left';
+            let tabSize = 'medium';
+
+            // Top navigation settings
+            let navStyle = 'simple';
+            let navAlignment = 'left';
+            let navSize = 'medium';
+            let navBgColor = '#ffffff';
+            let navTextColor = '#1f2937';
+            let navSticky = true;
+
+            // Bottom navigation settings
+            let bottomNavStyle = 'simple';
+            let bottomNavAlignment = 'left';
+            let bottomNavSize = 'medium';
+            let bottomNavBgColor = '#ffffff';
+            let bottomNavTextColor = '#1f2937';
+            let bottomNavSticky = true;
+
+            if (layoutSection) {
+                const { data, style } = getSectionData(layoutSection);
+                globalStyles = style;
+
+                // Get navigation type
+                const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+                navType = navTypeRadio?.value || 'none';
+
+                if (navType === 'tabview') {
+                    const tabNamesValue = layoutSection.querySelector('[data-field="tabNames"]')?.value || '';
+                    navItems = tabNamesValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get tab layout style settings
+                    tabStyle = layoutSection.querySelector('[data-field="tabStyle"]')?.value || 'underline';
+                    tabAlignment = layoutSection.querySelector('[data-field="tabAlignment"]')?.value || 'left';
+                    tabSize = layoutSection.querySelector('[data-field="tabSize"]')?.value || 'medium';
+                } else if (navType === 'topnav') {
+                    const navItemsValue = layoutSection.querySelector('[data-field="navItems"]')?.value || '';
+                    navItems = navItemsValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get top navigation style settings
+                    navStyle = layoutSection.querySelector('[data-field="navStyle"]')?.value || 'simple';
+                    navAlignment = layoutSection.querySelector('[data-field="navAlignment"]')?.value || 'left';
+                    navSize = layoutSection.querySelector('[data-field="navSize"]')?.value || 'medium';
+                    navBgColor = layoutSection.querySelector('[data-field="navBgColor"]')?.value || '#ffffff';
+                    navTextColor = layoutSection.querySelector('[data-field="navTextColor"]')?.value || '#1f2937';
+                    navSticky = layoutSection.querySelector('[data-field="navSticky"]')?.checked !== false;
+                } else if (navType === 'bottomnav') {
+                    const navItemsValue = layoutSection.querySelector('[data-field="bottomNavItems"]')?.value || '';
+                    navItems = navItemsValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get bottom navigation style settings
+                    bottomNavStyle = layoutSection.querySelector('[data-field="bottomNavStyle"]')?.value || 'simple';
+                    bottomNavAlignment = layoutSection.querySelector('[data-field="bottomNavAlignment"]')?.value || 'left';
+                    bottomNavSize = layoutSection.querySelector('[data-field="bottomNavSize"]')?.value || 'medium';
+                    bottomNavBgColor = layoutSection.querySelector('[data-field="bottomNavBgColor"]')?.value || '#ffffff';
+                    bottomNavTextColor = layoutSection.querySelector('[data-field="bottomNavTextColor"]')?.value || '#1f2937';
+                    bottomNavSticky = layoutSection.querySelector('[data-field="bottomNavSticky"]')?.checked !== false;
+                }
+            }
+
+            // Apply default global styles if not set
+            globalStyles = {
+                primaryColor: globalStyles.primaryColor || '#ec4899',
+                secondaryColor: globalStyles.secondaryColor || '#f43f5e',
+                bgColor: globalStyles.bgColor || '#ffffff',
+                textColor: globalStyles.textColor || '#1f2937',
+                fontFamily: globalStyles.fontFamily || 'system-ui, -apple-system, sans-serif',
+                borderRadius: globalStyles.borderRadius || '8px',
+                spacing: globalStyles.spacing || 'normal'
+            };
+
+            if (sections.length === 0 || sections.length === 1) {
+                html = `
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">🎉</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your congratulations card</p>
+                        </div>
+                    </div>
+                `;
+            } else if (navType === 'tabview' && navItems.length > 0) {
+                // Tab View Mode
+                // First, render hero section (always visible)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by tabs
+                const sectionsByTab = {};
+                navItems.forEach(tab => {
+                    sectionsByTab[tab] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByTab[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByTab[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Generate tab navigation and content
+                const tabId = 'preview-tabs-' + Date.now();
+
+                // Define size classes
+                const sizeClasses = {
+                    small: 'px-4 py-2 text-xs',
+                    medium: 'px-6 py-4 text-sm',
+                    large: 'px-8 py-5 text-base'
+                };
+
+                // Define alignment classes
+                const alignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                // Generate tab buttons based on style
+                const generateTabButton = (tab, index, tabStyle, tabSize) => {
+                    const sizeClass = sizeClasses[tabSize] || sizeClasses.medium;
+                    const baseClasses = 'flex-shrink-0 font-medium transition preview-tab-btn';
+
+                    switch(tabStyle) {
+                        case 'pills':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="pills">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'buttons':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} rounded-lg ${index === 0 ? 'bg-purple-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="buttons">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'boxed':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'bg-purple-50 border-purple-600 text-purple-600' : 'bg-white border-transparent text-gray-600 hover:bg-gray-50'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="boxed">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'underline':
+                        default:
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'border-purple-600 text-purple-600' : 'border-transparent text-gray-600 hover:text-gray-900'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="underline">
+                                    ${tab}
+                                </button>
+                            `;
+                    }
+                };
+
+                const containerClasses = tabStyle === 'pills' || tabStyle === 'buttons' ? 'gap-2' : '';
+                const alignClass = alignmentClasses[tabAlignment] || alignmentClasses.left;
+
+                html += `
+                    <div class="sticky top-0 z-10 bg-white ${tabStyle !== 'pills' && tabStyle !== 'buttons' ? 'border-b' : ''} shadow-sm">
+                        <div class="flex overflow-x-auto ${containerClasses} ${alignClass} p-2">
+                            ${navItems.map((tab, index) => generateTabButton(tab, index, tabStyle, tabSize)).join('')}
+                        </div>
+                    </div>
+                    <div class="preview-tab-contents" data-tab-container="${tabId}">
+                        ${navItems.map((tab, index) => `
+                            <div class="preview-tab-content ${index === 0 ? '' : 'hidden'}" data-tab-id="${tabId}" data-tab-name="${tab}">
+                                ${sectionsByTab[tab].length > 0
+                                    ? sectionsByTab[tab].map(s => s.html).join('')
+                                    : `<div class="py-16 text-center text-gray-500">
+                                        <div class="text-4xl mb-3">📋</div>
+                                        <p>No sections assigned to this tab yet</p>
+                                       </div>`
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (navType === 'topnav' && navItems.length > 0) {
+                // Top Navigation Bar Mode
+                // Define size classes
+                const navSizeClasses = {
+                    small: 'px-3 py-2 text-xs',
+                    medium: 'px-4 py-3 text-sm',
+                    large: 'px-6 py-4 text-base'
+                };
+
+                // Define alignment classes
+                const navAlignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                // Generate navigation buttons based on style
+                const navId = 'preview-nav-' + Date.now();
+                const generateNavButton = (item, index, navStyle, navSize) => {
+                    const sizeClass = navSizeClasses[navSize] || navSizeClasses.medium;
+                    const baseClasses = 'font-medium transition cursor-pointer preview-nav-btn';
+
+                    switch(navStyle) {
+                        case 'underline':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'border-purple-600' : 'border-transparent hover:border-gray-400'}"
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="underline">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'pills':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-purple-600 text-white' : 'hover:bg-gray-200'}"
+                                   style="color: ${index === 0 ? '#ffffff' : navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="pills">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'bordered':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-lg border ${index === 0 ? 'border-purple-600 bg-purple-50' : 'border-gray-300 hover:bg-gray-50'}"
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="bordered">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'simple':
+                        default:
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} hover:opacity-70"
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="simple">
+                                    ${item}
+                                </button>
+                            `;
+                    }
+                };
+
+                const navContainerClasses = navStyle === 'pills' || navStyle === 'bordered' ? 'gap-2' : 'gap-6';
+                const navAlignClass = navAlignmentClasses[navAlignment] || navAlignmentClasses.left;
+                const stickyClass = navSticky ? 'sticky top-0 z-10' : '';
+
+                // Render top navigation bar FIRST
+                html += `
+                    <div class="${stickyClass} shadow-sm" style="background-color: ${navBgColor}; border-bottom: 1px solid #e5e7eb;">
+                        <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
+                            ${navItems.map((item, index) => generateNavButton(item, index, navStyle, navSize)).join('')}
+                        </div>
+                    </div>
+                `;
+
+                // Then render hero section (always visible, not in navigation sections)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by navigation items
+                const sectionsByNavItem = {};
+                navItems.forEach(item => {
+                    sectionsByNavItem[item] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByNavItem[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Render navigation sections (only first one visible)
+                html += `
+                    <div class="nav-sections-container" data-nav-container="${navId}">
+                        ${navItems.map((item, index) => {
+                            return `
+                                <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
+                                    ${sectionsByNavItem[item].length > 0
+                                        ? sectionsByNavItem[item].map(s => s.html).join('')
+                                        : `<div class="py-16 text-center text-gray-500">
+                                            <div class="text-4xl mb-3">📋</div>
+                                            <p>No sections assigned to "${item}" yet</p>
+                                           </div>`
+                                    }
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            } else if (navType === 'bottomnav' && navItems.length > 0) {
+                // Bottom Navigation Bar Mode
+                const navId = 'preview-nav-' + Date.now();
+
+                // Wrap everything in a flex container for sticky bottom nav
+                html += '<div class="min-h-full flex flex-col">';
+
+                // First, render hero section (always visible)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by navigation items
+                const sectionsByNavItem = {};
+                navItems.forEach(item => {
+                    sectionsByNavItem[item] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByNavItem[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Render navigation sections (only first one visible)
+                html += `
+                    <div class="flex-1 nav-sections-container" data-nav-container="${navId}">
+                        ${navItems.map((item, index) => {
+                            return `
+                                <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
+                                    ${sectionsByNavItem[item].length > 0
+                                        ? sectionsByNavItem[item].map(s => s.html).join('')
+                                        : `<div class="py-16 text-center text-gray-500">
+                                            <div class="text-4xl mb-3">📋</div>
+                                            <p>No sections assigned to "${item}" yet</p>
+                                           </div>`
+                                    }
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                // Define size classes
+                const navSizeClasses = {
+                    small: 'px-3 py-2 text-xs',
+                    medium: 'px-4 py-3 text-sm',
+                    large: 'px-6 py-4 text-base'
+                };
+
+                // Define alignment classes
+                const navAlignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                // Generate navigation buttons based on style
+                const generateNavButton = (item, index, navStyle, navSize) => {
+                    const sizeClass = navSizeClasses[navSize] || navSizeClasses.medium;
+                    const baseClasses = 'font-medium transition cursor-pointer preview-nav-btn';
+
+                    switch(navStyle) {
+                        case 'underline':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} border-t-2 ${index === 0 ? 'border-purple-600' : 'border-transparent hover:border-gray-400'}"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="underline">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'pills':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-purple-600 text-white' : 'hover:bg-gray-200'}"
+                                   style="color: ${index === 0 ? '#ffffff' : bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="pills">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'bordered':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-lg border ${index === 0 ? 'border-purple-600 bg-purple-50' : 'border-gray-300 hover:bg-gray-50'}"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="bordered">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'simple':
+                        default:
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} hover:opacity-70"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="simple">
+                                    ${item}
+                                </button>
+                            `;
+                    }
+                };
+
+                const navContainerClasses = bottomNavStyle === 'pills' || bottomNavStyle === 'bordered' ? 'gap-2' : 'gap-6';
+                const navAlignClass = navAlignmentClasses[bottomNavAlignment] || navAlignmentClasses.left;
+                const stickyClass = bottomNavSticky ? 'sticky bottom-0 z-10' : '';
+
+                // Render bottom navigation bar LAST
+                html += `
+                    <div class="${stickyClass} shadow-sm mt-auto" style="background-color: ${bottomNavBgColor}; border-top: 1px solid #e5e7eb;">
+                        <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
+                            ${navItems.map((item, index) => generateNavButton(item, index, bottomNavStyle, bottomNavSize)).join('')}
+                        </div>
+                    </div>
+                </div>`; // Close the flex container
+            } else {
+                // Normal Mode (no navigation)
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout') return;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style, globalStyles);
+                });
+            }
+
+            // Wrap content with global styles
+            const styledHtml = `
+                <div style="font-family: ${globalStyles.fontFamily}; color: ${globalStyles.textColor}; background: ${globalStyles.bgColor};">
+                    ${html}
+                </div>
+            `;
+
+            document.getElementById('previewContent').innerHTML = styledHtml;
+
+            // Also update mobile preview if it's open
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = styledHtml;
+            }
+        }
+
+        function switchPreviewTab(containerId, tabName) {
+            // Update button states based on tab style
+            document.querySelectorAll(`[data-tab-id="${containerId}"]`).forEach(btn => {
+                if (btn.classList.contains('preview-tab-btn')) {
+                    const isActive = btn.dataset.tabName === tabName;
+                    const style = btn.dataset.style;
+
+                    // Remove all active state classes
+                    btn.classList.remove(
+                        'border-purple-600', 'text-purple-600', 'border-transparent', 'text-gray-600',
+                        'bg-purple-600', 'text-white', 'bg-gray-200', 'text-gray-700',
+                        'bg-purple-50', 'bg-white', 'text-gray-700', 'border-gray-300'
+                    );
+
+                    // Apply appropriate classes based on style and active state
+                    switch(style) {
+                        case 'pills':
+                            if (isActive) {
+                                btn.classList.add('bg-purple-600', 'text-white');
+                            } else {
+                                btn.classList.add('bg-gray-200', 'text-gray-700');
+                            }
+                            break;
+                        case 'buttons':
+                            if (isActive) {
+                                btn.classList.add('bg-purple-600', 'text-white');
+                            } else {
+                                btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                            }
+                            break;
+                        case 'boxed':
+                            if (isActive) {
+                                btn.classList.add('bg-purple-50', 'border-purple-600', 'text-purple-600');
+                            } else {
+                                btn.classList.add('bg-white', 'border-transparent', 'text-gray-600');
+                            }
+                            break;
+                        case 'underline':
+                        default:
+                            if (isActive) {
+                                btn.classList.add('border-purple-600', 'text-purple-600');
+                            } else {
+                                btn.classList.add('border-transparent', 'text-gray-600');
+                            }
+                            break;
+                    }
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll(`[data-tab-container="${containerId}"] .preview-tab-content`).forEach(content => {
+                if (content.dataset.tabName === tabName) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function switchNavSection(navId, itemName) {
+            // Update button states based on navigation style
+            document.querySelectorAll(`[data-nav-id="${navId}"]`).forEach(btn => {
+                if (btn.classList.contains('preview-nav-btn')) {
+                    const isActive = btn.dataset.navItem === itemName;
+                    const style = btn.dataset.style;
+                    const currentColor = btn.style.color;
+
+                    // Remove all active state classes
+                    btn.classList.remove(
+                        'border-purple-600', 'border-transparent',
+                        'bg-purple-600', 'text-white', 'hover:bg-gray-200',
+                        'bg-purple-50', 'border-gray-300', 'hover:bg-gray-50'
+                    );
+
+                    // Apply appropriate classes based on style and active state
+                    switch(style) {
+                        case 'underline':
+                            if (isActive) {
+                                btn.classList.add('border-purple-600');
+                            } else {
+                                btn.classList.add('border-transparent', 'hover:border-gray-400');
+                            }
+                            break;
+                        case 'pills':
+                            if (isActive) {
+                                btn.classList.add('bg-purple-600', 'text-white');
+                                btn.style.color = '#ffffff';
+                            } else {
+                                btn.classList.add('hover:bg-gray-200');
+                                btn.style.color = currentColor;
+                            }
+                            break;
+                        case 'bordered':
+                            if (isActive) {
+                                btn.classList.add('border-purple-600', 'bg-purple-50');
+                            } else {
+                                btn.classList.add('border-gray-300', 'hover:bg-gray-50');
+                            }
+                            break;
+                        case 'simple':
+                        default:
+                            // Simple style doesn't change appearance on active
+                            break;
+                    }
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll(`[data-nav-container="${navId}"] .nav-section-content`).forEach(content => {
+                if (content.dataset.navItem === itemName) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-purple-600', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your congratulations card?')) {
+                alert('✅ Published successfully!\n\nYour card is now live!');
+            }
+        }
+
+        function openMobilePreview() {
+            // Copy preview content to mobile preview modal
+            const previewContent = document.getElementById('previewContent').innerHTML;
+            document.getElementById('mobilePreviewContent').innerHTML = previewContent;
+
+            // Show the modal
+            document.getElementById('mobilePreviewModal').classList.remove('hidden');
+        }
+
+        function closeMobilePreview() {
+            document.getElementById('mobilePreviewModal').classList.add('hidden');
+        }
+
+        function setMobilePreviewDevice(device) {
+            // Update active button
+            document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-purple-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-purple-600', 'text-white');
+
+            // Update frame size
+            const frame = document.getElementById('mobilePreviewFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        // Initialize layout section on page load
+        function initializeLayout() {
+            addSection('layout');
+        }
+
+        // Initialize with default sections on page load
+        function initializeDefaultSections() {
+            // Add default sections here based on template type
+            const defaultSections = ['hero', 'achievement', 'message', 'celebration'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        // Wait for components to load before initializing
+        function initializeApp() {
+            // Assign components to sectionTemplates
+            sectionTemplates = window.sectionComponents || {};
+
+            console.log('Components loaded:', Object.keys(sectionTemplates).length);
+
+            // Initialize layout first
+            initializeLayout();
+
+            // Then add default sections
+            initializeDefaultSections();
+
+            // Close modals on outside click
+            document.getElementById('sectionModal').addEventListener('click', (e) => {
+                if (e.target.id === 'sectionModal') closeSectionModal();
+            });
+            document.getElementById('qrModal').addEventListener('click', (e) => {
+                if (e.target.id === 'qrModal') closeQRModal();
+            });
+            document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+            });
+        }
+
+        // Track if app has been initialized
+        let appInitialized = false;
+
+        // Safe initialization wrapper
+        function safeInitializeApp() {
+            if (appInitialized) {
+                console.log('⚠️ App already initialized, skipping...');
+                return;
+            }
+
+            if (!window.sectionComponents || Object.keys(window.sectionComponents).length === 0) {
+                console.warn('⚠️ Cannot initialize: components not loaded yet');
+                return;
+            }
+
+            appInitialized = true;
+            console.log('✅ Initializing app with', Object.keys(window.sectionComponents).length, 'components');
+            initializeApp();
+        }
+
+        // Listen for components ready event
+        window.addEventListener('componentsReady', () => {
+            console.log('✅ Components ready event received');
+            safeInitializeApp();
+        });
+
+        // Immediate check: if components are already loaded, initialize now
+        if (window.sectionComponents && Object.keys(window.sectionComponents).length > 0) {
+            console.log('✅ Components already loaded, initializing immediately');
+            safeInitializeApp();
+        } else {
+            // Fallback: Wait a bit and try again
+            setTimeout(() => {
+                if (!appInitialized) {
+                    console.log('⚠️ Fallback: checking for components after timeout');
+                    safeInitializeApp();
+                }
+            }, 150);
+        }
+    </script>
 </body>
 </html>
