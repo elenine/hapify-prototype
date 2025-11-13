@@ -121,12 +121,6 @@
                             <div class="text-4xl mb-2">ℹ️</div>
                             <div class="font-semibold text-sm">About Us</div>
                         </button>
-                    </div>
-                </div>
-
-                <!-- More Sections Tab -->
-                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button data-section-type="services" onclick="addSection('services')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                             <div class="text-4xl mb-2">⚙️</div>
                             <div class="font-semibold text-sm">Services</div>
@@ -135,6 +129,16 @@
                             <div class="text-4xl mb-2">📁</div>
                             <div class="font-semibold text-sm">Portfolio</div>
                         </button>
+                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">📞</div>
+                            <div class="font-semibold text-sm">Contact</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button data-section-type="team" onclick="addSection('team')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
                             <div class="text-4xl mb-2">👥</div>
                             <div class="font-semibold text-sm">Team</div>
@@ -151,9 +155,21 @@
                             <div class="text-4xl mb-2">🎯</div>
                             <div class="font-semibold text-sm">Call to Action</div>
                         </button>
-                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
-                            <div class="text-4xl mb-2">📞</div>
-                            <div class="font-semibold text-sm">Contact</div>
+                        <button data-section-type="skills" onclick="addSection('skills')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">🎓</div>
+                            <div class="font-semibold text-sm">Skills & Expertise</div>
+                        </button>
+                        <button data-section-type="pricing" onclick="addSection('pricing')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">💰</div>
+                            <div class="font-semibold text-sm">Pricing Plans</div>
+                        </button>
+                        <button data-section-type="faq" onclick="addSection('faq')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">❓</div>
+                            <div class="font-semibold text-sm">FAQ</div>
+                        </button>
+                        <button data-section-type="stats" onclick="addSection('stats')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition text-center">
+                            <div class="text-4xl mb-2">📊</div>
+                            <div class="font-semibold text-sm">Statistics</div>
                         </button>
                     </div>
                 </div>
@@ -860,6 +876,294 @@
                         </div>
                     </div>
                 `
+            },
+            skills: {
+                name: '🎓 Skills & Expertise',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Our Expertise" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Skills (one per line with optional percentage)</label>
+                            <textarea placeholder="Web Development - 95%&#10;Mobile Apps - 90%&#10;UI/UX Design - 85%&#10;Cloud Services - 80%" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="skills" oninput="updatePreview()"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Format: Skill Name - Percentage (or just Skill Name)</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Progress Bar Color</label>
+                            <input type="color" value="#2563eb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="barColor" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const skills = (data.skills || '').split('\n').filter(s => s.trim());
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Our Expertise'}</h2>
+                            <div class="max-w-2xl mx-auto space-y-6">
+                                ${skills.map(skill => {
+                                    const match = skill.match(/(.+?)\s*-\s*(\d+)%?/);
+                                    if (match) {
+                                        const [, name, percentage] = match;
+                                        return `
+                                            <div>
+                                                <div class="flex justify-between mb-2">
+                                                    <span class="font-medium text-sm">${name.trim()}</span>
+                                                    <span class="text-sm text-gray-600">${percentage}%</span>
+                                                </div>
+                                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                    <div class="h-2.5 rounded-full" style="width: ${percentage}%; background: ${style.barColor || '#2563eb'}"></div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    } else {
+                                        return `
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-2 h-2 rounded-full" style="background: ${style.barColor || '#2563eb'}"></div>
+                                                <span class="font-medium text-sm">${skill.trim()}</span>
+                                            </div>
+                                        `;
+                                    }
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            pricing: {
+                name: '💰 Pricing Plans',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Pricing Plans" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Plan 1</h4>
+                            <div class="space-y-3">
+                                <input type="text" placeholder="Basic" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan1Name" oninput="updatePreview()">
+                                <input type="text" placeholder="$99/mo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan1Price" oninput="updatePreview()">
+                                <textarea placeholder="Feature 1&#10;Feature 2&#10;Feature 3" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan1Features" oninput="updatePreview()"></textarea>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Plan 2</h4>
+                            <div class="space-y-3">
+                                <input type="text" placeholder="Pro" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan2Name" oninput="updatePreview()">
+                                <input type="text" placeholder="$199/mo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan2Price" oninput="updatePreview()">
+                                <textarea placeholder="Feature 1&#10;Feature 2&#10;Feature 3" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan2Features" oninput="updatePreview()"></textarea>
+                            </div>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Plan 3</h4>
+                            <div class="space-y-3">
+                                <input type="text" placeholder="Enterprise" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan3Name" oninput="updatePreview()">
+                                <input type="text" placeholder="$399/mo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan3Price" oninput="updatePreview()">
+                                <textarea placeholder="Feature 1&#10;Feature 2&#10;Feature 3" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="plan3Features" oninput="updatePreview()"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Border Color</label>
+                            <input type="color" value="#e5e7eb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="borderColor" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const plans = [
+                        { name: data.plan1Name, price: data.plan1Price, features: data.plan1Features },
+                        { name: data.plan2Name, price: data.plan2Price, features: data.plan2Features },
+                        { name: data.plan3Name, price: data.plan3Price, features: data.plan3Features }
+                    ].filter(p => p.name || p.price);
+
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Pricing Plans'}</h2>
+                            <div class="max-w-5xl mx-auto grid md:grid-cols-${plans.length} gap-6">
+                                ${plans.map((plan, idx) => `
+                                    <div class="border-2 rounded-xl p-6 ${idx === 1 ? 'border-blue-600 shadow-lg' : ''}" style="border-color: ${idx === 1 ? '#2563eb' : style.borderColor || '#e5e7eb'}">
+                                        ${idx === 1 ? '<div class="text-xs font-semibold text-blue-600 text-center mb-2">MOST POPULAR</div>' : ''}
+                                        <div class="text-center mb-6">
+                                            <h3 class="text-xl font-bold mb-2">${plan.name || 'Plan'}</h3>
+                                            <div class="text-3xl font-bold text-blue-600">${plan.price || '$0'}</div>
+                                        </div>
+                                        <div class="space-y-3">
+                                            ${(plan.features || '').split('\n').filter(f => f.trim()).map(feature => `
+                                                <div class="flex items-center gap-2">
+                                                    <div class="text-green-600">✓</div>
+                                                    <div class="text-sm">${feature.trim()}</div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        <button class="w-full mt-6 py-2 px-4 rounded-lg font-medium ${idx === 1 ? 'bg-blue-600 text-white' : 'border-2 border-gray-300 text-gray-700'}">
+                                            Choose Plan
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            faq: {
+                name: '❓ FAQ',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Frequently Asked Questions" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Question 1</h4>
+                            <input type="text" placeholder="What services do you offer?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q1" oninput="updatePreview()">
+                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a1" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Question 2</h4>
+                            <input type="text" placeholder="How long does a project take?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q2" oninput="updatePreview()">
+                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a2" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Question 3</h4>
+                            <input type="text" placeholder="What are your rates?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q3" oninput="updatePreview()">
+                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a3" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-4">
+                            <h4 class="font-medium text-gray-700 mb-3">Question 4</h4>
+                            <input type="text" placeholder="Do you offer support?" class="w-full px-4 py-2 mb-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="q4" oninput="updatePreview()">
+                            <textarea placeholder="Answer..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="a4" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const faqs = [
+                        { q: data.q1, a: data.a1 },
+                        { q: data.q2, a: data.a2 },
+                        { q: data.q3, a: data.a3 },
+                        { q: data.q4, a: data.a4 }
+                    ].filter(faq => faq.q || faq.a);
+
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Frequently Asked Questions'}</h2>
+                            <div class="max-w-3xl mx-auto space-y-4">
+                                ${faqs.map(faq => `
+                                    <div class="bg-white rounded-lg p-6 shadow-sm">
+                                        <h3 class="font-semibold text-lg mb-2">${faq.q || 'Question'}</h3>
+                                        <p class="text-gray-600 text-sm">${faq.a || 'Answer'}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            stats: {
+                name: '📊 Statistics',
+                allowMultiple: false,
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Our Achievements" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 1 Value</label>
+                                <input type="text" placeholder="500+" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat1Value" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 1 Label</label>
+                                <input type="text" placeholder="Projects" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat1Label" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 2 Value</label>
+                                <input type="text" placeholder="200+" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat2Value" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 2 Label</label>
+                                <input type="text" placeholder="Clients" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat2Label" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 3 Value</label>
+                                <input type="text" placeholder="15+" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat3Value" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 3 Label</label>
+                                <input type="text" placeholder="Years" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat3Label" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 4 Value</label>
+                                <input type="text" placeholder="98%" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat4Value" oninput="updatePreview()">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-1">Stat 4 Label</label>
+                                <input type="text" placeholder="Satisfaction" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="stat4Label" oninput="updatePreview()">
+                            </div>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#1e40af" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const stats = [
+                        { value: data.stat1Value, label: data.stat1Label },
+                        { value: data.stat2Value, label: data.stat2Label },
+                        { value: data.stat3Value, label: data.stat3Label },
+                        { value: data.stat4Value, label: data.stat4Label }
+                    ].filter(s => s.value || s.label);
+
+                    return `
+                        <div class="py-12 px-6" style="background: ${style.bg || '#1e40af'}; color: ${style.textColor || '#ffffff'}">
+                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Our Achievements'}</h2>
+                            <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+                                ${stats.map(stat => `
+                                    <div class="text-center">
+                                        <div class="text-3xl font-bold mb-2">${stat.value || '0'}</div>
+                                        <div class="text-sm opacity-90">${stat.label || 'Stat'}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
             }
         };
 
