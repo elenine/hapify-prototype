@@ -229,8 +229,52 @@
                 allowMultiple: false,
                 info: `
                     <div class="space-y-4">
-                        <div class="text-sm text-gray-600">
-                            <p>This section controls the overall styling and appearance of your entire invitation page.</p>
+                        <div class="border-b pb-4 mb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-sm font-semibold text-gray-700">Enable Tab View</label>
+                                <input type="checkbox" class="w-5 h-5 rounded section-data" data-field="tabViewEnabled" onchange="toggleTabViewSettings(this); updatePreview()">
+                            </div>
+                            <p class="text-xs text-gray-600">When enabled, sections will be organized into tabs</p>
+                        </div>
+                        <div id="tabViewSettings" class="space-y-4 hidden">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tab Names (one per line)</label>
+                                <textarea placeholder="Home&#10;About&#10;Services&#10;Contact" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="tabNames" oninput="updatePreview(); updateSectionTabDropdowns()"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Define the tab names that will be available</p>
+                            </div>
+                            <div class="border-t pt-4">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3">Tab Layout Style</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Tab Style</label>
+                                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="tabStyle" onchange="updatePreview()">
+                                            <option value="underline" selected>Underline</option>
+                                            <option value="pills">Pills</option>
+                                            <option value="buttons">Buttons</option>
+                                            <option value="boxed">Boxed</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Tab Alignment</label>
+                                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="tabAlignment" onchange="updatePreview()">
+                                            <option value="left" selected>Left</option>
+                                            <option value="center">Center</option>
+                                            <option value="right">Right</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Tab Size</label>
+                                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data" data-field="tabSize" onchange="updatePreview()">
+                                            <option value="small">Small</option>
+                                            <option value="medium" selected>Medium</option>
+                                            <option value="large">Large</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-600 pt-4 border-t">
+                            <p>This section controls the overall styling and appearance of your entire portfolio page.</p>
                             <p class="mt-2">Use the <strong>Style</strong> tab to customize colors, fonts, and layout.</p>
                         </div>
                     </div>
@@ -758,21 +802,39 @@
             const template = sectionTemplates[type];
             const id = `section-${sectionCounter++}`;
             const isLayout = type === 'layout';
+            const isHero = type === 'hero';
 
-            // For layout section, hide remove button and drag handle
-            const removeButton = isLayout ? '' : `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`;
+            // Check if tab view is enabled
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            const tabViewEnabled = layoutSection ? layoutSection.querySelector('[data-field="tabViewEnabled"]')?.checked : false;
+
+            // For layout and hero section when tab view is enabled, hide remove button
+            const canRemove = !isLayout && !(isHero && tabViewEnabled);
+            const removeButton = canRemove ? `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>` : '';
             const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
 
+            // Add tab selector for non-hero, non-layout sections when tab view is enabled
+            const tabSelector = (!isLayout && !isHero && tabViewEnabled) ? `
+                <div class="px-4 pt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Assign to Tab</label>
+                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data tab-selector" data-field="assignedTab" onchange="updatePreview()">
+                        <option value="">Select a tab...</option>
+                    </select>
+                </div>
+            ` : '';
+
             const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
-                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''}">
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''} ${isHero ? 'border-blue-300' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''} ${(isHero && tabViewEnabled) ? 'data-mandatory="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''} ${isHero ? 'bg-blue-50' : ''}">
                         <div class="flex items-center gap-2">
                             ${dragHandle}
                             <span class="font-semibold text-sm">${template.name}</span>
                             ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
+                            ${(isHero && tabViewEnabled) ? '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>' : ''}
                         </div>
                         ${removeButton}
                     </div>
+                    ${tabSelector}
                     <div class="border-b flex">
                         <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
                             Info
@@ -794,14 +856,120 @@
             if (!isLayout) {
                 closeSectionModal();
             }
+
+            // Update tab dropdowns for all sections
+            updateSectionTabDropdowns();
             updatePreview();
         }
 
         function removeSection(id) {
+            const section = document.querySelector(`[data-id="${id}"]`);
+            if (section && section.dataset.mandatory === 'true') {
+                alert('This section is mandatory and cannot be removed when tab view is enabled.');
+                return;
+            }
             if (confirm('Remove this section?')) {
-                document.querySelector(`[data-id="${id}"]`).remove();
+                section.remove();
                 updatePreview();
             }
+        }
+
+        function toggleTabViewSettings(checkbox) {
+            const tabViewSettings = document.getElementById('tabViewSettings');
+            if (checkbox.checked) {
+                tabViewSettings.classList.remove('hidden');
+                // Make hero section mandatory
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    heroSection.dataset.mandatory = 'true';
+                    const removeBtn = heroSection.querySelector('button[onclick^="removeSection"]');
+                    if (removeBtn) removeBtn.remove();
+
+                    // Add mandatory badge
+                    const header = heroSection.querySelector('.bg-gray-50');
+                    if (header && !header.querySelector('.bg-blue-200')) {
+                        header.classList.add('bg-blue-50');
+                        const titleDiv = header.querySelector('div');
+                        titleDiv.insertAdjacentHTML('beforeend', '<span class="ml-2 text-xs bg-blue-200 text-blue-700 px-2 py-1 rounded">Mandatory</span>');
+                    }
+                    heroSection.classList.add('border-blue-300');
+                }
+                // Add hero section if it doesn't exist
+                if (!heroSection) {
+                    addSection('hero');
+                }
+                // Add tab selectors to existing sections
+                updateSectionTabDropdowns();
+            } else {
+                tabViewSettings.classList.add('hidden');
+                // Remove mandatory status from hero
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    heroSection.dataset.mandatory = 'false';
+                    const mandatoryBadge = heroSection.querySelector('.bg-blue-200');
+                    if (mandatoryBadge) mandatoryBadge.remove();
+                    heroSection.classList.remove('border-blue-300');
+                    const header = heroSection.querySelector('.bg-blue-50');
+                    if (header) header.classList.remove('bg-blue-50');
+
+                    // Add back remove button
+                    const headerDiv = heroSection.querySelector('.bg-gray-50');
+                    if (headerDiv && !headerDiv.querySelector('button[onclick^="removeSection"]')) {
+                        const id = heroSection.dataset.id;
+                        headerDiv.insertAdjacentHTML('beforeend', `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`);
+                    }
+                }
+                // Remove tab selectors
+                document.querySelectorAll('.tab-selector').forEach(selector => {
+                    selector.closest('div').remove();
+                });
+            }
+        }
+
+        function updateSectionTabDropdowns() {
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (!layoutSection) return;
+
+            const tabViewEnabled = layoutSection.querySelector('[data-field="tabViewEnabled"]')?.checked;
+            if (!tabViewEnabled) return;
+
+            const tabNamesTextarea = layoutSection.querySelector('[data-field="tabNames"]');
+            const tabNames = tabNamesTextarea?.value.split('\n').filter(name => name.trim()) || [];
+
+            // Update all tab selector dropdowns
+            document.querySelectorAll('.tab-selector').forEach(selector => {
+                const currentValue = selector.value;
+                selector.innerHTML = '<option value="">Select a tab...</option>';
+                tabNames.forEach(tabName => {
+                    const option = document.createElement('option');
+                    option.value = tabName.trim();
+                    option.textContent = tabName.trim();
+                    if (currentValue === tabName.trim()) {
+                        option.selected = true;
+                    }
+                    selector.appendChild(option);
+                });
+            });
+
+            // Add tab selectors to sections that don't have them (except hero and layout)
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                if (type === 'layout' || type === 'hero') return;
+                if (section.querySelector('.tab-selector')) return; // Already has one
+
+                const tabSelectorHTML = `
+                    <div class="px-4 pt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Assign to Tab</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data tab-selector" data-field="assignedTab" onchange="updatePreview()">
+                            <option value="">Select a tab...</option>
+                            ${tabNames.map(name => `<option value="${name.trim()}">${name.trim()}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+
+                const header = section.querySelector('.bg-gray-50');
+                header.insertAdjacentHTML('afterend', tabSelectorHTML);
+            });
         }
 
         function switchTab(event, sectionId, tab) {
@@ -838,11 +1006,26 @@
             let html = '';
             let globalStyles = {};
 
-            // Extract global styles from layout section
+            // Extract global styles and layout settings from layout section
             const layoutSection = document.querySelector('[data-type="layout"]');
+            let tabViewEnabled = false;
+            let tabNames = [];
+
+            let tabStyle = 'underline';
+            let tabAlignment = 'left';
+            let tabSize = 'medium';
+
             if (layoutSection) {
-                const { style } = getSectionData(layoutSection);
+                const { data, style } = getSectionData(layoutSection);
                 globalStyles = style;
+                tabViewEnabled = layoutSection.querySelector('[data-field="tabViewEnabled"]')?.checked || false;
+                const tabNamesValue = layoutSection.querySelector('[data-field="tabNames"]')?.value || '';
+                tabNames = tabNamesValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                // Get tab layout style settings
+                tabStyle = layoutSection.querySelector('[data-field="tabStyle"]')?.value || 'underline';
+                tabAlignment = layoutSection.querySelector('[data-field="tabAlignment"]')?.value || 'left';
+                tabSize = layoutSection.querySelector('[data-field="tabSize"]')?.value || 'medium';
             }
 
             // Apply default global styles if not set
@@ -856,14 +1039,6 @@
                 spacing: globalStyles.spacing || 'normal'
             };
 
-            // Calculate spacing values
-            const spacingMap = {
-                compact: { py: 'py-8', px: 'px-4', gap: 'gap-2' },
-                normal: { py: 'py-12', px: 'px-6', gap: 'gap-4' },
-                relaxed: { py: 'py-16', px: 'px-8', gap: 'gap-6' },
-                spacious: { py: 'py-20', px: 'px-10', gap: 'gap-8' }
-            };
-
             if (sections.length === 0 || sections.length === 1) {
                 html = `
                     <div class="flex items-center justify-center h-full text-center p-8">
@@ -874,10 +1049,132 @@
                         </div>
                     </div>
                 `;
-            } else {
+            } else if (tabViewEnabled && tabNames.length > 0) {
+                // Tab View Mode
+                // First, render hero section (always visible)
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by tabs
+                const sectionsByTab = {};
+                tabNames.forEach(tab => {
+                    sectionsByTab[tab] = [];
+                });
+
                 sections.forEach(section => {
                     const type = section.dataset.type;
-                    if (type === 'layout') return; // Skip layout section in rendering
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedTab = section.querySelector('[data-field="assignedTab"]')?.value;
+                    if (assignedTab && sectionsByTab[assignedTab]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByTab[assignedTab].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Generate tab navigation and content
+                const tabId = 'preview-tabs-' + Date.now();
+
+                // Define size classes
+                const sizeClasses = {
+                    small: 'px-4 py-2 text-xs',
+                    medium: 'px-6 py-4 text-sm',
+                    large: 'px-8 py-5 text-base'
+                };
+
+                // Define alignment classes
+                const alignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                // Generate tab buttons based on style
+                const generateTabButton = (tab, index, tabStyle, tabSize) => {
+                    const sizeClass = sizeClasses[tabSize] || sizeClasses.medium;
+                    const baseClasses = 'flex-shrink-0 font-medium transition preview-tab-btn';
+
+                    switch(tabStyle) {
+                        case 'pills':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="pills">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'buttons':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} rounded-lg ${index === 0 ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="buttons">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'boxed':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'bg-blue-50 border-blue-600 text-blue-600' : 'bg-white border-transparent text-gray-600 hover:bg-gray-50'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="boxed">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'underline':
+                        default:
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-600 hover:text-gray-900'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="underline">
+                                    ${tab}
+                                </button>
+                            `;
+                    }
+                };
+
+                const containerClasses = tabStyle === 'pills' || tabStyle === 'buttons' ? 'gap-2' : '';
+                const alignClass = alignmentClasses[tabAlignment] || alignmentClasses.left;
+
+                html += `
+                    <div class="sticky top-0 z-10 bg-white ${tabStyle !== 'pills' && tabStyle !== 'buttons' ? 'border-b' : ''} shadow-sm">
+                        <div class="flex overflow-x-auto ${containerClasses} ${alignClass} p-2">
+                            ${tabNames.map((tab, index) => generateTabButton(tab, index, tabStyle, tabSize)).join('')}
+                        </div>
+                    </div>
+                    <div class="preview-tab-contents" data-tab-container="${tabId}">
+                        ${tabNames.map((tab, index) => `
+                            <div class="preview-tab-content ${index === 0 ? '' : 'hidden'}" data-tab-id="${tabId}" data-tab-name="${tab}">
+                                ${sectionsByTab[tab].length > 0
+                                    ? sectionsByTab[tab].map(s => s.html).join('')
+                                    : `<div class="py-16 text-center text-gray-500">
+                                        <div class="text-4xl mb-3">📋</div>
+                                        <p>No sections assigned to this tab yet</p>
+                                       </div>`
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else {
+                // Normal Mode (no tabs)
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout') return;
                     const template = sectionTemplates[type];
                     const { data, style } = getSectionData(section);
                     html += template.render(data, style, globalStyles);
@@ -892,6 +1189,71 @@
             `;
 
             document.getElementById('previewContent').innerHTML = styledHtml;
+
+            // Also update mobile preview if it's open
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = styledHtml;
+            }
+        }
+
+        function switchPreviewTab(containerId, tabName) {
+            // Update button states based on tab style
+            document.querySelectorAll(`[data-tab-id="${containerId}"]`).forEach(btn => {
+                if (btn.classList.contains('preview-tab-btn')) {
+                    const isActive = btn.dataset.tabName === tabName;
+                    const style = btn.dataset.style;
+
+                    // Remove all active state classes
+                    btn.classList.remove(
+                        'border-blue-600', 'text-blue-600', 'border-transparent', 'text-gray-600',
+                        'bg-blue-600', 'text-white', 'bg-gray-200', 'text-gray-700',
+                        'bg-blue-50', 'bg-white', 'text-gray-700', 'border-gray-300'
+                    );
+
+                    // Apply appropriate classes based on style and active state
+                    switch(style) {
+                        case 'pills':
+                            if (isActive) {
+                                btn.classList.add('bg-blue-600', 'text-white');
+                            } else {
+                                btn.classList.add('bg-gray-200', 'text-gray-700');
+                            }
+                            break;
+                        case 'buttons':
+                            if (isActive) {
+                                btn.classList.add('bg-blue-600', 'text-white');
+                            } else {
+                                btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                            }
+                            break;
+                        case 'boxed':
+                            if (isActive) {
+                                btn.classList.add('bg-blue-50', 'border-blue-600', 'text-blue-600');
+                            } else {
+                                btn.classList.add('bg-white', 'border-transparent', 'text-gray-600');
+                            }
+                            break;
+                        case 'underline':
+                        default:
+                            if (isActive) {
+                                btn.classList.add('border-blue-600', 'text-blue-600');
+                            } else {
+                                btn.classList.add('border-transparent', 'text-gray-600');
+                            }
+                            break;
+                    }
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll(`[data-tab-container="${containerId}"] .preview-tab-content`).forEach(content => {
+                if (content.dataset.tabName === tabName) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
         }
 
         function handleImageUpload(input) {
@@ -979,6 +1341,11 @@
             }
         }
 
+        // Initialize layout section on page load
+        function initializeLayout() {
+            addSection('layout');
+        }
+
         // Initialize with default sections on page load
         function initializeDefaultSections() {
             // Add default sections here based on template type
@@ -986,28 +1353,25 @@
             defaultSections.forEach(sectionType => addSection(sectionType));
         }
 
-        // Load default sections when page loads
-        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
+        // Load everything when DOM is ready
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize layout first
+            initializeLayout();
 
-        
-        // Initialize layout section on page load
-        function initializeLayout() {
-            addSection('layout');
-        }
+            // Then add default sections
+            initializeDefaultSections();
 
-        // Close modals on outside click
-        document.getElementById('sectionModal').addEventListener('click', (e) => {
-            if (e.target.id === 'sectionModal') closeSectionModal();
+            // Close modals on outside click
+            document.getElementById('sectionModal').addEventListener('click', (e) => {
+                if (e.target.id === 'sectionModal') closeSectionModal();
+            });
+            document.getElementById('qrModal').addEventListener('click', (e) => {
+                if (e.target.id === 'qrModal') closeQRModal();
+            });
+            document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+            });
         });
-        document.getElementById('qrModal').addEventListener('click', (e) => {
-            if (e.target.id === 'qrModal') closeQRModal();
-        });
-        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
-            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
-        });
-
-        // Run initialization
-        initializeLayout();
     </script>
 </body>
 </html>
