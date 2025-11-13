@@ -21,17 +21,24 @@ function checkComponentsLoaded() {
 
     if (missing.length > 0) {
         console.warn('Missing components:', missing.join(', '));
+    } else {
+        console.log('✅ All components loaded successfully!');
     }
 
     // Make components available as sectionTemplates for backwards compatibility
-    if (loaded.length === componentFiles.length) {
-        window.sectionTemplates = window.sectionComponents;
-        console.log('✅ All components loaded successfully!');
+    window.sectionTemplates = window.sectionComponents;
 
-        // Dispatch event to notify that components are ready
-        window.dispatchEvent(new Event('componentsReady'));
-    }
+    // Always dispatch event (even if some components are missing, we should still try to run)
+    window.dispatchEvent(new Event('componentsReady'));
 }
 
-// Auto-check after a short delay to allow all scripts to load
-setTimeout(checkComponentsLoaded, 100);
+// Check immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+    // DOM not ready, wait for it
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(checkComponentsLoaded, 50);
+    });
+} else {
+    // DOM already loaded, check components immediately
+    setTimeout(checkComponentsLoaded, 50);
+}

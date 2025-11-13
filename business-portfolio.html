@@ -289,7 +289,7 @@
 
         // Use components from the component system
         // Components are loaded from individual files and made available via window.sectionComponents
-        const sectionTemplates = window.sectionComponents;
+        let sectionTemplates = {};
 
         function openSectionModal() {
             updateSectionAvailability();
@@ -1407,8 +1407,13 @@
             defaultSections.forEach(sectionType => addSection(sectionType));
         }
 
-        // Load everything when DOM is ready
-        window.addEventListener('DOMContentLoaded', () => {
+        // Wait for components to load before initializing
+        function initializeApp() {
+            // Assign components to sectionTemplates
+            sectionTemplates = window.sectionComponents || {};
+
+            console.log('Components loaded:', Object.keys(sectionTemplates).length);
+
             // Initialize layout first
             initializeLayout();
 
@@ -1425,6 +1430,23 @@
             document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
                 if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
             });
+        }
+
+        // Listen for components ready event
+        window.addEventListener('componentsReady', () => {
+            console.log('✅ Components ready event received');
+            initializeApp();
+        });
+
+        // Fallback: Also listen to DOMContentLoaded in case components loaded before listener was attached
+        window.addEventListener('DOMContentLoaded', () => {
+            // Wait a bit for component scripts to execute
+            setTimeout(() => {
+                if (window.sectionComponents && Object.keys(sectionTemplates).length === 0) {
+                    console.log('⚠️ Initializing from DOMContentLoaded fallback');
+                    initializeApp();
+                }
+            }, 100);
         });
     </script>
 </body>
