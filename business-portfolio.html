@@ -705,6 +705,16 @@
             }
         }
 
+        // Initialize with default sections on page load
+        function initializeDefaultSections() {
+            // Add default sections here based on template type
+            const defaultSections = ['hero', 'about', 'services', 'contact'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        // Load default sections when page loads
+        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
+
         // Close modals on outside click
         document.getElementById('sectionModal').addEventListener('click', (e) => {
             if (e.target.id === 'sectionModal') closeSectionModal();
