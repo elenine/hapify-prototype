@@ -1341,44 +1341,56 @@
                 };
 
                 // Generate navigation buttons based on style
+                const navId = 'preview-nav-' + Date.now();
                 const generateNavButton = (item, index, navStyle, navSize) => {
                     const sizeClass = navSizeClasses[navSize] || navSizeClasses.medium;
-                    const baseClasses = 'font-medium transition cursor-pointer';
-                    const itemId = `nav-item-${item.replace(/\s+/g, '-')}`;
+                    const baseClasses = 'font-medium transition cursor-pointer preview-nav-btn';
 
                     switch(navStyle) {
                         case 'underline':
                             return `
-                                <a href="#${itemId}" onclick="scrollToNavSection('${item}'); return false;"
+                                <button onclick="switchNavSection('${navId}', '${item}')"
                                    class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'border-blue-600' : 'border-transparent hover:border-gray-400'}"
-                                   style="color: ${navTextColor};">
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="underline">
                                     ${item}
-                                </a>
+                                </button>
                             `;
                         case 'pills':
                             return `
-                                <a href="#${itemId}" onclick="scrollToNavSection('${item}'); return false;"
+                                <button onclick="switchNavSection('${navId}', '${item}')"
                                    class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-blue-600 text-white' : 'hover:bg-gray-200'}"
-                                   style="color: ${index === 0 ? '#ffffff' : navTextColor};">
+                                   style="color: ${index === 0 ? '#ffffff' : navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="pills">
                                     ${item}
-                                </a>
+                                </button>
                             `;
                         case 'bordered':
                             return `
-                                <a href="#${itemId}" onclick="scrollToNavSection('${item}'); return false;"
+                                <button onclick="switchNavSection('${navId}', '${item}')"
                                    class="${baseClasses} ${sizeClass} rounded-lg border ${index === 0 ? 'border-blue-600 bg-blue-50' : 'border-gray-300 hover:bg-gray-50'}"
-                                   style="color: ${navTextColor};">
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="bordered">
                                     ${item}
-                                </a>
+                                </button>
                             `;
                         case 'simple':
                         default:
                             return `
-                                <a href="#${itemId}" onclick="scrollToNavSection('${item}'); return false;"
+                                <button onclick="switchNavSection('${navId}', '${item}')"
                                    class="${baseClasses} ${sizeClass} hover:opacity-70"
-                                   style="color: ${navTextColor};">
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="simple">
                                     ${item}
-                                </a>
+                                </button>
                             `;
                     }
                 };
@@ -1425,13 +1437,12 @@
                     }
                 });
 
-                // Render navigation sections
+                // Render navigation sections (only first one visible)
                 html += `
-                    <div class="nav-sections">
-                        ${navItems.map((item) => {
-                            const itemId = `nav-item-${item.replace(/\s+/g, '-')}`;
+                    <div class="nav-sections-container" data-nav-container="${navId}">
+                        ${navItems.map((item, index) => {
                             return `
-                                <div id="${itemId}" class="nav-section">
+                                <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
                                     ${sectionsByNavItem[item].length > 0
                                         ? sectionsByNavItem[item].map(s => s.html).join('')
                                         : `<div class="py-16 text-center text-gray-500">
@@ -1530,12 +1541,62 @@
             });
         }
 
-        function scrollToNavSection(itemName) {
-            const itemId = `nav-item-${itemName.replace(/\s+/g, '-')}`;
-            const element = document.getElementById(itemId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+        function switchNavSection(navId, itemName) {
+            // Update button states based on navigation style
+            document.querySelectorAll(`[data-nav-id="${navId}"]`).forEach(btn => {
+                if (btn.classList.contains('preview-nav-btn')) {
+                    const isActive = btn.dataset.navItem === itemName;
+                    const style = btn.dataset.style;
+                    const currentColor = btn.style.color;
+
+                    // Remove all active state classes
+                    btn.classList.remove(
+                        'border-blue-600', 'border-transparent',
+                        'bg-blue-600', 'text-white', 'hover:bg-gray-200',
+                        'bg-blue-50', 'border-gray-300', 'hover:bg-gray-50'
+                    );
+
+                    // Apply appropriate classes based on style and active state
+                    switch(style) {
+                        case 'underline':
+                            if (isActive) {
+                                btn.classList.add('border-blue-600');
+                            } else {
+                                btn.classList.add('border-transparent', 'hover:border-gray-400');
+                            }
+                            break;
+                        case 'pills':
+                            if (isActive) {
+                                btn.classList.add('bg-blue-600', 'text-white');
+                                btn.style.color = '#ffffff';
+                            } else {
+                                btn.classList.add('hover:bg-gray-200');
+                                btn.style.color = currentColor;
+                            }
+                            break;
+                        case 'bordered':
+                            if (isActive) {
+                                btn.classList.add('border-blue-600', 'bg-blue-50');
+                            } else {
+                                btn.classList.add('border-gray-300', 'hover:bg-gray-50');
+                            }
+                            break;
+                        case 'simple':
+                        default:
+                            // Simple style doesn't change appearance on active
+                            break;
+                    }
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll(`[data-nav-container="${navId}"] .nav-section-content`).forEach(content => {
+                if (content.dataset.navItem === itemName) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
         }
 
         function handleImageUpload(input) {
