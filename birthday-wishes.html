@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Wishes Creator - InviteGen</title>
+    <title>Birthday Party Invitation Creator - InviteGen</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -17,7 +17,7 @@
                         <h1 class="text-xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
                             InviteGen
                         </h1>
-                        <p class="text-xs text-gray-500">Birthday Wishes</p>
+                        <p class="text-xs text-gray-500">Birthday Party Invitation</p>
                     </div>
                 </div>
                 <div class="flex gap-3">
@@ -41,8 +41,8 @@
         <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
             <div class="p-6">
                 <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-900">Design Birthday Wishes</h2>
-                    <p class="text-sm text-gray-600 mt-1">Create a memorable birthday celebration</p>
+                    <h2 class="text-2xl font-bold text-gray-900">Design Party Invitation</h2>
+                    <p class="text-sm text-gray-600 mt-1">Create an unforgettable birthday party invitation</p>
                 </div>
 
                 <!-- Sections Container -->
@@ -78,9 +78,9 @@
                     <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
                         <div class="flex items-center justify-center h-full text-center p-8">
                             <div>
-                                <div class="text-6xl mb-4">🎂</div>
+                                <div class="text-6xl mb-4">🎉</div>
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
-                                <p class="text-gray-600 text-sm">Add sections to build your birthday wishes</p>
+                                <p class="text-gray-600 text-sm">Add sections to build your party invitation</p>
                             </div>
                         </div>
                     </div>
@@ -115,19 +115,19 @@
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button data-section-type="hero" onclick="addSection('hero')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">🎂</div>
-                            <div class="font-semibold text-sm">Hero Header</div>
+                            <div class="font-semibold text-sm">Party Banner</div>
                         </button>
                         <button data-section-type="celebrant" onclick="addSection('celebrant')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">🎉</div>
-                            <div class="font-semibold text-sm">Celebrant Info</div>
+                            <div class="font-semibold text-sm">Guest of Honor</div>
                         </button>
                         <button data-section-type="party" onclick="addSection('party')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">🎈</div>
                             <div class="font-semibold text-sm">Party Details</div>
                         </button>
-                        <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
-                            <div class="text-4xl mb-2">🖼️</div>
-                            <div class="font-semibold text-sm">Photo Gallery</div>
+                        <button data-section-type="venue" onclick="addSection('venue')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📍</div>
+                            <div class="font-semibold text-sm">Venue Details</div>
                         </button>
                         <button data-section-type="rsvp" onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">✉️</div>
@@ -139,21 +139,29 @@
                 <!-- More Sections Tab -->
                 <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <button data-section-type="wishes" onclick="addSection('wishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
-                            <div class="text-4xl mb-2">💝</div>
-                            <div class="font-semibold text-sm">Birthday Wishes</div>
+                        <button data-section-type="schedule" onclick="addSection('schedule')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Party Schedule</div>
+                        </button>
+                        <button data-section-type="dresscode" onclick="addSection('dresscode')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">👔</div>
+                            <div class="font-semibold text-sm">Dress Code</div>
                         </button>
                         <button data-section-type="message" onclick="addSection('message')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
-                            <div class="text-4xl mb-2">💬</div>
-                            <div class="font-semibold text-sm">Special Message</div>
+                            <div class="text-4xl mb-2">📝</div>
+                            <div class="font-semibold text-sm">Important Notes</div>
+                        </button>
+                        <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🖼️</div>
+                            <div class="font-semibold text-sm">Photo Gallery</div>
                         </button>
                         <button data-section-type="countdown" onclick="addSection('countdown')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">⏰</div>
-                            <div class="font-semibold text-sm">Countdown</div>
+                            <div class="font-semibold text-sm">Party Countdown</div>
                         </button>
                         <button data-section-type="gifts" onclick="addSection('gifts')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">🎁</div>
-                            <div class="font-semibold text-sm">Gift Registry</div>
+                            <div class="font-semibold text-sm">Gift Preferences</div>
                         </button>
                     </div>
                 </div>
@@ -226,12 +234,14 @@
     <script src="components/birthday/hero.component.js"></script>
     <script src="components/birthday/celebrant.component.js"></script>
     <script src="components/birthday/party.component.js"></script>
+    <script src="components/birthday/schedule.component.js"></script>
+    <script src="components/birthday/venue.component.js"></script>
+    <script src="components/birthday/dresscode.component.js"></script>
     <script src="components/birthday/message.component.js"></script>
     <script src="components/birthday/gallery.component.js"></script>
     <script src="components/birthday/gifts.component.js"></script>
     <script src="components/birthday/rsvp.component.js"></script>
     <script src="components/birthday/countdown.component.js"></script>
-    <script src="components/birthday/wishes.component.js"></script>
     <script src="components/birthday/components-loader.js"></script>
 
     <script>
@@ -671,9 +681,9 @@
                 html = `
                     <div class="flex items-center justify-center h-full text-center p-8">
                         <div>
-                            <div class="text-6xl mb-4">🎂</div>
+                            <div class="text-6xl mb-4">🎉</div>
                             <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
-                            <p class="text-gray-600 text-sm">Add sections to build your birthday wishes</p>
+                            <p class="text-gray-600 text-sm">Add sections to build your party invitation</p>
                         </div>
                     </div>
                 `;
