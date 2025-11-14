@@ -89,7 +89,7 @@
         </div>
     </div>
 
-                <!-- Add Section Modal -->
+    <!-- Add Section Modal -->
     <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             <!-- Header -->
@@ -117,20 +117,6 @@
                             <div class="text-4xl mb-2">👶</div>
                             <div class="font-semibold text-sm">Hero Header</div>
                         </button>
-                        <button data-section-type="story" onclick="addSection('story')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
-                            <div class="text-4xl mb-2">📖</div>
-                            <div class="font-semibold text-sm">Birth Story</div>
-                        </button>
-                        <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
-                            <div class="text-4xl mb-2">📸</div>
-                            <div class="font-semibold text-sm">Photo Gallery</div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- More Sections Tab -->
-                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <button data-section-type="stats" onclick="addSection('stats')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
                             <div class="text-4xl mb-2">📊</div>
                             <div class="font-semibold text-sm">Baby Stats</div>
@@ -143,13 +129,27 @@
                             <div class="text-4xl mb-2">💌</div>
                             <div class="font-semibold text-sm">Family Message</div>
                         </button>
-                        <button data-section-type="visiting" onclick="addSection('visiting')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
-                            <div class="text-4xl mb-2">🏥</div>
-                            <div class="font-semibold text-sm">Visiting Hours</div>
-                        </button>
                         <button data-section-type="thankyou" onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
                             <div class="text-4xl mb-2">🙏</div>
                             <div class="font-semibold text-sm">Thank You</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="story" onclick="addSection('story')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                            <div class="text-4xl mb-2">📖</div>
+                            <div class="font-semibold text-sm">Birth Story</div>
+                        </button>
+                        <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                            <div class="text-4xl mb-2">📸</div>
+                            <div class="font-semibold text-sm">Photo Gallery</div>
+                        </button>
+                        <button data-section-type="visiting" onclick="addSection('visiting')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
+                            <div class="text-4xl mb-2">🏥</div>
+                            <div class="font-semibold text-sm">Visiting Hours</div>
                         </button>
                         <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-teal-500 hover:bg-teal-50 transition text-center">
                             <div class="text-4xl mb-2">📞</div>
@@ -220,475 +220,22 @@
         </div>
     </div>
 
+    <!-- Load Component System -->
+    <script src="components/layout.component.js"></script>
+    <script src="components/birth-announcement/hero.component.js"></script>
+    <script src="components/birth-announcement/stats.component.js"></script>
+    <script src="components/birth-announcement/parents.component.js"></script>
+    <script src="components/birth-announcement/story.component.js"></script>
+    <script src="components/birth-announcement/message.component.js"></script>
+    <script src="components/birth-announcement/visiting.component.js"></script>
+    <script src="components/birth-announcement/thankyou.component.js"></script>
+    <script src="components/birth-announcement/gallery.component.js"></script>
+    <script src="components/birth-announcement/contact.component.js"></script>
+    <script src="components/birth-announcement/components-loader.js"></script>
+
     <script>
         let sectionCounter = 0;
-
-        const sectionTemplates = {
-            layout: {
-                name: '🎨 Page Layout',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div class="text-sm text-gray-600">
-                            <p>This section controls the overall styling and appearance of your entire invitation page.</p>
-                            <p class="mt-2">Use the <strong>Style</strong> tab to customize colors, fonts, and layout.</p>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
-                            <input type="color" value="#9333ea" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="primaryColor" oninput="updatePreview()">
-                            <p class="text-xs text-gray-500 mt-1">Used for headings and accents</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
-                            <input type="color" value="#ec4899" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondaryColor" oninput="updatePreview()">
-                            <p class="text-xs text-gray-500 mt-1">Used for secondary elements</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bgColor" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
-                            <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="fontFamily" onchange="updatePreview()">
-                                <option value="system-ui, -apple-system, sans-serif">System Default</option>
-                                <option value="Georgia, serif">Georgia (Serif)</option>
-                                <option value="'Times New Roman', serif">Times New Roman</option>
-                                <option value="'Courier New', monospace">Courier New</option>
-                                <option value="Arial, sans-serif">Arial</option>
-                                <option value="'Comic Sans MS', cursive">Comic Sans</option>
-                                <option value="'Brush Script MT', cursive">Brush Script</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="borderRadius" onchange="updatePreview()">
-                                <option value="0px">Square (No Radius)</option>
-                                <option value="4px">Small (4px)</option>
-                                <option value="8px" selected>Medium (8px)</option>
-                                <option value="16px">Large (16px)</option>
-                                <option value="24px">Extra Large (24px)</option>
-                                <option value="9999px">Pill Shape</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="spacing" onchange="updatePreview()">
-                                <option value="compact">Compact</option>
-                                <option value="normal" selected>Normal</option>
-                                <option value="relaxed">Relaxed</option>
-                                <option value="spacious">Spacious</option>
-                            </select>
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => '' // Layout section doesn't render visible content
-            },
-            hero: {
-                name: '👶 Hero Header',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Baby's Name</label>
-                            <input type="text" placeholder="Emma Rose" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent section-data" data-field="name" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Announcement Title</label>
-                            <input type="text" placeholder="Welcome to the World" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Baby Photo</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-400 cursor-pointer" onclick="this.querySelector('input').click()">
-                                <div class="text-3xl mb-2">📸</div>
-                                <div class="text-sm text-gray-600">Click to upload</div>
-                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
-                            </div>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="text-center py-16 px-6" style="background: ${style.bg || '#14b8a6'}; color: ${style.text || '#ffffff'}">
-                        ${data.image ? `<img src="${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">` : '<div class="text-6xl mb-4">👶</div>'}
-                        <h1 class="text-3xl font-bold mb-2">${data.title || 'Welcome to the World'}</h1>
-                        <p class="text-2xl">${data.name || "Baby's Name"}</p>
-                    </div>
-                `
-            },
-            stats: {
-                name: '📊 Baby Stats',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Birth Date</label>
-                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="date" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Birth Time</label>
-                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="time" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Weight</label>
-                            <input type="text" placeholder="7 lbs 8 oz" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="weight" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Length</label>
-                            <input type="text" placeholder="20 inches" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="length" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto">
-                            <h2 class="text-2xl font-bold mb-6 text-center">Baby's First Stats</h2>
-                            <div class="space-y-3">
-                                ${data.date ? `
-                                <div class="p-4 bg-teal-50 rounded-lg">
-                                    <div class="text-xs text-gray-500 mb-1">Born</div>
-                                    <div class="font-bold">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
-                                </div>` : ''}
-                                ${data.time ? `
-                                <div class="p-4 bg-teal-50 rounded-lg">
-                                    <div class="text-xs text-gray-500 mb-1">Time</div>
-                                    <div class="font-bold">${data.time}</div>
-                                </div>` : ''}
-                                <div class="grid grid-cols-2 gap-3">
-                                    ${data.weight ? `
-                                    <div class="p-4 bg-teal-50 rounded-lg">
-                                        <div class="text-xs text-gray-500 mb-1">Weight</div>
-                                        <div class="font-medium">${data.weight}</div>
-                                    </div>` : ''}
-                                    ${data.length ? `
-                                    <div class="p-4 bg-teal-50 rounded-lg">
-                                        <div class="text-xs text-gray-500 mb-1">Length</div>
-                                        <div class="font-medium">${data.length}</div>
-                                    </div>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            parents: {
-                name: '👨‍👩‍👦 Parents Info',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Mother's Name</label>
-                            <input type="text" placeholder="Sarah Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="mother" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Father's Name</label>
-                            <input type="text" placeholder="Michael Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="father" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Siblings (if any)</label>
-                            <input type="text" placeholder="Big brother Jake" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="siblings" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#f0fdfa'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">Proud Parents</h2>
-                        <div class="max-w-md mx-auto text-center space-y-4">
-                            ${data.mother || data.father ? `
-                            <div class="p-4 bg-white rounded-lg">
-                                <div class="text-3xl mb-2">👨‍👩‍👦</div>
-                                ${data.mother ? `<div class="font-medium mb-1">${data.mother}</div>` : ''}
-                                ${data.father ? `<div class="font-medium mb-1">${data.father}</div>` : ''}
-                            </div>` : ''}
-                            ${data.siblings ? `
-                            <div class="p-4 bg-white rounded-lg">
-                                <div class="text-xs text-gray-500 mb-1">Siblings</div>
-                                <div class="font-medium">${data.siblings}</div>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `
-            },
-            story: {
-                name: '📖 Birth Story',
-                allowMultiple: true,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Story Title</label>
-                            <input type="text" placeholder="Our Birth Story" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Birth Story</label>
-                            <textarea placeholder="Share your special birth story..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="story" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-center text-4xl mb-4">📖</div>
-                            <h2 class="text-2xl font-bold mb-6 text-center">${data.title || 'Our Birth Story'}</h2>
-                            <div class="p-6 bg-teal-50 rounded-lg">
-                                <p class="text-gray-700 leading-relaxed">${data.story || 'Share your special birth story here...'}</p>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            message: {
-                name: '💌 Family Message',
-                allowMultiple: true,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message Title</label>
-                            <input type="text" placeholder="A Message from Our Hearts" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea placeholder="Share your feelings and gratitude..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#f0fdfa'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-5xl mb-4">💌</div>
-                            <h2 class="text-2xl font-bold mb-6">${data.title || 'A Message from Our Hearts'}</h2>
-                            <p class="text-gray-700 leading-relaxed">${data.message || 'We are overjoyed to welcome our little one into the world and grateful for all the love and support.'}</p>
-                        </div>
-                    </div>
-                `
-            },
-            visiting: {
-                name: '🏥 Visiting Hours',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
-                            <input type="text" placeholder="Hospital/Home" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="location" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Visiting Hours</label>
-                            <textarea placeholder="Daily 2PM - 6PM" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="hours" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Special Instructions</label>
-                            <textarea placeholder="Please call ahead..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="instructions" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">Visiting Information</h2>
-                        <div class="max-w-md mx-auto space-y-4">
-                            ${data.location ? `
-                            <div class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
-                                <div class="text-2xl">🏥</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Location</div>
-                                    <div class="font-medium">${data.location}</div>
-                                </div>
-                            </div>` : ''}
-                            ${data.hours ? `
-                            <div class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
-                                <div class="text-2xl">🕐</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Hours</div>
-                                    <div class="text-sm">${data.hours}</div>
-                                </div>
-                            </div>` : ''}
-                            ${data.instructions ? `
-                            <div class="flex items-start gap-4 p-4 bg-teal-50 rounded-lg">
-                                <div class="text-2xl">ℹ️</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Instructions</div>
-                                    <div class="text-sm">${data.instructions}</div>
-                                </div>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `
-            },
-            thankyou: {
-                name: '🙏 Thank You',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Title</label>
-                            <input type="text" placeholder="Thank You" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You Message</label>
-                            <textarea placeholder="Thank you for all the love and support..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#f0fdfa'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-5xl mb-4">🙏</div>
-                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Thank You'}</h2>
-                            <p class="text-gray-700 leading-relaxed">${data.message || 'Thank you for celebrating this special moment with us and for all your love and support.'}</p>
-                        </div>
-                    </div>
-                `
-            },
-            gallery: {
-                name: '📸 Photo Gallery',
-                allowMultiple: true,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Title</label>
-                            <input type="text" placeholder="More Photos" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Description</label>
-                            <textarea placeholder="Check out more photos of our little one..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'More Photos'}</h2>
-                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
-                        <div class="max-w-md mx-auto grid grid-cols-3 gap-3">
-                            <div class="aspect-square bg-teal-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
-                            <div class="aspect-square bg-teal-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
-                            <div class="aspect-square bg-teal-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
-                        </div>
-                    </div>
-                `
-            },
-            contact: {
-                name: '📞 Contact',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Contact Person</label>
-                            <input type="text" placeholder="Sarah Johnson" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="person" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                            <input type="email" placeholder="contact@email.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="email" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                            <input type="tel" placeholder="+1 (555) 123-4567" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data" data-field="phone" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#f0fdfa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#f0fdfa'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">Get in Touch</h2>
-                        <div class="max-w-md mx-auto space-y-4">
-                            ${data.person ? `
-                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">👤</div>
-                                <div class="font-medium">${data.person}</div>
-                            </div>` : ''}
-                            ${data.email ? `
-                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">📧</div>
-                                <div class="text-sm">${data.email}</div>
-                            </div>` : ''}
-                            ${data.phone ? `
-                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">📞</div>
-                                <div class="text-sm">${data.phone}</div>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `
-            }
-        };
+        let sectionTemplates = {};
 
         function openSectionModal() {
             updateSectionAvailability();
@@ -696,30 +243,25 @@
         }
 
         function updateSectionAvailability() {
-            // Get all currently added sections
             const addedSections = {};
             document.querySelectorAll('.section-item').forEach(section => {
                 const type = section.dataset.type;
                 addedSections[type] = (addedSections[type] || 0) + 1;
             });
 
-            // Update each section button in the modal
             document.querySelectorAll('[data-section-type]').forEach(button => {
                 const type = button.dataset.sectionType;
                 const template = sectionTemplates[type];
-
                 if (!template) return;
 
                 const isAdded = addedSections[type] > 0;
-                const allowMultiple = template.allowMultiple !== false; // Default to true if not specified
+                const allowMultiple = template.allowMultiple !== false;
 
                 if (isAdded && !allowMultiple) {
-                    // Disable button
                     button.disabled = true;
                     button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
-                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+                    button.classList.remove('hover:border-teal-500', 'hover:bg-teal-50');
 
-                    // Add "Added" badge
                     if (!button.querySelector('.added-badge')) {
                         const badge = document.createElement('span');
                         badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
@@ -728,35 +270,25 @@
                         button.appendChild(badge);
                     }
                 } else {
-                    // Enable button
                     button.disabled = false;
                     button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
-                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+                    button.classList.add('hover:border-teal-500', 'hover:bg-teal-50');
 
-                    // Remove "Added" badge if it exists
                     const badge = button.querySelector('.added-badge');
                     if (badge) badge.remove();
                 }
             });
         }
 
-        
         function switchModalTab(event, tabName) {
-            // Remove active class from all tab buttons
             document.querySelectorAll('.modal-tab-btn').forEach(btn => {
-                btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+                btn.classList.remove('active', 'text-teal-600', 'border-b-2', 'border-teal-600', 'bg-white');
             });
-
-            // Hide all tab contents
             document.querySelectorAll('.modal-tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
-
-            // Activate clicked tab button
-            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
-
-            // Show corresponding tab content
-            document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
+            event.target.classList.add('active', 'text-teal-600', 'border-b-2', 'border-teal-600', 'bg-white');
+            document.querySelector(\`[data-modal-tab="\${tabName}"]\`).classList.remove('hidden');
         }
 
         function closeSectionModal() {
@@ -765,61 +297,175 @@
 
         function addSection(type) {
             const template = sectionTemplates[type];
-            const id = `section-${sectionCounter++}`;
+            const id = \`section-\${sectionCounter++}\`;
             const isLayout = type === 'layout';
+            const isHero = type === 'hero';
 
-            // For layout section, hide remove button and drag handle
-            const removeButton = isLayout ? '' : `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`;
-            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            const navTypeRadio = layoutSection ? layoutSection.querySelector('[data-field="navType"]:checked') : null;
+            const navType = navTypeRadio?.value || 'none';
+            const navEnabled = navType !== 'none';
 
-            const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
-                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''}">
-                        <div class="flex items-center gap-2">
-                            ${dragHandle}
-                            <span class="font-semibold text-sm">${template.name}</span>
-                            ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
-                        </div>
-                        ${removeButton}
-                    </div>
-                    <div class="border-b flex">
-                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
-                            Info
-                        </button>
-                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
-                            Style
-                        </button>
-                    </div>
-                    <div class="p-4 tab-content" data-tab="info">
-                        ${template.info}
-                    </div>
-                    <div class="p-4 tab-content hidden" data-tab="style">
-                        ${template.style}
-                    </div>
+            const canRemove = !isLayout && !isHero;
+            const removeButton = canRemove ? \`<button onclick="removeSection('\${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>\` : '';
+            const dragHandle = isLayout ? '' : \`<span class="cursor-move text-gray-400">⋮⋮</span>\`;
+
+            const navSelector = (!isLayout && !isHero && navEnabled) ? \`
+                <div class="px-4 pt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">\${navType === 'tabview' ? 'Assign to Tab' : 'Assign to Navigation Item'}</label>
+                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
+                        <option value="">\${navType === 'tabview' ? 'Select a tab...' : 'Select a navigation item...'}</option>
+                    </select>
                 </div>
-            `;
+            \` : '';
+
+            const sectionHTML = \`
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item \${isLayout ? 'border-purple-300 bg-purple-50' : ''} \${isHero ? 'border-teal-300 bg-teal-50' : ''}" data-id="\${id}" data-type="\${type}" \${isLayout || isHero ? 'data-permanent="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center \${isLayout ? 'bg-purple-100' : ''} \${isHero ? 'bg-teal-50' : ''}">
+                        <div class="flex items-center gap-2">
+                            \${dragHandle}
+                            <span class="font-semibold text-sm">\${template.name}</span>
+                            \${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
+                            \${isHero ? '<span class="ml-2 text-xs bg-teal-200 text-teal-700 px-2 py-1 rounded">Required</span>' : ''}
+                        </div>
+                        \${removeButton}
+                    </div>
+                    \${navSelector}
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '\${id}', 'info')">Info</button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '\${id}', 'style')">Style</button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">\${typeof template.info === 'function' ? template.info(id) : template.info}</div>
+                    <div class="p-4 tab-content hidden" data-tab="style">\${template.style}</div>
+                </div>
+            \`;
 
             document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
-            if (!isLayout) {
-                closeSectionModal();
-            }
+            if (!isLayout) closeSectionModal();
+
+            updateSectionNavigationDropdowns();
             updatePreview();
         }
 
         function removeSection(id) {
+            const section = document.querySelector(\`[data-id="\${id}"]\`);
+            if (section && section.dataset.permanent === 'true') {
+                const sectionType = section.dataset.type;
+                if (sectionType === 'layout') {
+                    alert('The Layout section contains global settings and cannot be removed.');
+                } else if (sectionType === 'hero') {
+                    alert('The Hero Header is required and cannot be removed.');
+                } else {
+                    alert('This section is required and cannot be removed.');
+                }
+                return;
+            }
             if (confirm('Remove this section?')) {
-                document.querySelector(`[data-id="${id}"]`).remove();
+                section.remove();
                 updatePreview();
             }
         }
 
+        function toggleNavigationSettings(radio) {
+            const navType = radio.value;
+            const tabViewSettings = document.getElementById('tabViewSettings');
+            const topNavSettings = document.getElementById('topNavSettings');
+            const bottomNavSettings = document.getElementById('bottomNavSettings');
+            const heroSection = document.querySelector('[data-type="hero"]');
+
+            tabViewSettings.classList.add('hidden');
+            topNavSettings.classList.add('hidden');
+            bottomNavSettings.classList.add('hidden');
+
+            document.querySelectorAll('.nav-selector').forEach(selector => {
+                selector.closest('div').remove();
+            });
+
+            if (navType === 'tabview') {
+                tabViewSettings.classList.remove('hidden');
+                if (!heroSection) addSection('hero');
+                updateSectionNavigationDropdowns();
+            } else if (navType === 'topnav') {
+                topNavSettings.classList.remove('hidden');
+                if (!heroSection) addSection('hero');
+                updateSectionNavigationDropdowns();
+            } else if (navType === 'bottomnav') {
+                bottomNavSettings.classList.remove('hidden');
+                if (!heroSection) addSection('hero');
+                updateSectionNavigationDropdowns();
+            }
+        }
+
+        function updateSectionNavigationDropdowns() {
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (!layoutSection) return;
+
+            const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+            const navType = navTypeRadio?.value;
+            if (!navType || navType === 'none') return;
+
+            let navItems = [];
+            let labelText = '';
+            let placeholderText = '';
+
+            if (navType === 'tabview') {
+                const tabNamesTextarea = layoutSection.querySelector('[data-field="tabNames"]');
+                navItems = tabNamesTextarea?.value.split('\\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Tab';
+                placeholderText = 'Select a tab...';
+            } else if (navType === 'topnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="navItems"]');
+                navItems = navItemsTextarea?.value.split('\\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            } else if (navType === 'bottomnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="bottomNavItems"]');
+                navItems = navItemsTextarea?.value.split('\\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            }
+
+            document.querySelectorAll('.nav-selector').forEach(selector => {
+                const currentValue = selector.value;
+                selector.innerHTML = \`<option value="">\${placeholderText}</option>\`;
+                navItems.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.trim();
+                    option.textContent = item.trim();
+                    if (currentValue === item.trim()) {
+                        option.selected = true;
+                    }
+                    selector.appendChild(option);
+                });
+            });
+
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                if (type === 'layout' || type === 'hero') return;
+                if (section.querySelector('.nav-selector')) return;
+
+                const selectorHTML = \`
+                    <div class="px-4 pt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">\${labelText}</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
+                            <option value="">\${placeholderText}</option>
+                            \${navItems.map(item => \`<option value="\${item.trim()}">\${item.trim()}</option>\`).join('')}
+                        </select>
+                    </div>
+                \`;
+
+                const header = section.querySelector('.bg-gray-50');
+                header.insertAdjacentHTML('afterend', selectorHTML);
+            });
+        }
+
         function switchTab(event, sectionId, tab) {
-            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            const section = document.querySelector(\`[data-id="\${sectionId}"]\`);
             section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-teal-600', 'border-b-2', 'border-teal-600'));
             section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
 
             event.target.classList.add('active', 'text-teal-600', 'border-b-2', 'border-teal-600');
-            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+            section.querySelector(\`[data-tab="\${tab}"]\`).classList.remove('hidden');
         }
 
         function getSectionData(section) {
@@ -847,17 +493,19 @@
             let html = '';
             let globalStyles = {};
 
-            // Extract global styles from layout section
             const layoutSection = document.querySelector('[data-type="layout"]');
+            let navType = 'none';
+
             if (layoutSection) {
-                const { style } = getSectionData(layoutSection);
+                const { data, style } = getSectionData(layoutSection);
                 globalStyles = style;
+                const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+                navType = navTypeRadio?.value || 'none';
             }
 
-            // Apply default global styles if not set
             globalStyles = {
-                primaryColor: globalStyles.primaryColor || '#9333ea',
-                secondaryColor: globalStyles.secondaryColor || '#ec4899',
+                primaryColor: globalStyles.primaryColor || '#14b8a6',
+                secondaryColor: globalStyles.secondaryColor || '#0d9488',
                 bgColor: globalStyles.bgColor || '#ffffff',
                 textColor: globalStyles.textColor || '#1f2937',
                 fontFamily: globalStyles.fontFamily || 'system-ui, -apple-system, sans-serif',
@@ -865,16 +513,8 @@
                 spacing: globalStyles.spacing || 'normal'
             };
 
-            // Calculate spacing values
-            const spacingMap = {
-                compact: { py: 'py-8', px: 'px-4', gap: 'gap-2' },
-                normal: { py: 'py-12', px: 'px-6', gap: 'gap-4' },
-                relaxed: { py: 'py-16', px: 'px-8', gap: 'gap-6' },
-                spacious: { py: 'py-20', px: 'px-10', gap: 'gap-8' }
-            };
-
             if (sections.length === 0 || sections.length === 1) {
-                html = `
+                html = \`
                     <div class="flex items-center justify-center h-full text-center p-8">
                         <div>
                             <div class="text-6xl mb-4">👶</div>
@@ -882,25 +522,29 @@
                             <p class="text-gray-600 text-sm">Add sections to build your birth announcement</p>
                         </div>
                     </div>
-                `;
+                \`;
             } else {
                 sections.forEach(section => {
                     const type = section.dataset.type;
-                    if (type === 'layout') return; // Skip layout section in rendering
+                    if (type === 'layout') return;
                     const template = sectionTemplates[type];
                     const { data, style } = getSectionData(section);
                     html += template.render(data, style, globalStyles);
                 });
             }
 
-            // Wrap content with global styles
-            const styledHtml = `
-                <div style="font-family: ${globalStyles.fontFamily}; color: ${globalStyles.textColor}; background: ${globalStyles.bgColor};">
-                    ${html}
+            const styledHtml = \`
+                <div style="font-family: \${globalStyles.fontFamily}; color: \${globalStyles.textColor}; background: \${globalStyles.bgColor};">
+                    \${html}
                 </div>
-            `;
+            \`;
 
             document.getElementById('previewContent').innerHTML = styledHtml;
+
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = styledHtml;
+            }
         }
 
         function handleImageUpload(input) {
@@ -953,16 +597,13 @@
 
         function publishProject() {
             if (confirm('Publish your birth announcement?')) {
-                alert('✅ Published successfully!\n\nYour birth announcement is now live!');
+                alert('✅ Published successfully!\\n\\nYour birth announcement is now live!');
             }
         }
 
         function openMobilePreview() {
-            // Copy preview content to mobile preview modal
             const previewContent = document.getElementById('previewContent').innerHTML;
             document.getElementById('mobilePreviewContent').innerHTML = previewContent;
-
-            // Show the modal
             document.getElementById('mobilePreviewModal').classList.remove('hidden');
         }
 
@@ -971,13 +612,11 @@
         }
 
         function setMobilePreviewDevice(device) {
-            // Update active button
             document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-teal-600', 'text-white');
             });
             event.target.classList.add('active', 'bg-teal-600', 'text-white');
 
-            // Update frame size
             const frame = document.getElementById('mobilePreviewFrame');
             if (device === 'tablet') {
                 frame.style.width = '768px';
@@ -988,35 +627,67 @@
             }
         }
 
-        // Initialize with default sections on page load
-        function initializeDefaultSections() {
-            // Add default sections here based on template type
-            const defaultSections = ['hero', 'stats', 'message', 'thankyou'];
-            defaultSections.forEach(sectionType => addSection(sectionType));
-        }
-
-        // Load default sections when page loads
-        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
-
-        
-        // Initialize layout section on page load
         function initializeLayout() {
             addSection('layout');
         }
 
-        // Close modals on outside click
-        document.getElementById('sectionModal').addEventListener('click', (e) => {
-            if (e.target.id === 'sectionModal') closeSectionModal();
-        });
-        document.getElementById('qrModal').addEventListener('click', (e) => {
-            if (e.target.id === 'qrModal') closeQRModal();
-        });
-        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
-            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+        function initializeDefaultSections() {
+            const defaultSections = ['hero', 'stats', 'parents', 'message', 'thankyou'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        function initializeApp() {
+            sectionTemplates = window.sectionComponents || {};
+            console.log('Components loaded:', Object.keys(sectionTemplates).length);
+
+            initializeLayout();
+            initializeDefaultSections();
+
+            document.getElementById('sectionModal').addEventListener('click', (e) => {
+                if (e.target.id === 'sectionModal') closeSectionModal();
+            });
+            document.getElementById('qrModal').addEventListener('click', (e) => {
+                if (e.target.id === 'qrModal') closeQRModal();
+            });
+            document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+            });
+        }
+
+        let appInitialized = false;
+
+        function safeInitializeApp() {
+            if (appInitialized) {
+                console.log('⚠️ App already initialized, skipping...');
+                return;
+            }
+
+            if (!window.sectionComponents || Object.keys(window.sectionComponents).length === 0) {
+                console.warn('⚠️ Cannot initialize: components not loaded yet');
+                return;
+            }
+
+            appInitialized = true;
+            console.log('✅ Initializing app with', Object.keys(window.sectionComponents).length, 'components');
+            initializeApp();
+        }
+
+        window.addEventListener('componentsReady', () => {
+            console.log('✅ Components ready event received');
+            safeInitializeApp();
         });
 
-        // Run initialization
-        initializeLayout();
+        if (window.sectionComponents && Object.keys(window.sectionComponents).length > 0) {
+            console.log('✅ Components already loaded, initializing immediately');
+            safeInitializeApp();
+        } else {
+            setTimeout(() => {
+                if (!appInitialized) {
+                    console.log('⚠️ Fallback: checking for components after timeout');
+                    safeInitializeApp();
+                }
+            }, 150);
+        }
     </script>
 </body>
 </html>
