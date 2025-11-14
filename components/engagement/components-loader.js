@@ -9,7 +9,9 @@ console.log('🔄 Engagement component loader started');
 // List of all available engagement components
 const componentFiles = [
     'layout', 'hero', 'lovestory', 'proposal', 'couple',
-    'photos', 'celebration', 'registry', 'rsvp', 'future'
+    'photos', 'celebration', 'registry', 'rsvp', 'future',
+    'timeline', 'faq', 'dresscode', 'accommodations', 'directions',
+    'socialmedia', 'guestbook', 'thankyou'
 ];
 
 // Function to check if all components are loaded

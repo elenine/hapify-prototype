@@ -84,6 +84,55 @@ window.sectionComponents.sectionName = {
     - Future plans message
     - Background color customization
 
+11. **timeline.component.js** - Relationship timeline
+    - Dynamic timeline events (add/remove)
+    - Event date, title, and description
+    - Multiple timeline styles (vertical, cards, minimal)
+    - Background color customization
+
+12. **faq.component.js** - Frequently asked questions
+    - Dynamic Q&A items (add/remove)
+    - Question and answer pairs
+    - Background color customization
+
+13. **dresscode.component.js** - Dress code information
+    - Predefined dress code types (formal, semi-formal, casual, etc.)
+    - Additional details
+    - Color suggestions
+    - Background color customization
+
+14. **accommodations.component.js** - Hotel recommendations
+    - Dynamic hotel list (add/remove)
+    - Hotel name, address, phone
+    - Booking website links
+    - Group codes
+    - Background color customization
+
+15. **directions.component.js** - Travel and directions
+    - Venue name and address
+    - Google Maps integration
+    - Parking information
+    - Public transit details
+    - Additional notes
+    - Background color customization
+
+16. **socialmedia.component.js** - Social media sharing
+    - Event hashtag
+    - Instagram handle
+    - Custom message
+    - Background color customization
+
+17. **guestbook.component.js** - Guest messages
+    - Guestbook form link
+    - Custom description
+    - Background color customization
+
+18. **thankyou.component.js** - Thank you message
+    - Thank you title
+    - Custom message
+    - Closing signature
+    - Background color customization
+
 ## Usage
 
 ### In HTML File
@@ -102,6 +151,14 @@ Load components in this order:
 <script src="components/engagement/registry.component.js"></script>
 <script src="components/engagement/rsvp.component.js"></script>
 <script src="components/engagement/future.component.js"></script>
+<script src="components/engagement/timeline.component.js"></script>
+<script src="components/engagement/faq.component.js"></script>
+<script src="components/engagement/dresscode.component.js"></script>
+<script src="components/engagement/accommodations.component.js"></script>
+<script src="components/engagement/directions.component.js"></script>
+<script src="components/engagement/socialmedia.component.js"></script>
+<script src="components/engagement/guestbook.component.js"></script>
+<script src="components/engagement/thankyou.component.js"></script>
 
 <!-- Component Loader (MUST be last) -->
 <script src="components/engagement/components-loader.js"></script>
@@ -164,7 +221,15 @@ components/engagement/
 ├── celebration.component.js     # Celebration event
 ├── registry.component.js        # Gift registry
 ├── rsvp.component.js            # RSVP
-└── future.component.js          # Future plans
+├── future.component.js          # Future plans
+├── timeline.component.js        # Relationship timeline
+├── faq.component.js             # FAQ section
+├── dresscode.component.js       # Dress code
+├── accommodations.component.js  # Hotel info
+├── directions.component.js      # Travel & directions
+├── socialmedia.component.js     # Social sharing
+├── guestbook.component.js       # Guest messages
+└── thankyou.component.js        # Thank you message
 ```
 
 ## Adding New Components
@@ -186,4 +251,4 @@ components/engagement/
 
 **Last Updated:** 2025-11-14
 **Template:** Engagement Announcement
-**Components:** 10 modular sections
+**Components:** 18 modular sections
