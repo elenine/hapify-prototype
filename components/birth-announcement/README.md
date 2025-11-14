@@ -32,40 +32,78 @@ The Birth Announcement template follows a component-based architecture where eac
    - Siblings information
    - Family cards
 
+4. **grandparents.component.js** - Grandparents information:
+   - Maternal and paternal grandparents
+   - Special message about grandparents
+   - Organized by family side
+
 ### Story & Message Components
 
-4. **story.component.js** - Birth story section:
+5. **story.component.js** - Birth story section:
    - Story title
    - Detailed birth narrative
    - Multiple stories supported
 
-5. **message.component.js** - Family message:
+6. **message.component.js** - Family message:
    - Message title
    - Heartfelt message from family
    - Multiple messages supported
 
+7. **wishes.component.js** - Well wishes collection:
+   - Instructions for sending wishes
+   - Contact email for wishes
+   - Sample wishes display
+
+### Special Features Components
+
+8. **name-meaning.component.js** - Name meaning and significance:
+   - Baby's full name
+   - First and middle name meanings
+   - Story of why the name was chosen
+
+9. **milestones.component.js** - Baby milestones:
+   - First achievements
+   - Multiple milestone entries
+   - Visual milestone cards
+
+10. **timeline.component.js** - Journey timeline:
+    - Pregnancy timeline
+    - Important dates (found out, first visit, gender reveal, due date, birth)
+    - Visual timeline with icons
+
+11. **funfacts.component.js** - Fun facts about baby:
+    - Favorite song
+    - Sleep habits
+    - Personality traits
+    - Nickname and characteristics
+
 ### Event Components
 
-6. **visiting.component.js** - Visiting information:
-   - Hospital/home location
-   - Visiting hours
-   - Special instructions
+12. **visiting.component.js** - Visiting information:
+    - Hospital/home location
+    - Visiting hours
+    - Special instructions
 
-7. **thankyou.component.js** - Thank you section:
-   - Thank you title
-   - Gratitude message
+13. **thankyou.component.js** - Thank you section:
+    - Thank you title
+    - Gratitude message
 
 ### Media & Contact Components
 
-8. **gallery.component.js** - Photo gallery:
-   - Gallery title and description
-   - Grid layout for baby photos
-   - Multiple galleries supported
+14. **gallery.component.js** - Photo gallery:
+    - Gallery title and description
+    - Grid layout for baby photos
+    - Multiple galleries supported
 
-9. **contact.component.js** - Contact information:
-   - Contact person name
-   - Email and phone details
-   - Contact cards
+15. **video.component.js** - Video section:
+    - Video title and description
+    - Video URL (YouTube, Vimeo, etc.)
+    - Multiple videos supported
+
+16. **contact.component.js** - Contact information:
+    - Contact person name
+    - Email and phone details
+    - Contact cards
 
 ## Component Structure
 
