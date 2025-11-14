@@ -42,3 +42,15 @@ window.dynamicItemTemplates.birthdayWishes = (id, num) => `
         <textarea placeholder='Birthday wish message...' rows='3' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data' data-field='wish-message-${id}' oninput='updatePreview()'></textarea>
     </div>
 `;
+
+// FAQ items
+window.dynamicItemTemplates.faq = (id, num) => `
+    <div class='flex justify-between items-center mb-3'>
+        <h5 class='font-medium text-gray-600'>Question ${num}</h5>
+        <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+    </div>
+    <div class='space-y-3'>
+        <input type='text' placeholder='Question' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data' data-field='question' oninput='updatePreview()'>
+        <textarea placeholder='Answer' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data' data-field='answer' oninput='updatePreview()'></textarea>
+    </div>
+`;
