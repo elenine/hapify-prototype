@@ -9,7 +9,10 @@ console.log('🔄 Event component loader started');
 // List of all available event components
 const componentFiles = [
     'layout', 'hero', 'details', 'schedule', 'speakers', 'location',
-    'rsvp', 'agenda', 'sponsors', 'contact'
+    'rsvp', 'agenda', 'sponsors', 'contact',
+    // Birthday-themed sections
+    'celebrant', 'countdown', 'gallery', 'gifts', 'dresscode',
+    'message', 'wishes', 'activities', 'menu'
 ];
 
 // Function to check if all components are loaded
