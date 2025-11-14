@@ -27,6 +27,9 @@ window.sectionComponents.couple = {
                     <option value="split">Split View</option>
                     <option value="minimal">Minimal List</option>
                     <option value="banner">Banner Style</option>
+                    <option value="bubble">Speech Bubbles</option>
+                    <option value="infographic">Infographic Style</option>
+                    <option value="magazine">Magazine Layout</option>
                 </select>
             </div>
             <div>
@@ -181,6 +184,108 @@ window.sectionComponents.couple = {
                             </div>
                             <p class="leading-relaxed">${data.facts}</p>
                         </div>` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'bubble') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor}">
+                    <h2 class="text-2xl font-bold text-center mb-12">About Us</h2>
+                    <div class="max-w-2xl mx-auto space-y-6">
+                        ${data.duration ? `
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl ${shadows[shadow]}" style="background: linear-gradient(135deg, #ec4899, #f472b6);">
+                                👫
+                            </div>
+                            <div class="relative flex-1 p-5 rounded-2xl rounded-tl-none ${borders[borderStyle]} ${shadows[shadow]}" style="background: ${cardBg};">
+                                <div class="absolute -top-2 left-0 w-4 h-4 overflow-hidden">
+                                    <div class="w-full h-full rotate-45 transform origin-bottom-right" style="background: ${cardBg};"></div>
+                                </div>
+                                <div class="text-xs uppercase tracking-wide text-rose-600 font-semibold mb-2">Together</div>
+                                <div class="font-bold text-lg">${data.duration}</div>
+                            </div>
+                        </div>` : ''}
+                        ${data.facts ? `
+                        <div class="flex items-start gap-4 justify-end">
+                            <div class="relative flex-1 p-5 rounded-2xl rounded-tr-none ${borders[borderStyle]} ${shadows[shadow]}" style="background: ${cardBg};">
+                                <div class="absolute -top-2 right-0 w-4 h-4 overflow-hidden">
+                                    <div class="w-full h-full -rotate-45 transform origin-bottom-left" style="background: ${cardBg};"></div>
+                                </div>
+                                <div class="text-xs uppercase tracking-wide text-rose-600 font-semibold mb-2">Fun Facts</div>
+                                <p class="text-sm leading-relaxed">${data.facts}</p>
+                            </div>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl ${shadows[shadow]}" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">
+                                ✨
+                            </div>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'infographic') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor}">
+                    <h2 class="text-2xl font-bold text-center mb-12">About Us</h2>
+                    <div class="max-w-4xl mx-auto">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            ${data.duration ? `
+                            <div class="relative">
+                                <div class="absolute top-0 left-0 w-full h-2 rounded-full" style="background: linear-gradient(to right, #ec4899, #f472b6);"></div>
+                                <div class="p-8 pt-10 rounded-xl ${borders[borderStyle]} ${shadows[shadow]}" style="background: ${cardBg};">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="text-5xl">👫</div>
+                                        <div class="text-right">
+                                            <div class="text-4xl font-black" style="color: #ec4899;">${data.duration.split(' ')[0] || '3'}</div>
+                                            <div class="text-xs uppercase tracking-wide text-gray-500">${data.duration.split(' ').slice(1).join(' ') || 'Years'}</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm font-semibold uppercase tracking-wide" style="color: #ec4899;">Together</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.facts ? `
+                            <div class="relative">
+                                <div class="absolute top-0 left-0 w-full h-2 rounded-full" style="background: linear-gradient(to right, #fbbf24, #f59e0b);"></div>
+                                <div class="p-8 pt-10 rounded-xl ${borders[borderStyle]} ${shadows[shadow]}" style="background: ${cardBg};">
+                                    <div class="text-5xl mb-4">✨</div>
+                                    <div class="text-sm font-semibold uppercase tracking-wide mb-4" style="color: #f59e0b;">Fun Facts</div>
+                                    <p class="text-sm leading-relaxed">${data.facts}</p>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'magazine') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="grid md:grid-cols-3 gap-8 items-start">
+                            <div class="md:col-span-1">
+                                <h2 class="text-4xl font-black mb-4" style="font-family: 'Georgia', serif; line-height: 0.9;">About<br/>Us</h2>
+                                <div class="w-16 h-1 mb-4" style="background: linear-gradient(to right, #ec4899, transparent);"></div>
+                                <p class="text-xs text-gray-500 uppercase tracking-wider">Our Story</p>
+                            </div>
+                            <div class="md:col-span-2 space-y-6">
+                                ${data.duration ? `
+                                <div class="flex items-start gap-4 p-6 rounded-lg ${borders[borderStyle]} ${shadows[shadow]}" style="background: ${cardBg};">
+                                    <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, #ec4899, #f472b6);">
+                                        👫
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="text-xs uppercase tracking-widest text-gray-500 mb-1">Together</div>
+                                        <div class="text-2xl font-bold mb-2" style="font-family: 'Georgia', serif;">${data.duration}</div>
+                                        <div class="h-px" style="background: linear-gradient(to right, #ec4899, transparent);"></div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.facts ? `
+                                <div class="p-6 rounded-lg ${borders[borderStyle]} ${shadows[shadow]}" style="background: ${cardBg};">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-lg" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">✨</div>
+                                        <div class="text-sm font-bold uppercase tracking-wider" style="color: #f59e0b;">Fun Facts</div>
+                                    </div>
+                                    <p class="text-base leading-relaxed" style="column-count: 1; font-family: 'Georgia', serif;">${data.facts}</p>
+                                </div>` : ''}
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
