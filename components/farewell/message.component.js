@@ -35,30 +35,133 @@ window.sectionComponents.message = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="card">Card - Centered Box</option>
+                    <option value="banner">Banner - Full Width</option>
+                    <option value="callout">Callout - Alert Style</option>
+                    <option value="minimal">Minimal - Simple Text</option>
+                    <option value="bordered">Bordered - Framed</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fffbeb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Style</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="noteStyle" oninput="updatePreview()">
-                    <option value="card">Card Style</option>
-                    <option value="banner">Banner Style</option>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#8b5cf6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accentColor" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Color</label>
+                <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardColor" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                    <option value="xl">Extra Large</option>
                 </select>
             </div>
         </div>
     `,
     render: (data, style) => {
-        const noteStyle = style.noteStyle || 'card';
+        const layout = style.layout || 'card';
+        const bg = style.bg || '#fffbeb';
+        const accentColor = style.accentColor || '#8b5cf6';
+        const cardColor = style.cardColor || '#ffffff';
+        const shadow = style.shadow || 'md';
         const icon = data.icon || '';
 
-        if (noteStyle === 'banner') {
+        // Card Layout - Centered Box
+        if (layout === 'card') {
             return `
-                <div class="py-8 px-6" style="background: ${style.bg || '#fffbeb'}; border-top: 3px solid #8b5cf6; border-bottom: 3px solid #8b5cf6;">
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="rounded-2xl p-8 shadow-${shadow}" style="background: ${cardColor}; border-left: 4px solid ${accentColor}">
+                            <div class="text-center mb-4">
+                                ${icon ? `<div class="text-5xl mb-3">${icon}</div>` : ''}
+                                <h3 class="text-2xl font-bold" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                            </div>
+                            <div class="text-gray-700 leading-relaxed whitespace-pre-line text-center">${data.content || 'Add important notes or instructions here...'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Banner Layout - Full Width
+        if (layout === 'banner') {
+            return `
+                <div class="py-10 px-6" style="background: ${bg}; border-top: 3px solid ${accentColor}; border-bottom: 3px solid ${accentColor};">
                     <div class="max-w-3xl mx-auto">
                         <div class="flex items-start gap-4">
-                            ${icon ? `<div class="text-4xl flex-shrink-0">${icon}</div>` : ''}
+                            ${icon ? `<div class="text-5xl flex-shrink-0">${icon}</div>` : ''}
                             <div class="flex-1">
-                                <h3 class="text-xl font-bold mb-3 text-gray-900">${data.title || 'Important Information'}</h3>
+                                <h3 class="text-2xl font-bold mb-4" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                                <div class="text-gray-700 leading-relaxed whitespace-pre-line text-lg">${data.content || 'Add important notes or instructions here...'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Callout Layout - Alert Style
+        if (layout === 'callout') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="rounded-xl p-6 shadow-${shadow}" style="background: ${accentColor}15; border: 2px solid ${accentColor}">
+                            <div class="flex items-start gap-4">
+                                ${icon ? `
+                                    <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background: ${accentColor}; color: white">
+                                        ${icon}
+                                    </div>
+                                ` : ''}
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold mb-3" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                                    <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content || 'Add important notes or instructions here...'}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Minimal Layout - Simple Text
+        if (layout === 'minimal') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="text-center mb-6">
+                            ${icon ? `<div class="text-4xl mb-3">${icon}</div>` : ''}
+                            <h3 class="text-2xl font-bold mb-2" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                            <div class="w-16 h-1 mx-auto" style="background: ${accentColor}"></div>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed whitespace-pre-line text-center">${data.content || 'Add important notes or instructions here...'}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Bordered Layout - Framed
+        if (layout === 'bordered') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="border-4 rounded-2xl p-8 shadow-${shadow}" style="border-color: ${accentColor}; background: ${cardColor}">
+                            <div class="text-center">
+                                ${icon ? `
+                                    <div class="inline-block p-3 rounded-full mb-4" style="background: ${accentColor}15">
+                                        <div class="text-4xl">${icon}</div>
+                                    </div>
+                                ` : ''}
+                                <h3 class="text-2xl font-bold mb-6" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                                <div class="w-24 h-1 mx-auto mb-6" style="background: ${accentColor}30"></div>
                                 <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content || 'Add important notes or instructions here...'}</div>
                             </div>
                         </div>
@@ -67,18 +170,6 @@ window.sectionComponents.message = {
             `;
         }
 
-        return `
-            <div class="py-12 px-6" style="background: ${style.bg || '#fffbeb'}">
-                <div class="max-w-2xl mx-auto">
-                    <div class="bg-white rounded-xl p-6 shadow-md border-l-4 border-violet-500">
-                        <div class="text-center mb-4">
-                            ${icon ? `<div class="text-5xl mb-2">${icon}</div>` : ''}
-                            <h3 class="text-2xl font-bold text-gray-900">${data.title || 'Important Information'}</h3>
-                        </div>
-                        <div class="text-gray-700 leading-relaxed whitespace-pre-line text-center">${data.content || 'Add important notes or instructions here...'}</div>
-                    </div>
-                </div>
-            </div>
-        `;
+        return '';
     }
 };
