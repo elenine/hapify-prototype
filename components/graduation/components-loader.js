@@ -9,7 +9,9 @@ console.log('🔄 Graduation component loader started');
 // List of all available graduation components
 const componentFiles = [
     'layout', 'hero', 'graduateinfo', 'ceremonydetails', 'photogallery',
-    'celebrationparty', 'achievements', 'thankyou', 'futureplans', 'contact'
+    'celebrationparty', 'achievements', 'thankyou', 'futureplans', 'contact',
+    'schedule', 'dresscode', 'countdown', 'gifts', 'venue', 'rsvp',
+    'quotes', 'livestream', 'transportation', 'accommodations', 'faq', 'tribute', 'journey', 'reception'
 ];
 
 // Function to check if all components are loaded
