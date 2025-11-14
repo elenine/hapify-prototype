@@ -31,6 +31,9 @@ window.sectionComponents.countdown = {
                     <option value="circles">Circles - Round Design</option>
                     <option value="modern">Modern - Gradient</option>
                     <option value="minimal">Minimal - Simple</option>
+                    <option value="badges">Badges - Circular Counters</option>
+                    <option value="ribbon">Ribbon - Banner Style</option>
+                    <option value="digital">Digital - LED Display</option>
                 </select>
             </div>
             <div>
@@ -199,6 +202,113 @@ window.sectionComponents.countdown = {
                                 </div>
                             </div>
                             ${dateText ? `<p class="mt-6 text-sm opacity-60">${dateText}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'badges':
+                return `
+                    <div class="py-16 px-6 text-center" style="background: ${bg}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold mb-8">${data.title || 'Countdown to Baby Shower!'}</h2>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${boxBg} 100%); border: 6px solid white;">
+                                        <div class="${numberClass} font-bold" style="color: ${textColor};">00</div>
+                                    </div>
+                                    <div class="text-sm mt-3 font-semibold">Days</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${boxBg} 100%); border: 6px solid white;">
+                                        <div class="${numberClass} font-bold" style="color: ${textColor};">00</div>
+                                    </div>
+                                    <div class="text-sm mt-3 font-semibold">Hours</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${boxBg} 100%); border: 6px solid white;">
+                                        <div class="${numberClass} font-bold" style="color: ${textColor};">00</div>
+                                    </div>
+                                    <div class="text-sm mt-3 font-semibold">Minutes</div>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <div class="w-28 h-28 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${boxBg} 100%); border: 6px solid white;">
+                                        <div class="${numberClass} font-bold" style="color: ${textColor};">00</div>
+                                    </div>
+                                    <div class="text-sm mt-3 font-semibold">Seconds</div>
+                                </div>
+                            </div>
+                            ${dateText ? `<p class="mt-8 text-sm opacity-75">${dateText}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbon':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <div class="max-w-3xl mx-auto">
+                            <div class="py-6 px-8 text-center font-bold text-3xl shadow-xl mb-8" style="background: ${accent}; color: ${textColor}; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);">
+                                <div class="flex items-center justify-center gap-4">
+                                    <span class="text-4xl">⏰</span>
+                                    <span>${data.title || 'Countdown to Baby Shower!'}</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-4 gap-4">
+                                <div class="bg-white rounded-xl p-6 shadow-lg text-center" style="border-top: 4px solid ${accent};">
+                                    <div class="${numberClass} font-bold" style="color: ${accent};">00</div>
+                                    <div class="text-sm mt-2 font-semibold" style="color: ${textColor};">Days</div>
+                                </div>
+                                <div class="bg-white rounded-xl p-6 shadow-lg text-center" style="border-top: 4px solid ${accent};">
+                                    <div class="${numberClass} font-bold" style="color: ${accent};">00</div>
+                                    <div class="text-sm mt-2 font-semibold" style="color: ${textColor};">Hours</div>
+                                </div>
+                                <div class="bg-white rounded-xl p-6 shadow-lg text-center" style="border-top: 4px solid ${accent};">
+                                    <div class="${numberClass} font-bold" style="color: ${accent};">00</div>
+                                    <div class="text-sm mt-2 font-semibold" style="color: ${textColor};">Minutes</div>
+                                </div>
+                                <div class="bg-white rounded-xl p-6 shadow-lg text-center" style="border-top: 4px solid ${accent};">
+                                    <div class="${numberClass} font-bold" style="color: ${accent};">00</div>
+                                    <div class="text-sm mt-2 font-semibold" style="color: ${textColor};">Seconds</div>
+                                </div>
+                            </div>
+                            ${dateText ? `<p class="mt-6 text-center text-sm opacity-75" style="color: ${textColor};">${dateText}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'digital':
+                return `
+                    <div class="py-12 px-6 text-center" style="background: ${bg}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold mb-8">${data.title || 'Countdown to Baby Shower!'}</h2>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="bg-black rounded-2xl p-8 shadow-2xl">
+                                <div class="grid grid-cols-4 gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="px-6 py-4 rounded-lg font-mono" style="background: #1a1a1a; color: ${accent}; text-shadow: 0 0 10px ${accent};">
+                                            <div class="text-4xl font-bold">00</div>
+                                        </div>
+                                        <div class="text-xs mt-3 text-gray-400 uppercase tracking-wider">Days</div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="px-6 py-4 rounded-lg font-mono" style="background: #1a1a1a; color: ${accent}; text-shadow: 0 0 10px ${accent};">
+                                            <div class="text-4xl font-bold">00</div>
+                                        </div>
+                                        <div class="text-xs mt-3 text-gray-400 uppercase tracking-wider">Hours</div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="px-6 py-4 rounded-lg font-mono" style="background: #1a1a1a; color: ${accent}; text-shadow: 0 0 10px ${accent};">
+                                            <div class="text-4xl font-bold">00</div>
+                                        </div>
+                                        <div class="text-xs mt-3 text-gray-400 uppercase tracking-wider">Mins</div>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <div class="px-6 py-4 rounded-lg font-mono" style="background: #1a1a1a; color: ${accent}; text-shadow: 0 0 10px ${accent};">
+                                            <div class="text-4xl font-bold">00</div>
+                                        </div>
+                                        <div class="text-xs mt-3 text-gray-400 uppercase tracking-wider">Secs</div>
+                                    </div>
+                                </div>
+                            </div>
+                            ${dateText ? `<p class="mt-6 text-sm opacity-75">${dateText}</p>` : ''}
                         </div>
                     </div>
                 `;

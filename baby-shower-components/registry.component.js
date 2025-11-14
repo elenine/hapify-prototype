@@ -31,6 +31,9 @@ window.sectionComponents.registry = {
                     <option value="bordered">Bordered - Frame Style</option>
                     <option value="modern">Modern - Gradient</option>
                     <option value="minimal">Minimal - Clean</option>
+                    <option value="ribbon">Ribbon - Banner Style</option>
+                    <option value="badge">Badge - Circular Gift</option>
+                    <option value="split">Split - Gift Box Design</option>
                 </select>
             </div>
             <div>
@@ -127,6 +130,73 @@ window.sectionComponents.registry = {
                             <a href="${data.link}" target="_blank" class="inline-block px-10 py-3 rounded-lg font-medium text-white border-2 hover:shadow-lg transition" style="background: ${buttonColor}; border-color: ${buttonColor};">
                                 View Registry
                             </a>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbon':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="py-6 px-8 text-center font-bold text-3xl shadow-xl mb-6" style="background: ${buttonColor}; color: white; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);">
+                                <div class="flex items-center justify-center gap-4">
+                                    <span class="text-5xl">🎁</span>
+                                    <span>${data.title || 'Baby Registry'}</span>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                                <p class="text-lg mb-6" style="color: ${textColor};">${data.message || 'Your presence is the best gift!'}</p>
+                                ${data.link ? `
+                                <a href="${data.link}" target="_blank" class="inline-block px-10 py-4 rounded-lg font-bold text-white shadow-lg hover:shadow-xl transition border-2" style="background: ${accent}; border-color: ${buttonColor};">
+                                    View Our Registry
+                                </a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'badge':
+                return `
+                    <div class="py-16 px-6" style="background: ${bg};">
+                        <div class="max-w-2xl mx-auto text-center">
+                            <div class="inline-block mb-8">
+                                <div class="w-72 h-72 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${buttonColor} 0%, ${accent} 100%); border: 12px solid white;">
+                                    <div>
+                                        <div class="text-8xl mb-3">🎁</div>
+                                        <h2 class="text-2xl font-bold text-white">${data.title || 'Baby Registry'}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-lg mb-8 max-w-md mx-auto" style="color: ${textColor};">${data.message || 'Your presence is the best gift!'}</p>
+                            ${data.link ? `
+                            <a href="${data.link}" target="_blank" class="inline-block px-10 py-4 rounded-full font-bold text-white shadow-xl hover:shadow-2xl transition" style="background: ${buttonColor};">
+                                View Registry
+                            </a>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'split':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <div class="max-w-4xl mx-auto">
+                            <div class="grid md:grid-cols-2 gap-8 items-center">
+                                <div class="text-center md:text-right">
+                                    <div class="text-9xl mb-4 opacity-90">🎁</div>
+                                    <div class="inline-block px-6 py-3 rounded-full text-sm font-bold" style="background: ${accent}30; color: ${buttonColor};">
+                                        Gift Registry Available
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 class="text-3xl font-bold mb-4" style="color: ${textColor};">${data.title || 'Baby Registry'}</h2>
+                                    <div class="h-1 w-16 mb-4" style="background: ${accent};"></div>
+                                    <p class="text-lg mb-6 leading-relaxed" style="color: ${textColor};">${data.message || 'Your presence is the best gift!'}</p>
+                                    ${data.link ? `
+                                    <a href="${data.link}" target="_blank" class="inline-block px-8 py-4 rounded-lg font-bold text-white shadow-lg hover:shadow-xl transition" style="background: ${buttonColor};">
+                                        View Registry →
+                                    </a>` : ''}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
