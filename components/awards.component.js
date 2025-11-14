@@ -33,12 +33,31 @@ window.sectionComponents.awards = {
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="cards">Card List</option>
+                                <option value="timeline">Timeline View</option>
+                                <option value="grid">Grid View</option>
+                                <option value="minimal">Minimal List</option>
+                                <option value="featured">Featured Style</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#fffbeb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#f59e0b" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
+                    const layout = style.layout || 'cards';
+                    const bgColor = style.bg || '#fffbeb';
+                    const accentColor = style.accent || '#f59e0b';
+                    const title = data.title || 'Awards & Recognition';
+
                     const awards = [];
                     Object.keys(data).forEach(key => {
                         const match = key.match(/^award-name-(.+)$/);
@@ -52,24 +71,153 @@ window.sectionComponents.awards = {
                         }
                     });
 
-                    return `
-                        <div class="py-12 px-6" style="background: ${style.bg || '#fffbeb'}">
-                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Awards & Recognition'}</h2>
-                            <div class="max-w-4xl mx-auto space-y-6">
-                                ${awards.map(award => `
-                                    <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition flex items-start gap-4">
-                                        <div class="text-5xl">🏆</div>
-                                        <div class="flex-1">
-                                            <div class="flex items-baseline gap-3 mb-2">
-                                                <h3 class="text-lg font-bold">${award.name || 'Award'}</h3>
-                                                <span class="text-sm text-amber-600 font-semibold">${award.year || ''}</span>
-                                            </div>
-                                            ${award.desc ? `<p class="text-sm text-gray-600">${award.desc}</p>` : ''}
-                                        </div>
-                                    </div>
-                                `).join('')}
+                    const headerHtml = `<h2 class="text-2xl font-bold text-center mb-8">${title}</h2>`;
+
+                    if (awards.length === 0) {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bgColor}">
+                                ${headerHtml}
+                                <div class="text-center text-gray-500 text-sm">Add awards to display</div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    }
+
+                    switch(layout) {
+                        case 'cards':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${awards.map(award => `
+                                            <div class="bg-white rounded-xl p-5 shadow-md hover:shadow-lg transition flex items-start gap-4 border-l-4" style="border-color: ${accentColor};">
+                                                <div class="text-4xl">🏆</div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-baseline gap-2 mb-2">
+                                                        <h3 class="text-base font-bold">${award.name || 'Award'}</h3>
+                                                        <span class="text-xs font-semibold" style="color: ${accentColor};">${award.year || ''}</span>
+                                                    </div>
+                                                    ${award.desc ? `<p class="text-xs text-gray-600">${award.desc}</p>` : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'timeline':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${awards.map((award, idx) => `
+                                            <div class="flex gap-4">
+                                                <div class="flex flex-col items-center">
+                                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white flex-shrink-0" style="background: ${accentColor};">
+                                                        🏆
+                                                    </div>
+                                                    ${idx < awards.length - 1 ? `<div class="w-0.5 flex-1 my-2" style="background: ${accentColor}40;"></div>` : ''}
+                                                </div>
+                                                <div class="flex-1 pb-6">
+                                                    <div class="bg-white rounded-xl p-4 shadow-sm">
+                                                        <div class="flex items-baseline gap-2 mb-2">
+                                                            <h3 class="text-sm font-bold">${award.name || 'Award'}</h3>
+                                                            <span class="text-xs font-semibold" style="color: ${accentColor};">${award.year || ''}</span>
+                                                        </div>
+                                                        ${award.desc ? `<p class="text-xs text-gray-600">${award.desc}</p>` : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'grid':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-3">
+                                        ${awards.map(award => `
+                                            <div class="bg-white rounded-xl p-4 shadow-md text-center border-t-4" style="border-color: ${accentColor};">
+                                                <div class="text-3xl mb-2">🏆</div>
+                                                <div class="text-xs font-bold mb-1">${award.name || 'Award'}</div>
+                                                <div class="text-xs font-semibold mb-2" style="color: ${accentColor};">${award.year || ''}</div>
+                                                ${award.desc ? `<p class="text-xs text-gray-600 line-clamp-2">${award.desc}</p>` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'minimal':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-3">
+                                        ${awards.map(award => `
+                                            <div class="border-l-4 pl-4 py-2" style="border-color: ${accentColor};">
+                                                <div class="flex items-center gap-2 mb-1">
+                                                    <span class="text-xl">🏆</span>
+                                                    <h3 class="text-sm font-bold">${award.name || 'Award'}</h3>
+                                                    <span class="text-xs font-semibold" style="color: ${accentColor};">${award.year || ''}</span>
+                                                </div>
+                                                ${award.desc ? `<p class="text-xs text-gray-600 pl-7">${award.desc}</p>` : ''}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'featured':
+                            const featured = awards[0];
+                            const others = awards.slice(1);
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${featured ? `
+                                            <div class="rounded-2xl p-6 shadow-xl text-center text-white" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd);">
+                                                <div class="text-5xl mb-3">🏆</div>
+                                                <h3 class="text-lg font-bold mb-2">${featured.name || 'Award'}</h3>
+                                                <div class="text-sm font-semibold mb-3 opacity-90">${featured.year || ''}</div>
+                                                ${featured.desc ? `<p class="text-xs opacity-80">${featured.desc}</p>` : ''}
+                                            </div>
+                                        ` : ''}
+                                        ${others.length > 0 ? `
+                                            <div class="grid grid-cols-2 gap-3">
+                                                ${others.map(award => `
+                                                    <div class="bg-white rounded-xl p-4 shadow-sm text-center border-t-4" style="border-color: ${accentColor};">
+                                                        <div class="text-2xl mb-2">🏆</div>
+                                                        <div class="text-xs font-bold mb-1">${award.name || 'Award'}</div>
+                                                        <div class="text-xs font-semibold" style="color: ${accentColor};">${award.year || ''}</div>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        default:
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${awards.map(award => `
+                                            <div class="bg-white rounded-xl p-5 shadow-md flex items-start gap-4">
+                                                <div class="text-4xl">🏆</div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-baseline gap-2 mb-2">
+                                                        <h3 class="text-base font-bold">${award.name || 'Award'}</h3>
+                                                        <span class="text-xs font-semibold">${award.year || ''}</span>
+                                                    </div>
+                                                    ${award.desc ? `<p class="text-xs text-gray-600">${award.desc}</p>` : ''}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                    }
                 }
             };
