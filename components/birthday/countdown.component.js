@@ -27,6 +27,15 @@ window.sectionComponents.countdown = {
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" oninput="updatePreview()">
+                    <option value="card">Card Style</option>
+                    <option value="gradient">Gradient Box</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="flip">Flip Numbers</option>
+                </select>
+            </div>
         </div>
     `,
     render: (data, style) => {
