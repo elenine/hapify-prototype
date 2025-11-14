@@ -31,6 +31,9 @@ window.sectionComponents.rsvp = {
                     <option value="split">Split - Two Column</option>
                     <option value="modern">Modern - Gradient Card</option>
                     <option value="minimal">Minimal - Clean Design</option>
+                    <option value="envelope">Envelope - Mail Design</option>
+                    <option value="badge">Badge - Circular RSVP</option>
+                    <option value="ribbon">Ribbon - Banner Style</option>
                 </select>
             </div>
             <div>
@@ -156,6 +159,84 @@ window.sectionComponents.rsvp = {
                             <button class="px-10 py-3 ${buttonClass} font-medium text-white border-2 hover:shadow-lg transition" style="background: ${buttonColor}; border-color: ${buttonColor};">
                                 RSVP Now
                             </button>
+                        </div>
+                    </div>
+                `;
+
+            case 'envelope':
+                return `
+                    <div class="py-16 px-6" style="background: ${bg};">
+                        <div class="max-w-md mx-auto">
+                            <div class="bg-white rounded-lg shadow-2xl overflow-hidden" style="border: 3px solid ${accent};">
+                                <div class="relative">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="w-0 h-0 border-l-[200px] border-l-transparent border-t-[150px] border-r-[200px] border-r-transparent" style="border-top-color: ${accent};"></div>
+                                    </div>
+                                    <div class="relative z-10 p-8 text-center">
+                                        <div class="text-6xl mb-4">✉️</div>
+                                        <h2 class="text-2xl font-bold mb-4" style="color: ${textColor};">${data.title || 'Please RSVP'}</h2>
+                                        <p class="mb-6" style="color: ${textColor};">${data.message || "Let us know if you can join the celebration"}</p>
+                                        ${data.deadline ? `
+                                        <div class="mb-6 inline-block px-4 py-2 rounded-lg" style="background: ${accent}30;">
+                                            <div class="text-xs opacity-60">Respond by</div>
+                                            <div class="font-semibold">${formattedDeadline}</div>
+                                        </div>` : ''}
+                                        <div>
+                                            <button class="px-8 py-3 ${buttonClass} font-semibold text-white shadow-lg hover:shadow-xl transition" style="background: ${buttonColor};">
+                                                Send RSVP
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'badge':
+                return `
+                    <div class="py-16 px-6" style="background: ${bg};">
+                        <div class="max-w-2xl mx-auto text-center">
+                            <div class="inline-block mb-8">
+                                <div class="w-80 h-80 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${buttonColor} 100%); border: 12px solid white;">
+                                    <div class="text-center">
+                                        <div class="text-7xl mb-3">✉️</div>
+                                        <h2 class="text-2xl font-bold text-white mb-2">${data.title || 'Please RSVP'}</h2>
+                                        ${data.deadline ? `<div class="text-sm text-white opacity-90">by ${formattedDeadline}</div>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-lg mb-8 max-w-md mx-auto" style="color: ${textColor};">${data.message || "Let us know if you can join the celebration"}</p>
+                            <button class="px-10 py-4 ${buttonClass} font-bold text-white shadow-xl hover:shadow-2xl transition" style="background: ${buttonColor};">
+                                RSVP Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbon':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="py-6 px-8 text-center font-bold text-3xl shadow-xl mb-8" style="background: ${buttonColor}; color: white; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);">
+                                <div class="flex items-center justify-center gap-4">
+                                    <span class="text-5xl">✉️</span>
+                                    <span>${data.title || 'Please RSVP'}</span>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-2xl shadow-xl p-8 text-center">
+                                <p class="text-lg mb-6" style="color: ${textColor};">${data.message || "Let us know if you can join the celebration"}</p>
+                                ${data.deadline ? `
+                                <div class="mb-6 inline-block px-6 py-3 rounded-lg border-2" style="border-color: ${accent}; background: ${accent}20;">
+                                    <div class="text-xs opacity-60 mb-1">RSVP Deadline</div>
+                                    <div class="font-bold">${formattedDeadline}</div>
+                                </div>` : ''}
+                                <div>
+                                    <button class="px-10 py-4 ${buttonClass} font-bold text-white shadow-lg hover:shadow-xl transition border-2" style="background: ${accent}; border-color: ${buttonColor};">
+                                        Send Your RSVP
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
