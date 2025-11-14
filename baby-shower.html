@@ -80,7 +80,7 @@
                             <div>
                                 <div class="text-6xl mb-4">🍼</div>
                                 <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
-                                <p class="text-gray-600 text-sm">Add sections to build your business portfolio</p>
+                                <p class="text-gray-600 text-sm">Add sections to build your baby shower invitation</p>
                             </div>
                         </div>
                     </div>
@@ -121,17 +121,29 @@
                             <div class="text-4xl mb-2">👶</div>
                             <div class="font-semibold text-sm">Baby Details</div>
                         </button>
+                        <button data-section-type="parents" onclick="addSection('parents')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">👨‍👩‍👧</div>
+                            <div class="font-semibold text-sm">About Parents</div>
+                        </button>
+                        <button data-section-type="showerinfo" onclick="addSection('showerinfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎈</div>
+                            <div class="font-semibold text-sm">Shower Info</div>
+                        </button>
+                        <button data-section-type="theme" onclick="addSection('theme')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎨</div>
+                            <div class="font-semibold text-sm">Shower Theme</div>
+                        </button>
+                        <button data-section-type="registry" onclick="addSection('registry')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎁</div>
+                            <div class="font-semibold text-sm">Gift Registry</div>
+                        </button>
                         <button data-section-type="rsvp" onclick="addSection('rsvp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
                             <div class="text-4xl mb-2">✉️</div>
                             <div class="font-semibold text-sm">RSVP</div>
                         </button>
-                        <button data-section-type="portfolio" onclick="addSection('portfolio')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">📁</div>
-                            <div class="font-semibold text-sm">Portfolio</div>
-                        </button>
-                        <button data-section-type="contact" onclick="addSection('contact')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">📞</div>
-                            <div class="font-semibold text-sm">Contact</div>
+                        <button data-section-type="countdown" onclick="addSection('countdown')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">⏰</div>
+                            <div class="font-semibold text-sm">Countdown</div>
                         </button>
                     </div>
                 </div>
@@ -139,61 +151,41 @@
                 <!-- More Sections Tab -->
                 <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <button data-section-type="team" onclick="addSection('team')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">👥</div>
-                            <div class="font-semibold text-sm">Team</div>
+                        <button data-section-type="schedule" onclick="addSection('schedule')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Event Schedule</div>
                         </button>
-                        <button data-section-type="testimonials" onclick="addSection('testimonials')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">💬</div>
-                            <div class="font-semibold text-sm">Testimonials</div>
+                        <button data-section-type="games" onclick="addSection('games')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎮</div>
+                            <div class="font-semibold text-sm">Shower Games</div>
                         </button>
-                        <button data-section-type="social" onclick="addSection('social')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🔗</div>
-                            <div class="font-semibold text-sm">Social Media</div>
+                        <button data-section-type="menu" onclick="addSection('menu')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🍰</div>
+                            <div class="font-semibold text-sm">Menu</div>
                         </button>
-                        <button data-section-type="cta" onclick="addSection('cta')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🎯</div>
-                            <div class="font-semibold text-sm">Call to Action</div>
+                        <button data-section-type="directions" onclick="addSection('directions')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">📍</div>
+                            <div class="font-semibold text-sm">Directions</div>
                         </button>
-                        <button data-section-type="skills" onclick="addSection('skills')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🎓</div>
-                            <div class="font-semibold text-sm">Skills & Expertise</div>
-                        </button>
-                        <button data-section-type="pricing" onclick="addSection('pricing')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">💰</div>
-                            <div class="font-semibold text-sm">Pricing Plans</div>
-                        </button>
-                        <button data-section-type="faq" onclick="addSection('faq')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">❓</div>
-                            <div class="font-semibold text-sm">FAQ</div>
-                        </button>
-                        <button data-section-type="stats" onclick="addSection('stats')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">📊</div>
-                            <div class="font-semibold text-sm">Statistics</div>
+                        <button data-section-type="wishes" onclick="addSection('wishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💝</div>
+                            <div class="font-semibold text-sm">Wishes & Advice</div>
                         </button>
                         <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
                             <div class="text-4xl mb-2">🖼️</div>
-                            <div class="font-semibold text-sm">Gallery</div>
+                            <div class="font-semibold text-sm">Photo Gallery</div>
                         </button>
-                        <button data-section-type="clients" onclick="addSection('clients')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🤝</div>
-                            <div class="font-semibold text-sm">Clients & Partners</div>
+                        <button data-section-type="virtual" onclick="addSection('virtual')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💻</div>
+                            <div class="font-semibold text-sm">Virtual Attendance</div>
                         </button>
-                        <button data-section-type="awards" onclick="addSection('awards')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🏆</div>
-                            <div class="font-semibold text-sm">Awards</div>
+                        <button data-section-type="books" onclick="addSection('books')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">📚</div>
+                            <div class="font-semibold text-sm">Books for Baby</div>
                         </button>
-                        <button data-section-type="video" onclick="addSection('video')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🎥</div>
-                            <div class="font-semibold text-sm">Video</div>
-                        </button>
-                        <button data-section-type="features" onclick="addSection('features')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">✨</div>
-                            <div class="font-semibold text-sm">Features</div>
-                        </button>
-                        <button data-section-type="process" onclick="addSection('process')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
-                            <div class="text-4xl mb-2">🔄</div>
-                            <div class="font-semibold text-sm">Process</div>
+                        <button data-section-type="thankyou" onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💖</div>
+                            <div class="font-semibold text-sm">Thank You</div>
                         </button>
                     </div>
                 </div>
@@ -251,7 +243,7 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
-                    https://invitegen.com/view/business123
+                    https://invitegen.com/view/babyshower123
                 </div>
                 <button onclick="copyUrl()" class="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold hover:bg-amber-600 transition">
                     📋 Copy URL
@@ -261,19 +253,25 @@
     </div>
 
     <!-- Load Component System -->
-
-    <!-- Load Component System -->
     <script src="baby-shower-components/dynamic-templates.js"></script>
     <script src="baby-shower-components/layout.component.js"></script>
     <script src="baby-shower-components/hero.component.js"></script>
     <script src="baby-shower-components/babydetails.component.js"></script>
+    <script src="baby-shower-components/parents.component.js"></script>
     <script src="baby-shower-components/showerinfo.component.js"></script>
+    <script src="baby-shower-components/theme.component.js"></script>
     <script src="baby-shower-components/registry.component.js"></script>
+    <script src="baby-shower-components/countdown.component.js"></script>
+    <script src="baby-shower-components/schedule.component.js"></script>
     <script src="baby-shower-components/games.component.js"></script>
     <script src="baby-shower-components/menu.component.js"></script>
     <script src="baby-shower-components/rsvp.component.js"></script>
     <script src="baby-shower-components/directions.component.js"></script>
     <script src="baby-shower-components/wishes.component.js"></script>
+    <script src="baby-shower-components/gallery.component.js"></script>
+    <script src="baby-shower-components/virtual.component.js"></script>
+    <script src="baby-shower-components/books.component.js"></script>
+    <script src="baby-shower-components/thankyou.component.js"></script>
     <script src="baby-shower-components/components-loader.js"></script>
     <script>
         let sectionCounter = 0;
@@ -714,7 +712,7 @@
                         <div>
                             <div class="text-6xl mb-4">🍼</div>
                             <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
-                            <p class="text-gray-600 text-sm">Add sections to build your business portfolio</p>
+                            <p class="text-gray-600 text-sm">Add sections to build your baby shower invitation</p>
                         </div>
                     </div>
                 `;
@@ -1298,8 +1296,8 @@
         }
 
         function publishProject() {
-            if (confirm('Publish your business portfolio?')) {
-                alert('✅ Published successfully!\n\nYour portfolio is now live!');
+            if (confirm('Publish your baby shower invitation?')) {
+                alert('✅ Published successfully!\n\nYour baby shower invitation is now live!');
             }
         }
 
