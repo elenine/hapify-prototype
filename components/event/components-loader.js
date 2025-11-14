@@ -12,7 +12,10 @@ const componentFiles = [
     'rsvp', 'agenda', 'sponsors', 'contact',
     // Birthday-themed sections
     'celebrant', 'countdown', 'gallery', 'gifts', 'dresscode',
-    'message', 'wishes', 'activities', 'menu'
+    'message', 'wishes', 'activities', 'menu',
+    // Extended event sections
+    'transportation', 'accommodations', 'faq', 'specialguests', 'socialmedia',
+    'whattobring', 'video', 'thankyou', 'timeline', 'memories'
 ];
 
 // Function to check if all components are loaded
