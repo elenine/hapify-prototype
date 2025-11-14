@@ -275,6 +275,16 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="classic">Classic Centered</option>
+                                <option value="card">Card Style</option>
+                                <option value="gradient">Gradient Overlay</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="elegant">Elegant Border</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
                         </div>
@@ -290,26 +300,110 @@
                                 <option value="right">Right</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="fontSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="large">Large</option>
+                                <option value="xlarge">Extra Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Add Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">None</option>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef3c7';
                     const textColor = style.textColor || '#92400e';
                     const align = style.align || 'center';
+                    const layout = style.layout || 'classic';
+                    const fontSize = style.fontSize || 'medium';
+                    const shadow = style.shadow || 'none';
                     const name = data.name || 'Friend';
                     const message = data.message || 'Thank you so much';
                     const emoji = data.emoji || '🙏';
 
-                    return `
-                        <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor}; color: ${textColor}; text-align: ${align};">
-                            <div>
-                                <div class="text-6xl mb-4">${emoji}</div>
-                                <h2 class="text-3xl font-bold mb-4">Thank You</h2>
-                                <h3 class="text-2xl font-semibold mb-4">${name}</h3>
-                                <p class="text-lg">${message}</p>
+                    const fontSizes = {
+                        small: { emoji: 'text-4xl', title: 'text-2xl', name: 'text-xl', message: 'text-base' },
+                        medium: { emoji: 'text-6xl', title: 'text-3xl', name: 'text-2xl', message: 'text-lg' },
+                        large: { emoji: 'text-7xl', title: 'text-4xl', name: 'text-3xl', message: 'text-xl' },
+                        xlarge: { emoji: 'text-8xl', title: 'text-5xl', name: 'text-4xl', message: 'text-2xl' }
+                    };
+                    const sizes = fontSizes[fontSize] || fontSizes.medium;
+
+                    const shadows = {
+                        none: '',
+                        small: 'box-shadow: 0 1px 2px rgba(0,0,0,0.05);',
+                        medium: 'box-shadow: 0 4px 6px rgba(0,0,0,0.1);',
+                        large: 'box-shadow: 0 10px 15px rgba(0,0,0,0.15);'
+                    };
+                    const shadowStyle = shadows[shadow] || '';
+
+                    if (layout === 'card') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor};">
+                                <div class="bg-white rounded-2xl p-8 max-w-md w-full" style="text-align: ${align}; color: ${textColor}; ${shadowStyle}">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'gradient') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8 relative" style="background: linear-gradient(135deg, ${bgColor} 0%, ${textColor}40 100%);">
+                                <div style="text-align: ${align}; color: ${textColor}; ${shadowStyle} text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message} font-medium">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'minimal') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor};">
+                                <div style="text-align: ${align}; color: ${textColor};">
+                                    <div class="${sizes.emoji} mb-6 opacity-70">${emoji}</div>
+                                    <h2 class="${sizes.title} font-light mb-3">Thank You</h2>
+                                    <h3 class="${sizes.name} font-medium mb-3">${name}</h3>
+                                    <p class="${sizes.message} opacity-80">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'elegant') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor};">
+                                <div class="border-4 border-double rounded-xl p-8 max-w-md w-full" style="text-align: ${align}; color: ${textColor}; border-color: ${textColor}; ${shadowStyle}">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // classic
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor}; color: ${textColor}; text-align: ${align}; ${shadowStyle}">
+                                <div>
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             gratitude: {
@@ -325,6 +419,16 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="simple">Simple</option>
+                                <option value="boxed">Boxed</option>
+                                <option value="quote">Quote Style</option>
+                                <option value="sidebar">Icon Sidebar</option>
+                                <option value="highlighted">Highlighted</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
                         </div>
@@ -332,21 +436,88 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" value="#1f2937" onchange="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="fontStyle" onchange="updatePreview()">
+                                <option value="normal">Normal</option>
+                                <option value="italic">Italic</option>
+                                <option value="serif">Serif</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
+                                <option value="left">Left</option>
+                                <option value="center">Center</option>
+                                <option value="right">Right</option>
+                                <option value="justify">Justify</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#ffffff';
                     const textColor = style.textColor || '#1f2937';
+                    const layout = style.layout || 'simple';
+                    const fontStyle = style.fontStyle || 'normal';
+                    const align = style.align || 'left';
                     const message = data.message || 'I am truly grateful for everything you have done';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor}; color: ${textColor};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-4xl mb-4 text-center">💛</div>
-                                <p class="text-lg leading-relaxed">${message}</p>
+                    const fontClass = fontStyle === 'italic' ? 'italic' : fontStyle === 'serif' ? 'font-serif' : '';
+
+                    if (layout === 'boxed') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-amber-50 rounded-2xl p-8 border border-amber-200" style="color: ${textColor};">
+                                    <div class="text-4xl mb-4 text-center">💛</div>
+                                    <p class="text-lg leading-relaxed ${fontClass}" style="text-align: ${align};">${message}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'quote') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-l-4 border-amber-500 pl-6 pr-4 py-2">
+                                    <div class="flex items-start gap-4">
+                                        <div class="text-4xl">💛</div>
+                                        <p class="text-lg leading-relaxed italic ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'sidebar') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto flex gap-6">
+                                    <div class="text-5xl flex-shrink-0">💛</div>
+                                    <div>
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'highlighted') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(to bottom, ${bgColor} 0%, #fef3c7 50%, ${bgColor} 100%);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">💛</div>
+                                    <div class="bg-amber-100 rounded-xl p-6 inline-block">
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // simple
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor}; color: ${textColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">💛</div>
+                                    <p class="text-lg leading-relaxed ${fontClass}" style="text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             specificReason: {
@@ -362,24 +533,81 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="standard">Standard</option>
+                                <option value="card">Card</option>
+                                <option value="accent">Accent Border</option>
+                                <option value="split">Split Layout</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fffbeb" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#f59e0b" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
+                                <option value="left">Left</option>
+                                <option value="center">Center</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fffbeb';
+                    const accentColor = style.accentColor || '#f59e0b';
+                    const layout = style.layout || 'standard';
+                    const align = style.align || 'left';
                     const reason = data.reason || 'Thank you for your help';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-4xl mb-4">🎯</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
-                                <p class="text-gray-700">${reason}</p>
+                    if (layout === 'card') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-xl p-6 shadow-lg" style="text-align: ${align};">
+                                    <div class="text-4xl mb-4">🎯</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                    <p class="text-gray-700">${reason}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'accent') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-l-4 pl-6" style="border-color: ${accentColor}; text-align: ${align};">
+                                    <div class="text-4xl mb-4">🎯</div>
+                                    <h3 class="text-xl font-semibold mb-3" style="color: ${accentColor};">What You Did</h3>
+                                    <p class="text-gray-700">${reason}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'split') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto flex gap-6 items-start">
+                                    <div class="text-5xl flex-shrink-0" style="color: ${accentColor};">🎯</div>
+                                    <div style="text-align: ${align};">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                        <p class="text-gray-700">${reason}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto" style="text-align: ${align};">
+                                    <div class="text-4xl mb-4">🎯</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                    <p class="text-gray-700">${reason}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             impact: {
@@ -395,24 +623,85 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="standard">Standard</option>
+                                <option value="highlighted">Highlighted</option>
+                                <option value="bordered">Bordered</option>
+                                <option value="bubbles">Speech Bubble</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Highlight Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="highlightColor" value="#fbbf24" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="textStyle" onchange="updatePreview()">
+                                <option value="normal">Normal</option>
+                                <option value="italic">Italic</option>
+                                <option value="bold">Bold</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef3c7';
+                    const highlightColor = style.highlightColor || '#fbbf24';
+                    const layout = style.layout || 'standard';
+                    const textStyle = style.textStyle || 'normal';
                     const impact = data.impact || 'Your kindness has made a real difference';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-4xl mb-4">💫</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
-                                <p class="text-gray-700 leading-relaxed">${impact}</p>
+                    const textClass = textStyle === 'italic' ? 'italic' : textStyle === 'bold' ? 'font-bold' : '';
+
+                    if (layout === 'highlighted') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-xl p-6" style="background-color: ${highlightColor}20;">
+                                    <div class="text-4xl mb-4 text-center">💫</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">The Impact</h3>
+                                    <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'bordered') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-2 rounded-xl p-6" style="border-color: ${highlightColor};">
+                                    <div class="text-4xl mb-4">💫</div>
+                                    <h3 class="text-xl font-semibold mb-3" style="color: ${highlightColor};">The Impact</h3>
+                                    <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'bubbles') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">💫</div>
+                                    <div class="bg-white rounded-3xl p-6 shadow-md relative">
+                                        <div class="absolute -bottom-2 left-8 w-4 h-4 bg-white transform rotate-45"></div>
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
+                                        <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4">💫</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
+                                    <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             photo: {
@@ -433,30 +722,94 @@
                 style: `
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Style</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="standard">Standard</option>
+                                <option value="framed">Framed</option>
+                                <option value="polaroid">Polaroid</option>
+                                <option value="collage">Full Width</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Shape</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="imageStyle" onchange="updatePreview()">
                                 <option value="rounded">Rounded</option>
                                 <option value="circle">Circle</option>
                                 <option value="square">Square</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Frame Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="frameColor" value="#f59e0b" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">None</option>
+                                <option value="small">Small</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const imageStyle = style.imageStyle || 'rounded';
+                    const layout = style.layout || 'standard';
+                    const bgColor = style.bgColor || '#ffffff';
+                    const frameColor = style.frameColor || '#f59e0b';
+                    const shadow = style.shadow || 'medium';
                     const caption = data.caption || '';
                     const image = data.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fef3c7" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="60"%3E🙏%3C/text%3E%3C/svg%3E';
 
                     const borderRadius = imageStyle === 'circle' ? '50%' : imageStyle === 'rounded' ? '12px' : '0';
+                    const shadows = {
+                        none: '',
+                        small: 'shadow',
+                        medium: 'shadow-lg',
+                        large: 'shadow-2xl'
+                    };
+                    const shadowClass = shadows[shadow] || 'shadow-lg';
 
-                    return `
-                        <div class="p-8 bg-white">
-                            <div class="max-w-md mx-auto">
-                                <img src="${image}" alt="Photo" class="w-full h-64 object-cover shadow-lg" style="border-radius: ${borderRadius};">
-                                ${caption ? `<p class="text-center text-gray-600 mt-4">${caption}</p>` : ''}
+                    if (layout === 'framed') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto p-4 ${shadowClass}" style="background-color: ${frameColor}; border-radius: 16px;">
+                                    <img src="${image}" alt="Photo" class="w-full h-64 object-cover" style="border-radius: ${borderRadius};">
+                                    ${caption ? `<p class="text-center text-white mt-4 font-medium">${caption}</p>` : ''}
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'polaroid') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-xs mx-auto bg-white p-4 pb-12 ${shadowClass}" style="border-radius: 4px;">
+                                    <img src="${image}" alt="Photo" class="w-full h-64 object-cover mb-4" style="border-radius: ${borderRadius};">
+                                    ${caption ? `<p class="text-center text-gray-700 italic">${caption}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'collage') {
+                        return `
+                            <div style="background-color: ${bgColor};">
+                                <img src="${image}" alt="Photo" class="w-full h-80 object-cover ${shadowClass}">
+                                ${caption ? `<p class="text-center text-gray-700 mt-4 pb-4">${caption}</p>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto">
+                                    <img src="${image}" alt="Photo" class="w-full h-64 object-cover ${shadowClass}" style="border-radius: ${borderRadius};">
+                                    ${caption ? `<p class="text-center text-gray-600 mt-4">${caption}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             memory: {
@@ -472,24 +825,80 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="standard">Standard</option>
+                                <option value="journal">Journal Style</option>
+                                <option value="vintage">Vintage Card</option>
+                                <option value="modern">Modern Minimal</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffedd5" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="textStyle" onchange="updatePreview()">
+                                <option value="italic">Italic</option>
+                                <option value="normal">Normal</option>
+                                <option value="serif">Serif</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#ffedd5';
+                    const layout = style.layout || 'standard';
+                    const textStyle = style.textStyle || 'italic';
                     const memory = data.memory || 'I cherish the memories we have created together';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-4xl mb-4">✨</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900">A Special Memory</h3>
-                                <p class="text-gray-700 italic">${memory}</p>
+                    const textClass = textStyle === 'italic' ? 'italic' : textStyle === 'serif' ? 'font-serif italic' : '';
+
+                    if (layout === 'journal') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow border-l-4 border-amber-500">
+                                    <div class="flex items-start gap-4">
+                                        <div class="text-4xl">✨</div>
+                                        <div>
+                                            <h3 class="text-lg font-semibold mb-2 text-gray-900">A Special Memory</h3>
+                                            <p class="text-gray-700 ${textClass} leading-relaxed">${memory}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'vintage') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-amber-50 p-8 rounded border-4 border-double border-amber-600">
+                                    <div class="text-4xl mb-4 text-center">✨</div>
+                                    <h3 class="text-xl font-serif font-semibold mb-3 text-gray-900 text-center">A Special Memory</h3>
+                                    <p class="text-gray-700 font-serif ${textClass}">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'modern') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(to bottom, ${bgColor}, transparent);">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-3xl mb-3 opacity-60">✨</div>
+                                    <p class="text-gray-800 text-lg ${textClass} leading-relaxed pl-4 border-l-2 border-amber-400">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4">✨</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">A Special Memory</h3>
+                                    <p class="text-gray-700 ${textClass}">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             gift: {
@@ -509,25 +918,74 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="centered">Centered</option>
+                                <option value="card">Gift Card</option>
+                                <option value="banner">Banner</option>
+                                <option value="split">Split Layout</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fed7aa" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#ea580c" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fed7aa';
+                    const accentColor = style.accentColor || '#ea580c';
+                    const layout = style.layout || 'centered';
                     const giftName = data.giftName || 'the wonderful gift';
                     const enjoyment = data.enjoyment || 'I absolutely love it!';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-4xl mb-4">🎁</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900">Thank you for ${giftName}</h3>
-                                <p class="text-gray-700">${enjoyment}</p>
+                    if (layout === 'card') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl">
+                                    <div class="text-5xl mb-6 text-center">🎁</div>
+                                    <h3 class="text-2xl font-bold mb-4 text-center" style="color: ${accentColor};">Thank you for<br/>${giftName}</h3>
+                                    <p class="text-gray-700 text-center">${enjoyment}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'banner') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(135deg, ${bgColor}, ${accentColor}30);">
+                                <div class="max-w-lg mx-auto text-center text-white">
+                                    <div class="text-5xl mb-4">🎁</div>
+                                    <h3 class="text-2xl font-bold mb-3">Thank you for ${giftName}</h3>
+                                    <p class="text-lg font-medium">${enjoyment}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'split') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto flex items-center gap-6">
+                                    <div class="text-6xl flex-shrink-0">🎁</div>
+                                    <div>
+                                        <h3 class="text-xl font-semibold mb-2" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                        <p class="text-gray-700">${enjoyment}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">🎁</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Thank you for ${giftName}</h3>
+                                    <p class="text-gray-700">${enjoyment}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             quote: {
@@ -547,25 +1005,84 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="classic">Classic</option>
+                                <option value="modern">Modern</option>
+                                <option value="elegant">Elegant Box</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="decorated">Decorated</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef9e7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="quoteColor" value="#92400e" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef9e7';
+                    const quoteColor = style.quoteColor || '#92400e';
+                    const layout = style.layout || 'classic';
                     const quote = data.quote || 'Feeling gratitude and not expressing it is like wrapping a present and not giving it.';
                     const author = data.author || 'William Arthur Ward';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-4xl mb-4">💭</div>
-                                <blockquote class="text-xl italic text-gray-700 mb-3">"${quote}"</blockquote>
-                                ${author ? `<p class="text-gray-600">— ${author}</p>` : ''}
+                    if (layout === 'modern') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-l-4 pl-6" style="border-color: ${quoteColor};">
+                                    <div class="text-3xl mb-3">💭</div>
+                                    <blockquote class="text-xl italic mb-3" style="color: ${quoteColor};">"${quote}"</blockquote>
+                                    ${author ? `<p class="text-gray-600 font-medium">— ${author}</p>` : ''}
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'elegant') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-xl p-8 shadow-lg border-t-4" style="border-color: ${quoteColor};">
+                                    <div class="text-4xl mb-4 text-center">💭</div>
+                                    <blockquote class="text-lg italic text-center mb-4" style="color: ${quoteColor};">"${quote}"</blockquote>
+                                    ${author ? `<p class="text-gray-600 text-center">— ${author}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'minimal') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <blockquote class="text-2xl font-light mb-4" style="color: ${quoteColor};">"${quote}"</blockquote>
+                                    ${author ? `<p class="text-gray-500 text-sm">— ${author}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'decorated') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-6xl mb-2 opacity-30" style="color: ${quoteColor};">"</div>
+                                    <blockquote class="text-xl italic mb-2" style="color: ${quoteColor};">${quote}</blockquote>
+                                    <div class="text-6xl opacity-30" style="color: ${quoteColor};">"</div>
+                                    ${author ? `<p class="text-gray-600 mt-4">— ${author}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        // classic
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">💭</div>
+                                    <blockquote class="text-xl italic text-gray-700 mb-3">"${quote}"</blockquote>
+                                    ${author ? `<p class="text-gray-600">— ${author}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             signature: {
@@ -585,8 +1102,21 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="standard">Standard</option>
+                                <option value="handwritten">Handwritten Style</option>
+                                <option value="formal">Formal</option>
+                                <option value="modern">Modern</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" value="#1f2937" onchange="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
@@ -600,18 +1130,51 @@
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#ffffff';
+                    const textColor = style.textColor || '#1f2937';
                     const align = style.align || 'center';
+                    const layout = style.layout || 'standard';
                     const closing = data.closing || 'With gratitude';
                     const name = data.name || 'Your Friend';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
-                            <div class="max-w-lg mx-auto">
-                                <p class="text-lg text-gray-700 mb-2">${closing},</p>
-                                <p class="text-xl font-semibold text-gray-900">${name}</p>
+                    if (layout === 'handwritten') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
+                                <div class="max-w-lg mx-auto">
+                                    <p class="text-xl font-serif italic mb-3" style="color: ${textColor};">${closing},</p>
+                                    <p class="text-2xl font-serif italic" style="color: ${textColor};">${name}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'formal') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
+                                <div class="max-w-lg mx-auto border-t-2 border-gray-300 pt-6">
+                                    <p class="text-base uppercase tracking-wide text-gray-600 mb-2">${closing}</p>
+                                    <p class="text-2xl font-bold" style="color: ${textColor};">${name}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'modern') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="inline-block px-6 py-4 rounded-xl" style="background-color: ${textColor}10; text-align: ${align};">
+                                        <p class="text-sm mb-1 opacity-70" style="color: ${textColor};">${closing}</p>
+                                        <p class="text-xl font-bold" style="color: ${textColor};">${name}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
+                                <div class="max-w-lg mx-auto">
+                                    <p class="text-lg mb-2" style="color: ${textColor};">${closing},</p>
+                                    <p class="text-xl font-semibold" style="color: ${textColor};">${name}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             futureTogether: {
@@ -627,24 +1190,60 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="centered">Centered</option>
+                                <option value="optimistic">Optimistic Card</option>
+                                <option value="bright">Bright Banner</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#fbbf24" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef3c7';
+                    const accentColor = style.accentColor || '#fbbf24';
+                    const layout = style.layout || 'centered';
                     const message = data.message || 'Looking forward to spending more time together!';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-4xl mb-4">🌟</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900">Looking Forward</h3>
-                                <p class="text-gray-700">${message}</p>
+                    if (layout === 'optimistic') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-lg text-center">
+                                    <div class="text-5xl mb-4">🌟</div>
+                                    <h3 class="text-2xl font-bold mb-4" style="color: ${accentColor};">Looking Forward</h3>
+                                    <p class="text-gray-700 leading-relaxed">${message}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'bright') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(135deg, ${bgColor}, ${accentColor}40);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-6xl mb-4">🌟</div>
+                                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Looking Forward</h3>
+                                    <p class="text-gray-800 text-lg font-medium">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">🌟</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Looking Forward</h3>
+                                    <p class="text-gray-700">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             yourQualities: {
@@ -660,24 +1259,62 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="standard">Standard</option>
+                                <option value="highlighted">Highlighted Box</option>
+                                <option value="stars">Star Border</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fffbeb" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Star Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="starColor" value="#fbbf24" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fffbeb';
+                    const starColor = style.starColor || '#fbbf24';
+                    const layout = style.layout || 'standard';
                     const qualities = data.qualities || 'Your kindness and generosity are truly inspiring';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-4xl mb-4 text-center">⭐</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">What Makes You Special</h3>
-                                <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                    if (layout === 'highlighted') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-xl p-6" style="background-color: ${starColor}20;">
+                                    <div class="text-4xl mb-4 text-center">⭐</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${starColor};">What Makes You Special</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center">${qualities}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'stars') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-2 rounded-xl p-6" style="border-color: ${starColor};">
+                                    <div class="text-center mb-3">
+                                        <span class="text-3xl" style="color: ${starColor};">⭐ ⭐ ⭐</span>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">What Makes You Special</h3>
+                                    <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">⭐</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">What Makes You Special</h3>
+                                    <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             personalNote: {
@@ -693,8 +1330,20 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="bordered">Bordered</option>
+                                <option value="letter">Letter Style</option>
+                                <option value="card">Card Style</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fff1f2" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="borderColor" value="#fb7185" onchange="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Border Style</label>
@@ -702,24 +1351,46 @@
                                 <option value="dashed">Dashed</option>
                                 <option value="solid">Solid</option>
                                 <option value="double">Double</option>
-                                <option value="none">None</option>
+                                <option value="dotted">Dotted</option>
                             </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fff1f2';
+                    const borderColor = style.borderColor || '#fb7185';
                     const borderStyle = style.borderStyle || 'dashed';
+                    const layout = style.layout || 'bordered';
                     const note = data.note || 'You mean so much to me';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto p-6 border-2" style="border-style: ${borderStyle}; border-color: #fb7185;">
-                                <div class="text-4xl mb-4 text-center">💌</div>
-                                <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                    if (layout === 'letter') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white p-8 rounded shadow-lg">
+                                    <div class="text-4xl mb-4">💌</div>
+                                    <p class="text-gray-700 leading-relaxed italic font-serif">${note}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'card') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl text-center">
+                                    <div class="text-5xl mb-4">💌</div>
+                                    <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto p-6 border-2" style="border-style: ${borderStyle}; border-color: ${borderColor};">
+                                    <div class="text-4xl mb-4 text-center">💌</div>
+                                    <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             multipleThanks: {
