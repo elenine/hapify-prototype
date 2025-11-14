@@ -20,38 +20,191 @@ window.sectionComponents.agenda = {
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="timeline">Timeline Classic</option>
+                                <option value="cards">Modern Cards</option>
+                                <option value="compact">Compact List</option>
+                                <option value="blocks">Bold Blocks</option>
+                                <option value="minimal">Minimal Clean</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
-                            <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Time Format</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="timeFormat" onchange="updatePreview()">
+                                <option value="badge">Badge</option>
+                                <option value="inline">Inline</option>
+                                <option value="circle">Circle</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const scheduleItems = data.schedule ? data.schedule.split('\n').filter(s => s.trim()) : [];
-                    const accentColor = style.accent || '#3b82f6';
-                    return `
-                        <div class="py-12 px-6" style="background: ${style.bg || '#f9fafb'}">
-                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
-                            <div class="max-w-md mx-auto space-y-3">
-                                ${scheduleItems.map(item => {
-                                    const [time, session] = item.split('-').map(s => s.trim());
-                                    return `
-                                        <div class="flex gap-4 p-3 bg-white rounded-lg border-l-4" style="border-left-color: ${accentColor}">
-                                            <div class="flex-shrink-0 font-semibold text-sm" style="color: ${accentColor}; min-width: 80px;">
-                                                ${time || item}
-                                            </div>
-                                            <div class="flex-1 text-sm">
-                                                ${session || ''}
-                                            </div>
-                                        </div>
-                                    `;
-                                }).join('')}
-                                ${scheduleItems.length === 0 ? '<div class="text-center text-gray-500 text-sm">Add schedule items to display</div>' : ''}
+                    const layout = style.layout || 'timeline';
+                    const bgColor = style.bg || '#f9fafb';
+                    const accentColor = style.accent || '#14b8a6';
+                    const timeFormat = style.timeFormat || 'badge';
+
+                    if (scheduleItems.length === 0) {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bgColor}">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                <div class="text-center text-gray-500 text-sm">Add schedule items to display</div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    }
+
+                    switch(layout) {
+                        case 'timeline':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto relative">
+                                        <div class="absolute left-8 top-0 bottom-0 w-0.5" style="background: ${accentColor}; opacity: 0.3;"></div>
+                                        <div class="space-y-6">
+                                            ${scheduleItems.map((item, index) => {
+                                                const [time, session] = item.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="relative pl-16">
+                                                        <div class="absolute left-5 top-1 w-6 h-6 rounded-full border-4 border-white shadow-md" style="background: ${accentColor}"></div>
+                                                        <div class="bg-white p-4 rounded-xl shadow-md">
+                                                            <div class="text-xs font-bold mb-2" style="color: ${accentColor}">${time || item}</div>
+                                                            <div class="text-sm font-medium text-gray-900">${session || ''}</div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'cards':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${scheduleItems.map(item => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            return `
+                                                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: ${accentColor}">
+                                                    <div class="p-5">
+                                                        <div class="flex items-start gap-4">
+                                                            <div class="flex-shrink-0">
+                                                                <div class="px-3 py-2 rounded-lg text-xs font-bold text-white" style="background: ${accentColor}">
+                                                                    ${time || item}
+                                                                </div>
+                                                            </div>
+                                                            <div class="flex-1 pt-1">
+                                                                <div class="text-sm font-semibold text-gray-900">${session || ''}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'compact':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto">
+                                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                                            ${scheduleItems.map((item, index) => {
+                                                const [time, session] = item.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="flex items-center gap-4 p-4 ${index !== 0 ? 'border-t border-gray-200' : ''}">
+                                                        <div class="flex-shrink-0 w-20 text-right">
+                                                            <span class="text-xs font-bold" style="color: ${accentColor}">${time || item}</span>
+                                                        </div>
+                                                        <div class="w-px h-8" style="background: ${accentColor}; opacity: 0.3;"></div>
+                                                        <div class="flex-1 text-sm text-gray-900">${session || ''}</div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'blocks':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-3">
+                                        ${scheduleItems.map(item => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            return `
+                                                <div class="relative p-5 rounded-xl shadow-lg text-white overflow-hidden" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)">
+                                                    <div class="absolute top-0 right-0 text-7xl opacity-10 -mt-4 -mr-4">📅</div>
+                                                    <div class="relative">
+                                                        <div class="text-xs font-bold mb-2 opacity-90">${time || item}</div>
+                                                        <div class="text-sm font-semibold">${session || ''}</div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'minimal':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${scheduleItems.map((item, index) => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            return `
+                                                <div class="py-3 ${index !== scheduleItems.length - 1 ? 'border-b border-gray-300' : ''}">
+                                                    <div class="flex gap-3">
+                                                        <div class="flex-shrink-0 font-mono text-xs font-bold pt-0.5" style="color: ${accentColor}; min-width: 70px;">
+                                                            ${time || item}
+                                                        </div>
+                                                        <div class="flex-1 text-sm text-gray-700">
+                                                            ${session || ''}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        default:
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-3">
+                                        ${scheduleItems.map(item => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            return `
+                                                <div class="flex gap-4 p-3 bg-white rounded-lg border-l-4" style="border-left-color: ${accentColor}">
+                                                    <div class="flex-shrink-0 font-semibold text-sm" style="color: ${accentColor}; min-width: 80px;">
+                                                        ${time || item}
+                                                    </div>
+                                                    <div class="flex-1 text-sm">
+                                                        ${session || ''}
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+                    }
                 }
             };
