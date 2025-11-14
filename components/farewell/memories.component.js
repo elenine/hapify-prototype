@@ -27,6 +27,9 @@ window.sectionComponents.memories = {
                                 <option value="bubbles">Bubbles - Chat Style</option>
                                 <option value="list">List - Simple Clean</option>
                                 <option value="grid">Grid - Compact</option>
+                                <option value="polaroid">Polaroid - Photo Style</option>
+                                <option value="scrapbook">Scrapbook - Angled Cards</option>
+                                <option value="mosaic">Mosaic - Colorful Tiles</option>
                             </select>
                         </div>
                         <div>
@@ -46,6 +49,35 @@ window.sectionComponents.memories = {
                                 <option value="🌟">🌟 Star</option>
                                 <option value="💝">💝 Heart</option>
                                 <option value="📌">📌 Pin</option>
+                                <option value="🎯">🎯 Target</option>
+                                <option value="💡">💡 Idea</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">None</option>
+                                <option value="sm">Small</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Large</option>
+                                <option value="xl">Extra Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="sm">Small</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Large</option>
+                                <option value="xl">Extra Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
                             </select>
                         </div>
                     </div>

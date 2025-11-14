@@ -39,6 +39,9 @@ window.sectionComponents.farewell = {
                                 <option value="banner">Banner - Full Width</option>
                                 <option value="split">Split - Icon & Text</option>
                                 <option value="journey">Journey - Path Style</option>
+                                <option value="modern">Modern - Gradient Card</option>
+                                <option value="minimal">Minimal - Clean Layout</option>
+                                <option value="elegant">Elegant - Bordered Frame</option>
                             </select>
                         </div>
                         <div>
@@ -59,10 +62,38 @@ window.sectionComponents.farewell = {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">None</option>
                                 <option value="sm">Small</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Large</option>
                                 <option value="xl">Extra Large</option>
+                                <option value="2xl">Huge</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="sm">Small</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Large</option>
+                                <option value="xl">Extra Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Icon Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="iconSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                                <option value="xlarge">Extra Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
                             </select>
                         </div>
                     </div>
