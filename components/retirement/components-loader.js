@@ -10,7 +10,9 @@ console.log('🔄 Retirement Celebration component loader started');
 const componentFiles = [
     'layout', 'hero', 'careerhighlights', 'yearsofservice',
     'partydetails', 'memorylane', 'futureplans', 'rsvp',
-    'gallery', 'thankyou'
+    'gallery', 'thankyou', 'timeline', 'testimonials',
+    'achievements', 'countdown', 'dresscode', 'schedule',
+    'contact', 'quotes'
 ];
 
 // Function to check if all components are loaded

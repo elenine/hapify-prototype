@@ -21,6 +21,14 @@ Each section is defined as a separate component file, making it easier to mainta
 8. **rsvp.component.js** - RSVP section
 9. **gallery.component.js** - Photo gallery
 10. **thankyou.component.js** - Thank you message
+11. **timeline.component.js** - Career timeline/journey
+12. **testimonials.component.js** - Tributes and messages from colleagues
+13. **achievements.component.js** - Awards and recognitions
+14. **countdown.component.js** - Countdown to retirement date
+15. **dresscode.component.js** - Dress code information
+16. **schedule.component.js** - Event schedule/agenda
+17. **contact.component.js** - Contact information for organizers
+18. **quotes.component.js** - Inspirational retirement quotes
 
 ## Component Structure
 
