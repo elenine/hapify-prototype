@@ -32,12 +32,39 @@ window.sectionComponents.accommodations = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="cards">Simple Cards</option>
+                    <option value="elegant">Elegant Boxes</option>
+                    <option value="minimal">Minimal List</option>
+                    <option value="featured">Featured Hotels</option>
+                    <option value="grid">Grid View</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#e11d48" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Background</label>
+                <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardBg" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
             </div>
         </div>
     `,
     render: (data, style) => {
+        const layout = style.layout || 'cards';
+        const bg = style.bg || '#fdf2f8';
+        const accent = style.accent || '#e11d48';
+        const cardBg = style.cardBg || '#ffffff';
+        const textColor = style.textColor || '#1f2937';
         const accommodations = [];
 
         // Collect accommodation items
@@ -53,24 +80,91 @@ window.sectionComponents.accommodations = {
             i++;
         }
 
-        const hotelsHtml = accommodations.length > 0 ? accommodations.map(hotel => `
-            <div class="p-4 bg-white rounded-lg border border-rose-100">
-                <div class="font-bold text-gray-900 mb-2">${hotel.name}</div>
-                ${hotel.address ? `<div class="text-sm text-gray-600 mb-1">📍 ${hotel.address}</div>` : ''}
-                ${hotel.phone ? `<div class="text-sm text-gray-600 mb-1">📞 ${hotel.phone}</div>` : ''}
-                ${hotel.code ? `<div class="text-sm text-rose-600 font-semibold mb-2">Group Code: ${hotel.code}</div>` : ''}
-                ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="inline-block mt-2 px-4 py-2 bg-rose-600 text-white rounded-lg text-sm hover:bg-rose-700 transition">Book Now</a>` : ''}
-            </div>
-        `).join('') : `
-            <div class="text-center py-8 text-gray-500">
-                <div class="text-4xl mb-2">🏨</div>
-                <p>Add hotel recommendations for your guests</p>
-            </div>
-        `;
+        let hotelsHtml = '';
+        if (accommodations.length > 0) {
+            if (layout === 'elegant') {
+                hotelsHtml = accommodations.map(hotel => `
+                    <div class="p-6 rounded-xl shadow-lg border" style="background: ${cardBg}; border-color: ${accent}20; color: ${textColor};">
+                        <div class="flex items-start gap-4 mb-4">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md" style="background: ${accent}20;">
+                                🏨
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-bold text-xl mb-2">${hotel.name}</div>
+                                ${hotel.code ? `<div class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white mb-2" style="background: ${accent};">Code: ${hotel.code}</div>` : ''}
+                            </div>
+                        </div>
+                        ${hotel.address ? `<div class="text-sm text-gray-600 mb-2">📍 ${hotel.address}</div>` : ''}
+                        ${hotel.phone ? `<div class="text-sm text-gray-600 mb-3">📞 ${hotel.phone}</div>` : ''}
+                        ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="inline-block mt-2 px-6 py-3 rounded-lg text-sm font-semibold hover:opacity-90 transition shadow-md text-white" style="background: ${accent};">Book Now</a>` : ''}
+                    </div>
+                `).join('');
+            } else if (layout === 'minimal') {
+                hotelsHtml = accommodations.map((hotel, index) => `
+                    <div class="py-4 ${index < accommodations.length - 1 ? 'border-b' : ''}" style="border-color: ${accent}20; color: ${textColor};">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="font-bold text-lg">${hotel.name}</div>
+                            ${hotel.code ? `<div class="text-xs px-3 py-1 rounded-full font-semibold text-white" style="background: ${accent};">Code: ${hotel.code}</div>` : ''}
+                        </div>
+                        ${hotel.address ? `<div class="text-sm text-gray-600 mb-1">📍 ${hotel.address}</div>` : ''}
+                        ${hotel.phone ? `<div class="text-sm text-gray-600 mb-2">📞 ${hotel.phone}</div>` : ''}
+                        ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="inline-block px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition text-white" style="background: ${accent};">Book Now</a>` : ''}
+                    </div>
+                `).join('');
+            } else if (layout === 'featured') {
+                hotelsHtml = accommodations.map(hotel => `
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${accent}80 100%);">
+                        <div class="absolute top-4 right-4 text-6xl opacity-20">🏨</div>
+                        <div class="relative p-8 text-white">
+                            <div class="font-bold text-2xl mb-4">${hotel.name}</div>
+                            ${hotel.code ? `
+                                <div class="inline-block px-4 py-2 bg-white rounded-full text-sm font-bold mb-4" style="color: ${accent};">
+                                    Group Code: ${hotel.code}
+                                </div>
+                            ` : ''}
+                            ${hotel.address ? `<div class="mb-2 opacity-90">📍 ${hotel.address}</div>` : ''}
+                            ${hotel.phone ? `<div class="mb-4 opacity-90">📞 ${hotel.phone}</div>` : ''}
+                            ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="inline-block px-8 py-3 bg-white rounded-lg font-bold hover:shadow-xl transition text-lg" style="color: ${accent};">Reserve Your Room</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            } else if (layout === 'grid') {
+                hotelsHtml = `<div class="grid md:grid-cols-2 gap-4">${accommodations.map(hotel => `
+                    <div class="p-4 rounded-lg shadow-md border" style="background: ${cardBg}; border-color: ${accent}20; color: ${textColor};">
+                        <div class="text-3xl mb-3 text-center">🏨</div>
+                        <div class="font-bold text-center mb-2">${hotel.name}</div>
+                        ${hotel.code ? `<div class="text-center mb-3"><span class="text-xs px-3 py-1 rounded-full font-semibold text-white" style="background: ${accent};">Code: ${hotel.code}</span></div>` : ''}
+                        ${hotel.address ? `<div class="text-xs text-gray-600 text-center mb-1">📍 ${hotel.address}</div>` : ''}
+                        ${hotel.phone ? `<div class="text-xs text-gray-600 text-center mb-3">📞 ${hotel.phone}</div>` : ''}
+                        ${hotel.website ? `<div class="text-center"><a href="${hotel.website}" target="_blank" class="inline-block px-4 py-2 rounded-lg text-xs font-semibold hover:opacity-90 transition text-white" style="background: ${accent};">Book</a></div>` : ''}
+                    </div>
+                `).join('')}</div>`;
+            } else {
+                // Simple Cards (default)
+                hotelsHtml = accommodations.map(hotel => `
+                    <div class="p-4 rounded-lg border shadow-sm" style="background: ${cardBg}; border-color: ${accent}20; color: ${textColor};">
+                        <div class="font-bold mb-2">${hotel.name}</div>
+                        ${hotel.address ? `<div class="text-sm text-gray-600 mb-1">📍 ${hotel.address}</div>` : ''}
+                        ${hotel.phone ? `<div class="text-sm text-gray-600 mb-1">📞 ${hotel.phone}</div>` : ''}
+                        ${hotel.code ? `<div class="text-sm font-semibold mb-2" style="color: ${accent};">Group Code: ${hotel.code}</div>` : ''}
+                        ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="inline-block mt-2 px-4 py-2 rounded-lg text-sm hover:opacity-90 transition text-white" style="background: ${accent};">Book Now</a>` : ''}
+                    </div>
+                `).join('');
+            }
+        } else {
+            hotelsHtml = `
+                <div class="text-center py-8 text-gray-500">
+                    <div class="text-4xl mb-2">🏨</div>
+                    <p>Add hotel recommendations for your guests</p>
+                </div>
+            `;
+        }
+
+        const maxWidth = layout === 'grid' ? 'max-w-3xl' : 'max-w-md';
 
         return `
-            <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
-                <div class="max-w-md mx-auto">
+            <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                <div class="${maxWidth} mx-auto">
                     <div class="text-center text-5xl mb-4">🏨</div>
                     <h2 class="text-2xl font-bold mb-4 text-center">${data.title || 'Where to Stay'}</h2>
                     ${data.intro ? `<p class="text-center text-gray-600 mb-8">${data.intro}</p>` : ''}
