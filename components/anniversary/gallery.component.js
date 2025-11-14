@@ -31,9 +31,13 @@ window.sectionComponents.gallery = {
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="layout" onchange="updatePreview()">
                     <option value="grid-2">Grid - 2 Columns</option>
                     <option value="grid-3">Grid - 3 Columns</option>
+                    <option value="grid-4">Grid - 4 Columns</option>
                     <option value="masonry">Masonry - Mixed Sizes</option>
                     <option value="carousel">Carousel - Sliding View</option>
                     <option value="featured">Featured - Large + Small</option>
+                    <option value="collage">Collage - Creative Layout</option>
+                    <option value="stack">Stack - Overlapping Style</option>
+                    <option value="scrapbook">Scrapbook - Casual Style</option>
                 </select>
             </div>
             <div>
@@ -43,14 +47,28 @@ window.sectionComponents.gallery = {
                     <option value="circle">Circle</option>
                     <option value="sharp">Sharp Corners</option>
                     <option value="polaroid">Polaroid Frame</option>
+                    <option value="film">Film Strip</option>
+                    <option value="vintage">Vintage</option>
                 </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Gap Size</label>
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="gapSize" onchange="updatePreview()">
+                    <option value="none">No Gap</option>
                     <option value="small">Small</option>
                     <option value="medium" selected>Medium</option>
                     <option value="large">Large</option>
+                    <option value="xlarge">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Image Aspect Ratio</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="aspectRatio" onchange="updatePreview()">
+                    <option value="square">Square (1:1)</option>
+                    <option value="portrait">Portrait (3:4)</option>
+                    <option value="landscape">Landscape (4:3)</option>
+                    <option value="wide">Wide (16:9)</option>
+                    <option value="auto">Auto (Original)</option>
                 </select>
             </div>
             <div>
@@ -62,12 +80,48 @@ window.sectionComponents.gallery = {
                 <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#dc2626" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accentColor" oninput="updatePreview()">
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Border Style</label>
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="borderStyle" onchange="updatePreview()">
                     <option value="none">No Border</option>
                     <option value="thin">Thin Border</option>
                     <option value="thick">Thick Border</option>
                     <option value="shadow">Shadow</option>
+                    <option value="double">Double Border</option>
+                    <option value="gradient">Gradient Border</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Hover Effect</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="hoverEffect" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="zoom">Zoom In</option>
+                    <option value="lift">Lift Up</option>
+                    <option value="tilt">Tilt</option>
+                    <option value="glow">Glow</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Corner Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="full">Full (Circle)</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Intensity</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="shadowIntensity" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="light">Light</option>
+                    <option value="medium">Medium</option>
+                    <option value="strong">Strong</option>
+                    <option value="dramatic">Dramatic</option>
                 </select>
             </div>
         </div>
