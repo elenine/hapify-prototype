@@ -26,14 +26,60 @@ window.sectionComponents.tribute = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="cards">Card Grid</option>
+                    <option value="list">List View</option>
+                    <option value="timeline">Timeline - Vertical</option>
+                    <option value="badges">Badges - Achievement Style</option>
+                    <option value="featured">Featured - Large Cards</option>
+                    <option value="compact">Compact - Dense View</option>
+                    <option value="ribbon">Ribbon - Award Style</option>
+                    <option value="modern">Modern - Split Layout</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#faf5ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" oninput="updatePreview()">
-                    <option value="cards">Card Grid</option>
-                    <option value="list">List View</option>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#8b5cf6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accentColor" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                    <option value="xl">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                    <option value="xl">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Icon Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="iconSize" onchange="updatePreview()">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                    <option value="xlarge">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                    <option value="small">Small</option>
+                    <option value="normal">Normal</option>
+                    <option value="large">Large</option>
                 </select>
             </div>
         </div>

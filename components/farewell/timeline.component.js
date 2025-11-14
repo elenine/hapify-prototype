@@ -26,14 +26,58 @@ window.sectionComponents.timeline = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Timeline Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="timelineStyle" onchange="updatePreview()">
+                    <option value="vertical">Vertical Timeline</option>
+                    <option value="cards">Timeline Cards</option>
+                    <option value="zigzag">Zigzag - Alternating</option>
+                    <option value="modern">Modern - Clean Lines</option>
+                    <option value="roadmap">Roadmap - Horizontal</option>
+                    <option value="dotted">Dotted - Minimal</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fefce8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Timeline Style</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="timelineStyle" oninput="updatePreview()">
-                    <option value="vertical">Vertical Timeline</option>
-                    <option value="cards">Timeline Cards</option>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#8b5cf6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accentColor" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Line Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="lineStyle" onchange="updatePreview()">
+                    <option value="solid">Solid Line</option>
+                    <option value="dashed">Dashed Line</option>
+                    <option value="dotted">Dotted Line</option>
+                    <option value="thick">Thick Line</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                    <option value="xl">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="sm">Small</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Large</option>
+                    <option value="xl">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Date Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="dateStyle" onchange="updatePreview()">
+                    <option value="badge">Badge</option>
+                    <option value="circle">Circle</option>
+                    <option value="simple">Simple Text</option>
                 </select>
             </div>
         </div>

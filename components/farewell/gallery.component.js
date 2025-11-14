@@ -34,6 +34,9 @@ window.sectionComponents.gallery = {
                                 <option value="carousel">Carousel - Featured</option>
                                 <option value="polaroid">Polaroid - Classic Style</option>
                                 <option value="collage">Collage - Creative</option>
+                                <option value="filmstrip">Filmstrip - Horizontal Row</option>
+                                <option value="scrapbook">Scrapbook - Tilted Style</option>
+                                <option value="showcase">Showcase - Large Featured</option>
                             </select>
                         </div>
                         <div>
@@ -50,6 +53,7 @@ window.sectionComponents.gallery = {
                                 <option value="rounded">Rounded</option>
                                 <option value="square">Square</option>
                                 <option value="circle">Circular Crop</option>
+                                <option value="vintage">Vintage Frame</option>
                             </select>
                         </div>
                         <div>
@@ -60,6 +64,23 @@ window.sectionComponents.gallery = {
                                 <option value="md">Medium</option>
                                 <option value="lg">Large</option>
                                 <option value="xl">Extra Large</option>
+                                <option value="2xl">Huge</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="spacing" onchange="updatePreview()">
+                                <option value="tight">Tight</option>
+                                <option value="normal">Normal</option>
+                                <option value="loose">Loose</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Photo Count</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="photoCount" onchange="updatePreview()">
+                                <option value="3">3 Photos</option>
+                                <option value="4">4 Photos</option>
+                                <option value="6">6 Photos</option>
                             </select>
                         </div>
                     </div>

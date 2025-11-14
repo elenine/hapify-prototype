@@ -35,6 +35,9 @@ window.sectionComponents.aboutperson = {
                                 <option value="modern">Modern - Split Design</option>
                                 <option value="simple">Simple - Clean Text</option>
                                 <option value="elegant">Elegant - Bordered</option>
+                                <option value="profile">Profile - Centered Badge</option>
+                                <option value="minimal">Minimal - Compact View</option>
+                                <option value="gradient">Gradient - Colorful Background</option>
                             </select>
                         </div>
                         <div>
@@ -59,10 +62,39 @@ window.sectionComponents.aboutperson = {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">None</option>
                                 <option value="sm">Small</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Large</option>
                                 <option value="xl">Extra Large</option>
+                                <option value="2xl">Huge</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="none">Sharp Corners</option>
+                                <option value="sm">Small Rounded</option>
+                                <option value="md">Medium Rounded</option>
+                                <option value="lg">Large Rounded</option>
+                                <option value="xl">Extra Rounded</option>
+                                <option value="full">Pill Shape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Badge Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="badgeStyle" onchange="updatePreview()">
+                                <option value="filled">Filled</option>
+                                <option value="outlined">Outlined</option>
+                                <option value="subtle">Subtle</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="fontSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
                             </select>
                         </div>
                     </div>
@@ -74,8 +106,26 @@ window.sectionComponents.aboutperson = {
                     const textColor = style.textColor || '#1f2937';
                     const align = style.align || 'center';
                     const shadow = style.shadow || 'md';
+                    const borderRadius = style.borderRadius || 'md';
+                    const badgeStyle = style.badgeStyle || 'filled';
+                    const fontSize = style.fontSize || 'normal';
 
                     const alignClass = align === 'center' ? 'text-center' : 'text-left';
+                    const shadowClass = shadow !== 'none' ? `shadow-${shadow}` : '';
+
+                    const roundedClass = borderRadius === 'none' ? '' :
+                                        borderRadius === 'sm' ? 'rounded-lg' :
+                                        borderRadius === 'lg' ? 'rounded-2xl' :
+                                        borderRadius === 'xl' ? 'rounded-3xl' :
+                                        borderRadius === 'full' ? 'rounded-full' : 'rounded-xl';
+
+                    const getBadgeClasses = () => {
+                        if (badgeStyle === 'filled') return `bg-${accentColor} text-white`;
+                        if (badgeStyle === 'outlined') return `border-2 bg-transparent`;
+                        return `bg-opacity-20`;
+                    };
+
+                    const fontSizeClass = fontSize === 'small' ? 'text-sm' : fontSize === 'large' ? 'text-lg' : 'text-base';
 
                     // Card Layout - Highlighted Box
                     if (layout === 'card') {
@@ -194,6 +244,99 @@ window.sectionComponents.aboutperson = {
                                             <p class="leading-relaxed text-center">${data.bio}</p>
                                         </div>
                                     ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Profile Layout - Centered Badge
+                    if (layout === 'profile') {
+                        const badgeClasses = badgeStyle === 'filled' ? `text-white` : badgeStyle === 'outlined' ? `border-2 bg-transparent` : '';
+                        const badgeBg = badgeStyle === 'filled' ? accentColor : badgeStyle === 'outlined' ? 'transparent' : `${accentColor}20`;
+                        const badgeBorder = badgeStyle === 'outlined' ? `border-color: ${accentColor};` : '';
+
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}; color: ${textColor}">
+                                <div class="max-w-md mx-auto ${alignClass}">
+                                    <div class="inline-block p-4 mb-6 ${roundedClass} ${shadowClass}" style="background: ${accentColor}10">
+                                        <div class="text-5xl mb-2">👤</div>
+                                    </div>
+                                    <h2 class="text-3xl font-bold mb-4">${data.title || 'About'}</h2>
+                                    ${data.position ? `
+                                        <div class="mb-4">
+                                            <span class="inline-block px-6 py-3 ${roundedClass} font-bold ${fontSizeClass} ${badgeClasses}" style="background: ${badgeBg}; ${badgeBorder} color: ${badgeStyle === 'outlined' ? accentColor : 'white'}">${data.position}</span>
+                                        </div>
+                                    ` : ''}
+                                    ${data.duration ? `
+                                        <div class="flex items-center gap-2 justify-center mb-6">
+                                            <div class="w-2 h-2 rounded-full" style="background: ${accentColor}"></div>
+                                            <span class="text-sm font-semibold ${fontSizeClass}">${data.duration}</span>
+                                            <div class="w-2 h-2 rounded-full" style="background: ${accentColor}"></div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.bio ? `<p class="leading-relaxed mt-4 ${fontSizeClass} max-w-lg mx-auto">${data.bio}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Minimal Layout - Compact View
+                    if (layout === 'minimal') {
+                        return `
+                            <div class="py-8 px-6" style="background: ${bg}; color: ${textColor}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="flex items-start gap-6 ${alignClass === 'text-center' ? 'flex-col items-center' : ''}">
+                                        <div class="flex-shrink-0">
+                                            <div class="w-16 h-16 ${roundedClass} flex items-center justify-center text-3xl ${shadowClass}" style="background: ${accentColor}15">
+                                                👤
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h2 class="text-xl font-bold mb-2 ${alignClass}">${data.title || 'About'}</h2>
+                                            ${data.position ? `<div class="mb-2 ${alignClass}"><span class="text-sm font-bold px-3 py-1 ${roundedClass} ${fontSizeClass}" style="background: ${accentColor}; color: white">${data.position}</span></div>` : ''}
+                                            ${data.duration ? `<div class="${alignClass} text-xs opacity-60 mb-3 ${fontSizeClass}">⏱️ ${data.duration}</div>` : ''}
+                                            ${data.bio ? `<p class="leading-relaxed text-sm ${fontSizeClass} ${alignClass}">${data.bio}</p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Gradient Layout - Colorful Background
+                    if (layout === 'gradient') {
+                        return `
+                            <div class="py-16 px-6" style="background: linear-gradient(135deg, ${accentColor}, ${bg}); color: ${textColor}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="bg-white bg-opacity-95 ${roundedClass} p-8 ${shadowClass}">
+                                        <div class="${alignClass}">
+                                            <div class="inline-flex items-center gap-3 mb-6 p-3 ${roundedClass}" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}10)">
+                                                <div class="text-3xl">👤</div>
+                                                <h2 class="text-2xl font-bold" style="color: ${accentColor}">${data.title || 'About'}</h2>
+                                            </div>
+                                        </div>
+                                        ${data.position ? `
+                                            <div class="${alignClass} mb-4">
+                                                <div class="inline-block relative">
+                                                    <div class="absolute inset-0 ${roundedClass}" style="background: linear-gradient(135deg, ${accentColor}, ${bg}); opacity: 0.2;"></div>
+                                                    <span class="relative inline-block px-6 py-3 ${roundedClass} font-bold ${fontSizeClass}" style="color: ${accentColor}">${data.position}</span>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.duration ? `
+                                            <div class="${alignClass} mb-6">
+                                                <span class="inline-flex items-center gap-2 px-4 py-2 ${roundedClass} ${fontSizeClass}" style="background: ${accentColor}10; color: ${accentColor}">
+                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8"/></svg>
+                                                    ${data.duration}
+                                                </span>
+                                            </div>
+                                        ` : ''}
+                                        ${data.bio ? `
+                                            <div class="mt-6 pt-6 border-t ${alignClass}" style="border-color: ${accentColor}20">
+                                                <p class="leading-relaxed ${fontSizeClass}" style="color: ${textColor}">${data.bio}</p>
+                                            </div>
+                                        ` : ''}
+                                    </div>
                                 </div>
                             </div>
                         `;

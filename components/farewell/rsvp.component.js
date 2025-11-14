@@ -31,11 +31,18 @@ window.sectionComponents.rsvp = {
                                 <option value="split">Split - Form & Info</option>
                                 <option value="banner">Banner - Full Width CTA</option>
                                 <option value="elegant">Elegant - Bordered</option>
+                                <option value="minimal">Minimal - Clean Design</option>
+                                <option value="bold">Bold - Large CTA</option>
+                                <option value="modern">Modern - Gradient Box</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#faf5ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#c4b5fd" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accentColor" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Button Color</label>
@@ -47,6 +54,7 @@ window.sectionComponents.rsvp = {
                                 <option value="solid">Solid</option>
                                 <option value="outline">Outline</option>
                                 <option value="gradient">Gradient</option>
+                                <option value="shadow">Shadow Effect</option>
                             </select>
                         </div>
                         <div>
@@ -55,6 +63,25 @@ window.sectionComponents.rsvp = {
                                 <option value="sm">Small</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Large</option>
+                                <option value="xl">Extra Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="sm">Small</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Large</option>
+                                <option value="xl">Extra Large</option>
+                                <option value="full">Pill Shape</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
                             </select>
                         </div>
                     </div>

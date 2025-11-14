@@ -35,6 +35,9 @@ window.sectionComponents.hero = {
                                 <option value="overlay">Overlay - Image Background</option>
                                 <option value="minimal">Minimal - Clean Simple</option>
                                 <option value="card">Card - Boxed Design</option>
+                                <option value="banner">Banner - Full Width</option>
+                                <option value="floating">Floating - Elevated Card</option>
+                                <option value="asymmetric">Asymmetric - Modern Layout</option>
                             </select>
                         </div>
                         <div>
@@ -63,6 +66,7 @@ window.sectionComponents.hero = {
                                 <option value="circle">Circle</option>
                                 <option value="rounded">Rounded Square</option>
                                 <option value="square">Square</option>
+                                <option value="hexagon">Hexagon Style</option>
                             </select>
                         </div>
                         <div>
@@ -73,6 +77,34 @@ window.sectionComponents.hero = {
                                 <option value="md">Medium</option>
                                 <option value="lg">Large</option>
                                 <option value="xl">Extra Large</option>
+                                <option value="2xl">Huge</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderStyle" onchange="updatePreview()">
+                                <option value="none">None</option>
+                                <option value="solid">Solid Border</option>
+                                <option value="dashed">Dashed Border</option>
+                                <option value="double">Double Border</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Padding Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="padding" onchange="updatePreview()">
+                                <option value="compact">Compact</option>
+                                <option value="normal">Normal</option>
+                                <option value="spacious">Spacious</option>
+                                <option value="extra">Extra Spacious</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Title Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="titleSize" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                                <option value="xlarge">Extra Large</option>
                             </select>
                         </div>
                     </div>
@@ -85,17 +117,36 @@ window.sectionComponents.hero = {
                     const align = style.align || 'center';
                     const imageStyle = style.imageStyle || 'circle';
                     const shadow = style.shadow || 'none';
+                    const borderStyle = style.borderStyle || 'none';
+                    const padding = style.padding || 'normal';
+                    const titleSize = style.titleSize || 'medium';
 
                     const shadowClass = shadow !== 'none' ? `shadow-${shadow}` : '';
-                    const imageRoundClass = imageStyle === 'circle' ? 'rounded-full' : imageStyle === 'rounded' ? 'rounded-2xl' : '';
+                    const imageRoundClass = imageStyle === 'circle' ? 'rounded-full' :
+                                           imageStyle === 'rounded' ? 'rounded-2xl' :
+                                           imageStyle === 'hexagon' ? 'rounded-2xl' : '';
                     const alignClass = align === 'center' ? 'text-center mx-auto' : align === 'left' ? 'text-left' : 'text-right ml-auto';
+
+                    const paddingClass = padding === 'compact' ? 'py-8 px-4' :
+                                        padding === 'spacious' ? 'py-20 px-8' :
+                                        padding === 'extra' ? 'py-24 px-12' : 'py-16 px-6';
+
+                    const titleSizeClass = titleSize === 'small' ? 'text-2xl' :
+                                          titleSize === 'large' ? 'text-5xl' :
+                                          titleSize === 'xlarge' ? 'text-6xl' : 'text-4xl';
+
+                    const borderClass = borderStyle === 'solid' ? `border-4` :
+                                       borderStyle === 'dashed' ? `border-4 border-dashed` :
+                                       borderStyle === 'double' ? `border-8` : '';
+
+                    const borderColor = borderStyle !== 'none' ? `border-color: ${textColor};` : '';
 
                     // Classic Layout - Centered
                     if (layout === 'classic') {
                         return `
-                            <div class="py-16 px-6 ${alignClass}" style="background: linear-gradient(135deg, ${bg}, ${accentBg}); color: ${textColor}">
+                            <div class="${paddingClass} ${alignClass} ${borderClass}" style="background: linear-gradient(135deg, ${bg}, ${accentBg}); color: ${textColor}; ${borderColor}">
                                 ${data.image ? `<img src="${data.image}" class="w-32 h-32 ${imageRoundClass} ${alignClass} mb-6 object-cover border-4 ${shadowClass}" style="border-color: ${textColor}">` : '<div class="text-6xl mb-4">👋</div>'}
-                                <h1 class="text-4xl font-bold mb-3">${data.title || 'Farewell Party'}</h1>
+                                <h1 class="${titleSizeClass} font-bold mb-3">${data.title || 'Farewell Party'}</h1>
                                 <p class="text-2xl font-semibold opacity-90">${data.name || "Person's Name"}</p>
                             </div>
                         `;
@@ -165,6 +216,86 @@ window.sectionComponents.hero = {
                                         <p class="text-xl font-semibold opacity-70">${data.name || "Person's Name"}</p>
                                     </div>
                                 </div>
+                            </div>
+                        `;
+                    }
+
+                    // Banner Layout - Full Width
+                    if (layout === 'banner') {
+                        return `
+                            <div class="${paddingClass} relative overflow-hidden ${borderClass}" style="background: linear-gradient(90deg, ${bg}, ${accentBg}); color: ${textColor}; ${borderColor}">
+                                <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8 relative z-10">
+                                    ${data.image ? `<img src="${data.image}" class="w-40 h-40 ${imageRoundClass} object-cover border-4 ${shadowClass}" style="border-color: ${textColor}">` : '<div class="text-7xl">👋</div>'}
+                                    <div class="flex-1 ${alignClass}">
+                                        <div class="inline-block px-4 py-1 rounded-full text-xs font-semibold mb-3 ${shadowClass}" style="background: rgba(255,255,255,0.2)">FAREWELL EVENT</div>
+                                        <h1 class="${titleSizeClass} font-bold mb-2">${data.title || 'Farewell Party'}</h1>
+                                        <p class="text-2xl font-semibold opacity-90">${data.name || "Person's Name"}</p>
+                                    </div>
+                                </div>
+                                <div class="absolute top-0 right-0 w-64 h-64 rounded-full opacity-10" style="background: ${textColor}; transform: translate(30%, -30%);"></div>
+                                <div class="absolute bottom-0 left-0 w-48 h-48 rounded-full opacity-10" style="background: ${textColor}; transform: translate(-30%, 30%);"></div>
+                            </div>
+                        `;
+                    }
+
+                    // Floating Layout - Elevated Card
+                    if (layout === 'floating') {
+                        return `
+                            <div class="${paddingClass}" style="background: ${bg}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300" style="border: 6px solid ${accentBg}">
+                                        <div class="p-2" style="background: linear-gradient(135deg, ${bg}, ${accentBg})"></div>
+                                        <div class="p-8 ${alignClass}">
+                                            ${data.image ? `
+                                                <div class="inline-block p-2 rounded-full mb-6" style="background: linear-gradient(135deg, ${bg}, ${accentBg})">
+                                                    <img src="${data.image}" class="w-32 h-32 ${imageRoundClass} object-cover ${shadowClass}">
+                                                </div>
+                                            ` : '<div class="text-6xl mb-4">👋</div>'}
+                                            <div class="mb-2">
+                                                <span class="inline-block px-4 py-1 rounded-full text-xs font-bold" style="background: ${accentBg}20; color: ${bg}">FAREWELL</span>
+                                            </div>
+                                            <h1 class="${titleSizeClass} font-bold mb-3" style="color: #1f2937">${data.title || 'Farewell Party'}</h1>
+                                            <div class="w-20 h-1 mb-4 ${align === 'center' ? 'mx-auto' : align === 'right' ? 'ml-auto' : ''}" style="background: linear-gradient(90deg, ${bg}, ${accentBg})"></div>
+                                            <p class="text-xl font-semibold" style="color: ${accentBg}">${data.name || "Person's Name"}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Asymmetric Layout - Modern Design
+                    if (layout === 'asymmetric') {
+                        return `
+                            <div class="${paddingClass} relative overflow-hidden" style="background: ${bg}">
+                                <div class="max-w-4xl mx-auto">
+                                    <div class="grid md:grid-cols-5 gap-6 items-center">
+                                        <div class="md:col-span-2 ${align === 'right' ? 'md:order-2' : ''}">
+                                            ${data.image ? `
+                                                <div class="relative inline-block">
+                                                    <img src="${data.image}" class="w-full h-64 ${imageRoundClass} object-cover ${shadowClass}">
+                                                    <div class="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl ${shadowClass}" style="background: linear-gradient(135deg, ${accentBg}, ${bg})"></div>
+                                                </div>
+                                            ` : '<div class="text-8xl ${alignClass}">👋</div>'}
+                                        </div>
+                                        <div class="md:col-span-3 ${alignClass} ${align === 'right' ? 'md:order-1' : ''}">
+                                            <div class="inline-block mb-4">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-12 h-1" style="background: ${accentBg}"></div>
+                                                    <span class="text-sm font-bold tracking-wider" style="color: ${textColor}">FAREWELL EVENT</span>
+                                                </div>
+                                            </div>
+                                            <h1 class="${titleSizeClass} font-black mb-3 leading-tight" style="color: ${textColor}">${data.title || 'Farewell Party'}</h1>
+                                            <p class="text-3xl font-bold mb-6" style="color: ${accentBg}">${data.name || "Person's Name"}</p>
+                                            <div class="flex gap-2 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : 'justify-start'}">
+                                                <div class="w-3 h-3 rounded-full" style="background: ${accentBg}"></div>
+                                                <div class="w-3 h-3 rounded-full" style="background: ${accentBg}; opacity: 0.6"></div>
+                                                <div class="w-3 h-3 rounded-full" style="background: ${accentBg}; opacity: 0.3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5" style="background: ${accentBg}; transform: translate(40%, -40%);"></div>
                             </div>
                         `;
                     }
