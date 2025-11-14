@@ -39,11 +39,18 @@ window.sectionComponents.registration = {
                                 <option value="split">Split View</option>
                                 <option value="minimal">Minimal Clean</option>
                                 <option value="gradient">Bold Gradient</option>
+                                <option value="modern">Modern Badge</option>
+                                <option value="floating">Floating Action</option>
+                                <option value="banner">Full Banner</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
@@ -56,6 +63,25 @@ window.sectionComponents.registration = {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Button Text Color</label>
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="buttonText" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-full">Full Rounded</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="shadow-md">Medium</option>
+                                <option value="shadow-lg">Bold</option>
+                                <option value="shadow-xl">Extra Bold</option>
+                                <option value="shadow-2xl">Dramatic</option>
+                            </select>
                         </div>
                     </div>
                 `,

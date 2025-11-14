@@ -69,7 +69,9 @@ window.sectionComponents.agenda = {
                     const layout = style.layout || 'timeline';
                     const bgColor = style.bg || '#f9fafb';
                     const accentColor = style.accent || '#14b8a6';
-                    const timeFormat = style.timeFormat || 'badge';
+                    const secondaryColor = style.secondary || '#10b981';
+                    const radius = style.radius || 'rounded-lg';
+                    const shadow = style.shadow || 'shadow-md';
 
                     if (scheduleItems.length === 0) {
                         return `
@@ -197,6 +199,85 @@ window.sectionComponents.agenda = {
                                                 </div>
                                             `;
                                         }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${scheduleItems.map((item, index) => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            const isEven = index % 2 === 0;
+                                            const cardColor = isEven ? accentColor : secondaryColor;
+                                            return `
+                                                <div class="relative ${radius} overflow-hidden ${shadow}" style="background: linear-gradient(135deg, ${cardColor}, ${cardColor}dd); color: white;">
+                                                    <div class="absolute top-0 right-0 text-7xl opacity-10 -mt-4 -mr-4">📅</div>
+                                                    <div class="relative p-5">
+                                                        <div class="text-xs font-bold mb-2 opacity-90">${time || item}</div>
+                                                        <div class="text-sm font-semibold">${session || ''}</div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'table':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto">
+                                        <div class="bg-white ${radius} ${shadow} overflow-hidden">
+                                            <div class="grid grid-cols-3 gap-0 border-b-2" style="border-color: ${accentColor};">
+                                                <div class="p-3 font-bold text-xs uppercase text-center" style="background: ${accentColor}20; color: ${accentColor};">Time</div>
+                                                <div class="col-span-2 p-3 font-bold text-xs uppercase" style="background: ${accentColor}20; color: ${accentColor};">Session</div>
+                                            </div>
+                                            ${scheduleItems.map((item, index) => {
+                                                const [time, session] = item.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="grid grid-cols-3 gap-0 ${index !== scheduleItems.length - 1 ? 'border-b border-gray-200' : ''}">
+                                                        <div class="p-4 text-xs font-bold text-center" style="color: ${accentColor}; background: ${accentColor}05;">
+                                                            ${time || item}
+                                                        </div>
+                                                        <div class="col-span-2 p-4 text-sm text-gray-700">
+                                                            ${session || ''}
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badges':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto relative pl-12">
+                                        <div class="absolute left-4 top-0 bottom-0 w-0.5" style="background: ${accentColor}30;"></div>
+                                        <div class="space-y-5">
+                                            ${scheduleItems.map((item, index) => {
+                                                const [time, session] = item.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="relative">
+                                                        <div class="absolute left-[-2.7rem] top-3 w-8 h-8 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center text-xs font-bold ${shadow}" style="background: ${accentColor}; color: white;">
+                                                            ${index + 1}
+                                                        </div>
+                                                        <div class="bg-white p-5 ${radius} ${shadow} border-l-4" style="border-left-color: ${accentColor};">
+                                                            <div class="inline-block px-3 py-1 ${radius === 'rounded-none' ? '' : 'rounded-full'} text-xs font-bold mb-3" style="background: ${accentColor}20; color: ${accentColor};">
+                                                                ${time || item}
+                                                            </div>
+                                                            <div class="text-sm font-semibold text-gray-900">${session || ''}</div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
                                     </div>
                                 </div>
                             `;
