@@ -31,11 +31,18 @@ window.sectionComponents.cta = {
                                 <option value="bold">Bold & Vibrant</option>
                                 <option value="boxed">Boxed</option>
                                 <option value="gradient">Gradient</option>
+                                <option value="split">Split Layout</option>
+                                <option value="badge">Badge Style</option>
+                                <option value="floating">Floating Card</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
@@ -45,13 +52,36 @@ window.sectionComponents.cta = {
                             <label class="block text-sm font-medium text-gray-700 mb-2">Button Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="buttonBg" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-full">Pill</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'centered';
                     const bgColor = style.bg || '#14b8a6';
+                    const secondaryColor = style.secondary || '#10b981';
                     const textColor = style.text || '#ffffff';
                     const buttonBg = style.buttonBg || '#ffffff';
+                    const shadow = style.shadow || 'lg';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const heading = data.heading || 'Ready to Work Together?';
                     const subtext = data.subtext || "Let's bring your ideas to life";
                     const button = data.button || 'Get Started';
@@ -130,6 +160,70 @@ window.sectionComponents.cta = {
                                         <button class="px-10 py-4 rounded-full font-bold shadow-2xl hover:scale-105 transition transform" style="background: ${buttonBg}; color: ${buttonTextColor};">
                                             ${button}
                                         </button>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'split':
+                            return `
+                                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bgColor}, ${secondaryColor}); color: ${textColor}">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="bg-white ${radius} ${shadowClass} overflow-hidden">
+                                            <div class="p-6" style="background: linear-gradient(to right, ${bgColor}20, ${secondaryColor}20);">
+                                                <h2 class="text-2xl font-bold mb-2 text-gray-900">${heading}</h2>
+                                                <p class="text-gray-600 mb-6">${subtext}</p>
+                                                <button class="w-full py-3 px-6 ${radius} font-bold text-white ${shadowClass} hover:shadow-2xl transition" style="background: linear-gradient(135deg, ${bgColor}, ${secondaryColor});">
+                                                    ${button} →
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative">
+                                            <div class="bg-white ${radius} ${shadowClass} p-8 text-center">
+                                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                                                    <div class="px-6 py-2 ${radius} ${shadowClass} text-white font-bold text-sm" style="background: linear-gradient(135deg, ${bgColor}, ${secondaryColor});">
+                                                        Special Offer
+                                                    </div>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <h2 class="text-2xl font-bold mb-3 text-gray-900">${heading}</h2>
+                                                    <p class="text-gray-600 mb-6">${subtext}</p>
+                                                    <button class="px-8 py-3 ${radius} font-bold text-white ${shadowClass} hover:shadow-2xl transition" style="background: ${bgColor};">
+                                                        ${button}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-16 px-6" style="background: ${bgColor}; color: ${textColor}">
+                                    <div class="max-w-md mx-auto text-center">
+                                        <div class="mb-6">
+                                            <div class="inline-block w-16 h-16 ${radius} ${shadowClass} flex items-center justify-center text-3xl mb-4" style="background: ${secondaryColor};">
+                                                🎯
+                                            </div>
+                                        </div>
+                                        <h2 class="text-3xl font-bold mb-3">${heading}</h2>
+                                        <p class="text-lg opacity-90 mb-8">${subtext}</p>
+                                        <div class="relative inline-block">
+                                            <button class="px-8 py-3 ${radius} font-bold ${shadowClass} hover:shadow-2xl transition transform hover:-translate-y-1" style="background: ${buttonBg}; color: ${buttonTextColor};">
+                                                ${button}
+                                            </button>
+                                            <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-xl ${shadowClass}" style="background: ${secondaryColor};">
+                                                →
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             `;
