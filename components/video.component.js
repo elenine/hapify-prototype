@@ -35,6 +35,9 @@ window.sectionComponents.video = {
                                 <option value="featured">Featured Player</option>
                                 <option value="minimal">Minimal</option>
                                 <option value="card">Card Style</option>
+                                <option value="gradient">Gradient Overlay</option>
+                                <option value="theater">Theater Mode</option>
+                                <option value="floating">Floating Player</option>
                             </select>
                         </div>
                         <div>
@@ -45,12 +48,39 @@ window.sectionComponents.video = {
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
                             <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'centered';
                     const bgColor = style.bg || '#000000';
                     const accentColor = style.accent || '#3b82f6';
+                    const secondaryColor = style.secondary || '#10b981';
+                    const shadow = style.shadow || 'lg';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Watch Our Story';
                     const videoTitle = data.videoTitle || 'Video Player';
                     const videoUrl = data.videoUrl || '';
@@ -166,6 +196,79 @@ window.sectionComponents.video = {
                                                 <p class="text-gray-700 text-sm text-center">${description}</p>
                                             </div>
                                             ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="${radius} overflow-hidden ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                            <div class="aspect-video flex items-center justify-center relative">
+                                                <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                                                <div class="text-center z-10">
+                                                    <div class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-white bg-opacity-20 backdrop-blur-sm">
+                                                        ▶️
+                                                    </div>
+                                                    <div class="font-bold text-white text-lg mb-2">${videoTitle}</div>
+                                                    ${description ? `<p class="text-white text-xs opacity-90 px-6">${description}</p>` : ''}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'theater':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="relative ${radius} overflow-hidden ${shadowClass} border-4" style="border-color: ${accentColor};">
+                                            <div class="aspect-video flex items-center justify-center bg-black">
+                                                <div class="text-center">
+                                                    <div class="text-6xl mb-4">🎬</div>
+                                                    <div class="font-bold text-white text-lg mb-2">${videoTitle}</div>
+                                                    <div class="flex justify-center gap-2 mt-4">
+                                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white" style="background: ${accentColor};">
+                                                            ▶️
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            ${description ? `
+                                            <div class="absolute bottom-0 left-0 right-0 p-4 text-center" style="background: linear-gradient(to top, ${accentColor}dd, transparent);">
+                                                <p class="text-white text-xs">${description}</p>
+                                            </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative">
+                                            <div class="bg-white ${radius} ${shadowClass} p-4 hover:shadow-2xl transition">
+                                                <div class="aspect-video ${radius} overflow-hidden mb-4" style="background: linear-gradient(135deg, ${accentColor}30, ${secondaryColor}30);">
+                                                    <div class="h-full flex items-center justify-center">
+                                                        <div class="text-5xl">🎥</div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="font-bold text-lg mb-2" style="color: ${accentColor};">${videoTitle}</div>
+                                                    ${description ? `<p class="text-gray-600 text-sm mb-4">${description}</p>` : ''}
+                                                </div>
+                                            </div>
+                                            <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full flex items-center justify-center text-2xl text-white ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                                ▶️
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

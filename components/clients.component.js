@@ -27,6 +27,9 @@ window.sectionComponents.clients = {
                                 <option value="minimal">Minimal List</option>
                                 <option value="cards">Card Style</option>
                                 <option value="badges">Badge Style</option>
+                                <option value="gradient">Gradient Cards</option>
+                                <option value="timeline">Timeline View</option>
+                                <option value="floating">Floating Style</option>
                             </select>
                         </div>
                         <div>
@@ -37,12 +40,39 @@ window.sectionComponents.clients = {
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
                             <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'grid';
                     const bgColor = style.bg || '#f9fafb';
                     const accentColor = style.accent || '#3b82f6';
+                    const secondaryColor = style.secondary || '#10b981';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Our Clients & Partners';
                     const clients = (data.clients || '').split('\n').filter(c => c.trim());
 
@@ -137,6 +167,64 @@ window.sectionComponents.clients = {
                                         ${clients.map(client => `
                                             <div class="px-4 py-2 rounded-full font-semibold text-sm text-white shadow-md hover:shadow-lg transition" style="background: ${accentColor};">
                                                 ${client.trim()}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${clients.map((client, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                            return `
+                                            <div class="${radius} ${shadowClass} p-5 text-center hover:shadow-2xl transition" style="background: ${gradientColor};">
+                                                <div class="text-white font-bold text-sm">${client.trim()}</div>
+                                            </div>
+                                        `}).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'timeline':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto relative">
+                                        <div class="absolute left-8 top-0 bottom-0 w-0.5" style="background: ${accentColor}40;"></div>
+                                        <div class="space-y-4">
+                                            ${clients.map((client, idx) => `
+                                                <div class="relative pl-16">
+                                                    <div class="absolute left-5 w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background: ${accentColor};">
+                                                        ${idx + 1}
+                                                    </div>
+                                                    <div class="bg-white p-4 ${radius} ${shadowClass} border-l-4" style="border-color: ${accentColor};">
+                                                        <div class="font-semibold text-sm">${client.trim()}</div>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${clients.map((client, idx) => `
+                                            <div class="relative">
+                                                <div class="bg-white ${radius} ${shadowClass} p-5 text-center hover:shadow-2xl transition transform hover:-translate-y-2">
+                                                    <div class="font-semibold text-sm">${client.trim()}</div>
+                                                </div>
+                                                <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg" style="background: ${accentColor};">
+                                                    🤝
+                                                </div>
                                             </div>
                                         `).join('')}
                                     </div>
