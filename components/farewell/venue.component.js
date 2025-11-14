@@ -43,6 +43,9 @@ window.sectionComponents.venue = {
                     <option value="map">Map - Featured Location</option>
                     <option value="split">Split - Info & Map</option>
                     <option value="minimal">Minimal - Simple Text</option>
+                    <option value="compact">Compact - Dense Layout</option>
+                    <option value="timeline">Timeline - Vertical Flow</option>
+                    <option value="gradient">Gradient - Modern Card</option>
                 </select>
             </div>
             <div>
@@ -60,10 +63,38 @@ window.sectionComponents.venue = {
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="none">None</option>
                     <option value="sm">Small</option>
                     <option value="md">Medium</option>
                     <option value="lg">Large</option>
                     <option value="xl">Extra Large</option>
+                    <option value="2xl">Huge</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="rounded-lg">Normal</option>
+                    <option value="rounded-xl">Large</option>
+                    <option value="rounded-2xl">Extra Large</option>
+                    <option value="rounded-3xl">Huge</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                    <option value="sm">Small</option>
+                    <option value="base">Medium</option>
+                    <option value="lg">Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Icon Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="iconSize" onchange="updatePreview()">
+                    <option value="text-xl">Small</option>
+                    <option value="text-2xl">Medium</option>
+                    <option value="text-3xl">Large</option>
+                    <option value="text-4xl">Extra Large</option>
                 </select>
             </div>
         </div>
@@ -74,6 +105,12 @@ window.sectionComponents.venue = {
         const accentColor = style.accentColor || '#8b5cf6';
         const cardColor = style.cardColor || '#ffffff';
         const shadow = style.shadow || 'md';
+        const borderRadius = style.borderRadius || 'rounded-xl';
+        const textSize = style.textSize || 'base';
+        const iconSize = style.iconSize || 'text-2xl';
+
+        const textSizeClass = textSize === 'sm' ? 'text-sm' : textSize === 'lg' ? 'text-lg' : 'text-base';
+        const shadowClass = shadow === 'none' ? '' : `shadow-${shadow}`;
 
         // Card Layout - Unified Box
         if (layout === 'card') {
@@ -423,6 +460,159 @@ window.sectionComponents.venue = {
                                 </a>
                             </div>
                         ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Compact Layout - Dense Layout
+        if (layout === 'compact') {
+            return `
+                <div class="py-8 px-6" style="background: ${bg}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="flex items-start gap-4 ${borderRadius} p-5 ${shadowClass}" style="background: ${cardColor}">
+                            <div class="${iconSize} flex-shrink-0" style="color: ${accentColor}">📍</div>
+                            <div class="flex-1">
+                                ${data.venueName ? `<h3 class="font-bold ${textSizeClass === 'text-sm' ? 'text-base' : textSizeClass === 'text-lg' ? 'text-xl' : 'text-lg'} mb-2" style="color: ${accentColor}">${data.venueName}</h3>` : ''}
+                                ${data.address ? `<p class="text-gray-700 ${textSizeClass} mb-2">${data.address.replace(/\n/g, '<br>')}</p>` : ''}
+                                ${data.phone ? `<p class="text-gray-600 ${textSizeClass}">📞 ${data.phone}</p>` : ''}
+                                ${data.mapLink ? `<a href="${data.mapLink}" target="_blank" class="inline-block mt-3 px-4 py-2 ${borderRadius} font-medium text-white ${textSizeClass} hover:opacity-90" style="background: ${accentColor}">Get Directions</a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Timeline Layout - Vertical Flow
+        if (layout === 'timeline') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="text-center mb-8">
+                            <div class="${iconSize} mb-3">📍</div>
+                            <h2 class="text-2xl font-bold">Venue Details</h2>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute left-5 top-0 bottom-0 w-0.5" style="background: ${accentColor}30"></div>
+                            <div class="space-y-6">
+                                ${data.venueName ? `
+                                    <div class="relative flex gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 ${borderRadius} flex items-center justify-center text-white font-bold z-10" style="background: ${accentColor}">
+                                            <span class="${iconSize}">🏛️</span>
+                                        </div>
+                                        <div class="flex-1 ${borderRadius} p-4 ${shadowClass}" style="background: ${cardColor}">
+                                            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Venue Name</div>
+                                            <div class="font-bold ${textSizeClass}" style="color: ${accentColor}">${data.venueName}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.address ? `
+                                    <div class="relative flex gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 ${borderRadius} flex items-center justify-center text-white font-bold z-10" style="background: ${accentColor}">
+                                            <span class="${iconSize}">📮</span>
+                                        </div>
+                                        <div class="flex-1 ${borderRadius} p-4 ${shadowClass}" style="background: ${cardColor}">
+                                            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Address</div>
+                                            <div class="text-gray-800 ${textSizeClass}">${data.address.replace(/\n/g, '<br>')}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.parking ? `
+                                    <div class="relative flex gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 ${borderRadius} flex items-center justify-center text-white font-bold z-10" style="background: ${accentColor}">
+                                            <span class="${iconSize}">🅿️</span>
+                                        </div>
+                                        <div class="flex-1 ${borderRadius} p-4 ${shadowClass}" style="background: ${cardColor}">
+                                            <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Parking</div>
+                                            <div class="text-gray-700 ${textSizeClass}">${data.parking}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.mapLink ? `
+                                    <div class="relative flex gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 ${borderRadius} flex items-center justify-center text-white font-bold z-10" style="background: ${accentColor}">
+                                            <span class="${iconSize}">🗺️</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <a href="${data.mapLink}" target="_blank" class="block ${borderRadius} p-4 ${shadowClass} text-center font-semibold text-white hover:opacity-90" style="background: ${accentColor}">
+                                                View Map
+                                            </a>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gradient Layout - Modern Card
+        if (layout === 'gradient') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${accentColor}10, ${bg})">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="bg-white ${borderRadius} ${shadowClass} overflow-hidden">
+                            <div class="p-8 text-center" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}90); color: white">
+                                <div class="${iconSize} mb-3">📍</div>
+                                <h2 class="text-3xl font-bold">Venue Details</h2>
+                                ${data.venueName ? `<p class="text-xl mt-2 opacity-90">${data.venueName}</p>` : ''}
+                            </div>
+                            <div class="p-8 space-y-5">
+                                ${data.address ? `
+                                    <div class="${borderRadius} p-4" style="background: ${accentColor}10">
+                                        <div class="flex items-start gap-3">
+                                            <span class="${iconSize}">📮</span>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-wide font-semibold mb-1" style="color: ${accentColor}">Address</div>
+                                                <div class="text-gray-700 ${textSizeClass}">${data.address.replace(/\n/g, '<br>')}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.phone ? `
+                                    <div class="${borderRadius} p-4" style="background: ${accentColor}10">
+                                        <div class="flex items-start gap-3">
+                                            <span class="${iconSize}">📞</span>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-wide font-semibold mb-1" style="color: ${accentColor}">Phone</div>
+                                                <div class="text-gray-700 ${textSizeClass}">${data.phone}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.parking ? `
+                                    <div class="${borderRadius} p-4" style="background: ${accentColor}10">
+                                        <div class="flex items-start gap-3">
+                                            <span class="${iconSize}">🅿️</span>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-wide font-semibold mb-1" style="color: ${accentColor}">Parking</div>
+                                                <div class="text-gray-700 ${textSizeClass}">${data.parking}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.directions ? `
+                                    <div class="${borderRadius} p-4" style="background: ${accentColor}10">
+                                        <div class="flex items-start gap-3">
+                                            <span class="${iconSize}">🗺️</span>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-wide font-semibold mb-1" style="color: ${accentColor}">Directions</div>
+                                                <div class="text-gray-700 ${textSizeClass}">${data.directions}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.mapLink ? `
+                                    <div class="text-center pt-4">
+                                        <a href="${data.mapLink}" target="_blank" class="inline-block px-8 py-3 ${borderRadius} font-bold text-white ${shadowClass} hover:opacity-90" style="background: ${accentColor}">
+                                            Get Directions
+                                        </a>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;

@@ -32,6 +32,9 @@ window.sectionComponents.schedule = {
                     <option value="list">List - Clean Simple</option>
                     <option value="modern">Modern - Alternating</option>
                     <option value="minimal">Minimal - Text Only</option>
+                    <option value="compact">Compact - Dense Layout</option>
+                    <option value="elegant">Elegant - Bordered</option>
+                    <option value="boxes">Boxes - Badge Style</option>
                 </select>
             </div>
             <div>
@@ -49,10 +52,30 @@ window.sectionComponents.schedule = {
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="none">None</option>
                     <option value="sm">Small</option>
                     <option value="md">Medium</option>
                     <option value="lg">Large</option>
                     <option value="xl">Extra Large</option>
+                    <option value="2xl">Huge</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="rounded-lg">Normal</option>
+                    <option value="rounded-xl">Large</option>
+                    <option value="rounded-2xl">Extra Large</option>
+                    <option value="rounded-3xl">Huge</option>
+                    <option value="rounded-full">Full</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                    <option value="sm">Small</option>
+                    <option value="base">Medium</option>
+                    <option value="lg">Large</option>
                 </select>
             </div>
         </div>
@@ -63,6 +86,11 @@ window.sectionComponents.schedule = {
         const accentColor = style.accentColor || '#8b5cf6';
         const cardColor = style.cardColor || '#ffffff';
         const shadow = style.shadow || 'md';
+        const borderRadius = style.borderRadius || 'rounded-xl';
+        const textSize = style.textSize || 'base';
+
+        const textSizeClass = textSize === 'sm' ? 'text-sm' : textSize === 'lg' ? 'text-lg' : 'text-base';
+        const shadowClass = shadow === 'none' ? '' : `shadow-${shadow}`;
 
         const items = data.items ? data.items.split('\n').filter(item => item.trim()) : [];
 
@@ -88,19 +116,19 @@ window.sectionComponents.schedule = {
                         <div class="text-center mb-10">
                             <div class="text-5xl mb-3">📅</div>
                             <h2 class="text-3xl font-bold">${data.title || 'Party Schedule'}</h2>
-                            ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            ${data.description ? `<p class="text-gray-600 mt-2 ${textSizeClass}">${data.description}</p>` : ''}
                         </div>
                         <div class="relative">
                             <div class="absolute left-6 top-0 bottom-0 w-0.5" style="background: ${accentColor}30"></div>
                             <div class="space-y-6">
                                 ${parsedItems.map((item, index) => `
                                     <div class="relative flex gap-4 items-start">
-                                        <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg z-10" style="background: ${accentColor}">
+                                        <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${shadowClass} z-10" style="background: ${accentColor}">
                                             ${index + 1}
                                         </div>
-                                        <div class="flex-1 rounded-xl p-5 shadow-${shadow}" style="background: ${cardColor}; border-left: 3px solid ${accentColor}">
-                                            ${item.time ? `<div class="font-bold text-sm mb-2" style="color: ${accentColor}">🕐 ${item.time}</div>` : ''}
-                                            <div class="text-gray-800 font-medium leading-relaxed">${item.activity}</div>
+                                        <div class="flex-1 ${borderRadius} p-5 ${shadowClass}" style="background: ${cardColor}; border-left: 3px solid ${accentColor}">
+                                            ${item.time ? `<div class="font-bold ${textSizeClass} mb-2" style="color: ${accentColor}">🕐 ${item.time}</div>` : ''}
+                                            <div class="text-gray-800 font-medium leading-relaxed ${textSizeClass}">${item.activity}</div>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -119,18 +147,18 @@ window.sectionComponents.schedule = {
                         <div class="text-center mb-10">
                             <div class="text-5xl mb-3">📅</div>
                             <h2 class="text-3xl font-bold">${data.title || 'Party Schedule'}</h2>
-                            ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            ${data.description ? `<p class="text-gray-600 mt-2 ${textSizeClass}">${data.description}</p>` : ''}
                         </div>
                         <div class="grid sm:grid-cols-2 gap-4">
                             ${parsedItems.map((item, index) => `
-                                <div class="rounded-xl p-5 shadow-${shadow}" style="background: ${cardColor}; border-top: 4px solid ${accentColor}">
+                                <div class="${borderRadius} p-5 ${shadowClass}" style="background: ${cardColor}; border-top: 4px solid ${accentColor}">
                                     <div class="flex items-center gap-3 mb-3">
                                         <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background: ${accentColor}">
                                             ${index + 1}
                                         </div>
-                                        ${item.time ? `<div class="font-bold text-sm" style="color: ${accentColor}">🕐 ${item.time}</div>` : ''}
+                                        ${item.time ? `<div class="font-bold ${textSizeClass}" style="color: ${accentColor}">🕐 ${item.time}</div>` : ''}
                                     </div>
-                                    <div class="text-gray-800 font-medium leading-relaxed">${item.activity}</div>
+                                    <div class="text-gray-800 font-medium leading-relaxed ${textSizeClass}">${item.activity}</div>
                                 </div>
                             `).join('')}
                         </div>
@@ -149,9 +177,9 @@ window.sectionComponents.schedule = {
                                 <div class="text-4xl">📅</div>
                             </div>
                             <h2 class="text-3xl font-bold">${data.title || 'Party Schedule'}</h2>
-                            ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            ${data.description ? `<p class="text-gray-600 mt-2 ${textSizeClass}">${data.description}</p>` : ''}
                         </div>
-                        <div class="rounded-2xl p-8 shadow-${shadow}" style="background: ${cardColor}">
+                        <div class="${borderRadius} p-8 ${shadowClass}" style="background: ${cardColor}">
                             <div class="space-y-4 divide-y" style="divide-color: ${accentColor}20">
                                 ${parsedItems.map((item, index) => `
                                     <div class="${index === 0 ? '' : 'pt-4'}">
@@ -160,8 +188,8 @@ window.sectionComponents.schedule = {
                                                 ${index + 1}
                                             </div>
                                             <div class="flex-1 pt-1">
-                                                ${item.time ? `<div class="font-bold text-sm mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
-                                                <div class="text-gray-800 font-medium">${item.activity}</div>
+                                                ${item.time ? `<div class="font-bold ${textSizeClass} mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
+                                                <div class="text-gray-800 font-medium ${textSizeClass}">${item.activity}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -181,33 +209,33 @@ window.sectionComponents.schedule = {
                         <div class="text-center mb-10">
                             <div class="text-5xl mb-3">📅</div>
                             <h2 class="text-3xl font-bold">${data.title || 'Party Schedule'}</h2>
-                            ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            ${data.description ? `<p class="text-gray-600 mt-2 ${textSizeClass}">${data.description}</p>` : ''}
                         </div>
                         <div class="space-y-6">
                             ${parsedItems.map((item, index) => `
                                 <div class="grid md:grid-cols-${index % 2 === 0 ? '3' : '1'} gap-4 items-center">
                                     ${index % 2 === 0 ? `
                                         <div class="text-right">
-                                            ${item.time ? `<div class="inline-block px-4 py-2 rounded-full font-bold text-white shadow-md" style="background: ${accentColor}">${item.time}</div>` : ''}
+                                            ${item.time ? `<div class="inline-block px-4 py-2 rounded-full font-bold text-white ${shadowClass}" style="background: ${accentColor}">${item.time}</div>` : ''}
                                         </div>
                                         <div class="flex justify-center">
-                                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg" style="background: ${accentColor}">
+                                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${shadowClass}" style="background: ${accentColor}">
                                                 ${index + 1}
                                             </div>
                                         </div>
-                                        <div class="p-5 rounded-xl shadow-${shadow}" style="background: ${cardColor}">
-                                            <div class="text-gray-800 font-medium">${item.activity}</div>
+                                        <div class="p-5 ${borderRadius} ${shadowClass}" style="background: ${cardColor}">
+                                            <div class="text-gray-800 font-medium ${textSizeClass}">${item.activity}</div>
                                         </div>
                                     ` : `
                                         <div class="md:col-span-1"></div>
-                                        <div class="p-5 rounded-xl shadow-${shadow} md:col-span-3" style="background: ${accentColor}15">
+                                        <div class="p-5 ${borderRadius} ${shadowClass} md:col-span-3" style="background: ${accentColor}15">
                                             <div class="flex items-center gap-4">
-                                                <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg" style="background: ${accentColor}">
+                                                <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${shadowClass}" style="background: ${accentColor}">
                                                     ${index + 1}
                                                 </div>
                                                 <div class="flex-1">
-                                                    ${item.time ? `<div class="font-bold text-sm mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
-                                                    <div class="text-gray-800 font-medium">${item.activity}</div>
+                                                    ${item.time ? `<div class="font-bold ${textSizeClass} mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
+                                                    <div class="text-gray-800 font-medium ${textSizeClass}">${item.activity}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -229,7 +257,7 @@ window.sectionComponents.schedule = {
                             <div class="text-5xl mb-4">📅</div>
                             <h2 class="text-3xl font-bold mb-3">${data.title || 'Party Schedule'}</h2>
                             <div class="w-20 h-1 mx-auto mb-4" style="background: ${accentColor}"></div>
-                            ${data.description ? `<p class="text-gray-600">${data.description}</p>` : ''}
+                            ${data.description ? `<p class="text-gray-600 ${textSizeClass}">${data.description}</p>` : ''}
                         </div>
                         <div class="space-y-6 text-left">
                             ${parsedItems.map((item, index) => `
@@ -238,8 +266,98 @@ window.sectionComponents.schedule = {
                                         ${index + 1}
                                     </div>
                                     <div class="flex-1">
-                                        ${item.time ? `<div class="font-bold mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
-                                        <div class="text-gray-700">${item.activity}</div>
+                                        ${item.time ? `<div class="font-bold mb-1 ${textSizeClass}" style="color: ${accentColor}">${item.time}</div>` : ''}
+                                        <div class="text-gray-700 ${textSizeClass}">${item.activity}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Compact Layout - Dense Layout
+        if (layout === 'compact') {
+            return `
+                <div class="py-8 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="text-4xl">📅</div>
+                            <div>
+                                <h2 class="text-xl font-bold">${data.title || 'Party Schedule'}</h2>
+                                ${data.description ? `<p class="text-gray-600 ${textSizeClass}">${data.description}</p>` : ''}
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            ${parsedItems.map((item, index) => `
+                                <div class="flex items-center gap-3 ${borderRadius} p-3 ${shadowClass}" style="background: ${cardColor}">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background: ${accentColor}">
+                                        ${index + 1}
+                                    </div>
+                                    ${item.time ? `<div class="font-bold ${textSizeClass}" style="color: ${accentColor}">${item.time}</div>` : ''}
+                                    <div class="flex-1 text-gray-800 ${textSizeClass}">${item.activity}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Elegant Layout - Bordered
+        if (layout === 'elegant') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="border-4 ${borderRadius} p-10 bg-white ${shadowClass}" style="border-color: ${accentColor}">
+                            <div class="text-center mb-8">
+                                <div class="inline-block p-3 rounded-full mb-4" style="background: ${accentColor}15">
+                                    <div class="text-4xl">📅</div>
+                                </div>
+                                <h2 class="text-2xl font-bold" style="color: ${accentColor}">${data.title || 'Party Schedule'}</h2>
+                                <div class="w-20 h-1 mx-auto mt-4" style="background: ${accentColor}"></div>
+                                ${data.description ? `<p class="text-gray-600 mt-4 ${textSizeClass}">${data.description}</p>` : ''}
+                            </div>
+                            <div class="space-y-4">
+                                ${parsedItems.map((item, index) => `
+                                    <div class="${borderRadius} p-4" style="background: ${accentColor}10">
+                                        <div class="flex items-start gap-3">
+                                            <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background: ${accentColor}">
+                                                ${index + 1}
+                                            </div>
+                                            <div class="flex-1">
+                                                ${item.time ? `<div class="font-bold ${textSizeClass} mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
+                                                <div class="text-gray-800 ${textSizeClass}">${item.activity}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Boxes Layout - Badge Style
+        if (layout === 'boxes') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="text-center mb-10">
+                            <div class="text-5xl mb-3">📅</div>
+                            <h2 class="text-3xl font-bold">${data.title || 'Party Schedule'}</h2>
+                            ${data.description ? `<p class="text-gray-600 mt-2 ${textSizeClass}">${data.description}</p>` : ''}
+                        </div>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${parsedItems.map((item, index) => `
+                                <div class="${borderRadius} overflow-hidden ${shadowClass}" style="background: ${cardColor}">
+                                    <div class="p-3 text-center text-white font-bold" style="background: ${accentColor}">
+                                        ${item.time || `Step ${index + 1}`}
+                                    </div>
+                                    <div class="p-4 text-center">
+                                        <div class="text-gray-800 font-medium ${textSizeClass}">${item.activity}</div>
                                     </div>
                                 </div>
                             `).join('')}

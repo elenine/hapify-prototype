@@ -39,6 +39,9 @@ window.sectionComponents.contact = {
                                 <option value="buttons">Buttons - Call-to-Action</option>
                                 <option value="modern">Modern - Icon Grid</option>
                                 <option value="business">Business - Professional Card</option>
+                                <option value="compact">Compact - Minimal Space</option>
+                                <option value="horizontal">Horizontal - Row Layout</option>
+                                <option value="elegant">Elegant - Bordered Frame</option>
                             </select>
                         </div>
                         <div>
@@ -56,10 +59,39 @@ window.sectionComponents.contact = {
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">None</option>
                                 <option value="sm">Small</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Large</option>
                                 <option value="xl">Extra Large</option>
+                                <option value="2xl">Huge</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                                <option value="rounded-lg">Normal</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-3xl">Huge</option>
+                                <option value="rounded-full">Full (Pills)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="textSize" onchange="updatePreview()">
+                                <option value="sm">Small</option>
+                                <option value="base">Medium</option>
+                                <option value="lg">Large</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Icon Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 section-style" data-style="iconSize" onchange="updatePreview()">
+                                <option value="text-xl">Small</option>
+                                <option value="text-2xl">Medium</option>
+                                <option value="text-3xl">Large</option>
+                                <option value="text-4xl">Extra Large</option>
                             </select>
                         </div>
                     </div>
@@ -70,6 +102,12 @@ window.sectionComponents.contact = {
                     const accentColor = style.accentColor || '#8b5cf6';
                     const cardColor = style.cardColor || '#ffffff';
                     const shadow = style.shadow || 'md';
+                    const borderRadius = style.borderRadius || 'rounded-xl';
+                    const textSize = style.textSize || 'base';
+                    const iconSize = style.iconSize || 'text-2xl';
+
+                    const textSizeClass = textSize === 'sm' ? 'text-sm' : textSize === 'lg' ? 'text-lg' : 'text-base';
+                    const shadowClass = shadow === 'none' ? '' : `shadow-${shadow}`;
 
                     // Stacked Layout - Vertical List
                     if (layout === 'stacked') {
@@ -268,6 +306,121 @@ window.sectionComponents.contact = {
                                                     </div>
                                                 </div>
                                             ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Compact Layout - Minimal Space
+                    if (layout === 'compact') {
+                        return `
+                            <div class="py-8 px-6" style="background: ${bg}">
+                                <div class="max-w-xl mx-auto text-center">
+                                    <div class="${iconSize} mb-3">📞</div>
+                                    <h2 class="text-xl font-bold mb-4">${data.title || 'Stay In Touch'}</h2>
+                                    <div class="flex flex-wrap justify-center gap-3">
+                                        ${data.email ? `
+                                            <a href="mailto:${data.email}" class="inline-flex items-center gap-2 px-4 py-2 ${borderRadius} ${shadowClass} ${textSizeClass} font-medium transition hover:scale-105" style="background: ${cardColor}; color: ${accentColor}">
+                                                <span class="${iconSize}">✉️</span>
+                                                <span>Email</span>
+                                            </a>
+                                        ` : ''}
+                                        ${data.phone ? `
+                                            <a href="tel:${data.phone}" class="inline-flex items-center gap-2 px-4 py-2 ${borderRadius} ${shadowClass} ${textSizeClass} font-medium transition hover:scale-105" style="background: ${cardColor}; color: ${accentColor}">
+                                                <span class="${iconSize}">📱</span>
+                                                <span>Call</span>
+                                            </a>
+                                        ` : ''}
+                                        ${data.linkedin ? `
+                                            <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 ${borderRadius} ${shadowClass} ${textSizeClass} font-medium transition hover:scale-105" style="background: ${cardColor}; color: ${accentColor}">
+                                                <span class="${iconSize}">💼</span>
+                                                <span>LinkedIn</span>
+                                            </a>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Horizontal Layout - Row Layout
+                    if (layout === 'horizontal') {
+                        return `
+                            <div class="py-10 px-6" style="background: ${bg}">
+                                <div class="max-w-4xl mx-auto">
+                                    <div class="flex items-center gap-6 ${borderRadius} p-6 ${shadowClass}" style="background: ${cardColor}">
+                                        <div class="${iconSize} flex-shrink-0" style="color: ${accentColor}">📞</div>
+                                        <div class="flex-1">
+                                            <h2 class="text-lg font-bold mb-1" style="color: ${accentColor}">${data.title || 'Stay In Touch'}</h2>
+                                            <p class="text-gray-600 ${textSizeClass}">${data.message || "Let's keep in touch!"}</p>
+                                        </div>
+                                        <div class="flex gap-3 flex-shrink-0">
+                                            ${data.email ? `
+                                                <a href="mailto:${data.email}" class="flex items-center justify-center w-12 h-12 ${borderRadius} ${shadowClass} transition hover:scale-110" style="background: ${accentColor}; color: white">
+                                                    <span class="${iconSize}">✉️</span>
+                                                </a>
+                                            ` : ''}
+                                            ${data.phone ? `
+                                                <a href="tel:${data.phone}" class="flex items-center justify-center w-12 h-12 ${borderRadius} ${shadowClass} transition hover:scale-110" style="background: ${accentColor}; color: white">
+                                                    <span class="${iconSize}">📱</span>
+                                                </a>
+                                            ` : ''}
+                                            ${data.linkedin ? `
+                                                <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="flex items-center justify-center w-12 h-12 ${borderRadius} ${shadowClass} transition hover:scale-110" style="background: ${accentColor}; color: white">
+                                                    <span class="${iconSize}">💼</span>
+                                                </a>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Elegant Layout - Bordered Frame
+                    if (layout === 'elegant') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="border-4 ${borderRadius} p-10 ${shadowClass}" style="border-color: ${accentColor}; background: ${cardColor}">
+                                        <div class="text-center">
+                                            <div class="inline-block p-3 rounded-full mb-4" style="background: ${accentColor}15">
+                                                <div class="${iconSize}">📞</div>
+                                            </div>
+                                            <h2 class="text-2xl font-bold mb-3" style="color: ${accentColor}">${data.title || 'Stay In Touch'}</h2>
+                                            <div class="w-20 h-1 mx-auto mb-6" style="background: ${accentColor}"></div>
+                                            <p class="text-gray-600 ${textSizeClass} mb-8">${data.message || "Let's keep in touch!"}</p>
+                                            <div class="space-y-4">
+                                                ${data.email ? `
+                                                    <div class="flex items-center justify-between p-4 ${borderRadius}" style="background: ${accentColor}10">
+                                                        <div class="flex items-center gap-3">
+                                                            <span class="${iconSize}">✉️</span>
+                                                            <span class="font-medium ${textSizeClass}">Email</span>
+                                                        </div>
+                                                        <a href="mailto:${data.email}" class="font-semibold hover:underline break-all ${textSizeClass}" style="color: ${accentColor}">${data.email}</a>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.phone ? `
+                                                    <div class="flex items-center justify-between p-4 ${borderRadius}" style="background: ${accentColor}10">
+                                                        <div class="flex items-center gap-3">
+                                                            <span class="${iconSize}">📱</span>
+                                                            <span class="font-medium ${textSizeClass}">Phone</span>
+                                                        </div>
+                                                        <a href="tel:${data.phone}" class="font-semibold hover:underline ${textSizeClass}" style="color: ${accentColor}">${data.phone}</a>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.linkedin ? `
+                                                    <div class="flex items-center justify-between p-4 ${borderRadius}" style="background: ${accentColor}10">
+                                                        <div class="flex items-center gap-3">
+                                                            <span class="${iconSize}">💼</span>
+                                                            <span class="font-medium ${textSizeClass}">LinkedIn</span>
+                                                        </div>
+                                                        <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="font-semibold hover:underline ${textSizeClass}" style="color: ${accentColor}">View Profile</a>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
