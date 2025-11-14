@@ -24,6 +24,17 @@ window.sectionComponents.age = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="giant">Giant Number - Bold</option>
+                    <option value="circle">Circle Badge - Modern</option>
+                    <option value="banner">Banner Style - Elegant</option>
+                    <option value="spotlight">Spotlight - Dramatic</option>
+                    <option value="minimal">Minimal - Clean</option>
+                    <option value="decorative">Decorative - Festive</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fef3c7" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
@@ -35,13 +46,154 @@ window.sectionComponents.age = {
                 <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
                 <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Number Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="numberSize" onchange="updatePreview()">
+                    <option value="medium">Medium</option>
+                    <option value="large" selected>Large</option>
+                    <option value="xlarge">Extra Large</option>
+                    <option value="mega">Mega</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Add Effects</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="effects" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="shadow">Shadow</option>
+                    <option value="glow">Glow</option>
+                    <option value="gradient">Gradient</option>
+                </select>
+            </div>
         </div>
     `,
-    render: (data, style, globalStyles) => `
-        <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fef3c7'}; color: ${style.text || '#1f2937'}">
-            <div class="text-8xl font-bold mb-4" style="color: ${style.ageColor || '#f59e0b'}">${data.age || '25'}</div>
-            <h3 class="text-2xl font-bold mb-3">${data.milestoneTitle || 'A Special Milestone'}</h3>
-            <p class="text-lg max-w-md mx-auto">${data.message || 'Another year of amazing memories!'}</p>
-        </div>
-    `
+    render: (data, style, globalStyles) => {
+        const layout = style.layout || 'giant';
+        const bgColor = style.bg || '#fef3c7';
+        const ageColor = style.ageColor || '#f59e0b';
+        const textColor = style.text || '#1f2937';
+        const age = data.age || '25';
+        const title = data.milestoneTitle || 'A Special Milestone';
+        const message = data.message || 'Another year of amazing memories!';
+
+        const numberSizes = {
+            medium: 'text-7xl',
+            large: 'text-8xl',
+            xlarge: 'text-9xl',
+            mega: 'text-[12rem]'
+        };
+        const numberSize = numberSizes[style.numberSize] || 'text-8xl';
+
+        const effects = {
+            none: '',
+            shadow: 'text-shadow: 4px 4px 8px rgba(0,0,0,0.3);',
+            glow: `text-shadow: 0 0 20px ${ageColor}, 0 0 40px ${ageColor};`,
+            gradient: `background: linear-gradient(135deg, ${ageColor}, ${globalStyles.secondaryColor}); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;`
+        };
+        const effectStyle = effects[style.effects] || '';
+
+        // Giant Number Layout
+        if (layout === 'giant') {
+            return `
+                <div class="py-16 px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="${numberSize} font-black mb-6" style="color: ${ageColor}; ${effectStyle}">${age}</div>
+                    <h3 class="text-3xl font-bold mb-4">${title}</h3>
+                    <p class="text-lg max-w-md mx-auto leading-relaxed">${message}</p>
+                </div>
+            `;
+        }
+
+        // Circle Badge Layout
+        if (layout === 'circle') {
+            return `
+                <div class="py-12 px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="inline-flex items-center justify-center w-64 h-64 rounded-full border-8 mb-6" style="border-color: ${ageColor}; background: linear-gradient(135deg, ${ageColor}22, ${ageColor}11)">
+                        <div class="${numberSize} font-black" style="color: ${ageColor}; ${effectStyle}">${age}</div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                    <p class="text-lg max-w-md mx-auto">${message}</p>
+                </div>
+            `;
+        }
+
+        // Banner Style Layout
+        if (layout === 'banner') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="relative py-8 px-12 rounded-2xl" style="background: linear-gradient(135deg, ${ageColor}33, ${ageColor}22)">
+                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 ${numberSize} font-black px-8 py-2 rounded-full shadow-xl" style="background: ${ageColor}; color: white;">${age}</div>
+                            <div class="text-center mt-12">
+                                <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                                <p class="text-lg leading-relaxed">${message}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Spotlight Layout
+        if (layout === 'spotlight') {
+            return `
+                <div class="py-16 px-6 relative overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-10">
+                        <div class="text-[20rem] font-black" style="color: ${ageColor}">${age}</div>
+                    </div>
+                    <div class="relative z-10 text-center">
+                        <div class="${numberSize} font-black mb-6 inline-block px-8 py-4 rounded-xl" style="background: ${ageColor}; color: white; ${effectStyle}">${age}</div>
+                        <h3 class="text-3xl font-bold mb-4">${title}</h3>
+                        <p class="text-lg max-w-md mx-auto">${message}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Minimal Layout
+        if (layout === 'minimal') {
+            return `
+                <div class="py-12 px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex items-center justify-center gap-8 mb-6">
+                            <div class="h-1 flex-1 rounded" style="background: ${ageColor}"></div>
+                            <div class="${numberSize} font-bold" style="color: ${ageColor}; ${effectStyle}">${age}</div>
+                            <div class="h-1 flex-1 rounded" style="background: ${ageColor}"></div>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-4">${title}</h3>
+                        <p class="text-base max-w-md mx-auto">${message}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Decorative Layout
+        if (layout === 'decorative') {
+            return `
+                <div class="py-12 px-6 text-center relative" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="absolute top-8 left-8 text-6xl opacity-20" style="color: ${ageColor}">★</div>
+                    <div class="absolute top-8 right-8 text-6xl opacity-20" style="color: ${ageColor}">★</div>
+                    <div class="absolute bottom-8 left-8 text-6xl opacity-20" style="color: ${ageColor}">★</div>
+                    <div class="absolute bottom-8 right-8 text-6xl opacity-20" style="color: ${ageColor}">★</div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-center gap-4 mb-6">
+                            <span class="text-4xl" style="color: ${ageColor}">✨</span>
+                            <div class="${numberSize} font-black" style="color: ${ageColor}; ${effectStyle}">${age}</div>
+                            <span class="text-4xl" style="color: ${ageColor}">✨</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                        <p class="text-lg max-w-md mx-auto">${message}</p>
+                        <div class="mt-6 text-4xl">🎉 🎊 🎈</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Default
+        return `
+            <div class="py-12 px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                <div class="${numberSize} font-bold mb-4" style="color: ${ageColor}; ${effectStyle}">${age}</div>
+                <h3 class="text-2xl font-bold mb-3">${title}</h3>
+                <p class="text-lg max-w-md mx-auto">${message}</p>
+            </div>
+        `;
+    }
 };
