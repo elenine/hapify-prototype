@@ -139,6 +139,30 @@
                 <!-- More Sections Tab -->
                 <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="age" onclick="addSection('age')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎯</div>
+                            <div class="font-semibold text-sm">Age Milestone</div>
+                        </button>
+                        <button data-section-type="cake" onclick="addSection('cake')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎂</div>
+                            <div class="font-semibold text-sm">Birthday Cake</div>
+                        </button>
+                        <button data-section-type="balloons" onclick="addSection('balloons')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎈</div>
+                            <div class="font-semibold text-sm">Balloons</div>
+                        </button>
+                        <button data-section-type="gift" onclick="addSection('gift')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🎁</div>
+                            <div class="font-semibold text-sm">Gift Message</div>
+                        </button>
+                        <button data-section-type="funfacts" onclick="addSection('funfacts')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🌟</div>
+                            <div class="font-semibold text-sm">Fun Facts</div>
+                        </button>
+                        <button data-section-type="groupwishes" onclick="addSection('groupwishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">👥</div>
+                            <div class="font-semibold text-sm">Group Wishes</div>
+                        </button>
                         <button data-section-type="note" onclick="addSection('note')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">💌</div>
                             <div class="font-semibold text-sm">Personal Note</div>
@@ -152,7 +176,7 @@
                             <div class="font-semibold text-sm">Poem</div>
                         </button>
                         <button data-section-type="memories" onclick="addSection('memories')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
-                            <div class="text-4xl mb-2">🎈</div>
+                            <div class="text-4xl mb-2">💭</div>
                             <div class="font-semibold text-sm">Memories</div>
                         </button>
                         <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
@@ -257,6 +281,12 @@
     <script src="components/greeting-card/countdown.component.js"></script>
     <script src="components/greeting-card/signature.component.js"></script>
     <script src="components/greeting-card/footer.component.js"></script>
+    <script src="components/greeting-card/age.component.js"></script>
+    <script src="components/greeting-card/cake.component.js"></script>
+    <script src="components/greeting-card/balloons.component.js"></script>
+    <script src="components/greeting-card/gift.component.js"></script>
+    <script src="components/greeting-card/funfacts.component.js"></script>
+    <script src="components/greeting-card/groupwishes.component.js"></script>
     <script src="components/greeting-card/components-loader.js"></script>
 
     <script>

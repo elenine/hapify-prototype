@@ -40,3 +40,33 @@ window.dynamicItemTemplates.memoryItem = (itemId, itemNumber) => `
         <button type="button" onclick="removeDynamicItem(this)" class="ml-2 text-red-500 hover:text-red-700 text-sm">✕</button>
     </div>
 `;
+
+// Fun Fact Item Template
+window.dynamicItemTemplates.funfact = (itemId, itemNumber) => `
+    <div class="flex justify-between items-start">
+        <div class="flex-1 space-y-2">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Fun Fact ${itemNumber}</label>
+                <input type="text" placeholder="They can juggle!" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="fact" oninput="updatePreview()">
+            </div>
+        </div>
+        <button type="button" onclick="removeDynamicItem(this)" class="ml-2 text-red-500 hover:text-red-700 text-sm">✕</button>
+    </div>
+`;
+
+// Group Wish Item Template
+window.dynamicItemTemplates.groupwish = (itemId, itemNumber) => `
+    <div class="flex justify-between items-start">
+        <div class="flex-1 space-y-2">
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">From (Name ${itemNumber})</label>
+                <input type="text" placeholder="Sarah" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="name" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-gray-600 mb-1">Birthday Wish</label>
+                <textarea placeholder="Wishing you the happiest of birthdays!" rows="2" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
+            </div>
+        </div>
+        <button type="button" onclick="removeDynamicItem(this)" class="ml-2 text-red-500 hover:text-red-700 text-sm">✕</button>
+    </div>
+`;
