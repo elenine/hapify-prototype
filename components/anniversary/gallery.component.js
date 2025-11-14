@@ -27,31 +27,201 @@ window.sectionComponents.gallery = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Layout</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="grid-2">Grid - 2 Columns</option>
+                    <option value="grid-3">Grid - 3 Columns</option>
+                    <option value="masonry">Masonry - Mixed Sizes</option>
+                    <option value="carousel">Carousel - Sliding View</option>
+                    <option value="featured">Featured - Large + Small</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Image Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="imageStyle" onchange="updatePreview()">
+                    <option value="rounded">Rounded Corners</option>
+                    <option value="circle">Circle</option>
+                    <option value="sharp">Sharp Corners</option>
+                    <option value="polaroid">Polaroid Frame</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Gap Size</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="gapSize" onchange="updatePreview()">
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Frame Color</label>
+                <input type="color" value="#fef2f2" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="frameColor" oninput="updatePreview()">
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="borderStyle" onchange="updatePreview()">
+                    <option value="none">No Border</option>
+                    <option value="thin">Thin Border</option>
+                    <option value="thick">Thick Border</option>
+                    <option value="shadow">Shadow</option>
+                </select>
+            </div>
         </div>
     `,
-    render: (data, style, globalStyles) => `
-        <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-            <div class="max-w-md mx-auto">
-                <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
-                ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="aspect-square bg-red-100 rounded-lg flex items-center justify-center">
-                        <span class="text-4xl">📷</span>
+    render: (data, style, globalStyles) => {
+        const layout = style.layout || 'grid-2';
+        const imageStyle = style.imageStyle || 'rounded';
+        const gapSize = style.gapSize || 'medium';
+        const frameColor = style.frameColor || '#fef2f2';
+        const bg = style.bg || '#ffffff';
+        const borderStyle = style.borderStyle || 'none';
+
+        const gapClasses = {
+            small: 'gap-2',
+            medium: 'gap-4',
+            large: 'gap-6'
+        };
+
+        const imageClasses = {
+            rounded: 'rounded-lg',
+            circle: 'rounded-full',
+            sharp: 'rounded-none',
+            polaroid: 'rounded-sm'
+        };
+
+        const borderClasses = {
+            none: '',
+            thin: 'border border-gray-200',
+            thick: 'border-4 border-gray-300',
+            shadow: 'shadow-lg'
+        };
+
+        const photoPlaceholder = (size = 'normal', extraClass = '') => `
+            <div class="aspect-square ${imageClasses[imageStyle]} ${borderClasses[borderStyle]} ${extraClass} flex items-center justify-center overflow-hidden ${imageStyle === 'polaroid' ? 'p-3 bg-white shadow-md' : ''}" style="background: ${frameColor}">
+                <span class="${size === 'large' ? 'text-6xl' : size === 'small' ? 'text-2xl' : 'text-4xl'}">📷</span>
+            </div>
+        `;
+
+        // Grid 2 Column Layout
+        if (layout === 'grid-2') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
+                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                        <div class="grid grid-cols-2 ${gapClasses[gapSize]}">
+                            ${photoPlaceholder()}
+                            ${photoPlaceholder()}
+                            ${photoPlaceholder()}
+                            ${photoPlaceholder()}
+                        </div>
                     </div>
-                    <div class="aspect-square bg-red-100 rounded-lg flex items-center justify-center">
-                        <span class="text-4xl">📷</span>
+                </div>
+            `;
+        }
+
+        // Grid 3 Column Layout
+        if (layout === 'grid-3') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
+                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                        <div class="grid grid-cols-3 ${gapClasses[gapSize]}">
+                            ${photoPlaceholder('small')}
+                            ${photoPlaceholder('small')}
+                            ${photoPlaceholder('small')}
+                            ${photoPlaceholder('small')}
+                            ${photoPlaceholder('small')}
+                            ${photoPlaceholder('small')}
+                        </div>
                     </div>
-                    <div class="aspect-square bg-red-100 rounded-lg flex items-center justify-center">
-                        <span class="text-4xl">📷</span>
+                </div>
+            `;
+        }
+
+        // Masonry Layout
+        if (layout === 'masonry') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
+                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                        <div class="grid grid-cols-2 ${gapClasses[gapSize]}">
+                            ${photoPlaceholder('normal', 'row-span-2')}
+                            ${photoPlaceholder()}
+                            ${photoPlaceholder()}
+                            ${photoPlaceholder('normal', 'col-span-2')}
+                            ${photoPlaceholder()}
+                            ${photoPlaceholder()}
+                        </div>
                     </div>
-                    <div class="aspect-square bg-red-100 rounded-lg flex items-center justify-center">
-                        <span class="text-4xl">📷</span>
+                </div>
+            `;
+        }
+
+        // Carousel Layout
+        if (layout === 'carousel') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-lg mx-auto">
+                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
+                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                        <div class="relative">
+                            <div class="overflow-x-auto flex ${gapClasses[gapSize]} pb-4">
+                                ${photoPlaceholder('large', 'flex-shrink-0 w-64')}
+                                ${photoPlaceholder('large', 'flex-shrink-0 w-64')}
+                                ${photoPlaceholder('large', 'flex-shrink-0 w-64')}
+                            </div>
+                            <div class="flex justify-center gap-2 mt-4">
+                                <div class="w-2 h-2 rounded-full bg-red-600"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                                <div class="w-2 h-2 rounded-full bg-gray-300"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Featured Layout
+        if (layout === 'featured') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
+                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                        <div class="space-y-4">
+                            ${photoPlaceholder('large', 'w-full aspect-video')}
+                            <div class="grid grid-cols-3 ${gapClasses[gapSize]}">
+                                ${photoPlaceholder('small')}
+                                ${photoPlaceholder('small')}
+                                ${photoPlaceholder('small')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Default - Grid 2
+        return `
+            <div class="py-12 px-6" style="background: ${bg}">
+                <div class="max-w-md mx-auto">
+                    <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Memory Gallery'}</h2>
+                    ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
+                    <div class="grid grid-cols-2 gap-4">
+                        ${photoPlaceholder()}
+                        ${photoPlaceholder()}
+                        ${photoPlaceholder()}
+                        ${photoPlaceholder()}
                     </div>
                 </div>
             </div>
-        </div>
-    `
+        `;
+    }
 };
