@@ -120,22 +120,61 @@ window.sectionComponents.celebration = {
     render: (data, style, globalStyles) => {
         const layout = style.layout || 'cards';
         const cardStyle = style.cardStyle || 'rounded';
+        const fontWeight = style.fontWeight || 'medium';
         const accentColor = style.accentColor || '#dc2626';
         const bg = style.bg || '#fef2f2';
         const cardBg = style.cardBg || '#ffffff';
+        const secondaryColor = style.secondaryColor || '#fecaca';
         const iconSize = style.iconSize || 'medium';
+        const shadow = style.shadow || 'medium';
+        const borderRadius = style.borderRadius || 'medium';
+        const spacing = style.spacing || 'normal';
 
         const cardClasses = {
             rounded: 'rounded-lg',
             sharp: 'rounded-none',
             bordered: 'rounded-lg border-2',
-            shadow: 'rounded-lg shadow-lg'
+            shadow: 'rounded-lg shadow-lg',
+            gradient: 'rounded-lg border-4',
+            glass: 'rounded-lg backdrop-blur-sm bg-opacity-90'
+        };
+
+        const fontWeightClasses = {
+            light: 'font-light',
+            normal: 'font-normal',
+            medium: 'font-medium',
+            semibold: 'font-semibold',
+            bold: 'font-bold'
         };
 
         const iconSizes = {
             small: 'text-xl',
             medium: 'text-2xl',
-            large: 'text-4xl'
+            large: 'text-4xl',
+            xlarge: 'text-5xl'
+        };
+
+        const shadowClasses = {
+            none: '',
+            small: 'shadow-sm',
+            medium: 'shadow-md',
+            large: 'shadow-lg',
+            xlarge: 'shadow-2xl'
+        };
+
+        const borderRadiusClasses = {
+            none: 'rounded-none',
+            small: 'rounded-sm',
+            medium: 'rounded-lg',
+            large: 'rounded-2xl',
+            full: 'rounded-full'
+        };
+
+        const spacingClasses = {
+            compact: 'space-y-2',
+            normal: 'space-y-4',
+            relaxed: 'space-y-6',
+            loose: 'space-y-8'
         };
 
         const dateStr = data.date ? new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'}) : '';
@@ -320,31 +359,175 @@ window.sectionComponents.celebration = {
             return `
                 <div class="py-16 px-6" style="background: ${bg}">
                     <div class="max-w-xl mx-auto">
-                        <h2 class="text-3xl font-light text-center mb-12 tracking-wide">Celebration Details</h2>
-                        <div class="space-y-8">
+                        <h2 class="text-3xl ${fontWeightClasses[fontWeight]} text-center mb-12 tracking-wide">Celebration Details</h2>
+                        <div class="${spacingClasses[spacing]}">
                             ${dateStr ? `
-                            <div class="text-center pb-6 border-b" style="border-color: ${accentColor}33">
+                            <div class="text-center pb-6 border-b ${shadowClasses[shadow]}" style="border-color: ${accentColor}33">
                                 <div class="${iconSizes[iconSize]} mb-3" style="color: ${accentColor}">📅</div>
                                 <div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Date</div>
-                                <div class="text-lg font-light">${dateStr}</div>
+                                <div class="text-lg ${fontWeightClasses[fontWeight]}">${dateStr}</div>
                             </div>` : ''}
                             ${data.time ? `
-                            <div class="text-center pb-6 border-b" style="border-color: ${accentColor}33">
+                            <div class="text-center pb-6 border-b ${shadowClasses[shadow]}" style="border-color: ${accentColor}33">
                                 <div class="${iconSizes[iconSize]} mb-3" style="color: ${accentColor}">🕐</div>
                                 <div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Time</div>
-                                <div class="text-lg font-light">${data.time}</div>
+                                <div class="text-lg ${fontWeightClasses[fontWeight]}">${data.time}</div>
                             </div>` : ''}
                             ${data.venue ? `
-                            <div class="text-center pb-6 border-b" style="border-color: ${accentColor}33">
+                            <div class="text-center pb-6 border-b ${shadowClasses[shadow]}" style="border-color: ${accentColor}33">
                                 <div class="${iconSizes[iconSize]} mb-3" style="color: ${accentColor}">🏛️</div>
                                 <div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Venue</div>
-                                <div class="text-lg font-light">${data.venue}</div>
+                                <div class="text-lg ${fontWeightClasses[fontWeight]}">${data.venue}</div>
                             </div>` : ''}
                             ${data.address ? `
                             <div class="text-center pb-6">
                                 <div class="${iconSizes[iconSize]} mb-3" style="color: ${accentColor}">📍</div>
                                 <div class="text-xs uppercase tracking-widest text-gray-400 mb-2">Address</div>
-                                <div class="font-light">${data.address}</div>
+                                <div class="${fontWeightClasses[fontWeight]}">${data.address}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modern Layout
+        if (layout === 'modern') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bg} 0%, ${secondaryColor} 100%)">
+                    <div class="max-w-2xl mx-auto">
+                        <h2 class="text-3xl ${fontWeightClasses[fontWeight]} text-center mb-10" style="color: ${accentColor}">Event Details</h2>
+                        <div class="${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} overflow-hidden" style="background: ${cardBg}">
+                            <div class="grid md:grid-cols-2 gap-6 p-8">
+                                ${dateStr ? `
+                                <div class="flex items-center gap-4 p-4 ${borderRadiusClasses[borderRadius]}" style="background: linear-gradient(135deg, ${secondaryColor} 0%, ${accentColor}22 100%)">
+                                    <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">📅</div>
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Date</div>
+                                        <div class="${fontWeightClasses[fontWeight]}">${dateStr}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.time ? `
+                                <div class="flex items-center gap-4 p-4 ${borderRadiusClasses[borderRadius]}" style="background: linear-gradient(135deg, ${secondaryColor} 0%, ${accentColor}22 100%)">
+                                    <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">🕐</div>
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Time</div>
+                                        <div class="${fontWeightClasses[fontWeight]}">${data.time}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.venue ? `
+                                <div class="flex items-center gap-4 p-4 md:col-span-2 ${borderRadiusClasses[borderRadius]}" style="background: linear-gradient(135deg, ${secondaryColor} 0%, ${accentColor}22 100%)">
+                                    <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">🏛️</div>
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Venue</div>
+                                        <div class="${fontWeightClasses[fontWeight]}">${data.venue}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.address ? `
+                                <div class="flex items-center gap-4 p-4 md:col-span-2 ${borderRadiusClasses[borderRadius]}" style="background: linear-gradient(135deg, ${secondaryColor} 0%, ${accentColor}22 100%)">
+                                    <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">📍</div>
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Address</div>
+                                        <div class="text-sm ${fontWeightClasses[fontWeight]}">${data.address}</div>
+                                    </div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Colorful Layout
+        if (layout === 'colorful') {
+            const colors = [accentColor, secondaryColor, `${accentColor}cc`, `${secondaryColor}dd`];
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <h2 class="text-3xl ${fontWeightClasses[fontWeight]} text-center mb-10">🎨 Celebration Details 🎨</h2>
+                    <div class="max-w-lg mx-auto ${spacingClasses[spacing]}">
+                        ${dateStr ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} transform hover:scale-105 transition-transform" style="background: linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%);">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]} text-white">📅</div>
+                                <div class="text-white">
+                                    <div class="text-xs uppercase tracking-wider mb-1 opacity-90">Date</div>
+                                    <div class="${fontWeightClasses[fontWeight]} text-lg">${dateStr}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.time ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} transform hover:scale-105 transition-transform" style="background: linear-gradient(135deg, ${colors[2]} 0%, ${colors[3]} 100%);">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]} text-white">🕐</div>
+                                <div class="text-white">
+                                    <div class="text-xs uppercase tracking-wider mb-1 opacity-90">Time</div>
+                                    <div class="${fontWeightClasses[fontWeight]} text-lg">${data.time}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.venue ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} transform hover:scale-105 transition-transform" style="background: linear-gradient(135deg, ${colors[1]} 0%, ${colors[2]} 100%);">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]} text-white">🏛️</div>
+                                <div class="text-white">
+                                    <div class="text-xs uppercase tracking-wider mb-1 opacity-90">Venue</div>
+                                    <div class="${fontWeightClasses[fontWeight]} text-lg">${data.venue}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.address ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} transform hover:scale-105 transition-transform" style="background: linear-gradient(135deg, ${colors[3]} 0%, ${colors[0]} 100%);">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]} text-white">📍</div>
+                                <div class="text-white">
+                                    <div class="text-xs uppercase tracking-wider mb-1 opacity-90">Address</div>
+                                    <div class="${fontWeightClasses[fontWeight]}">${data.address}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Classic Layout
+        if (layout === 'classic') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto border-4 ${borderRadiusClasses[borderRadius]} p-8 ${shadowClasses[shadow]}" style="border-color: ${accentColor}; background: ${cardBg}">
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-8 pb-4 border-b-2" style="border-color: ${accentColor}; color: ${accentColor}">Celebration Details</h2>
+                        <div class="${spacingClasses[spacing]}">
+                            ${dateStr ? `
+                            <div class="flex items-start gap-4">
+                                <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">📅</div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1 ${fontWeightClasses[fontWeight]}" style="color: ${accentColor}">Date</div>
+                                    <div class="text-gray-800">${dateStr}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.time ? `
+                            <div class="flex items-start gap-4">
+                                <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">🕐</div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1 ${fontWeightClasses[fontWeight]}" style="color: ${accentColor}">Time</div>
+                                    <div class="text-gray-800">${data.time}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.venue ? `
+                            <div class="flex items-start gap-4">
+                                <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">🏛️</div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1 ${fontWeightClasses[fontWeight]}" style="color: ${accentColor}">Venue</div>
+                                    <div class="text-gray-800">${data.venue}</div>
+                                </div>
+                            </div>` : ''}
+                            ${data.address ? `
+                            <div class="flex items-start gap-4">
+                                <div class="${iconSizes[iconSize]} flex-shrink-0" style="color: ${accentColor}">📍</div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1 ${fontWeightClasses[fontWeight]}" style="color: ${accentColor}">Address</div>
+                                    <div class="text-gray-800 text-sm">${data.address}</div>
+                                </div>
                             </div>` : ''}
                         </div>
                     </div>
@@ -355,35 +538,35 @@ window.sectionComponents.celebration = {
         // Default - return cards layout
         return `
             <div class="py-12 px-6" style="background: ${bg}">
-                <h2 class="text-2xl font-bold text-center mb-8">Celebration Details</h2>
-                <div class="max-w-md mx-auto space-y-4">
+                <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-8">Celebration Details</h2>
+                <div class="max-w-md mx-auto ${spacingClasses[spacing]} ${shadowClasses[shadow]}">
                     ${dateStr ? `
-                    <div class="flex items-start gap-4 p-4 rounded-lg" style="background: ${cardBg}">
-                        <div class="text-2xl">📅</div>
+                    <div class="flex items-start gap-4 p-4 ${borderRadiusClasses[borderRadius]}" style="background: ${cardBg}">
+                        <div class="${iconSizes[iconSize]}">📅</div>
                         <div>
                             <div class="text-xs text-gray-500 mb-1">Date</div>
-                            <div class="font-medium">${dateStr}</div>
+                            <div class="${fontWeightClasses[fontWeight]}">${dateStr}</div>
                         </div>
                     </div>` : ''}
                     ${data.time ? `
-                    <div class="flex items-start gap-4 p-4 rounded-lg" style="background: ${cardBg}">
-                        <div class="text-2xl">🕐</div>
+                    <div class="flex items-start gap-4 p-4 ${borderRadiusClasses[borderRadius]}" style="background: ${cardBg}">
+                        <div class="${iconSizes[iconSize]}">🕐</div>
                         <div>
                             <div class="text-xs text-gray-500 mb-1">Time</div>
-                            <div class="font-medium">${data.time}</div>
+                            <div class="${fontWeightClasses[fontWeight]}">${data.time}</div>
                         </div>
                     </div>` : ''}
                     ${data.venue ? `
-                    <div class="flex items-start gap-4 p-4 rounded-lg" style="background: ${cardBg}">
-                        <div class="text-2xl">🏛️</div>
+                    <div class="flex items-start gap-4 p-4 ${borderRadiusClasses[borderRadius]}" style="background: ${cardBg}">
+                        <div class="${iconSizes[iconSize]}">🏛️</div>
                         <div>
                             <div class="text-xs text-gray-500 mb-1">Venue</div>
-                            <div class="font-medium">${data.venue}</div>
+                            <div class="${fontWeightClasses[fontWeight]}">${data.venue}</div>
                         </div>
                     </div>` : ''}
                     ${data.address ? `
-                    <div class="flex items-start gap-4 p-4 rounded-lg" style="background: ${cardBg}">
-                        <div class="text-2xl">📍</div>
+                    <div class="flex items-start gap-4 p-4 ${borderRadiusClasses[borderRadius]}" style="background: ${cardBg}">
+                        <div class="${iconSizes[iconSize]}">📍</div>
                         <div>
                             <div class="text-xs text-gray-500 mb-1">Address</div>
                             <div class="text-sm">${data.address}</div>
