@@ -35,6 +35,9 @@ window.sectionComponents.celebration = {
                     <option value="timeline">Timeline - Vertical Flow</option>
                     <option value="grid">Grid - 2 Column Layout</option>
                     <option value="elegant">Elegant - Minimalist Style</option>
+                    <option value="modern">Modern - Clean Design</option>
+                    <option value="colorful">Colorful - Vibrant Style</option>
+                    <option value="classic">Classic - Traditional Look</option>
                 </select>
             </div>
             <div>
@@ -44,6 +47,18 @@ window.sectionComponents.celebration = {
                     <option value="sharp">Sharp</option>
                     <option value="bordered">Bordered</option>
                     <option value="shadow">Shadow</option>
+                    <option value="gradient">Gradient</option>
+                    <option value="glass">Glass Effect</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Font Weight</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="fontWeight" onchange="updatePreview()">
+                    <option value="light">Light</option>
+                    <option value="normal">Normal</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="semibold">Semi Bold</option>
+                    <option value="bold">Bold</option>
                 </select>
             </div>
             <div>
@@ -59,11 +74,45 @@ window.sectionComponents.celebration = {
                 <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardBg" oninput="updatePreview()">
             </div>
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                <input type="color" value="#fecaca" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondaryColor" oninput="updatePreview()">
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Icon Size</label>
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="iconSize" onchange="updatePreview()">
                     <option value="small">Small</option>
                     <option value="medium" selected>Medium</option>
                     <option value="large">Large</option>
+                    <option value="xlarge">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Effect</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="xlarge">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="full">Full Rounded</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 section-style" data-style="spacing" onchange="updatePreview()">
+                    <option value="compact">Compact</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="relaxed">Relaxed</option>
+                    <option value="loose">Loose</option>
                 </select>
             </div>
         </div>
