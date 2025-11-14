@@ -17,7 +17,19 @@
             'vowrenewal',
             'rsvp',
             'gallery',
-            'thankyou'
+            'thankyou',
+            'timeline',
+            'guestbook',
+            'oursong',
+            'contact',
+            'venue',
+            'accommodation',
+            'dresscode',
+            'gifts',
+            'schedule',
+            'quotes',
+            'futuredreams',
+            'countdown'
         ];
 
         const allLoaded = requiredComponents.every(comp =>

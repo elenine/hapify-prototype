@@ -78,6 +78,72 @@ window.sectionComponents.componentName = {
     - Closing note
     - `allowMultiple: false`
 
+11. **timeline.component.js** - Relationship Timeline
+    - Timeline events with years
+    - Milestone markers
+    - `allowMultiple: false`
+
+12. **guestbook.component.js** - Guest Messages
+    - Guest message form
+    - Instructions
+    - `allowMultiple: false`
+
+13. **oursong.component.js** - Our Song
+    - Song name and artist
+    - Story behind the song
+    - Spotify/YouTube link
+    - `allowMultiple: false`
+
+14. **contact.component.js** - Contact Information
+    - Contact person name
+    - Phone and email
+    - Additional info
+    - `allowMultiple: false`
+
+15. **venue.component.js** - Venue Details
+    - Venue name and address
+    - Google Maps link
+    - Parking information
+    - `allowMultiple: false`
+
+16. **accommodation.component.js** - Accommodation
+    - Hotel name and address
+    - Phone and website
+    - Group code/special rate
+    - `allowMultiple: true` (multiple hotels)
+
+17. **dresscode.component.js** - Dress Code
+    - Dress code type (formal, semi-formal, etc.)
+    - Additional details
+    - Suggested colors
+    - `allowMultiple: false`
+
+18. **gifts.component.js** - Gift Preferences
+    - Gift message
+    - Registry links (up to 2)
+    - `allowMultiple: false`
+
+19. **schedule.component.js** - Event Schedule
+    - Timeline of events
+    - Time and activity format
+    - `allowMultiple: false`
+
+20. **quotes.component.js** - Love Quotes
+    - Quote text
+    - Author attribution
+    - `allowMultiple: true` (multiple quotes)
+
+21. **futuredreams.component.js** - Future Dreams
+    - Future plans together
+    - Closing message
+    - `allowMultiple: false`
+
+22. **countdown.component.js** - Countdown Timer
+    - Target date/time
+    - Live countdown display
+    - Custom message
+    - `allowMultiple: false`
+
 ## Component Loader
 
 The `components-loader.js` file ensures all components are loaded before the application initializes. It:
@@ -146,5 +212,6 @@ The Anniversary Wishes template has been successfully migrated from inline `sect
 ---
 
 **Last Updated:** 2025-11-14
-**Components:** 10 + 1 layout
+**Components:** 22 total (21 content + 1 layout)
 **Template:** anniversary-wishes.html
+**Total Sections Available:** 22 specialized anniversary sections
