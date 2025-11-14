@@ -8,8 +8,9 @@ console.log('🔄 Birthday component loader started');
 
 // List of all available birthday components
 const componentFiles = [
-    'layout', 'hero', 'celebrant', 'party', 'message', 'gallery',
-    'gifts', 'rsvp', 'countdown', 'wishes'
+    'layout', 'hero', 'celebrant', 'party', 'schedule', 'venue',
+    'dresscode', 'message', 'gallery', 'gifts', 'rsvp', 'countdown',
+    'theme', 'activities', 'menu', 'contact', 'memories', 'specialrequests'
 ];
 
 // Function to check if all components are loaded
