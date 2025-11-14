@@ -35,6 +35,9 @@ window.sectionComponents.showerinfo = {
                     <option value="compact">Compact - Single Card</option>
                     <option value="elegant">Elegant - Styled Boxes</option>
                     <option value="modern">Modern - Gradient Design</option>
+                    <option value="timeline">Timeline - Connected Flow</option>
+                    <option value="hexagon">Hexagon - Geometric Cards</option>
+                    <option value="newspaper">Newspaper - Column Style</option>
                 </select>
             </div>
             <div>
@@ -233,6 +236,138 @@ window.sectionComponents.showerinfo = {
                                                 <div class="text-sm">${data.address}</div>
                                             </div>
                                         </div>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'timeline':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <h2 class="text-2xl font-bold text-center mb-8">Shower Details</h2>
+                        <div class="max-w-md mx-auto relative">
+                            <div class="absolute left-6 top-0 bottom-0 w-1" style="background: ${accent};"></div>
+                            <div class="space-y-6 relative">
+                                ${data.date ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl z-10 shadow-lg" style="background: ${accent}; color: white;">📅</div>
+                                    <div class="flex-1 pt-2">
+                                        <div class="text-xs opacity-60 mb-1">Date</div>
+                                        <div class="font-bold text-lg">${formattedDate}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.time ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl z-10 shadow-lg" style="background: ${accent}; color: white;">🕐</div>
+                                    <div class="flex-1 pt-2">
+                                        <div class="text-xs opacity-60 mb-1">Time</div>
+                                        <div class="font-bold text-lg">${data.time}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.venue ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl z-10 shadow-lg" style="background: ${accent}; color: white;">🏠</div>
+                                    <div class="flex-1 pt-2">
+                                        <div class="text-xs opacity-60 mb-1">Venue</div>
+                                        <div class="font-bold text-lg">${data.venue}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.address ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl z-10 shadow-lg" style="background: ${accent}; color: white;">📍</div>
+                                    <div class="flex-1 pt-2">
+                                        <div class="text-xs opacity-60 mb-1">Address</div>
+                                        <div class="text-sm">${data.address}</div>
+                                    </div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'hexagon':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <h2 class="text-2xl font-bold text-center mb-8">Shower Details</h2>
+                        <div class="max-w-3xl mx-auto">
+                            <div class="grid sm:grid-cols-2 gap-8">
+                                ${data.date ? `
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center shadow-xl" style="background: ${accent}; color: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                        <div>
+                                            <div class="text-3xl mb-1">📅</div>
+                                            <div class="text-xs font-bold">Date</div>
+                                        </div>
+                                    </div>
+                                    <div class="font-bold">${formattedDate}</div>
+                                </div>` : ''}
+                                ${data.time ? `
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center shadow-xl" style="background: ${accent}; color: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                        <div>
+                                            <div class="text-3xl mb-1">🕐</div>
+                                            <div class="text-xs font-bold">Time</div>
+                                        </div>
+                                    </div>
+                                    <div class="font-bold">${data.time}</div>
+                                </div>` : ''}
+                                ${data.venue ? `
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center shadow-xl" style="background: ${accent}; color: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                        <div>
+                                            <div class="text-3xl mb-1">🏠</div>
+                                            <div class="text-xs font-bold">Venue</div>
+                                        </div>
+                                    </div>
+                                    <div class="font-bold">${data.venue}</div>
+                                </div>` : ''}
+                                ${data.address ? `
+                                <div class="text-center">
+                                    <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center shadow-xl" style="background: ${accent}; color: white; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                                        <div>
+                                            <div class="text-3xl mb-1">📍</div>
+                                            <div class="text-xs font-bold">Address</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm leading-tight">${data.address}</div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'newspaper':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <div class="max-w-3xl mx-auto">
+                            <div class="border-t-4 border-b-4 py-6 mb-6" style="border-color: ${accent};">
+                                <h2 class="text-3xl font-bold text-center uppercase tracking-wider" style="font-family: 'Georgia', serif;">Shower Details</h2>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div class="space-y-6">
+                                    ${data.date ? `
+                                    <div class="border-l-4 pl-4" style="border-color: ${accent};">
+                                        <div class="text-xs uppercase tracking-wider opacity-60 mb-2" style="font-family: 'Georgia', serif;">Date</div>
+                                        <div class="font-bold text-lg">${formattedDate}</div>
+                                    </div>` : ''}
+                                    ${data.time ? `
+                                    <div class="border-l-4 pl-4" style="border-color: ${accent};">
+                                        <div class="text-xs uppercase tracking-wider opacity-60 mb-2" style="font-family: 'Georgia', serif;">Time</div>
+                                        <div class="font-bold text-lg">${data.time}</div>
+                                    </div>` : ''}
+                                </div>
+                                <div class="space-y-6">
+                                    ${data.venue ? `
+                                    <div class="border-l-4 pl-4" style="border-color: ${accent};">
+                                        <div class="text-xs uppercase tracking-wider opacity-60 mb-2" style="font-family: 'Georgia', serif;">Venue</div>
+                                        <div class="font-bold text-lg">${data.venue}</div>
+                                    </div>` : ''}
+                                    ${data.address ? `
+                                    <div class="border-l-4 pl-4" style="border-color: ${accent};">
+                                        <div class="text-xs uppercase tracking-wider opacity-60 mb-2" style="font-family: 'Georgia', serif;">Address</div>
+                                        <div class="text-sm leading-relaxed">${data.address}</div>
                                     </div>` : ''}
                                 </div>
                             </div>

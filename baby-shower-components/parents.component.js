@@ -35,6 +35,9 @@ window.sectionComponents.parents = {
                     <option value="card">Card - Boxed Style</option>
                     <option value="modern">Modern - Gradient</option>
                     <option value="minimal">Minimal - Clean</option>
+                    <option value="polaroid">Polaroid - Photo Frame</option>
+                    <option value="magazine">Magazine - Editorial Style</option>
+                    <option value="badge">Badge - Circular Design</option>
                 </select>
             </div>
             <div>
@@ -135,6 +138,72 @@ window.sectionComponents.parents = {
                             </div>
                             ${data.names ? `<h3 class="text-xl font-semibold mb-4" style="color: ${accent};">${data.names}</h3>` : ''}
                             ${data.message ? `<p class="text-lg leading-relaxed opacity-75">${data.message}</p>` : '<p class="opacity-60">Share your story here...</p>'}
+                        </div>
+                    </div>
+                `;
+
+            case 'polaroid':
+                return `
+                    <div class="py-16 px-6" style="background: ${bg};">
+                        <div class="max-w-lg mx-auto">
+                            <div class="bg-white p-5 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform">
+                                <div class="aspect-square bg-gray-100 mb-4 flex items-center justify-center overflow-hidden">
+                                    ${data.photo ? `<img src="${data.photo}" class="w-full h-full object-cover" alt="Parents">` : `<div class="text-7xl">👨‍👩‍👧</div>`}
+                                </div>
+                                <div class="text-center py-4">
+                                    <h2 class="text-xl font-bold mb-2" style="color: ${textColor}; font-family: 'Brush Script MT', cursive;">${data.title || 'Meet the Parents-to-Be'}</h2>
+                                    ${data.names ? `<h3 class="text-lg font-semibold mb-3" style="color: ${accent};">${data.names}</h3>` : ''}
+                                    ${data.message ? `<p class="text-sm leading-relaxed" style="color: ${textColor};">${data.message}</p>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'magazine':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg};">
+                        <div class="max-w-4xl mx-auto">
+                            <div class="grid md:grid-cols-5 gap-8">
+                                <div class="md:col-span-2">
+                                    ${data.photo
+                                        ? `<img src="${data.photo}" class="w-full h-auto object-cover shadow-2xl" alt="Parents">`
+                                        : `<div class="w-full aspect-[3/4] flex items-center justify-center text-8xl shadow-2xl" style="background: ${accent}20;">👨‍👩‍👧</div>`
+                                    }
+                                </div>
+                                <div class="md:col-span-3 flex flex-col justify-center">
+                                    <div class="border-l-4 pl-6" style="border-color: ${accent};">
+                                        <div class="text-xs uppercase tracking-widest opacity-60 mb-2" style="font-family: 'Georgia', serif;">Featured</div>
+                                        <h2 class="text-4xl font-bold mb-4" style="color: ${textColor}; font-family: 'Georgia', serif; line-height: 1.2;">${data.title || 'Meet the Parents-to-Be'}</h2>
+                                        ${data.names ? `<h3 class="text-2xl font-semibold mb-6" style="color: ${accent};">${data.names}</h3>` : ''}
+                                        ${data.message ? `<p class="text-lg leading-relaxed" style="color: ${textColor};">${data.message}</p>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'badge':
+                return `
+                    <div class="py-16 px-6" style="background: ${bg};">
+                        <div class="max-w-3xl mx-auto text-center">
+                            <h2 class="text-3xl font-bold mb-8" style="color: ${textColor};">${data.title || 'Meet the Parents-to-Be'}</h2>
+                            <div class="relative inline-block">
+                                <div class="w-80 h-80 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, ${accent} 0%, ${bg} 100%); border: 12px solid white;">
+                                    <div class="text-center">
+                                        ${data.photo
+                                            ? `<img src="${data.photo}" class="w-48 h-48 rounded-full object-cover mb-4 mx-auto border-4" style="border-color: white;" alt="Parents">`
+                                            : '<div class="text-8xl mb-4">👨‍👩‍👧</div>'
+                                        }
+                                        ${data.names ? `<h3 class="text-xl font-bold" style="color: ${textColor};">${data.names}</h3>` : ''}
+                                    </div>
+                                </div>
+                                <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white px-8 py-3 rounded-full shadow-xl" style="border: 3px solid ${accent};">
+                                    <span class="font-bold text-lg" style="color: ${accent};">Parents-to-Be</span>
+                                </div>
+                            </div>
+                            ${data.message ? `<p class="mt-12 text-lg leading-relaxed max-w-2xl mx-auto" style="color: ${textColor};">${data.message}</p>` : ''}
                         </div>
                     </div>
                 `;

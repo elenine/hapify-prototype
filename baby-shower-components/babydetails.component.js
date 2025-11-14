@@ -36,6 +36,9 @@ window.sectionComponents.babydetails = {
                     <option value="badges">Badges - Icon Based</option>
                     <option value="split">Split - Two Column</option>
                     <option value="modern">Modern - Gradient Card</option>
+                    <option value="grid">Grid - Icon Boxes</option>
+                    <option value="circles">Circles - Round Cards</option>
+                    <option value="ribbon">Ribbon - Banner Style</option>
                 </select>
             </div>
             <div>
@@ -189,6 +192,115 @@ window.sectionComponents.babydetails = {
                                         <div class="font-semibold" style="color: ${textColor};">${formattedDate}</div>
                                     </div>` : ''}
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'grid':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                        <div class="max-w-3xl mx-auto">
+                            <h2 class="text-2xl font-bold mb-8 text-center">About Baby</h2>
+                            <div class="grid grid-cols-${data.babyname && data.gender && data.duedate ? '3' : '2'} gap-4">
+                                ${data.babyname ? `
+                                <div class="p-6 rounded-xl text-center border-2 hover:shadow-lg transition" style="background: ${cardBg}; border-color: ${accent};">
+                                    <div class="w-16 h-16 mx-auto mb-3 rounded-lg flex items-center justify-center text-3xl" style="background: ${accent}; color: white;">👶</div>
+                                    <div class="text-xs opacity-60 mb-1">Name</div>
+                                    <div class="font-bold text-lg">${data.babyname}</div>
+                                </div>` : ''}
+                                ${data.gender ? `
+                                <div class="p-6 rounded-xl text-center border-2 hover:shadow-lg transition" style="background: ${cardBg}; border-color: ${accent};">
+                                    <div class="w-16 h-16 mx-auto mb-3 rounded-lg flex items-center justify-center text-3xl" style="background: ${accent}; color: white;">${genderIcon}</div>
+                                    <div class="text-xs opacity-60 mb-1">Gender</div>
+                                    <div class="font-bold">${genderText}</div>
+                                </div>` : ''}
+                                ${data.duedate ? `
+                                <div class="p-6 rounded-xl text-center border-2 hover:shadow-lg transition" style="background: ${cardBg}; border-color: ${accent};">
+                                    <div class="w-16 h-16 mx-auto mb-3 rounded-lg flex items-center justify-center text-3xl" style="background: ${accent}; color: white;">📅</div>
+                                    <div class="text-xs opacity-60 mb-1">Expected</div>
+                                    <div class="font-bold text-sm">${formattedDate}</div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'circles':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                        <div class="max-w-4xl mx-auto">
+                            <h2 class="text-2xl font-bold mb-8 text-center">About Baby</h2>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                ${data.babyname ? `
+                                <div class="text-center">
+                                    <div class="w-40 h-40 rounded-full flex items-center justify-center shadow-xl mb-3" style="background: linear-gradient(135deg, ${accent}, ${cardBg});">
+                                        <div>
+                                            <div class="text-4xl mb-2">👶</div>
+                                            <div class="font-bold text-sm">${data.babyname}</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-xs opacity-60">Baby's Name</div>
+                                </div>` : ''}
+                                ${data.gender ? `
+                                <div class="text-center">
+                                    <div class="w-40 h-40 rounded-full flex items-center justify-center shadow-xl mb-3" style="background: linear-gradient(135deg, ${accent}, ${cardBg});">
+                                        <div>
+                                            <div class="text-5xl mb-2">${genderIcon}</div>
+                                            <div class="font-bold text-sm">${genderText}</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-xs opacity-60">Gender</div>
+                                </div>` : ''}
+                                ${data.duedate ? `
+                                <div class="text-center">
+                                    <div class="w-40 h-40 rounded-full flex items-center justify-center shadow-xl mb-3" style="background: linear-gradient(135deg, ${accent}, ${cardBg});">
+                                        <div class="p-4">
+                                            <div class="text-4xl mb-2">📅</div>
+                                            <div class="font-bold text-xs leading-tight">${formattedDate}</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-xs opacity-60">Expected Date</div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbon':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                        <div class="max-w-2xl mx-auto">
+                            <h2 class="text-2xl font-bold mb-8 text-center">About Baby</h2>
+                            <div class="space-y-4">
+                                ${data.babyname ? `
+                                <div class="relative">
+                                    <div class="py-4 px-8 text-center font-bold text-xl shadow-lg" style="background: ${accent}; color: white; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);">
+                                        <div class="flex items-center justify-center gap-3">
+                                            <span class="text-2xl">👶</span>
+                                            <span>${data.babyname}</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute top-0 left-0 w-0 h-0 border-t-[48px] border-t-transparent border-l-[20px] border-b-[48px] border-b-transparent" style="border-left-color: ${accent};"></div>
+                                </div>` : ''}
+                                ${data.gender ? `
+                                <div class="relative">
+                                    <div class="py-4 px-8 text-center font-bold text-lg shadow-lg" style="background: ${cardBg}; border: 3px solid ${accent}; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);">
+                                        <div class="flex items-center justify-center gap-3">
+                                            <span class="text-2xl">${genderIcon}</span>
+                                            <span>${genderText}</span>
+                                        </div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.duedate ? `
+                                <div class="relative">
+                                    <div class="py-4 px-8 text-center font-bold shadow-lg" style="background: ${accent}; color: white; clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 5% 50%);">
+                                        <div class="flex items-center justify-center gap-3">
+                                            <span class="text-2xl">📅</span>
+                                            <span class="text-sm">${formattedDate}</span>
+                                        </div>
+                                    </div>
+                                </div>` : ''}
                             </div>
                         </div>
                     </div>
