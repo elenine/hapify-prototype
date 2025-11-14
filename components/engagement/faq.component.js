@@ -29,12 +29,39 @@ window.sectionComponents.faq = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="cards">Simple Cards</option>
+                    <option value="accordion">Accordion Style</option>
+                    <option value="numbered">Numbered List</option>
+                    <option value="modern">Modern Boxes</option>
+                    <option value="twocolumn">Two Column</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#e11d48" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card Background</label>
+                <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardBg" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
             </div>
         </div>
     `,
     render: (data, style) => {
+        const layout = style.layout || 'cards';
+        const bg = style.bg || '#fdf2f8';
+        const accent = style.accent || '#e11d48';
+        const cardBg = style.cardBg || '#ffffff';
+        const textColor = style.textColor || '#1f2937';
         const faqs = [];
 
         // Collect FAQ items from dynamic inputs
@@ -49,21 +76,82 @@ window.sectionComponents.faq = {
             i++;
         }
 
-        const faqHtml = faqs.length > 0 ? faqs.map(faq => `
-            <div class="p-4 bg-white rounded-lg border border-rose-100">
-                <div class="font-semibold text-gray-900 mb-2">Q: ${faq.question}</div>
-                <div class="text-gray-700 text-sm">A: ${faq.answer}</div>
-            </div>
-        `).join('') : `
-            <div class="text-center py-8 text-gray-500">
-                <div class="text-4xl mb-2">❓</div>
-                <p>Add frequently asked questions and answers</p>
-            </div>
-        `;
+        let faqHtml = '';
+        if (faqs.length > 0) {
+            if (layout === 'accordion') {
+                faqHtml = faqs.map((faq, index) => `
+                    <div class="rounded-lg border shadow-sm overflow-hidden" style="background: ${cardBg}; border-color: ${accent}40;">
+                        <div class="p-4 flex items-center gap-3" style="background: ${accent}10;">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background: ${accent};">
+                                Q
+                            </div>
+                            <div class="font-semibold" style="color: ${textColor};">${faq.question}</div>
+                        </div>
+                        <div class="p-4 text-sm text-gray-700 leading-relaxed">
+                            ${faq.answer}
+                        </div>
+                    </div>
+                `).join('');
+            } else if (layout === 'numbered') {
+                faqHtml = faqs.map((faq, index) => `
+                    <div class="flex gap-4 p-4 rounded-lg border" style="background: ${cardBg}; border-color: ${accent}20;">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shadow-md" style="background: ${accent};">
+                            ${index + 1}
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-semibold mb-2" style="color: ${textColor};">${faq.question}</div>
+                            <div class="text-sm text-gray-600 leading-relaxed">${faq.answer}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } else if (layout === 'modern') {
+                faqHtml = faqs.map(faq => `
+                    <div class="p-6 rounded-xl shadow-lg border-l-4" style="background: ${cardBg}; border-left-color: ${accent};">
+                        <div class="flex items-start gap-3 mb-3">
+                            <span class="text-2xl">❓</span>
+                            <div class="font-bold text-lg" style="color: ${textColor};">${faq.question}</div>
+                        </div>
+                        <div class="pl-11 text-sm text-gray-600 leading-relaxed">
+                            ${faq.answer}
+                        </div>
+                    </div>
+                `).join('');
+            } else if (layout === 'twocolumn') {
+                faqHtml = faqs.map(faq => `
+                    <div class="p-4 rounded-lg border shadow-sm" style="background: ${cardBg}; border-color: ${accent}20;">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="font-semibold pr-4 border-r" style="color: ${accent}; border-color: ${accent}30;">
+                                ${faq.question}
+                            </div>
+                            <div class="text-sm text-gray-600 leading-relaxed">
+                                ${faq.answer}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                // Simple Cards (default)
+                faqHtml = faqs.map(faq => `
+                    <div class="p-4 rounded-lg border shadow-sm" style="background: ${cardBg}; border-color: ${accent}20;">
+                        <div class="font-semibold mb-2" style="color: ${textColor};">Q: ${faq.question}</div>
+                        <div class="text-gray-700 text-sm">A: ${faq.answer}</div>
+                    </div>
+                `).join('');
+            }
+        } else {
+            faqHtml = `
+                <div class="text-center py-8 text-gray-500">
+                    <div class="text-4xl mb-2">❓</div>
+                    <p>Add frequently asked questions and answers</p>
+                </div>
+            `;
+        }
+
+        const maxWidth = layout === 'twocolumn' ? 'max-w-3xl' : 'max-w-md';
 
         return `
-            <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
-                <div class="max-w-md mx-auto">
+            <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                <div class="${maxWidth} mx-auto">
                     <div class="text-center text-4xl mb-4">❓</div>
                     <h2 class="text-2xl font-bold mb-8 text-center">${data.title || 'Frequently Asked Questions'}</h2>
                     <div class="space-y-4">

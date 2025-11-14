@@ -20,20 +20,140 @@ window.sectionComponents.proposal = {
     style: `
         <div class="space-y-4">
             <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="layout" onchange="updatePreview()">
+                    <option value="classic">Classic Card</option>
+                    <option value="romantic">Romantic Glow</option>
+                    <option value="polaroid">Polaroid Frame</option>
+                    <option value="decorated">Decorated Box</option>
+                    <option value="spotlight">Spotlight Moment</option>
+                </select>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                 <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
             </div>
-        </div>
-    `,
-    render: (data, style) => `
-        <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
-            <div class="max-w-md mx-auto">
-                <div class="text-center text-4xl mb-4">💐</div>
-                <h2 class="text-2xl font-bold mb-6 text-center">${data.title || 'The Proposal'}</h2>
-                <div class="p-6 bg-white rounded-lg">
-                    <p class="text-gray-700 leading-relaxed">${data.story || 'Share your magical proposal story here...'}</p>
-                </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Card/Accent Color</label>
+                <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardBg" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Highlight Color</label>
+                <input type="color" value="#ec4899" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="highlight" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+                <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="textAlign" onchange="updatePreview()">
+                    <option value="left">Left</option>
+                    <option value="center" selected>Center</option>
+                    <option value="justify">Justify</option>
+                </select>
             </div>
         </div>
-    `
+    `,
+    render: (data, style) => {
+        const layout = style.layout || 'classic';
+        const bg = style.bg || '#fdf2f8';
+        const cardBg = style.cardBg || '#ffffff';
+        const highlight = style.highlight || '#ec4899';
+        const textColor = style.textColor || '#1f2937';
+        const textAlign = style.textAlign || 'center';
+
+        if (layout === 'romantic') {
+            return `
+                <div class="relative py-16 px-6 overflow-hidden" style="background: ${bg}; color: ${textColor}">
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-5 left-5 text-6xl animate-pulse">💐</div>
+                        <div class="absolute top-20 right-10 text-4xl animate-pulse" style="animation-delay: 0.5s;">💕</div>
+                        <div class="absolute bottom-10 left-1/4 text-5xl animate-pulse" style="animation-delay: 1s;">💍</div>
+                        <div class="absolute bottom-20 right-1/4 text-3xl animate-pulse" style="animation-delay: 1.5s;">✨</div>
+                    </div>
+                    <div class="relative max-w-lg mx-auto">
+                        <div class="text-center mb-6">
+                            <div class="inline-block p-4 rounded-full shadow-xl" style="background: ${highlight};">
+                                <span class="text-4xl">💐</span>
+                            </div>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-8 text-center">${data.title || 'The Proposal'}</h2>
+                        <div class="p-8 rounded-2xl shadow-2xl relative" style="background: ${cardBg}; box-shadow: 0 0 60px rgba(236, 72, 153, 0.3);">
+                            <p class="leading-relaxed" style="text-align: ${textAlign};">${data.story || 'Share your magical proposal story here...'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'polaroid') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor}">
+                    <div class="max-w-md mx-auto">
+                        <div class="bg-white p-6 rounded-lg shadow-xl transform rotate-1 hover:rotate-0 transition-transform">
+                            <div class="text-center text-5xl mb-4">💐</div>
+                            <div class="bg-gray-100 p-6 mb-4" style="background: ${cardBg};">
+                                <h2 class="text-2xl font-bold mb-4 text-center" style="color: ${highlight};">${data.title || 'The Proposal'}</h2>
+                                <p class="text-sm leading-relaxed" style="text-align: ${textAlign};">${data.story || 'Share your magical proposal story here...'}</p>
+                            </div>
+                            <div class="text-center italic text-sm" style="color: ${highlight}; font-family: 'Brush Script MT', cursive;">A moment to remember...</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'decorated') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="relative p-8 rounded-2xl shadow-xl" style="background: ${cardBg}; border: 2px solid ${highlight};">
+                            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-8 py-2 rounded-full shadow-md" style="background: ${highlight}; color: white;">
+                                <span class="text-2xl">💐</span>
+                            </div>
+                            <div class="absolute top-4 left-4 text-2xl opacity-30">✨</div>
+                            <div class="absolute top-4 right-4 text-2xl opacity-30">✨</div>
+                            <div class="absolute bottom-4 left-8 text-2xl opacity-30">💕</div>
+                            <div class="absolute bottom-4 right-8 text-2xl opacity-30">💍</div>
+
+                            <div class="mt-4">
+                                <h2 class="text-3xl font-bold mb-6 text-center">${data.title || 'The Proposal'}</h2>
+                                <div class="max-w-xl mx-auto">
+                                    <p class="leading-relaxed" style="text-align: ${textAlign};">${data.story || 'Share your magical proposal story here...'}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'spotlight') {
+            return `
+                <div class="relative py-20 px-6" style="background: linear-gradient(135deg, ${bg} 0%, ${cardBg} 100%); color: ${textColor}">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <div class="relative inline-block mb-8">
+                            <div class="absolute inset-0 rounded-full blur-2xl opacity-30" style="background: ${highlight};"></div>
+                            <div class="relative p-6 rounded-full shadow-2xl" style="background: ${cardBg};">
+                                <span class="text-6xl">💐</span>
+                            </div>
+                        </div>
+                        <h2 class="text-4xl font-bold mb-8" style="color: ${highlight};">${data.title || 'The Proposal'}</h2>
+                        <div class="relative max-w-xl mx-auto p-8 rounded-2xl shadow-2xl" style="background: ${cardBg};">
+                            <div class="absolute -inset-1 rounded-2xl opacity-20 blur" style="background: linear-gradient(45deg, ${highlight}, transparent);"></div>
+                            <p class="relative text-lg leading-relaxed" style="text-align: ${textAlign};">${data.story || 'Share your magical proposal story here...'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Classic Card (default)
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor}">
+                    <div class="max-w-md mx-auto">
+                        <div class="text-center text-4xl mb-4">💐</div>
+                        <h2 class="text-2xl font-bold mb-6 text-center">${data.title || 'The Proposal'}</h2>
+                        <div class="p-6 rounded-lg shadow-md" style="background: ${cardBg};">
+                            <p class="leading-relaxed" style="text-align: ${textAlign};">${data.story || 'Share your magical proposal story here...'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
 };
