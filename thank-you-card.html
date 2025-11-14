@@ -137,6 +137,54 @@
                         <div class="text-4xl mb-2">✍️</div>
                         <div class="font-semibold text-sm">Signature</div>
                     </button>
+                    <button onclick="addSection('futureTogether')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🌟</div>
+                        <div class="font-semibold text-sm">Future Together</div>
+                    </button>
+                    <button onclick="addSection('yourQualities')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">⭐</div>
+                        <div class="font-semibold text-sm">Your Qualities</div>
+                    </button>
+                    <button onclick="addSection('personalNote')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">💌</div>
+                        <div class="font-semibold text-sm">Personal Note</div>
+                    </button>
+                    <button onclick="addSection('multipleThanks')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">📝</div>
+                        <div class="font-semibold text-sm">Multiple Thanks</div>
+                    </button>
+                    <button onclick="addSection('meetUp')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">☕</div>
+                        <div class="font-semibold text-sm">Meet Up Invitation</div>
+                    </button>
+                    <button onclick="addSection('decorativeDivider')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🌸</div>
+                        <div class="font-semibold text-sm">Decorative Divider</div>
+                    </button>
+                    <button onclick="addSection('timeline')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">📅</div>
+                        <div class="font-semibold text-sm">Timeline</div>
+                    </button>
+                    <button onclick="addSection('groupSignatures')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">👥</div>
+                        <div class="font-semibold text-sm">Group Signatures</div>
+                    </button>
+                    <button onclick="addSection('imageGallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🖼️</div>
+                        <div class="font-semibold text-sm">Image Gallery</div>
+                    </button>
+                    <button onclick="addSection('bestWishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🌈</div>
+                        <div class="font-semibold text-sm">Best Wishes</div>
+                    </button>
+                    <button onclick="addSection('achievement')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">🏆</div>
+                        <div class="font-semibold text-sm">Achievement Celebration</div>
+                    </button>
+                    <button onclick="addSection('contactInfo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                        <div class="text-4xl mb-2">📧</div>
+                        <div class="font-semibold text-sm">Contact Information</div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -561,6 +609,632 @@
                             <div class="max-w-lg mx-auto">
                                 <p class="text-lg text-gray-700 mb-2">${closing},</p>
                                 <p class="text-xl font-semibold text-gray-900">${name}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            futureTogether: {
+                name: '🌟 Future Together',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Looking Forward Message</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="message" rows="4" onchange="updatePreview()" placeholder="I'm looking forward to creating more wonderful memories together. Let's catch up soon!"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+                    const message = data.message || 'Looking forward to spending more time together!';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-4xl mb-4">🌟</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900">Looking Forward</h3>
+                                <p class="text-gray-700">${message}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            yourQualities: {
+                name: '⭐ Your Qualities',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">What You Appreciate About Them</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="qualities" rows="5" onchange="updatePreview()" placeholder="Your kindness, generosity, and thoughtfulness never cease to amaze me. You're always there when someone needs help, and your positive energy lights up every room."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fffbeb" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fffbeb';
+                    const qualities = data.qualities || 'Your kindness and generosity are truly inspiring';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4 text-center">⭐</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">What Makes You Special</h3>
+                                <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            personalNote: {
+                name: '💌 Personal Note',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Personal Heartfelt Message</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="note" rows="5" onchange="updatePreview()" placeholder="I wanted to take a moment to let you know how much you mean to me. Your friendship has been a true blessing in my life."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fff1f2" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="borderStyle" onchange="updatePreview()">
+                                <option value="dashed">Dashed</option>
+                                <option value="solid">Solid</option>
+                                <option value="double">Double</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fff1f2';
+                    const borderStyle = style.borderStyle || 'dashed';
+                    const note = data.note || 'You mean so much to me';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto p-6 border-2" style="border-style: ${borderStyle}; border-color: #fb7185;">
+                                <div class="text-4xl mb-4 text-center">💌</div>
+                                <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            multipleThanks: {
+                name: '📝 Multiple Thanks',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Thank You For... (one per line)</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="items" rows="6" onchange="updatePreview()" placeholder="Always being there when I need you&#10;Your thoughtful gifts&#10;Making me laugh when I'm down&#10;Being such a wonderful friend&#10;Your constant support"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Enter each item on a new line</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">List Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="listStyle" onchange="updatePreview()">
+                                <option value="checkmark">Checkmarks ✓</option>
+                                <option value="heart">Hearts ❤️</option>
+                                <option value="star">Stars ⭐</option>
+                                <option value="bullet">Bullets •</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const listStyle = style.listStyle || 'checkmark';
+                    const items = data.items || 'Your kindness\nYour support\nYour friendship';
+
+                    const icons = {
+                        checkmark: '✓',
+                        heart: '❤️',
+                        star: '⭐',
+                        bullet: '•'
+                    };
+                    const icon = icons[listStyle] || '✓';
+
+                    const itemList = items.split('\n').filter(item => item.trim()).map(item =>
+                        `<li class="flex items-start gap-3 mb-2"><span class="text-amber-600 text-xl">${icon}</span><span class="flex-1">${item.trim()}</span></li>`
+                    ).join('');
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4 text-center">📝</div>
+                                <h3 class="text-xl font-semibold mb-4 text-gray-900 text-center">Thank You For...</h3>
+                                <ul class="text-gray-700">
+                                    ${itemList}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            meetUp: {
+                name: '☕ Meet Up Invitation',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Invitation Message</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="message" rows="3" onchange="updatePreview()" placeholder="Would love to grab coffee and catch up soon! How about next weekend?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Activity Icon</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="icon" onchange="updatePreview()" placeholder="☕" value="☕">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
+                                <option value="center">Center</option>
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+                    const align = style.align || 'center';
+                    const message = data.message || 'Let\'s meet up soon!';
+                    const icon = data.icon || '☕';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-5xl mb-4">${icon}</div>
+                                <h3 class="text-xl font-semibold mb-3 text-gray-900">Let's Connect</h3>
+                                <p class="text-gray-700">${message}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            decorativeDivider: {
+                name: '🌸 Decorative Divider',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Decorative Icon/Pattern</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="pattern" onchange="updatePreview()" placeholder="🌸 ✨ 🌸" value="🌸 ✨ 🌸">
+                            <p class="text-xs text-gray-500 mt-1">Use emojis or symbols to create a decorative pattern</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Divider Size</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="size" onchange="updatePreview()">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const size = style.size || 'medium';
+                    const pattern = data.pattern || '✨ 💛 ✨';
+
+                    const sizeMap = {
+                        small: '2rem',
+                        medium: '2.5rem',
+                        large: '3rem'
+                    };
+                    const fontSize = sizeMap[size] || '2.5rem';
+
+                    const paddingMap = {
+                        small: '1rem',
+                        medium: '1.5rem',
+                        large: '2rem'
+                    };
+                    const padding = paddingMap[size] || '1.5rem';
+
+                    return `
+                        <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                            <div class="text-gray-400 opacity-60" style="font-size: ${fontSize};">${pattern}</div>
+                        </div>
+                    `;
+                }
+            },
+            timeline: {
+                name: '📅 Timeline',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Timeline Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="title" onchange="updatePreview()" placeholder="Our Journey Together" value="Our Journey Together">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Milestones (format: Date | Event, one per line)</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="milestones" rows="6" onchange="updatePreview()" placeholder="2020 | We first met&#10;2021 | You helped me through a tough time&#10;2023 | Celebrated my graduation together&#10;Today | Saying thank you for everything"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Format: Date | Event description</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fffbeb" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Timeline Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="timelineStyle" onchange="updatePreview()">
+                                <option value="vertical">Vertical</option>
+                                <option value="simple">Simple List</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fffbeb';
+                    const timelineStyle = style.timelineStyle || 'vertical';
+                    const title = data.title || 'Our Journey Together';
+                    const milestones = data.milestones || '2023 | We met\n2024 | You were there for me\nToday | Thank you';
+
+                    const items = milestones.split('\n').filter(item => item.trim()).map(item => {
+                        const parts = item.split('|');
+                        const date = parts[0]?.trim() || '';
+                        const event = parts[1]?.trim() || item.trim();
+
+                        if (timelineStyle === 'vertical') {
+                            return `
+                                <div class="flex gap-4 mb-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
+                                        <div class="w-0.5 h-full bg-amber-300 mt-1"></div>
+                                    </div>
+                                    <div class="flex-1 pb-4">
+                                        <div class="text-sm font-semibold text-amber-700">${date}</div>
+                                        <div class="text-gray-700 mt-1">${event}</div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="mb-3">
+                                    <span class="font-semibold text-amber-700">${date}</span>
+                                    <span class="text-gray-600"> — </span>
+                                    <span class="text-gray-700">${event}</span>
+                                </div>
+                            `;
+                        }
+                    }).join('');
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4 text-center">📅</div>
+                                <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">${title}</h3>
+                                <div>${items}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            groupSignatures: {
+                name: '👥 Group Signatures',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Group Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="title" onchange="updatePreview()" placeholder="From All of Us" value="From All of Us">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Signatures (one name per line)</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="signatures" rows="6" onchange="updatePreview()" placeholder="Sarah&#10;Michael&#10;Jennifer&#10;David&#10;Emma"></textarea>
+                            <p class="text-xs text-gray-500 mt-1">Each name on a new line</p>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="grid">Grid</option>
+                                <option value="list">List</option>
+                                <option value="signatures">Handwritten Style</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#ffffff';
+                    const layout = style.layout || 'grid';
+                    const title = data.title || 'From All of Us';
+                    const signatures = data.signatures || 'Sarah\nMichael\nJennifer\nDavid';
+
+                    const names = signatures.split('\n').filter(name => name.trim());
+
+                    let namesHTML = '';
+                    if (layout === 'grid') {
+                        namesHTML = `<div class="grid grid-cols-2 gap-4 mt-4">
+                            ${names.map(name => `<div class="text-center p-3 bg-amber-50 rounded-lg"><span class="text-gray-800 font-medium">${name.trim()}</span></div>`).join('')}
+                        </div>`;
+                    } else if (layout === 'list') {
+                        namesHTML = `<div class="mt-4 space-y-2">
+                            ${names.map(name => `<div class="text-gray-800">• ${name.trim()}</div>`).join('')}
+                        </div>`;
+                    } else {
+                        namesHTML = `<div class="mt-6 flex flex-wrap gap-6 justify-center">
+                            ${names.map(name => `<div class="text-gray-700 font-serif italic text-lg">${name.trim()}</div>`).join('')}
+                        </div>`;
+                    }
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-4xl mb-4">👥</div>
+                                <h3 class="text-xl font-semibold text-gray-900">${title}</h3>
+                                ${namesHTML}
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            imageGallery: {
+                name: '🖼️ Image Gallery',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Caption</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="caption" onchange="updatePreview()" placeholder="Memories Together">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Number of Photo Placeholders</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="photoCount" onchange="updatePreview()">
+                                <option value="2">2 Photos</option>
+                                <option value="3">3 Photos</option>
+                                <option value="4" selected>4 Photos</option>
+                                <option value="6">6 Photos</option>
+                            </select>
+                        </div>
+                        <p class="text-xs text-gray-500">Photo upload functionality coming soon - placeholders shown for now</p>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#f9fafb" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Layout</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="grid">Grid</option>
+                                <option value="masonry">Masonry</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#f9fafb';
+                    const layout = style.layout || 'grid';
+                    const caption = data.caption || 'Our Memories';
+                    const photoCount = parseInt(data.photoCount) || 4;
+
+                    const photos = Array(photoCount).fill(0).map((_, i) => {
+                        const emojis = ['📷', '🎨', '🌟', '💫', '✨', '🎭'];
+                        const emoji = emojis[i % emojis.length];
+                        return `
+                            <div class="bg-gray-200 rounded-lg flex items-center justify-center" style="height: 150px;">
+                                <span class="text-4xl opacity-50">${emoji}</span>
+                            </div>
+                        `;
+                    }).join('');
+
+                    const gridClass = photoCount === 2 ? 'grid-cols-2' : photoCount === 3 ? 'grid-cols-3' : 'grid-cols-2';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto">
+                                <div class="text-4xl mb-4 text-center">🖼️</div>
+                                ${caption ? `<h3 class="text-xl font-semibold mb-4 text-gray-900 text-center">${caption}</h3>` : ''}
+                                <div class="grid ${gridClass} gap-3">
+                                    ${photos}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            bestWishes: {
+                name: '🌈 Best Wishes',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Wishes Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="title" onchange="updatePreview()" placeholder="Wishing You All the Best" value="Wishing You All the Best">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Wishes</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="wishes" rows="5" onchange="updatePreview()" placeholder="May you continue to spread joy and kindness wherever you go. Wishing you health, happiness, and success in all your future endeavors."></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="textStyle" onchange="updatePreview()">
+                                <option value="normal">Normal</option>
+                                <option value="italic">Italic</option>
+                                <option value="bold">Bold</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef3c7';
+                    const textStyle = style.textStyle || 'normal';
+                    const title = data.title || 'Wishing You All the Best';
+                    const wishes = data.wishes || 'May all your dreams come true!';
+
+                    const styleClass = textStyle === 'italic' ? 'italic' : textStyle === 'bold' ? 'font-bold' : '';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-5xl mb-4">🌈</div>
+                                <h3 class="text-xl font-semibold mb-4 text-gray-900">${title}</h3>
+                                <p class="text-gray-700 leading-relaxed ${styleClass}">${wishes}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            achievement: {
+                name: '🏆 Achievement Celebration',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Achievement Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="achievement" onchange="updatePreview()" placeholder="Your Amazing Achievement">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Celebration Message</label>
+                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="message" rows="4" onchange="updatePreview()" placeholder="I'm so proud of everything you've accomplished. Your hard work and dedication truly paid off!"></textarea>
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef9c3" onchange="updatePreview()">
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#fef9c3';
+                    const achievement = data.achievement || 'Your Success';
+                    const message = data.message || 'Congratulations on this amazing achievement!';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-6xl mb-4">🏆</div>
+                                <h3 class="text-2xl font-bold mb-3 text-gray-900">${achievement}</h3>
+                                <p class="text-gray-700 leading-relaxed">${message}</p>
+                                <div class="mt-4 text-3xl">🎉 ⭐ 🎊</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            contactInfo: {
+                name: '📧 Contact Information',
+                info: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="title" onchange="updatePreview()" placeholder="Stay in Touch" value="Stay in Touch">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email (optional)</label>
+                            <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="email" onchange="updatePreview()" placeholder="your.email@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone (optional)</label>
+                            <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="phone" onchange="updatePreview()" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Social Media/Website (optional)</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="social" onchange="updatePreview()" placeholder="@username or website.com">
+                        </div>
+                    </div>
+                `,
+                style: `
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#f3f4f6" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="vertical">Vertical List</option>
+                                <option value="horizontal">Horizontal</option>
+                            </select>
+                        </div>
+                    </div>
+                `,
+                render: (data, style) => {
+                    const bgColor = style.bgColor || '#f3f4f6';
+                    const layout = style.layout || 'vertical';
+                    const title = data.title || 'Stay in Touch';
+                    const email = data.email || '';
+                    const phone = data.phone || '';
+                    const social = data.social || '';
+
+                    const contacts = [];
+                    if (email) contacts.push(`<div class="flex items-center gap-2 ${layout === 'horizontal' ? '' : 'justify-center'}"><span>📧</span><span class="text-gray-700">${email}</span></div>`);
+                    if (phone) contacts.push(`<div class="flex items-center gap-2 ${layout === 'horizontal' ? '' : 'justify-center'}"><span>📱</span><span class="text-gray-700">${phone}</span></div>`);
+                    if (social) contacts.push(`<div class="flex items-center gap-2 ${layout === 'horizontal' ? '' : 'justify-center'}"><span>🌐</span><span class="text-gray-700">${social}</span></div>`);
+
+                    const contactsHTML = contacts.length > 0
+                        ? `<div class="mt-4 ${layout === 'horizontal' ? 'flex gap-6 justify-center flex-wrap' : 'space-y-2'}">${contacts.join('')}</div>`
+                        : '<p class="text-gray-500 mt-4">Add your contact information above</p>';
+
+                    return `
+                        <div class="p-8" style="background-color: ${bgColor};">
+                            <div class="max-w-lg mx-auto text-center">
+                                <div class="text-4xl mb-4">📧</div>
+                                <h3 class="text-xl font-semibold text-gray-900">${title}</h3>
+                                ${contactsHTML}
                             </div>
                         </div>
                     `;
