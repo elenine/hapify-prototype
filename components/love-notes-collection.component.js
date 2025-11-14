@@ -35,23 +35,31 @@ Every moment with you is precious" rows="15" class="w-full px-4 py-2 border bord
     style: `
         <div class="space-y-4">
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                <input type="color" value="#fefce8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-            </div>
-            <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Notes Style</label>
                 <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="notesStyle" onchange="updatePreview()">
                     <option value="sticky" selected>Sticky Notes</option>
                     <option value="cards">Love Cards</option>
                     <option value="bubbles">Speech Bubbles</option>
                     <option value="handwritten">Handwritten Style</option>
+                    <option value="envelopes">Love Envelopes</option>
+                    <option value="hearts">Floating Hearts</option>
+                    <option value="ribbon">Ribbon Notes</option>
                 </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                <input type="color" value="#fefce8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                <input type="color" value="#f59e0b" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
             </div>
         </div>
     `,
     render: (data, style) => {
         const notes = (data.notes || '').split('\n').filter(n => n.trim());
         const notesStyle = style.notesStyle || 'sticky';
+        const accentColor = style.accent || '#f59e0b';
 
         let notesHTML = '';
 
@@ -83,29 +91,78 @@ Every moment with you is precious" rows="15" class="w-full px-4 py-2 border bord
         } else if (notesStyle === 'bubbles') {
             notesHTML = notes.map((note, i) => {
                 const isLeft = i % 2 === 0;
-                const bgClass = isLeft ? 'bg-rose-100' : 'bg-pink-100';
                 const alignClass = isLeft ? 'mr-auto' : 'ml-auto';
 
                 return `
                     <div class="max-w-md ${alignClass}">
-                        <div class="${bgClass} rounded-3xl p-5 shadow-md relative">
+                        <div class="rounded-3xl p-5 shadow-md relative" style="background: ${accentColor}20;">
                             <p class="text-gray-900">${note.trim()}</p>
-                            <div class="absolute ${isLeft ? 'left-0 -ml-2' : 'right-0 -mr-2'} bottom-4 w-4 h-4 ${bgClass} transform rotate-45"></div>
+                            <div class="absolute ${isLeft ? 'left-0 -ml-2' : 'right-0 -mr-2'} bottom-4 w-4 h-4 transform rotate-45" style="background: ${accentColor}20;"></div>
                         </div>
                     </div>
                 `;
             }).join('');
             notesHTML = `<div class="space-y-4">${notesHTML}</div>`;
-        } else {
+        } else if (notesStyle === 'handwritten') {
             notesHTML = notes.map((note, i) => {
                 return `
                     <div class="bg-white border-2 border-gray-300 rounded p-5 shadow-sm relative">
-                        <div class="absolute top-2 right-2 text-rose-500 opacity-20 text-4xl">💌</div>
+                        <div class="absolute top-2 right-2 opacity-20 text-4xl" style="color: ${accentColor}">💌</div>
                         <p class="text-gray-900 italic" style="font-family: 'Comic Sans MS', cursive;">${note.trim()}</p>
                     </div>
                 `;
             }).join('');
             notesHTML = `<div class="grid md:grid-cols-2 gap-4">${notesHTML}</div>`;
+        } else if (notesStyle === 'envelopes') {
+            notesHTML = notes.map((note, i) => {
+                const rotation = (i % 2 === 0 ? 1 : -1) * (Math.random() * 3 + 1);
+
+                return `
+                    <div class="transform hover:scale-105 transition" style="transform: rotate(${rotation}deg);">
+                        <div class="bg-white rounded-lg overflow-hidden shadow-xl" style="border: 3px solid ${accentColor}40;">
+                            <div class="h-3" style="background: linear-gradient(to right, ${accentColor}, ${accentColor}dd);"></div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="text-3xl" style="color: ${accentColor}">💌</div>
+                                    <div class="flex-1 h-0.5" style="background: ${accentColor}40;"></div>
+                                </div>
+                                <p class="text-gray-700 italic text-center">"${note.trim()}"</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            notesHTML = `<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">${notesHTML}</div>`;
+        } else if (notesStyle === 'hearts') {
+            notesHTML = notes.map((note, i) => {
+                return `
+                    <div class="relative">
+                        <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+                            <div class="absolute -top-4 -right-4 w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg" style="background: ${accentColor};">
+                                💕
+                            </div>
+                            <p class="text-gray-700 text-center pr-4">${note.trim()}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            notesHTML = `<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">${notesHTML}</div>`;
+        } else if (notesStyle === 'ribbon') {
+            notesHTML = notes.map((note, i) => {
+                return `
+                    <div class="relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition overflow-hidden">
+                        <div class="absolute top-0 left-0 right-0 h-2" style="background: linear-gradient(to right, ${accentColor}, ${accentColor}dd);"></div>
+                        <div class="absolute bottom-0 left-0 right-0 h-2" style="background: linear-gradient(to right, ${accentColor}dd, ${accentColor});"></div>
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: ${accentColor}20; color: ${accentColor};">
+                                💝
+                            </div>
+                            <p class="flex-1 text-gray-700 pt-2">${note.trim()}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            notesHTML = `<div class="grid md:grid-cols-2 gap-6">${notesHTML}</div>`;
         }
 
         return `
