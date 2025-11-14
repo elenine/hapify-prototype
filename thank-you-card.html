@@ -1407,48 +1407,147 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="list">Simple List</option>
+                                <option value="boxes">Individual Boxes</option>
+                                <option value="numbered">Numbered List</option>
+                                <option value="columns">Two Columns</option>
+                                <option value="cards">Card Style</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">List Style</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">List Icon</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="listStyle" onchange="updatePreview()">
                                 <option value="checkmark">Checkmarks ✓</option>
                                 <option value="heart">Hearts ❤️</option>
                                 <option value="star">Stars ⭐</option>
                                 <option value="bullet">Bullets •</option>
+                                <option value="hands">Hands 🙏</option>
                             </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#f59e0b" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#ffffff';
+                    const accentColor = style.accentColor || '#f59e0b';
                     const listStyle = style.listStyle || 'checkmark';
+                    const layout = style.layout || 'list';
                     const items = data.items || 'Your kindness\nYour support\nYour friendship';
 
                     const icons = {
                         checkmark: '✓',
                         heart: '❤️',
                         star: '⭐',
-                        bullet: '•'
+                        bullet: '•',
+                        hands: '🙏'
                     };
                     const icon = icons[listStyle] || '✓';
 
-                    const itemList = items.split('\n').filter(item => item.trim()).map(item =>
-                        `<li class="flex items-start gap-3 mb-2"><span class="text-amber-600 text-xl">${icon}</span><span class="flex-1">${item.trim()}</span></li>`
-                    ).join('');
+                    const itemsArray = items.split('\n').filter(item => item.trim());
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-4xl mb-4 text-center">📝</div>
-                                <h3 class="text-xl font-semibold mb-4 text-gray-900 text-center">Thank You For...</h3>
-                                <ul class="text-gray-700">
-                                    ${itemList}
-                                </ul>
+                    if (layout === 'boxes') {
+                        const itemBoxes = itemsArray.map(item =>
+                            `<div class="bg-amber-50 rounded-lg p-4 border-l-4" style="border-color: ${accentColor};">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl" style="color: ${accentColor};">${icon}</span>
+                                    <span class="flex-1 text-gray-700">${item.trim()}</span>
+                                </div>
+                            </div>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="space-y-3">
+                                        ${itemBoxes}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'numbered') {
+                        const itemList = itemsArray.map((item, index) =>
+                            `<li class="flex items-start gap-4 mb-3">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold" style="background-color: ${accentColor};">${index + 1}</span>
+                                <span class="flex-1 text-gray-700 pt-1">${item.trim()}</span>
+                            </li>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <ul class="text-gray-700">
+                                        ${itemList}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'columns') {
+                        const mid = Math.ceil(itemsArray.length / 2);
+                        const col1 = itemsArray.slice(0, mid).map(item =>
+                            `<li class="flex items-start gap-3 mb-2"><span style="color: ${accentColor};" class="text-xl">${icon}</span><span class="flex-1">${item.trim()}</span></li>`
+                        ).join('');
+                        const col2 = itemsArray.slice(mid).map(item =>
+                            `<li class="flex items-start gap-3 mb-2"><span style="color: ${accentColor};" class="text-xl">${icon}</span><span class="flex-1">${item.trim()}</span></li>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="grid grid-cols-2 gap-8">
+                                        <ul class="text-gray-700">${col1}</ul>
+                                        <ul class="text-gray-700">${col2}</ul>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cards') {
+                        const itemCards = itemsArray.map(item =>
+                            `<div class="bg-white rounded-xl p-4 shadow-md border-t-2" style="border-color: ${accentColor};">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl" style="color: ${accentColor};">${icon}</span>
+                                    <span class="text-gray-700 font-medium">${item.trim()}</span>
+                                </div>
+                            </div>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="grid gap-3">
+                                        ${itemCards}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const itemList = itemsArray.map(item =>
+                            `<li class="flex items-start gap-3 mb-2"><span style="color: ${accentColor};" class="text-xl">${icon}</span><span class="flex-1">${item.trim()}</span></li>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-4 text-gray-900 text-center">Thank You For...</h3>
+                                    <ul class="text-gray-700">
+                                        ${itemList}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             meetUp: {
@@ -1468,8 +1567,21 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="simple">Simple</option>
+                                <option value="card">Invitation Card</option>
+                                <option value="banner">Banner Style</option>
+                                <option value="badge">Badge Style</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#f59e0b" onchange="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
@@ -1483,19 +1595,59 @@
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef3c7';
+                    const accentColor = style.accentColor || '#f59e0b';
                     const align = style.align || 'center';
+                    const layout = style.layout || 'simple';
                     const message = data.message || 'Let\'s meet up soon!';
                     const icon = data.icon || '☕';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
-                            <div class="max-w-lg mx-auto">
-                                <div class="text-5xl mb-4">${icon}</div>
-                                <h3 class="text-xl font-semibold mb-3 text-gray-900">Let's Connect</h3>
-                                <p class="text-gray-700">${message}</p>
+                    if (layout === 'card') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl text-center">
+                                    <div class="text-6xl mb-4">${icon}</div>
+                                    <h3 class="text-2xl font-bold mb-4" style="color: ${accentColor};">Let's Connect</h3>
+                                    <p class="text-gray-700 text-lg">${message}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'banner') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(135deg, ${bgColor}, ${accentColor}40);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-7xl mb-4">${icon}</div>
+                                    <h3 class="text-2xl font-bold mb-3 text-gray-900">Let's Connect</h3>
+                                    <p class="text-gray-800 text-lg font-medium">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'badge') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto">
+                                    <div class="bg-white rounded-xl p-6 shadow-lg border-l-4" style="border-color: ${accentColor}; text-align: ${align};">
+                                        <div class="flex items-center gap-4">
+                                            <div class="text-5xl flex-shrink-0">${icon}</div>
+                                            <div class="flex-1">
+                                                <h3 class="text-xl font-bold mb-2" style="color: ${accentColor};">Let's Connect</h3>
+                                                <p class="text-gray-700">${message}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-5xl mb-4">${icon}</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">Let's Connect</h3>
+                                    <p class="text-gray-700">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             decorativeDivider: {
@@ -1512,8 +1664,21 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Divider Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="dividerStyle" onchange="updatePreview()">
+                                <option value="simple">Simple Pattern</option>
+                                <option value="line">Line with Icon</option>
+                                <option value="dots">Dotted Line</option>
+                                <option value="wave">Wave Pattern</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Pattern Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="patternColor" value="#d1d5db" onchange="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Divider Size</label>
@@ -1527,7 +1692,9 @@
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#ffffff';
+                    const patternColor = style.patternColor || '#d1d5db';
                     const size = style.size || 'medium';
+                    const dividerStyle = style.dividerStyle || 'simple';
                     const pattern = data.pattern || '✨ 💛 ✨';
 
                     const sizeMap = {
@@ -1544,11 +1711,39 @@
                     };
                     const padding = paddingMap[size] || '1.5rem';
 
-                    return `
-                        <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
-                            <div class="text-gray-400 opacity-60" style="font-size: ${fontSize};">${pattern}</div>
-                        </div>
-                    `;
+                    if (dividerStyle === 'line') {
+                        return `
+                            <div class="flex items-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="flex-1 h-px" style="background-color: ${patternColor};"></div>
+                                <div class="px-4" style="font-size: ${fontSize}; color: ${patternColor};">${pattern}</div>
+                                <div class="flex-1 h-px" style="background-color: ${patternColor};"></div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'dots') {
+                        return `
+                            <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="flex items-center justify-center gap-2">
+                                    <span class="w-2 h-2 rounded-full" style="background-color: ${patternColor};"></span>
+                                    <span class="w-2 h-2 rounded-full" style="background-color: ${patternColor};"></span>
+                                    <span class="w-3 h-3 rounded-full" style="background-color: ${patternColor};"></span>
+                                    <span class="w-2 h-2 rounded-full" style="background-color: ${patternColor};"></span>
+                                    <span class="w-2 h-2 rounded-full" style="background-color: ${patternColor};"></span>
+                                </div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'wave') {
+                        return `
+                            <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div style="font-size: ${fontSize}; color: ${patternColor}; opacity: 0.6;">～ ～ ～</div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div style="font-size: ${fontSize}; color: ${patternColor}; opacity: 0.6;">${pattern}</div>
+                            </div>
+                        `;
+                    }
                 }
             },
             timeline: {
@@ -1775,8 +1970,21 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="centered">Centered</option>
+                                <option value="card">Card Style</option>
+                                <option value="colorful">Colorful Banner</option>
+                                <option value="elegant">Elegant</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef3c7" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#fbbf24" onchange="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Style</label>
@@ -1790,21 +1998,55 @@
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef3c7';
+                    const accentColor = style.accentColor || '#fbbf24';
                     const textStyle = style.textStyle || 'normal';
+                    const layout = style.layout || 'centered';
                     const title = data.title || 'Wishing You All the Best';
                     const wishes = data.wishes || 'May all your dreams come true!';
 
                     const styleClass = textStyle === 'italic' ? 'italic' : textStyle === 'bold' ? 'font-bold' : '';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-5xl mb-4">🌈</div>
-                                <h3 class="text-xl font-semibold mb-4 text-gray-900">${title}</h3>
-                                <p class="text-gray-700 leading-relaxed ${styleClass}">${wishes}</p>
+                    if (layout === 'card') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl text-center">
+                                    <div class="text-6xl mb-4">🌈</div>
+                                    <h3 class="text-2xl font-bold mb-4" style="color: ${accentColor};">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed ${styleClass}">${wishes}</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'colorful') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(135deg, ${bgColor}, ${accentColor}40);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-7xl mb-4">🌈</div>
+                                    <h3 class="text-3xl font-bold mb-4 text-gray-900">${title}</h3>
+                                    <p class="text-gray-800 text-lg font-medium ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'elegant') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-t-4 border-b-4 py-8" style="border-color: ${accentColor};">
+                                    <div class="text-5xl mb-4 text-center">🌈</div>
+                                    <h3 class="text-xl font-serif font-semibold mb-4 text-gray-900 text-center">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-5xl mb-4">🌈</div>
+                                    <h3 class="text-xl font-semibold mb-4 text-gray-900">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             achievement: {
@@ -1824,26 +2066,80 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="celebration">Celebration</option>
+                                <option value="trophy">Trophy Card</option>
+                                <option value="confetti">Confetti Style</option>
+                                <option value="banner">Banner</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef9c3" onchange="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gold Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="goldColor" value="#fbbf24" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#fef9c3';
+                    const goldColor = style.goldColor || '#fbbf24';
+                    const layout = style.layout || 'celebration';
                     const achievement = data.achievement || 'Your Success';
                     const message = data.message || 'Congratulations on this amazing achievement!';
 
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-6xl mb-4">🏆</div>
-                                <h3 class="text-2xl font-bold mb-3 text-gray-900">${achievement}</h3>
-                                <p class="text-gray-700 leading-relaxed">${message}</p>
-                                <div class="mt-4 text-3xl">🎉 ⭐ 🎊</div>
+                    if (layout === 'trophy') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-xl text-center">
+                                    <div class="text-8xl mb-4">🏆</div>
+                                    <div class="inline-block px-6 py-2 rounded-full mb-4" style="background-color: ${goldColor}20;">
+                                        <h3 class="text-2xl font-bold" style="color: ${goldColor};">${achievement}</h3>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed">${message}</p>
+                                    <div class="mt-6 text-3xl">🎉 ⭐ 🎊</div>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else if (layout === 'confetti') {
+                        return `
+                            <div class="p-8 relative" style="background: linear-gradient(135deg, ${bgColor}, ${goldColor}30);">
+                                <div class="max-w-lg mx-auto text-center relative">
+                                    <div class="text-9xl mb-4">🏆</div>
+                                    <h3 class="text-3xl font-bold mb-4 text-gray-900">${achievement}</h3>
+                                    <p class="text-gray-800 text-lg font-medium">${message}</p>
+                                    <div class="mt-6 text-4xl">🎉 🎊 ✨ ⭐ 🎈</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'banner') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="rounded-xl p-6" style="background-color: ${goldColor}30; border: 3px solid ${goldColor};">
+                                        <div class="text-7xl mb-4 text-center">🏆</div>
+                                        <h3 class="text-2xl font-bold mb-3 text-center" style="color: ${goldColor};">${achievement}</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center">${message}</p>
+                                        <div class="mt-4 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-6xl mb-4">🏆</div>
+                                    <h3 class="text-2xl font-bold mb-3 text-gray-900">${achievement}</h3>
+                                    <p class="text-gray-700 leading-relaxed">${message}</p>
+                                    <div class="mt-4 text-3xl">🎉 ⭐ 🎊</div>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             },
             contactInfo: {
@@ -1871,20 +2167,27 @@
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="vertical">Vertical List</option>
+                                <option value="horizontal">Horizontal</option>
+                                <option value="card">Card Style</option>
+                                <option value="buttons">Button Style</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#f3f4f6" onchange="updatePreview()">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
-                                <option value="vertical">Vertical List</option>
-                                <option value="horizontal">Horizontal</option>
-                            </select>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="accentColor" value="#3b82f6" onchange="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const bgColor = style.bgColor || '#f3f4f6';
+                    const accentColor = style.accentColor || '#3b82f6';
                     const layout = style.layout || 'vertical';
                     const title = data.title || 'Stay in Touch';
                     const email = data.email || '';
@@ -1892,23 +2195,94 @@
                     const social = data.social || '';
 
                     const contacts = [];
-                    if (email) contacts.push(`<div class="flex items-center gap-2 ${layout === 'horizontal' ? '' : 'justify-center'}"><span>📧</span><span class="text-gray-700">${email}</span></div>`);
-                    if (phone) contacts.push(`<div class="flex items-center gap-2 ${layout === 'horizontal' ? '' : 'justify-center'}"><span>📱</span><span class="text-gray-700">${phone}</span></div>`);
-                    if (social) contacts.push(`<div class="flex items-center gap-2 ${layout === 'horizontal' ? '' : 'justify-center'}"><span>🌐</span><span class="text-gray-700">${social}</span></div>`);
+                    if (email) contacts.push({ icon: '📧', value: email });
+                    if (phone) contacts.push({ icon: '📱', value: phone });
+                    if (social) contacts.push({ icon: '🌐', value: social });
 
-                    const contactsHTML = contacts.length > 0
-                        ? `<div class="mt-4 ${layout === 'horizontal' ? 'flex gap-6 justify-center flex-wrap' : 'space-y-2'}">${contacts.join('')}</div>`
-                        : '<p class="text-gray-500 mt-4">Add your contact information above</p>';
-
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-4xl mb-4">📧</div>
-                                <h3 class="text-xl font-semibold text-gray-900">${title}</h3>
-                                ${contactsHTML}
+                    if (contacts.length === 0) {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900">${title}</h3>
+                                    <p class="text-gray-500 mt-4">Add your contact information above</p>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    }
+
+                    if (layout === 'card') {
+                        const contactCards = contacts.map(c => `
+                            <div class="bg-white rounded-lg p-4 shadow-md">
+                                <div class="text-3xl mb-2">${c.icon}</div>
+                                <p class="text-gray-700 text-sm break-all">${c.value}</p>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="grid grid-cols-${contacts.length > 2 ? '3' : contacts.length} gap-4">
+                                        ${contactCards}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'buttons') {
+                        const contactButtons = contacts.map(c => `
+                            <div class="inline-block px-6 py-3 rounded-full text-white font-medium" style="background-color: ${accentColor};">
+                                ${c.icon} ${c.value}
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="flex flex-wrap gap-3 justify-center">
+                                        ${contactButtons}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'horizontal') {
+                        const contactItems = contacts.map(c => `
+                            <div class="flex items-center gap-2">
+                                <span>${c.icon}</span>
+                                <span class="text-gray-700">${c.value}</span>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-4">${title}</h3>
+                                    <div class="flex gap-6 justify-center flex-wrap">
+                                        ${contactItems}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        const contactItems = contacts.map(c => `
+                            <div class="flex items-center gap-2 justify-center">
+                                <span>${c.icon}</span>
+                                <span class="text-gray-700">${c.value}</span>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-4">${title}</h3>
+                                    <div class="space-y-2">
+                                        ${contactItems}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
                 }
             }
         };
