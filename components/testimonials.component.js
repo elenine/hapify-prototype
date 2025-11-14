@@ -35,6 +35,9 @@ window.sectionComponents.testimonials = {
                                 <option value="minimal">Minimal</option>
                                 <option value="modern">Modern Bubble</option>
                                 <option value="boxed">Boxed</option>
+                                <option value="gradient">Gradient Background</option>
+                                <option value="timeline">Timeline Style</option>
+                                <option value="badge">Badge Style</option>
                             </select>
                         </div>
                         <div>
@@ -46,12 +49,26 @@ window.sectionComponents.testimonials = {
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
                                 <option value="sm">Subtle</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Bold</option>
                                 <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
                             </select>
                         </div>
                     </div>
@@ -60,8 +77,10 @@ window.sectionComponents.testimonials = {
                     const layout = style.layout || 'card';
                     const bgColor = style.bg || '#f9fafb';
                     const accentColor = style.accent || '#14b8a6';
+                    const secondaryColor = style.secondary || '#10b981';
                     const shadow = style.shadow || 'lg';
                     const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'What Clients Say';
                     const testimonial = data.testimonial || 'Add a client testimonial...';
                     const client = data.client || 'Client Name';
@@ -153,6 +172,83 @@ window.sectionComponents.testimonials = {
                                             <div class="pt-3 border-t">
                                                 <div class="font-bold" style="color: ${accentColor};">${client}</div>
                                                 ${role ? `<div class="text-sm text-gray-500 mt-1">${role}</div>` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="${radius} ${shadowClass} overflow-hidden" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                            <div class="p-6">
+                                                <div class="flex items-center gap-3 mb-4">
+                                                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-2xl backdrop-blur-sm">
+                                                        💬
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="font-bold text-white">${client}</div>
+                                                        ${role ? `<div class="text-xs text-white opacity-80">${role}</div>` : ''}
+                                                    </div>
+                                                </div>
+                                                <p class="text-white leading-relaxed italic">"${testimonial}"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'timeline':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto relative">
+                                        <div class="absolute left-6 top-0 bottom-0 w-0.5" style="background: ${accentColor}40;"></div>
+                                        <div class="relative pl-14">
+                                            <div class="absolute left-3 w-7 h-7 rounded-full flex items-center justify-center text-white font-bold" style="background: ${accentColor};">
+                                                💬
+                                            </div>
+                                            <div class="bg-white p-5 ${radius} ${shadowClass} border-l-4" style="border-color: ${accentColor};">
+                                                <div class="flex items-center justify-between mb-3">
+                                                    <div>
+                                                        <div class="font-bold text-sm">${client}</div>
+                                                        ${role ? `<div class="text-xs text-gray-500">${role}</div>` : ''}
+                                                    </div>
+                                                    <div class="text-2xl opacity-20">"</div>
+                                                </div>
+                                                <p class="text-gray-700 italic text-sm leading-relaxed">${testimonial}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative">
+                                            <div class="bg-white ${radius} ${shadowClass} p-6 hover:shadow-2xl transition-all">
+                                                <div class="absolute -top-4 -right-4 w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-xl" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                                    💬
+                                                </div>
+                                                <div class="mb-4 inline-block px-3 py-1 ${radius} text-xs font-semibold text-white" style="background: ${accentColor};">
+                                                    Featured Testimonial
+                                                </div>
+                                                <p class="text-gray-700 italic mb-4 leading-relaxed text-sm">"${testimonial}"</p>
+                                                <div class="flex items-center gap-3 pt-3 border-t">
+                                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background: ${secondaryColor};">
+                                                        ${client.charAt(0).toUpperCase()}
+                                                    </div>
+                                                    <div>
+                                                        <div class="font-semibold text-sm">${client}</div>
+                                                        ${role ? `<div class="text-xs text-gray-500">${role}</div>` : ''}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

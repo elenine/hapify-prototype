@@ -30,6 +30,9 @@ window.sectionComponents.faq = {
                                 <option value="minimal">Minimal</option>
                                 <option value="numbered">Numbered</option>
                                 <option value="bordered">Bordered</option>
+                                <option value="gradient">Gradient Cards</option>
+                                <option value="timeline">Timeline Style</option>
+                                <option value="badge">Badge Style</option>
                             </select>
                         </div>
                         <div>
@@ -41,12 +44,26 @@ window.sectionComponents.faq = {
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
                                 <option value="sm">Subtle</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Bold</option>
                                 <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
                             </select>
                         </div>
                     </div>
@@ -55,8 +72,10 @@ window.sectionComponents.faq = {
                     const layout = style.layout || 'cards';
                     const bgColor = style.bg || '#f9fafb';
                     const accentColor = style.accent || '#14b8a6';
+                    const secondaryColor = style.secondary || '#10b981';
                     const shadow = style.shadow || 'md';
                     const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Frequently Asked Questions';
 
                     const faqs = [];
@@ -167,6 +186,85 @@ window.sectionComponents.faq = {
                                                 <p class="text-gray-700 text-sm"><span class="font-semibold">A:</span> ${faq.a || 'Answer'}</p>
                                             </div>
                                         `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${faqs.map((faq, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                            return `
+                                            <div class="${radius} ${shadowClass} overflow-hidden" style="background: ${gradientColor};">
+                                                <div class="p-5">
+                                                    <div class="flex items-start gap-3 mb-3">
+                                                        <div class="w-7 h-7 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0 backdrop-blur-sm">
+                                                            ?
+                                                        </div>
+                                                        <h3 class="font-bold text-base text-white leading-tight">${faq.q || 'Question'}</h3>
+                                                    </div>
+                                                    <p class="text-white text-sm pl-10 leading-relaxed opacity-90">${faq.a || 'Answer'}</p>
+                                                </div>
+                                            </div>
+                                        `}).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'timeline':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto relative">
+                                        <div class="absolute left-6 top-0 bottom-0 w-0.5" style="background: ${accentColor}40;"></div>
+                                        <div class="space-y-6">
+                                            ${faqs.map((faq, idx) => {
+                                                const isEven = idx % 2 === 0;
+                                                const dotColor = isEven ? accentColor : secondaryColor;
+                                                return `
+                                                <div class="relative pl-14">
+                                                    <div class="absolute left-3 w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold" style="background: ${dotColor};">
+                                                        ${idx + 1}
+                                                    </div>
+                                                    <div class="bg-white p-5 ${radius} ${shadowClass} border-l-4" style="border-color: ${dotColor};">
+                                                        <h3 class="font-bold mb-2 text-sm" style="color: ${dotColor};">${faq.q || 'Question'}</h3>
+                                                        <p class="text-gray-700 text-xs leading-relaxed">${faq.a || 'Answer'}</p>
+                                                    </div>
+                                                </div>
+                                            `}).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${faqs.map((faq, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const badgeColor = isEven ? accentColor : secondaryColor;
+                                            return `
+                                            <div class="relative">
+                                                <div class="bg-white ${radius} ${shadowClass} p-5 hover:shadow-2xl transition-all">
+                                                    <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg" style="background: ${badgeColor};">
+                                                        ${idx + 1}
+                                                    </div>
+                                                    <div class="flex items-start gap-3 mb-3 mt-2">
+                                                        <div class="w-7 h-7 ${radius} flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background: ${badgeColor};">
+                                                            ?
+                                                        </div>
+                                                        <h3 class="font-bold text-base flex-1">${faq.q || 'Question'}</h3>
+                                                    </div>
+                                                    <p class="text-gray-600 text-sm pl-10 leading-relaxed">${faq.a || 'Answer'}</p>
+                                                </div>
+                                            </div>
+                                        `}).join('')}
                                     </div>
                                 </div>
                             `;

@@ -35,6 +35,9 @@ window.sectionComponents.venue = {
                                 <option value="minimal">Minimal Clean</option>
                                 <option value="featured">Featured Venue</option>
                                 <option value="blocks">Info Blocks</option>
+                                <option value="gradient">Gradient Panel</option>
+                                <option value="timeline">Timeline Details</option>
+                                <option value="modern">Modern Card</option>
                             </select>
                         </div>
                         <div>
@@ -46,11 +49,27 @@ window.sectionComponents.venue = {
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Icon Style</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="iconStyle" onchange="updatePreview()">
-                                <option value="circle">Circle</option>
-                                <option value="square">Square</option>
-                                <option value="gradient">Gradient</option>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-3xl">Super Rounded</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="shadow-sm">Subtle</option>
+                                <option value="shadow-md">Medium</option>
+                                <option value="shadow-lg">Bold</option>
+                                <option value="shadow-xl">Extra Bold</option>
+                                <option value="shadow-2xl">Dramatic</option>
                             </select>
                         </div>
                     </div>

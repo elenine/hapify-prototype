@@ -28,6 +28,9 @@ window.sectionComponents.gallery = {
                                 <option value="featured">Featured + Thumbnails</option>
                                 <option value="carousel">Carousel View</option>
                                 <option value="minimal">Minimal List</option>
+                                <option value="gradient">Gradient Gallery</option>
+                                <option value="polaroid">Polaroid Style</option>
+                                <option value="badge">Badge Gallery</option>
                             </select>
                         </div>
                         <div>
@@ -38,12 +41,39 @@ window.sectionComponents.gallery = {
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
                             <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'grid';
                     const bgColor = style.bg || '#ffffff';
                     const accentColor = style.accent || '#3b82f6';
+                    const secondaryColor = style.secondary || '#10b981';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Our Work';
                     const images = (data.images || '').split('\n').filter(i => i.trim());
 
@@ -164,6 +194,73 @@ window.sectionComponents.gallery = {
                                                 </div>
                                             </div>
                                         `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${images.map((image, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                            return `
+                                            <div class="aspect-square ${radius} ${shadowClass} overflow-hidden hover:shadow-2xl transition" style="background: ${gradientColor};">
+                                                <div class="h-full flex flex-col items-center justify-center p-4 text-center">
+                                                    <div class="text-4xl mb-3 opacity-80">🖼️</div>
+                                                    <div class="text-xs font-bold text-white">${image.trim()}</div>
+                                                </div>
+                                            </div>
+                                        `}).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'polaroid':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${images.map((image, idx) => `
+                                            <div class="bg-white p-3 ${radius} ${shadowClass} hover:shadow-2xl transition transform hover:-rotate-2">
+                                                <div class="aspect-square ${radius} overflow-hidden mb-3" style="background: linear-gradient(135deg, ${accentColor}20, ${secondaryColor}20);">
+                                                    <div class="h-full flex flex-col items-center justify-center p-4">
+                                                        <div class="text-4xl mb-2">🖼️</div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="text-xs font-semibold text-gray-700">${image.trim()}</div>
+                                                    <div class="text-xs text-gray-400 mt-1">#${idx + 1}</div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${images.map((image, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const badgeColor = isEven ? accentColor : secondaryColor;
+                                            return `
+                                            <div class="relative">
+                                                <div class="aspect-square bg-white ${radius} ${shadowClass} overflow-hidden hover:shadow-2xl transition">
+                                                    <div class="h-full flex flex-col items-center justify-center p-4" style="background: ${badgeColor}10;">
+                                                        <div class="text-4xl mb-2">🖼️</div>
+                                                        <div class="text-xs font-semibold text-center" style="color: ${badgeColor};">${image.trim()}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg" style="background: ${badgeColor};">
+                                                    ${idx + 1}
+                                                </div>
+                                            </div>
+                                        `}).join('')}
                                     </div>
                                 </div>
                             `;

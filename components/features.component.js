@@ -40,6 +40,9 @@ window.sectionComponents.features = {
                                 <option value="cards">Card Style</option>
                                 <option value="minimal">Minimal</option>
                                 <option value="showcase">Showcase</option>
+                                <option value="gradient">Gradient Cards</option>
+                                <option value="badge">Badge Style</option>
+                                <option value="floating">Floating Icons</option>
                             </select>
                         </div>
                         <div>
@@ -51,12 +54,26 @@ window.sectionComponents.features = {
                             <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
                                 <option value="sm">Subtle</option>
                                 <option value="md">Medium</option>
                                 <option value="lg">Bold</option>
                                 <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
                             </select>
                         </div>
                     </div>
@@ -65,8 +82,10 @@ window.sectionComponents.features = {
                     const layout = style.layout || 'grid';
                     const bgColor = style.bg || '#ffffff';
                     const accentColor = style.accent || '#14b8a6';
+                    const secondaryColor = style.secondary || '#10b981';
                     const shadow = style.shadow || 'md';
                     const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Why Choose Us';
 
                     const features = [];
@@ -188,6 +207,73 @@ window.sectionComponents.features = {
                                                 `).join('')}
                                             </div>
                                         ` : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${features.map((feature, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                            return `
+                                                <div class="${radius} ${shadowClass} overflow-hidden p-4 text-center hover:shadow-2xl transition" style="background: ${gradientColor};">
+                                                    <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center text-2xl mb-3 bg-white bg-opacity-20">
+                                                        ${feature.icon || '✨'}
+                                                    </div>
+                                                    <h3 class="text-sm font-bold text-white mb-2">${feature.title || 'Feature'}</h3>
+                                                    ${feature.desc ? `<p class="text-xs text-white opacity-90">${feature.desc}</p>` : ''}
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${features.map((feature, idx) => `
+                                            <div class="relative">
+                                                <div class="bg-white ${radius} ${shadowClass} p-4 text-center hover:shadow-2xl transition border-t-4" style="border-color: ${accentColor};">
+                                                    <div class="text-3xl mb-2">${feature.icon || '✨'}</div>
+                                                    <h3 class="text-sm font-bold mb-2">${feature.title || 'Feature'}</h3>
+                                                    ${feature.desc ? `<p class="text-xs text-gray-600">${feature.desc}</p>` : ''}
+                                                </div>
+                                                <div class="absolute -top-3 -right-3 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                                    ${idx + 1}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${features.map((feature, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const color = isEven ? accentColor : secondaryColor;
+                                            return `
+                                                <div class="relative">
+                                                    <div class="bg-white ${radius} ${shadowClass} p-4 pl-20 hover:shadow-2xl transition">
+                                                        <h3 class="text-sm font-bold mb-2">${feature.title || 'Feature'}</h3>
+                                                        ${feature.desc ? `<p class="text-xs text-gray-600">${feature.desc}</p>` : ''}
+                                                    </div>
+                                                    <div class="absolute -left-4 top-1/2 transform -translate-y-1/2 w-14 h-14 rounded-full flex items-center justify-center text-2xl text-white ${shadowClass}" style="background: ${color};">
+                                                        ${feature.icon || '✨'}
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
                                     </div>
                                 </div>
                             `;

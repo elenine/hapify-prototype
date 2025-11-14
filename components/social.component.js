@@ -39,17 +39,42 @@ window.sectionComponents.social = {
                                 <option value="minimal">Minimal</option>
                                 <option value="cards">Card Style</option>
                                 <option value="buttons">Button Style</option>
+                                <option value="gradient">Gradient Badges</option>
+                                <option value="floating">Floating Icons</option>
+                                <option value="badges">Badge Style</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-full">Circle</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'circles';
                     const bgColor = style.bg || '#ffffff';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Follow Us';
                     const facebook = data.facebook || '';
                     const instagram = data.instagram || '';
@@ -150,6 +175,62 @@ window.sectionComponents.social = {
                                             `).join('')}
                                         </div>
                                         ${!hasLinks ? '<p class="text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6 text-center" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="flex justify-center gap-3 flex-wrap">
+                                            ${socialLinks.map((link, idx) => `
+                                                <a href="${link.url}" class="w-14 h-14 ${radius} ${shadowClass} flex items-center justify-center text-white text-xl hover:scale-110 transition transform" style="background: linear-gradient(135deg, ${link.color}, ${link.color}dd);">
+                                                    ${link.icon}
+                                                </a>
+                                            `).join('')}
+                                        </div>
+                                        ${!hasLinks ? '<p class="text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-12 px-6 text-center" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="flex justify-center gap-4 flex-wrap">
+                                            ${socialLinks.map((link, idx) => `
+                                                <div class="relative">
+                                                    <a href="${link.url}" class="flex items-center justify-center w-16 h-16 bg-white ${radius} ${shadowClass} hover:shadow-2xl transition transform hover:-translate-y-2" style="border: 3px solid ${link.color};">
+                                                        <span class="text-2xl">${link.icon}</span>
+                                                    </a>
+                                                    <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full ${shadowClass}" style="background: ${link.color};"></div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        ${!hasLinks ? '<p class="text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badges':
+                            return `
+                                <div class="py-12 px-6 text-center" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="grid grid-cols-2 gap-4">
+                                            ${socialLinks.map((link, idx) => `
+                                                <a href="${link.url}" class="relative bg-white ${radius} ${shadowClass} p-5 hover:shadow-2xl transition group">
+                                                    <div class="text-3xl mb-2 group-hover:scale-110 transition">${link.icon}</div>
+                                                    <div class="font-semibold text-sm">${link.name}</div>
+                                                    <div class="absolute top-0 right-0 w-full h-1 ${radius}" style="background: ${link.color};"></div>
+                                                </a>
+                                            `).join('')}
+                                        </div>
+                                        ${!hasLinks ? '<p class="text-center text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
                                     </div>
                                 </div>
                             `;

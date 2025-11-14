@@ -31,6 +31,9 @@ window.sectionComponents.pricing = {
                     <option value="minimal">Minimal</option>
                     <option value="featured">Featured Center</option>
                     <option value="comparison">Comparison Table</option>
+                    <option value="gradient">Gradient Cards</option>
+                    <option value="badge">Badge Style</option>
+                    <option value="floating">Floating Price</option>
                 </select>
             </div>
             <div>
@@ -41,12 +44,39 @@ window.sectionComponents.pricing = {
                 <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
                 <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                    <option value="rounded-lg">Medium</option>
+                    <option value="rounded-xl">Large</option>
+                    <option value="rounded-2xl">Extra Large</option>
+                    <option value="rounded-none">Sharp</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                    <option value="sm">Subtle</option>
+                    <option value="md">Medium</option>
+                    <option value="lg">Bold</option>
+                    <option value="xl">Extra Bold</option>
+                    <option value="2xl">Dramatic</option>
+                </select>
+            </div>
         </div>
     `,
     render: (data, style) => {
         const layout = style.layout || 'cards';
         const bgColor = style.bg || '#ffffff';
         const accentColor = style.accent || '#3b82f6';
+        const secondaryColor = style.secondary || '#10b981';
+        const shadow = style.shadow || 'md';
+        const shadowClass = `shadow-${shadow}`;
+        const radius = style.radius || 'rounded-lg';
         const title = data.title || 'Pricing Plans';
 
         const plans = [];
@@ -208,6 +238,108 @@ window.sectionComponents.pricing = {
                                     </div>
                                 `).join('')}
                             </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'gradient':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}">
+                        ${headerHtml}
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${plans.map((plan, idx) => {
+                                const isEven = idx % 2 === 0;
+                                const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                return `
+                                <div class="${radius} ${shadowClass} overflow-hidden p-6 hover:shadow-2xl transition" style="background: ${gradientColor};">
+                                    <div class="text-center mb-4">
+                                        <h3 class="text-xl font-bold text-white mb-2">${plan.name || 'Plan'}</h3>
+                                        <div class="text-3xl font-bold text-white">${plan.price || '$0'}</div>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        ${(plan.features || '').split('\n').filter(f => f.trim()).map(feature => `
+                                            <div class="flex items-center gap-2 text-sm text-white">
+                                                <div>✓</div>
+                                                <div>${feature.trim()}</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <button class="w-full py-3 px-4 ${radius} font-medium bg-white hover:bg-opacity-90 transition" style="color: ${accentColor};">
+                                        Choose Plan
+                                    </button>
+                                </div>
+                            `}).join('')}
+                        </div>
+                    </div>
+                `;
+
+            case 'badge':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}">
+                        ${headerHtml}
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${plans.map((plan, idx) => `
+                                <div class="relative">
+                                    <div class="bg-white ${radius} ${shadowClass} p-6 hover:shadow-2xl transition border-2" style="border-color: ${idx === 1 ? accentColor : '#e5e7eb'};">
+                                        <div class="text-center mb-4">
+                                            <h3 class="text-xl font-bold mb-2">${plan.name || 'Plan'}</h3>
+                                            <div class="text-3xl font-bold" style="color: ${accentColor};">${plan.price || '$0'}</div>
+                                        </div>
+                                        <div class="space-y-2 mb-4">
+                                            ${(plan.features || '').split('\n').filter(f => f.trim()).map(feature => `
+                                                <div class="flex items-center gap-2 text-sm">
+                                                    <div style="color: ${accentColor};">✓</div>
+                                                    <div>${feature.trim()}</div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        <button class="w-full py-3 px-4 ${radius} font-medium text-white ${shadowClass}" style="background: ${accentColor};">
+                                            Select Plan
+                                        </button>
+                                    </div>
+                                    ${idx === 1 ? `
+                                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                        <div class="px-4 py-1 ${radius} ${shadowClass} text-white text-xs font-bold" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                            POPULAR
+                                        </div>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+
+            case 'floating':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}">
+                        ${headerHtml}
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${plans.map((plan, idx) => `
+                                <div class="relative">
+                                    <div class="bg-white ${radius} ${shadowClass} p-6 pt-8 hover:shadow-2xl transition">
+                                        <div class="text-center mb-4">
+                                            <h3 class="text-xl font-bold mb-2">${plan.name || 'Plan'}</h3>
+                                        </div>
+                                        <div class="space-y-2 mb-4">
+                                            ${(plan.features || '').split('\n').filter(f => f.trim()).map(feature => `
+                                                <div class="flex items-center gap-2 text-sm">
+                                                    <div style="color: ${accentColor};">✓</div>
+                                                    <div>${feature.trim()}</div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        <button class="w-full py-3 px-4 ${radius} font-medium border-2 hover:bg-gray-50 transition" style="border-color: ${accentColor}; color: ${accentColor};">
+                                            Get Started
+                                        </button>
+                                    </div>
+                                    <div class="absolute -top-4 -right-4 w-20 h-20 rounded-full flex items-center justify-center text-white ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                        <div class="text-center">
+                                            <div class="text-lg font-bold leading-tight">${plan.price || '$0'}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
                 `;

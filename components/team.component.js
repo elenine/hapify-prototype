@@ -27,6 +27,9 @@ window.sectionComponents.team = {
                                 <option value="minimal">Minimal</option>
                                 <option value="modern">Modern Cards</option>
                                 <option value="compact">Compact</option>
+                                <option value="gradient">Gradient Cards</option>
+                                <option value="badge">Badge Style</option>
+                                <option value="floating">Floating Avatar</option>
                             </select>
                         </div>
                         <div>
@@ -37,12 +40,39 @@ window.sectionComponents.team = {
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
                             <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#10b981" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'cards';
                     const bgColor = style.bg || '#f9fafb';
                     const accentColor = style.accent || '#3b82f6';
+                    const secondaryColor = style.secondary || '#10b981';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Meet Our Team';
                     const members = data.members ? data.members.split('\n').filter(m => m.trim()) : [];
 
@@ -171,6 +201,80 @@ window.sectionComponents.team = {
                                                 }).join('')}
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${members.map((member, idx) => {
+                                            const [name, role] = member.split('-').map(s => s.trim());
+                                            const isEven = idx % 2 === 0;
+                                            const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                            return `
+                                                <div class="${radius} ${shadowClass} overflow-hidden p-4 text-center hover:shadow-2xl transition" style="background: ${gradientColor};">
+                                                    <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl mb-3 bg-white bg-opacity-20">
+                                                        👤
+                                                    </div>
+                                                    <div class="font-semibold text-sm text-white">${name || member}</div>
+                                                    ${role ? `<div class="text-xs text-white opacity-90 mt-1">${role}</div>` : ''}
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${members.map((member, idx) => {
+                                            const [name, role] = member.split('-').map(s => s.trim());
+                                            return `
+                                                <div class="relative">
+                                                    <div class="bg-white ${radius} ${shadowClass} p-4 text-center hover:shadow-2xl transition">
+                                                        <div class="w-16 h-16 mx-auto rounded-full flex items-center justify-center text-3xl mb-3" style="background: ${accentColor}20; color: ${accentColor};">
+                                                            👤
+                                                        </div>
+                                                        <div class="font-semibold text-sm">${name || member}</div>
+                                                        ${role ? `<div class="text-xs text-gray-600 mt-1">${role}</div>` : ''}
+                                                    </div>
+                                                    <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                                        ${idx + 1}
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${members.map((member, idx) => {
+                                            const [name, role] = member.split('-').map(s => s.trim());
+                                            const isEven = idx % 2 === 0;
+                                            const color = isEven ? accentColor : secondaryColor;
+                                            return `
+                                                <div class="relative">
+                                                    <div class="bg-white ${radius} ${shadowClass} p-4 pl-20 hover:shadow-2xl transition">
+                                                        <div class="font-semibold">${name || member}</div>
+                                                        ${role ? `<div class="text-sm mt-1" style="color: ${color};">${role}</div>` : ''}
+                                                    </div>
+                                                    <div class="absolute -left-4 top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center text-3xl text-white ${shadowClass}" style="background: ${color};">
+                                                        👤
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
                                     </div>
                                 </div>
                             `;
