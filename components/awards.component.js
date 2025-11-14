@@ -40,6 +40,9 @@ window.sectionComponents.awards = {
                                 <option value="grid">Grid View</option>
                                 <option value="minimal">Minimal List</option>
                                 <option value="featured">Featured Style</option>
+                                <option value="gradient">Gradient Cards</option>
+                                <option value="badge">Badge Style</option>
+                                <option value="showcase">Showcase View</option>
                             </select>
                         </div>
                         <div>
@@ -50,12 +53,39 @@ window.sectionComponents.awards = {
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
                             <input type="color" value="#f59e0b" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
+                            <input type="color" value="#dc2626" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondary" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="radius" onchange="updatePreview()">
+                                <option value="rounded-lg">Medium</option>
+                                <option value="rounded-xl">Large</option>
+                                <option value="rounded-2xl">Extra Large</option>
+                                <option value="rounded-none">Sharp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                                <option value="2xl">Dramatic</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'cards';
                     const bgColor = style.bg || '#fffbeb';
                     const accentColor = style.accent || '#f59e0b';
+                    const secondaryColor = style.secondary || '#dc2626';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
+                    const radius = style.radius || 'rounded-lg';
                     const title = data.title || 'Awards & Recognition';
 
                     const awards = [];
@@ -194,6 +224,78 @@ window.sectionComponents.awards = {
                                                 `).join('')}
                                             </div>
                                         ` : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'gradient':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${awards.map((award, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const gradientColor = isEven ? `linear-gradient(135deg, ${accentColor}, ${secondaryColor})` : `linear-gradient(135deg, ${secondaryColor}, ${accentColor})`;
+                                            return `
+                                            <div class="${radius} ${shadowClass} overflow-hidden" style="background: ${gradientColor};">
+                                                <div class="flex items-center gap-4 p-5">
+                                                    <div class="text-4xl">🏆</div>
+                                                    <div class="flex-1 text-white">
+                                                        <h3 class="font-bold text-sm mb-1">${award.name || 'Award'}</h3>
+                                                        <div class="text-xs opacity-90 font-semibold mb-2">${award.year || ''}</div>
+                                                        ${award.desc ? `<p class="text-xs opacity-80">${award.desc}</p>` : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `}).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badge':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${awards.map((award, idx) => `
+                                            <div class="relative">
+                                                <div class="bg-white ${radius} ${shadowClass} p-5 hover:shadow-2xl transition flex items-start gap-4">
+                                                    <div class="absolute -top-3 -left-3 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shadow-lg" style="background: ${accentColor};">
+                                                        ${idx + 1}
+                                                    </div>
+                                                    <div class="text-4xl mt-2">🏆</div>
+                                                    <div class="flex-1">
+                                                        <h3 class="font-bold text-sm mb-1">${award.name || 'Award'}</h3>
+                                                        <div class="text-xs font-semibold mb-2" style="color: ${accentColor};">${award.year || ''}</div>
+                                                        ${award.desc ? `<p class="text-xs text-gray-600">${award.desc}</p>` : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'showcase':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
+                                        ${awards.map((award, idx) => {
+                                            const isEven = idx % 2 === 0;
+                                            const color = isEven ? accentColor : secondaryColor;
+                                            return `
+                                            <div class="relative">
+                                                <div class="bg-white ${radius} ${shadowClass} p-5 text-center hover:shadow-2xl transition">
+                                                    <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center shadow-lg" style="background: ${color};">
+                                                        🏆
+                                                    </div>
+                                                    <div class="text-3xl mb-3 opacity-50">🏆</div>
+                                                    <h3 class="text-xs font-bold mb-1">${award.name || 'Award'}</h3>
+                                                    <div class="text-xs font-semibold" style="color: ${color};">${award.year || ''}</div>
+                                                </div>
+                                            </div>
+                                        `}).join('')}
                                     </div>
                                 </div>
                             `;
