@@ -34,18 +34,29 @@ window.sectionComponents.stats = {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#1e40af" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'grid';
-                    const bgColor = style.bg || '#1e40af';
+                    const bgColor = style.bg || '#14b8a6';
                     const textColor = style.textColor || '#ffffff';
+                    const shadow = style.shadow || 'lg';
+                    const shadowClass = `shadow-${shadow}`;
                     const title = data.title || 'Our Achievements';
 
                     const stats = [];
@@ -93,7 +104,7 @@ window.sectionComponents.stats = {
                                     <h2 class="text-2xl font-bold text-center mb-8" style="color: ${textColor};">${title}</h2>
                                     <div class="max-w-md mx-auto grid grid-cols-2 gap-4">
                                         ${stats.map(stat => `
-                                            <div class="bg-white rounded-xl p-5 shadow-lg text-center">
+                                            <div class="bg-white rounded-xl p-5 ${shadowClass} text-center hover:shadow-2xl transition-shadow">
                                                 <div class="text-3xl font-bold mb-1" style="color: ${bgColor};">${stat.value || '0'}</div>
                                                 <div class="text-xs text-gray-600 uppercase tracking-wide">${stat.label || 'Stat'}</div>
                                             </div>

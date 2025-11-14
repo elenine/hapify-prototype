@@ -35,7 +35,7 @@ window.sectionComponents.cta = {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#2563eb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
@@ -49,7 +49,7 @@ window.sectionComponents.cta = {
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'centered';
-                    const bgColor = style.bg || '#2563eb';
+                    const bgColor = style.bg || '#14b8a6';
                     const textColor = style.text || '#ffffff';
                     const buttonBg = style.buttonBg || '#ffffff';
                     const heading = data.heading || 'Ready to Work Together?';
@@ -57,7 +57,7 @@ window.sectionComponents.cta = {
                     const button = data.button || 'Get Started';
 
                     // Calculate contrasting text color for button
-                    const buttonTextColor = buttonBg === '#ffffff' ? '#2563eb' : '#ffffff';
+                    const buttonTextColor = buttonBg === '#ffffff' ? '#14b8a6' : '#ffffff';
 
                     switch(layout) {
                         case 'centered':
