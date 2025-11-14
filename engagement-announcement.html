@@ -89,7 +89,7 @@
         </div>
     </div>
 
-                <!-- Add Section Modal -->
+    <!-- Add Section Modal -->
     <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
             <!-- Header -->
@@ -154,6 +154,38 @@
                         <button data-section-type="registry" onclick="addSection('registry')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
                             <div class="text-4xl mb-2">🎁</div>
                             <div class="font-semibold text-sm">Registry</div>
+                        </button>
+                        <button data-section-type="timeline" onclick="addSection('timeline')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Timeline</div>
+                        </button>
+                        <button data-section-type="faq" onclick="addSection('faq')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">❓</div>
+                            <div class="font-semibold text-sm">FAQ</div>
+                        </button>
+                        <button data-section-type="dresscode" onclick="addSection('dresscode')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">👔</div>
+                            <div class="font-semibold text-sm">Dress Code</div>
+                        </button>
+                        <button data-section-type="accommodations" onclick="addSection('accommodations')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🏨</div>
+                            <div class="font-semibold text-sm">Accommodations</div>
+                        </button>
+                        <button data-section-type="directions" onclick="addSection('directions')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">🗺️</div>
+                            <div class="font-semibold text-sm">Directions</div>
+                        </button>
+                        <button data-section-type="socialmedia" onclick="addSection('socialmedia')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">📱</div>
+                            <div class="font-semibold text-sm">Social Media</div>
+                        </button>
+                        <button data-section-type="guestbook" onclick="addSection('guestbook')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">✍️</div>
+                            <div class="font-semibold text-sm">Guestbook</div>
+                        </button>
+                        <button data-section-type="thankyou" onclick="addSection('thankyou')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-pink-500 hover:bg-pink-50 transition text-center">
+                            <div class="text-4xl mb-2">💝</div>
+                            <div class="font-semibold text-sm">Thank You</div>
                         </button>
                     </div>
                 </div>
@@ -220,463 +252,33 @@
         </div>
     </div>
 
+    <!-- Load Component System -->
+    <script src="components/engagement/layout.component.js"></script>
+    <script src="components/engagement/hero.component.js"></script>
+    <script src="components/engagement/lovestory.component.js"></script>
+    <script src="components/engagement/proposal.component.js"></script>
+    <script src="components/engagement/couple.component.js"></script>
+    <script src="components/engagement/photos.component.js"></script>
+    <script src="components/engagement/celebration.component.js"></script>
+    <script src="components/engagement/registry.component.js"></script>
+    <script src="components/engagement/rsvp.component.js"></script>
+    <script src="components/engagement/future.component.js"></script>
+    <script src="components/engagement/timeline.component.js"></script>
+    <script src="components/engagement/faq.component.js"></script>
+    <script src="components/engagement/dresscode.component.js"></script>
+    <script src="components/engagement/accommodations.component.js"></script>
+    <script src="components/engagement/directions.component.js"></script>
+    <script src="components/engagement/socialmedia.component.js"></script>
+    <script src="components/engagement/guestbook.component.js"></script>
+    <script src="components/engagement/thankyou.component.js"></script>
+    <script src="components/engagement/components-loader.js"></script>
+
     <script>
         let sectionCounter = 0;
 
-        const sectionTemplates = {
-            layout: {
-                name: '🎨 Page Layout',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div class="text-sm text-gray-600">
-                            <p>This section controls the overall styling and appearance of your entire invitation page.</p>
-                            <p class="mt-2">Use the <strong>Style</strong> tab to customize colors, fonts, and layout.</p>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
-                            <input type="color" value="#9333ea" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="primaryColor" oninput="updatePreview()">
-                            <p class="text-xs text-gray-500 mt-1">Used for headings and accents</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color</label>
-                            <input type="color" value="#ec4899" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="secondaryColor" oninput="updatePreview()">
-                            <p class="text-xs text-gray-500 mt-1">Used for secondary elements</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bgColor" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
-                            <input type="color" value="#1f2937" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="textColor" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="fontFamily" onchange="updatePreview()">
-                                <option value="system-ui, -apple-system, sans-serif">System Default</option>
-                                <option value="Georgia, serif">Georgia (Serif)</option>
-                                <option value="'Times New Roman', serif">Times New Roman</option>
-                                <option value="'Courier New', monospace">Courier New</option>
-                                <option value="Arial, sans-serif">Arial</option>
-                                <option value="'Comic Sans MS', cursive">Comic Sans</option>
-                                <option value="'Brush Script MT', cursive">Brush Script</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="borderRadius" onchange="updatePreview()">
-                                <option value="0px">Square (No Radius)</option>
-                                <option value="4px">Small (4px)</option>
-                                <option value="8px" selected>Medium (8px)</option>
-                                <option value="16px">Large (16px)</option>
-                                <option value="24px">Extra Large (24px)</option>
-                                <option value="9999px">Pill Shape</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 section-style" data-style="spacing" onchange="updatePreview()">
-                                <option value="compact">Compact</option>
-                                <option value="normal" selected>Normal</option>
-                                <option value="relaxed">Relaxed</option>
-                                <option value="spacious">Spacious</option>
-                            </select>
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => '' // Layout section doesn't render visible content
-            },
-            hero: {
-                name: '💍 Hero Header',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partner 1 Name</label>
-                            <input type="text" placeholder="Sarah" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent section-data" data-field="partner1" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Partner 2 Name</label>
-                            <input type="text" placeholder="John" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent section-data" data-field="partner2" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Engagement Date</label>
-                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="date" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Couple Photo</label>
-                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-rose-400 cursor-pointer" onclick="this.querySelector('input').click()">
-                                <div class="text-3xl mb-2">📸</div>
-                                <div class="text-sm text-gray-600">Click to upload</div>
-                                <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
-                            </div>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#e11d48" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="text-center py-16 px-6" style="background: ${style.bg || '#e11d48'}; color: ${style.text || '#ffffff'}">
-                        ${data.image ? `<img src="${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">` : '<div class="text-6xl mb-4">💍</div>'}
-                        <h1 class="text-3xl font-bold mb-2">We're Engaged!</h1>
-                        <p class="text-2xl">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</p>
-                        ${data.date ? `<p class="text-sm mt-3 opacity-90">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
-                    </div>
-                `
-            },
-            lovestory: {
-                name: '❤️ Love Story',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
-                            <input type="text" placeholder="Our Love Story" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">How You Met</label>
-                            <textarea placeholder="Tell the story of how you met..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="story" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-center text-4xl mb-4">❤️</div>
-                            <h2 class="text-2xl font-bold mb-6 text-center">${data.title || 'Our Love Story'}</h2>
-                            <div class="p-6 bg-rose-50 rounded-lg">
-                                <p class="text-gray-700 leading-relaxed">${data.story || 'Share your beautiful love story here...'}</p>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            proposal: {
-                name: '💐 Proposal Story',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
-                            <input type="text" placeholder="The Proposal" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Proposal Story</label>
-                            <textarea placeholder="Tell the story of the proposal..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="story" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-center text-4xl mb-4">💐</div>
-                            <h2 class="text-2xl font-bold mb-6 text-center">${data.title || 'The Proposal'}</h2>
-                            <div class="p-6 bg-white rounded-lg">
-                                <p class="text-gray-700 leading-relaxed">${data.story || 'Share your magical proposal story here...'}</p>
-                            </div>
-                        </div>
-                    </div>
-                `
-            },
-            couple: {
-                name: '👫 Couple Details',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Relationship Length</label>
-                            <input type="text" placeholder="Together for 3 years" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="duration" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Fun Facts</label>
-                            <textarea placeholder="Share fun facts about your relationship..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="facts" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">About Us</h2>
-                        <div class="max-w-md mx-auto space-y-4">
-                            ${data.duration ? `
-                            <div class="p-4 bg-rose-50 rounded-lg text-center">
-                                <div class="text-3xl mb-2">👫</div>
-                                <div class="font-medium">${data.duration}</div>
-                            </div>` : ''}
-                            ${data.facts ? `
-                            <div class="p-4 bg-rose-50 rounded-lg">
-                                <div class="text-xs text-gray-500 mb-2">Fun Facts</div>
-                                <p class="text-gray-700">${data.facts}</p>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `
-            },
-            photos: {
-                name: '📸 Photo Gallery',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Gallery Title</label>
-                            <input type="text" placeholder="Our Journey" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                            <textarea placeholder="A glimpse of our journey together..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#fdf2f8'}">
-                        <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Our Journey'}</h2>
-                        ${data.description ? `<p class="text-center text-gray-600 mb-6">${data.description}</p>` : ''}
-                        <div class="max-w-md mx-auto grid grid-cols-3 gap-3">
-                            <div class="aspect-square bg-rose-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
-                            <div class="aspect-square bg-rose-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
-                            <div class="aspect-square bg-rose-100 rounded-lg flex items-center justify-center text-3xl">📸</div>
-                        </div>
-                    </div>
-                `
-            },
-            celebration: {
-                name: '🎉 Celebration Event',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Title</label>
-                            <input type="text" placeholder="Engagement Party" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
-                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="date" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Time</label>
-                            <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="time" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Venue</label>
-                            <input type="text" placeholder="Venue name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="venue" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                            <textarea placeholder="Full address..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Engagement Party'}</h2>
-                        <div class="max-w-md mx-auto space-y-4">
-                            ${data.date ? `
-                            <div class="flex items-start gap-4 p-4 bg-rose-50 rounded-lg">
-                                <div class="text-2xl">📅</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Date</div>
-                                    <div class="font-medium">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
-                                </div>
-                            </div>` : ''}
-                            ${data.time ? `
-                            <div class="flex items-start gap-4 p-4 bg-rose-50 rounded-lg">
-                                <div class="text-2xl">🕐</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Time</div>
-                                    <div class="font-medium">${data.time}</div>
-                                </div>
-                            </div>` : ''}
-                            ${data.venue ? `
-                            <div class="flex items-start gap-4 p-4 bg-rose-50 rounded-lg">
-                                <div class="text-2xl">🏛️</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Venue</div>
-                                    <div class="font-medium">${data.venue}</div>
-                                </div>
-                            </div>` : ''}
-                            ${data.address ? `
-                            <div class="flex items-start gap-4 p-4 bg-rose-50 rounded-lg">
-                                <div class="text-2xl">📍</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Address</div>
-                                    <div class="text-sm">${data.address}</div>
-                                </div>
-                            </div>` : ''}
-                        </div>
-                    </div>
-                `
-            },
-            registry: {
-                name: '🎁 Registry',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Registry Title</label>
-                            <input type="text" placeholder="Gift Registry" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Registry Link</label>
-                            <input type="url" placeholder="https://..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="link" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea placeholder="Your presence is the best gift..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fdf2f8'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-5xl mb-4">🎁</div>
-                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Gift Registry'}</h2>
-                            <p class="text-gray-600 mb-6">${data.message || 'Your presence is the best gift!'}</p>
-                            ${data.link ? `<a href="${data.link}" target="_blank" class="inline-block bg-rose-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-rose-700 transition">View Registry</a>` : ''}
-                        </div>
-                    </div>
-                `
-            },
-            rsvp: {
-                name: '✉️ RSVP',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Title</label>
-                            <input type="text" placeholder="Please RSVP" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea placeholder="Let us know if you can celebrate with us..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Deadline</label>
-                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="deadline" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto">
-                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Please RSVP'}</h2>
-                            <p class="text-gray-600 mb-6">${data.message || "Let us know if you can celebrate with us"}</p>
-                            ${data.deadline ? `<p class="text-sm text-gray-500 mb-6">Deadline: ${new Date(data.deadline).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
-                            <button class="bg-rose-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-rose-700 transition">
-                                RSVP Now
-                            </button>
-                        </div>
-                    </div>
-                `
-            },
-            future: {
-                name: '🌟 Future Plans',
-                allowMultiple: false,
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
-                            <input type="text" placeholder="Our Future Together" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="title" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Wedding Date (if set)</label>
-                            <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="weddingdate" oninput="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea placeholder="Share your future plans and dreams..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#fdf2f8" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => `
-                    <div class="py-12 px-6 text-center" style="background: ${style.bg || '#fdf2f8'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-5xl mb-4">🌟</div>
-                            <h2 class="text-2xl font-bold mb-4">${data.title || 'Our Future Together'}</h2>
-                            ${data.weddingdate ? `<div class="mb-4 p-4 bg-white rounded-lg"><div class="text-xs text-gray-500 mb-1">Save the Date</div><div class="font-bold text-rose-600">${new Date(data.weddingdate).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div></div>` : ''}
-                            <p class="text-gray-700 leading-relaxed">${data.message || 'We are excited to start this new chapter together and look forward to celebrating with you!'}</p>
-                        </div>
-                    </div>
-                `
-            }
-        };
+        // Use components from the component system
+        // Components are loaded from individual files and made available via window.sectionComponents
+        let sectionTemplates = {};
 
         function openSectionModal() {
             updateSectionAvailability();
@@ -705,7 +307,7 @@
                     // Disable button
                     button.disabled = true;
                     button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
-                    button.classList.remove('hover:border-purple-500', 'hover:bg-purple-50');
+                    button.classList.remove('hover:border-pink-500', 'hover:bg-pink-50');
 
                     // Add "Added" badge
                     if (!button.querySelector('.added-badge')) {
@@ -719,7 +321,7 @@
                     // Enable button
                     button.disabled = false;
                     button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
-                    button.classList.add('hover:border-purple-500', 'hover:bg-purple-50');
+                    button.classList.add('hover:border-pink-500', 'hover:bg-pink-50');
 
                     // Remove "Added" badge if it exists
                     const badge = button.querySelector('.added-badge');
@@ -728,11 +330,11 @@
             });
         }
 
-        
+
         function switchModalTab(event, tabName) {
             // Remove active class from all tab buttons
             document.querySelectorAll('.modal-tab-btn').forEach(btn => {
-                btn.classList.remove('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+                btn.classList.remove('active', 'text-rose-600', 'border-b-2', 'border-rose-600', 'bg-white');
             });
 
             // Hide all tab contents
@@ -741,7 +343,7 @@
             });
 
             // Activate clicked tab button
-            event.target.classList.add('active', 'text-purple-600', 'border-b-2', 'border-purple-600', 'bg-white');
+            event.target.classList.add('active', 'text-rose-600', 'border-b-2', 'border-rose-600', 'bg-white');
 
             // Show corresponding tab content
             document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
@@ -755,21 +357,41 @@
             const template = sectionTemplates[type];
             const id = `section-${sectionCounter++}`;
             const isLayout = type === 'layout';
+            const isHero = type === 'hero';
 
-            // For layout section, hide remove button and drag handle
-            const removeButton = isLayout ? '' : `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>`;
+            // Check navigation type
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            const navTypeRadio = layoutSection ? layoutSection.querySelector('[data-field="navType"]:checked') : null;
+            const navType = navTypeRadio?.value || 'none';
+            const navEnabled = navType !== 'none';
+
+            // For layout and hero section, always hide remove button (both are permanent)
+            const canRemove = !isLayout && !isHero;
+            const removeButton = canRemove ? `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>` : '';
             const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
 
+            // Add navigation selector for non-hero, non-layout sections when navigation is enabled
+            const navSelector = (!isLayout && !isHero && navEnabled) ? `
+                <div class="px-4 pt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">${navType === 'tabview' ? 'Assign to Tab' : 'Assign to Navigation Item'}</label>
+                    <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
+                        <option value="">${navType === 'tabview' ? 'Select a tab...' : 'Select a navigation item...'}</option>
+                    </select>
+                </div>
+            ` : '';
+
             const sectionHTML = `
-                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
-                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''}">
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-purple-300 bg-purple-50' : ''} ${isHero ? 'border-pink-300 bg-pink-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout || isHero ? 'data-permanent="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-purple-100' : ''} ${isHero ? 'bg-pink-50' : ''}">
                         <div class="flex items-center gap-2">
                             ${dragHandle}
                             <span class="font-semibold text-sm">${template.name}</span>
                             ${isLayout ? '<span class="ml-2 text-xs bg-purple-200 text-purple-700 px-2 py-1 rounded">Global Settings</span>' : ''}
+                            ${isHero ? '<span class="ml-2 text-xs bg-pink-200 text-pink-700 px-2 py-1 rounded">Required</span>' : ''}
                         </div>
                         ${removeButton}
                     </div>
+                    ${navSelector}
                     <div class="border-b flex">
                         <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
                             Info
@@ -779,7 +401,7 @@
                         </button>
                     </div>
                     <div class="p-4 tab-content" data-tab="info">
-                        ${template.info}
+                        ${typeof template.info === 'function' ? template.info(id) : template.info}
                     </div>
                     <div class="p-4 tab-content hidden" data-tab="style">
                         ${template.style}
@@ -791,14 +413,149 @@
             if (!isLayout) {
                 closeSectionModal();
             }
+
+            // Update navigation dropdowns for all sections
+            updateSectionNavigationDropdowns();
             updatePreview();
         }
 
         function removeSection(id) {
+            const section = document.querySelector(`[data-id="${id}"]`);
+            if (section && section.dataset.permanent === 'true') {
+                const sectionType = section.dataset.type;
+                if (sectionType === 'layout') {
+                    alert('The Layout section contains global settings and cannot be removed.');
+                } else if (sectionType === 'hero') {
+                    alert('The Hero Header is required and cannot be removed.');
+                } else {
+                    alert('This section is required and cannot be removed.');
+                }
+                return;
+            }
             if (confirm('Remove this section?')) {
-                document.querySelector(`[data-id="${id}"]`).remove();
+                section.remove();
                 updatePreview();
             }
+        }
+
+        function toggleNavigationSettings(radio) {
+            const navType = radio.value;
+            const tabViewSettings = document.getElementById('tabViewSettings');
+            const topNavSettings = document.getElementById('topNavSettings');
+            const bottomNavSettings = document.getElementById('bottomNavSettings');
+            const heroSection = document.querySelector('[data-type="hero"]');
+
+            // Hide all navigation settings first
+            tabViewSettings.classList.add('hidden');
+            topNavSettings.classList.add('hidden');
+            bottomNavSettings.classList.add('hidden');
+
+            // Remove all navigation selectors
+            document.querySelectorAll('.nav-selector').forEach(selector => {
+                selector.closest('div').remove();
+            });
+
+            if (navType === 'tabview') {
+                // Show tab view settings
+                tabViewSettings.classList.remove('hidden');
+
+                // Ensure hero section exists
+                if (!heroSection) {
+                    addSection('hero');
+                }
+
+                // Add tab selectors to existing sections
+                updateSectionNavigationDropdowns();
+            } else if (navType === 'topnav') {
+                // Show top navigation settings
+                topNavSettings.classList.remove('hidden');
+
+                // Ensure hero section exists
+                if (!heroSection) {
+                    addSection('hero');
+                }
+
+                // Add navigation item selectors to existing sections
+                updateSectionNavigationDropdowns();
+            } else if (navType === 'bottomnav') {
+                // Show bottom navigation settings
+                bottomNavSettings.classList.remove('hidden');
+
+                // Ensure hero section exists
+                if (!heroSection) {
+                    addSection('hero');
+                }
+
+                // Add navigation item selectors to existing sections
+                updateSectionNavigationDropdowns();
+            }
+        }
+
+        function updateSectionNavigationDropdowns() {
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (!layoutSection) return;
+
+            // Get the selected navigation type
+            const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+            const navType = navTypeRadio?.value;
+
+            if (!navType || navType === 'none') return;
+
+            let navItems = [];
+            let labelText = '';
+            let placeholderText = '';
+
+            if (navType === 'tabview') {
+                const tabNamesTextarea = layoutSection.querySelector('[data-field="tabNames"]');
+                navItems = tabNamesTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Tab';
+                placeholderText = 'Select a tab...';
+            } else if (navType === 'topnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="navItems"]');
+                navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            } else if (navType === 'bottomnav') {
+                const navItemsTextarea = layoutSection.querySelector('[data-field="bottomNavItems"]');
+                navItems = navItemsTextarea?.value.split('\n').filter(name => name.trim()) || [];
+                labelText = 'Assign to Navigation Item';
+                placeholderText = 'Select a navigation item...';
+            }
+
+            // Update all navigation selector dropdowns
+            document.querySelectorAll('.nav-selector').forEach(selector => {
+                const currentValue = selector.value;
+                selector.innerHTML = `<option value="">${placeholderText}</option>`;
+                navItems.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.trim();
+                    option.textContent = item.trim();
+                    if (currentValue === item.trim()) {
+                        option.selected = true;
+                    }
+                    selector.appendChild(option);
+                });
+            });
+
+            // Add navigation selectors to sections that don't have them (except hero and layout)
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                if (type === 'layout' || type === 'hero') return;
+                if (section.querySelector('.nav-selector')) return; // Already has one
+
+                const selectorHTML = `
+                    <div class="px-4 pt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">${labelText}</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data nav-selector" data-field="assignedNavItem" onchange="updatePreview()">
+                            <option value="">${placeholderText}</option>
+                            ${navItems.map(item => `<option value="${item.trim()}">${item.trim()}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+
+                const header = section.querySelector('.bg-gray-50');
+                header.insertAdjacentHTML('afterend', selectorHTML);
+            });
         }
 
         function switchTab(event, sectionId, tab) {
@@ -818,13 +575,19 @@
                 const field = input.dataset.field;
                 if (input.type === 'file' && input.dataset.imageData) {
                     data[field] = input.dataset.imageData;
+                } else if (input.type === 'checkbox') {
+                    data[field] = input.checked;
                 } else {
                     data[field] = input.value;
                 }
             });
 
             section.querySelectorAll('.section-style').forEach(input => {
-                style[input.dataset.style] = input.value;
+                if (input.type === 'checkbox') {
+                    style[input.dataset.style] = input.checked;
+                } else {
+                    style[input.dataset.style] = input.value;
+                }
             });
 
             return { data, style };
@@ -835,30 +598,82 @@
             let html = '';
             let globalStyles = {};
 
-            // Extract global styles from layout section
+            // Extract global styles and layout settings from layout section
             const layoutSection = document.querySelector('[data-type="layout"]');
+            let navType = 'none';
+            let navItems = [];
+
+            // Tab view settings
+            let tabStyle = 'underline';
+            let tabAlignment = 'left';
+            let tabSize = 'medium';
+
+            // Top navigation settings
+            let navStyle = 'simple';
+            let navAlignment = 'left';
+            let navSize = 'medium';
+            let navBgColor = '#ffffff';
+            let navTextColor = '#1f2937';
+            let navSticky = true;
+
+            // Bottom navigation settings
+            let bottomNavStyle = 'simple';
+            let bottomNavAlignment = 'left';
+            let bottomNavSize = 'medium';
+            let bottomNavBgColor = '#ffffff';
+            let bottomNavTextColor = '#1f2937';
+            let bottomNavSticky = true;
+
             if (layoutSection) {
-                const { style } = getSectionData(layoutSection);
+                const { data, style } = getSectionData(layoutSection);
                 globalStyles = style;
+
+                // Get navigation type
+                const navTypeRadio = layoutSection.querySelector('[data-field="navType"]:checked');
+                navType = navTypeRadio?.value || 'none';
+
+                if (navType === 'tabview') {
+                    const tabNamesValue = layoutSection.querySelector('[data-field="tabNames"]')?.value || '';
+                    navItems = tabNamesValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get tab layout style settings
+                    tabStyle = style.tabStyle || 'underline';
+                    tabAlignment = style.tabAlignment || 'left';
+                    tabSize = style.tabSize || 'medium';
+                } else if (navType === 'topnav') {
+                    const navItemsValue = layoutSection.querySelector('[data-field="navItems"]')?.value || '';
+                    navItems = navItemsValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get top navigation style settings
+                    navStyle = style.navStyle || 'simple';
+                    navAlignment = style.navAlignment || 'left';
+                    navSize = style.navSize || 'medium';
+                    navBgColor = style.navBgColor || '#ffffff';
+                    navTextColor = style.navTextColor || '#1f2937';
+                    navSticky = style.navSticky !== false;
+                } else if (navType === 'bottomnav') {
+                    const navItemsValue = layoutSection.querySelector('[data-field="bottomNavItems"]')?.value || '';
+                    navItems = navItemsValue.split('\n').filter(name => name.trim()).map(name => name.trim());
+
+                    // Get bottom navigation style settings
+                    bottomNavStyle = style.bottomNavStyle || 'simple';
+                    bottomNavAlignment = style.bottomNavAlignment || 'left';
+                    bottomNavSize = style.bottomNavSize || 'medium';
+                    bottomNavBgColor = style.bottomNavBgColor || '#ffffff';
+                    bottomNavTextColor = style.bottomNavTextColor || '#1f2937';
+                    bottomNavSticky = style.bottomNavSticky !== false;
+                }
             }
 
             // Apply default global styles if not set
             globalStyles = {
-                primaryColor: globalStyles.primaryColor || '#9333ea',
+                primaryColor: globalStyles.primaryColor || '#e11d48',
                 secondaryColor: globalStyles.secondaryColor || '#ec4899',
                 bgColor: globalStyles.bgColor || '#ffffff',
                 textColor: globalStyles.textColor || '#1f2937',
                 fontFamily: globalStyles.fontFamily || 'system-ui, -apple-system, sans-serif',
                 borderRadius: globalStyles.borderRadius || '8px',
                 spacing: globalStyles.spacing || 'normal'
-            };
-
-            // Calculate spacing values
-            const spacingMap = {
-                compact: { py: 'py-8', px: 'px-4', gap: 'gap-2' },
-                normal: { py: 'py-12', px: 'px-6', gap: 'gap-4' },
-                relaxed: { py: 'py-16', px: 'px-8', gap: 'gap-6' },
-                spacious: { py: 'py-20', px: 'px-10', gap: 'gap-8' }
             };
 
             if (sections.length === 0 || sections.length === 1) {
@@ -871,10 +686,385 @@
                         </div>
                     </div>
                 `;
-            } else {
+            } else if (navType === 'tabview' && navItems.length > 0) {
+                // Tab View Mode - Implementation continues...
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                const sectionsByTab = {};
+                navItems.forEach(tab => {
+                    sectionsByTab[tab] = [];
+                });
+
                 sections.forEach(section => {
                     const type = section.dataset.type;
-                    if (type === 'layout') return; // Skip layout section in rendering
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByTab[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByTab[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                const tabId = 'preview-tabs-' + Date.now();
+
+                const sizeClasses = {
+                    small: 'px-4 py-2 text-xs',
+                    medium: 'px-6 py-4 text-sm',
+                    large: 'px-8 py-5 text-base'
+                };
+
+                const alignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                const generateTabButton = (tab, index, tabStyle, tabSize) => {
+                    const sizeClass = sizeClasses[tabSize] || sizeClasses.medium;
+                    const baseClasses = 'flex-shrink-0 font-medium transition preview-tab-btn';
+
+                    switch(tabStyle) {
+                        case 'pills':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-rose-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="pills">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'buttons':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} rounded-lg ${index === 0 ? 'bg-rose-600 text-white' : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="buttons">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'boxed':
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'bg-rose-50 border-rose-600 text-rose-600' : 'bg-white border-transparent text-gray-600 hover:bg-gray-50'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="boxed">
+                                    ${tab}
+                                </button>
+                            `;
+                        case 'underline':
+                        default:
+                            return `
+                                <button onclick="switchPreviewTab('${tabId}', '${tab}')"
+                                        class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'border-rose-600 text-rose-600' : 'border-transparent text-gray-600 hover:text-gray-900'}"
+                                        data-tab-id="${tabId}"
+                                        data-tab-name="${tab}"
+                                        data-style="underline">
+                                    ${tab}
+                                </button>
+                            `;
+                    }
+                };
+
+                const containerClasses = tabStyle === 'pills' || tabStyle === 'buttons' ? 'gap-2' : '';
+                const alignClass = alignmentClasses[tabAlignment] || alignmentClasses.left;
+
+                html += `
+                    <div class="sticky top-0 z-10 bg-white ${tabStyle !== 'pills' && tabStyle !== 'buttons' ? 'border-b' : ''} shadow-sm">
+                        <div class="flex overflow-x-auto ${containerClasses} ${alignClass} p-2">
+                            ${navItems.map((tab, index) => generateTabButton(tab, index, tabStyle, tabSize)).join('')}
+                        </div>
+                    </div>
+                    <div class="preview-tab-contents" data-tab-container="${tabId}">
+                        ${navItems.map((tab, index) => `
+                            <div class="preview-tab-content ${index === 0 ? '' : 'hidden'}" data-tab-id="${tabId}" data-tab-name="${tab}">
+                                ${sectionsByTab[tab].length > 0
+                                    ? sectionsByTab[tab].map(s => s.html).join('')
+                                    : `<div class="py-16 text-center text-gray-500">
+                                        <div class="text-4xl mb-3">📋</div>
+                                        <p>No sections assigned to this tab yet</p>
+                                       </div>`
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (navType === 'topnav' && navItems.length > 0) {
+                // Top Navigation - similar to Tab View but with navigation at top
+                const navSizeClasses = {
+                    small: 'px-3 py-2 text-xs',
+                    medium: 'px-4 py-3 text-sm',
+                    large: 'px-6 py-4 text-base'
+                };
+
+                const navAlignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                const navId = 'preview-nav-' + Date.now();
+                const generateNavButton = (item, index, navStyle, navSize) => {
+                    const sizeClass = navSizeClasses[navSize] || navSizeClasses.medium;
+                    const baseClasses = 'font-medium transition cursor-pointer preview-nav-btn';
+
+                    switch(navStyle) {
+                        case 'underline':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} border-b-2 ${index === 0 ? 'border-rose-600' : 'border-transparent hover:border-gray-400'}"
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="underline">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'pills':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-rose-600 text-white' : 'hover:bg-gray-200'}"
+                                   style="color: ${index === 0 ? '#ffffff' : navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="pills">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'bordered':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-lg border ${index === 0 ? 'border-rose-600 bg-rose-50' : 'border-gray-300 hover:bg-gray-50'}"
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="bordered">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'simple':
+                        default:
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} hover:opacity-70"
+                                   style="color: ${navTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="simple">
+                                    ${item}
+                                </button>
+                            `;
+                    }
+                };
+
+                const navContainerClasses = navStyle === 'pills' || navStyle === 'bordered' ? 'gap-2' : 'gap-6';
+                const navAlignClass = navAlignmentClasses[navAlignment] || navAlignmentClasses.left;
+                const stickyClass = navSticky ? 'sticky top-0 z-10' : '';
+
+                // Render top navigation bar FIRST
+                html += `
+                    <div class="${stickyClass} shadow-sm" style="background-color: ${navBgColor}; border-bottom: 1px solid #e5e7eb;">
+                        <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
+                            ${navItems.map((item, index) => generateNavButton(item, index, navStyle, navSize)).join('')}
+                        </div>
+                    </div>
+                `;
+
+                // Then render hero section
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by navigation items
+                const sectionsByNavItem = {};
+                navItems.forEach(item => {
+                    sectionsByNavItem[item] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByNavItem[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Render navigation sections
+                html += `
+                    <div class="nav-sections-container" data-nav-container="${navId}">
+                        ${navItems.map((item, index) => {
+                            return `
+                                <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
+                                    ${sectionsByNavItem[item].length > 0
+                                        ? sectionsByNavItem[item].map(s => s.html).join('')
+                                        : `<div class="py-16 text-center text-gray-500">
+                                            <div class="text-4xl mb-3">📋</div>
+                                            <p>No sections assigned to "${item}" yet</p>
+                                           </div>`
+                                    }
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            } else if (navType === 'bottomnav' && navItems.length > 0) {
+                // Bottom Navigation Bar Mode - similar implementation
+                const navId = 'preview-nav-' + Date.now();
+
+                html += '<div class="min-h-full flex flex-col">';
+
+                // Render hero section
+                const heroSection = document.querySelector('[data-type="hero"]');
+                if (heroSection) {
+                    const template = sectionTemplates['hero'];
+                    const { data, style } = getSectionData(heroSection);
+                    html += template.render(data, style, globalStyles);
+                }
+
+                // Group sections by navigation items
+                const sectionsByNavItem = {};
+                navItems.forEach(item => {
+                    sectionsByNavItem[item] = [];
+                });
+
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout' || type === 'hero') return;
+
+                    const assignedNavItem = section.querySelector('[data-field="assignedNavItem"]')?.value;
+                    if (assignedNavItem && sectionsByNavItem[assignedNavItem]) {
+                        const template = sectionTemplates[type];
+                        const { data, style } = getSectionData(section);
+                        sectionsByNavItem[assignedNavItem].push({
+                            html: template.render(data, style, globalStyles),
+                            type: type
+                        });
+                    }
+                });
+
+                // Render navigation sections
+                html += `
+                    <div class="flex-1 nav-sections-container" data-nav-container="${navId}">
+                        ${navItems.map((item, index) => {
+                            return `
+                                <div class="nav-section-content ${index === 0 ? '' : 'hidden'}" data-nav-id="${navId}" data-nav-item="${item}">
+                                    ${sectionsByNavItem[item].length > 0
+                                        ? sectionsByNavItem[item].map(s => s.html).join('')
+                                        : `<div class="py-16 text-center text-gray-500">
+                                            <div class="text-4xl mb-3">📋</div>
+                                            <p>No sections assigned to "${item}" yet</p>
+                                           </div>`
+                                    }
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+
+                const navSizeClasses = {
+                    small: 'px-3 py-2 text-xs',
+                    medium: 'px-4 py-3 text-sm',
+                    large: 'px-6 py-4 text-base'
+                };
+
+                const navAlignmentClasses = {
+                    left: 'justify-start',
+                    center: 'justify-center',
+                    right: 'justify-end'
+                };
+
+                const generateNavButton = (item, index, navStyle, navSize) => {
+                    const sizeClass = navSizeClasses[navSize] || navSizeClasses.medium;
+                    const baseClasses = 'font-medium transition cursor-pointer preview-nav-btn';
+
+                    switch(navStyle) {
+                        case 'underline':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} border-t-2 ${index === 0 ? 'border-rose-600' : 'border-transparent hover:border-gray-400'}"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="underline">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'pills':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-full ${index === 0 ? 'bg-rose-600 text-white' : 'hover:bg-gray-200'}"
+                                   style="color: ${index === 0 ? '#ffffff' : bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="pills">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'bordered':
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} rounded-lg border ${index === 0 ? 'border-rose-600 bg-rose-50' : 'border-gray-300 hover:bg-gray-50'}"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="bordered">
+                                    ${item}
+                                </button>
+                            `;
+                        case 'simple':
+                        default:
+                            return `
+                                <button onclick="switchNavSection('${navId}', '${item}')"
+                                   class="${baseClasses} ${sizeClass} hover:opacity-70"
+                                   style="color: ${bottomNavTextColor};"
+                                   data-nav-id="${navId}"
+                                   data-nav-item="${item}"
+                                   data-style="simple">
+                                    ${item}
+                                </button>
+                            `;
+                    }
+                };
+
+                const navContainerClasses = bottomNavStyle === 'pills' || bottomNavStyle === 'bordered' ? 'gap-2' : 'gap-6';
+                const navAlignClass = navAlignmentClasses[bottomNavAlignment] || navAlignmentClasses.left;
+                const stickyClass = bottomNavSticky ? 'sticky bottom-0 z-10' : '';
+
+                // Render bottom navigation bar LAST
+                html += `
+                    <div class="${stickyClass} shadow-sm mt-auto" style="background-color: ${bottomNavBgColor}; border-top: 1px solid #e5e7eb;">
+                        <div class="flex overflow-x-auto ${navContainerClasses} ${navAlignClass} px-4 py-3">
+                            ${navItems.map((item, index) => generateNavButton(item, index, bottomNavStyle, bottomNavSize)).join('')}
+                        </div>
+                    </div>
+                </div>`;
+            } else {
+                // Normal Mode (no navigation)
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout') return;
                     const template = sectionTemplates[type];
                     const { data, style } = getSectionData(section);
                     html += template.render(data, style, globalStyles);
@@ -889,6 +1079,129 @@
             `;
 
             document.getElementById('previewContent').innerHTML = styledHtml;
+
+            // Also update mobile preview if it's open
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = styledHtml;
+            }
+        }
+
+        function switchPreviewTab(containerId, tabName) {
+            // Update button states based on tab style
+            document.querySelectorAll(`[data-tab-id="${containerId}"]`).forEach(btn => {
+                if (btn.classList.contains('preview-tab-btn')) {
+                    const isActive = btn.dataset.tabName === tabName;
+                    const style = btn.dataset.style;
+
+                    // Remove all active state classes
+                    btn.classList.remove(
+                        'border-rose-600', 'text-rose-600', 'border-transparent', 'text-gray-600',
+                        'bg-rose-600', 'text-white', 'bg-gray-200', 'text-gray-700',
+                        'bg-rose-50', 'bg-white', 'text-gray-700', 'border-gray-300'
+                    );
+
+                    // Apply appropriate classes based on style and active state
+                    switch(style) {
+                        case 'pills':
+                            if (isActive) {
+                                btn.classList.add('bg-rose-600', 'text-white');
+                            } else {
+                                btn.classList.add('bg-gray-200', 'text-gray-700');
+                            }
+                            break;
+                        case 'buttons':
+                            if (isActive) {
+                                btn.classList.add('bg-rose-600', 'text-white');
+                            } else {
+                                btn.classList.add('bg-white', 'text-gray-700', 'border', 'border-gray-300');
+                            }
+                            break;
+                        case 'boxed':
+                            if (isActive) {
+                                btn.classList.add('bg-rose-50', 'border-rose-600', 'text-rose-600');
+                            } else {
+                                btn.classList.add('bg-white', 'border-transparent', 'text-gray-600');
+                            }
+                            break;
+                        case 'underline':
+                        default:
+                            if (isActive) {
+                                btn.classList.add('border-rose-600', 'text-rose-600');
+                            } else {
+                                btn.classList.add('border-transparent', 'text-gray-600');
+                            }
+                            break;
+                    }
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll(`[data-tab-container="${containerId}"] .preview-tab-content`).forEach(content => {
+                if (content.dataset.tabName === tabName) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        }
+
+        function switchNavSection(navId, itemName) {
+            // Update button states based on navigation style
+            document.querySelectorAll(`[data-nav-id="${navId}"]`).forEach(btn => {
+                if (btn.classList.contains('preview-nav-btn')) {
+                    const isActive = btn.dataset.navItem === itemName;
+                    const style = btn.dataset.style;
+                    const currentColor = btn.style.color;
+
+                    // Remove all active state classes
+                    btn.classList.remove(
+                        'border-rose-600', 'border-transparent',
+                        'bg-rose-600', 'text-white', 'hover:bg-gray-200',
+                        'bg-rose-50', 'border-gray-300', 'hover:bg-gray-50'
+                    );
+
+                    // Apply appropriate classes based on style and active state
+                    switch(style) {
+                        case 'underline':
+                            if (isActive) {
+                                btn.classList.add('border-rose-600');
+                            } else {
+                                btn.classList.add('border-transparent', 'hover:border-gray-400');
+                            }
+                            break;
+                        case 'pills':
+                            if (isActive) {
+                                btn.classList.add('bg-rose-600', 'text-white');
+                                btn.style.color = '#ffffff';
+                            } else {
+                                btn.classList.add('hover:bg-gray-200');
+                                btn.style.color = currentColor;
+                            }
+                            break;
+                        case 'bordered':
+                            if (isActive) {
+                                btn.classList.add('border-rose-600', 'bg-rose-50');
+                            } else {
+                                btn.classList.add('border-gray-300', 'hover:bg-gray-50');
+                            }
+                            break;
+                        case 'simple':
+                        default:
+                            // Simple style doesn't change appearance on active
+                            break;
+                    }
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll(`[data-nav-container="${navId}"] .nav-section-content`).forEach(content => {
+                if (content.dataset.navItem === itemName) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
         }
 
         function handleImageUpload(input) {
@@ -946,11 +1259,8 @@
         }
 
         function openMobilePreview() {
-            // Copy preview content to mobile preview modal
             const previewContent = document.getElementById('previewContent').innerHTML;
             document.getElementById('mobilePreviewContent').innerHTML = previewContent;
-
-            // Show the modal
             document.getElementById('mobilePreviewModal').classList.remove('hidden');
         }
 
@@ -959,13 +1269,11 @@
         }
 
         function setMobilePreviewDevice(device) {
-            // Update active button
             document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-rose-600', 'text-white');
             });
             event.target.classList.add('active', 'bg-rose-600', 'text-white');
 
-            // Update frame size
             const frame = document.getElementById('mobilePreviewFrame');
             if (device === 'tablet') {
                 frame.style.width = '768px';
@@ -976,35 +1284,81 @@
             }
         }
 
-        // Initialize with default sections on page load
-        function initializeDefaultSections() {
-            // Add default sections here based on template type
-            const defaultSections = ['hero', 'couple', 'celebration', 'rsvp'];
-            defaultSections.forEach(sectionType => addSection(sectionType));
-        }
-
-        // Load default sections when page loads
-        window.addEventListener('DOMContentLoaded', initializeDefaultSections);
-
-        
         // Initialize layout section on page load
         function initializeLayout() {
             addSection('layout');
         }
 
-        // Close modals on outside click
-        document.getElementById('sectionModal').addEventListener('click', (e) => {
-            if (e.target.id === 'sectionModal') closeSectionModal();
-        });
-        document.getElementById('qrModal').addEventListener('click', (e) => {
-            if (e.target.id === 'qrModal') closeQRModal();
-        });
-        document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
-            if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+        // Initialize with default sections on page load
+        function initializeDefaultSections() {
+            const defaultSections = ['hero', 'lovestory', 'proposal', 'celebration', 'rsvp'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        // Wait for components to load before initializing
+        function initializeApp() {
+            // Assign components to sectionTemplates
+            sectionTemplates = window.sectionComponents || {};
+
+            console.log('💍 Engagement components loaded:', Object.keys(sectionTemplates).length);
+
+            // Initialize layout first
+            initializeLayout();
+
+            // Then add default sections
+            initializeDefaultSections();
+
+            // Close modals on outside click
+            document.getElementById('sectionModal').addEventListener('click', (e) => {
+                if (e.target.id === 'sectionModal') closeSectionModal();
+            });
+            document.getElementById('qrModal').addEventListener('click', (e) => {
+                if (e.target.id === 'qrModal') closeQRModal();
+            });
+            document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+            });
+        }
+
+        // Track if app has been initialized
+        let appInitialized = false;
+
+        // Safe initialization wrapper
+        function safeInitializeApp() {
+            if (appInitialized) {
+                console.log('⚠️ App already initialized, skipping...');
+                return;
+            }
+
+            if (!window.sectionComponents || Object.keys(window.sectionComponents).length === 0) {
+                console.warn('⚠️ Cannot initialize: components not loaded yet');
+                return;
+            }
+
+            appInitialized = true;
+            console.log('✅ Initializing engagement announcement with', Object.keys(window.sectionComponents).length, 'components');
+            initializeApp();
+        }
+
+        // Listen for components ready event
+        window.addEventListener('componentsReady', () => {
+            console.log('✅ Engagement components ready event received');
+            safeInitializeApp();
         });
 
-        // Run initialization
-        initializeLayout();
+        // Immediate check: if components are already loaded, initialize now
+        if (window.sectionComponents && Object.keys(window.sectionComponents).length > 0) {
+            console.log('✅ Engagement components already loaded, initializing immediately');
+            safeInitializeApp();
+        } else {
+            // Fallback: Wait a bit and try again
+            setTimeout(() => {
+                if (!appInitialized) {
+                    console.log('⚠️ Fallback: checking for engagement components after timeout');
+                    safeInitializeApp();
+                }
+            }, 150);
+        }
     </script>
 </body>
 </html>
