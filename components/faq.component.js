@@ -38,14 +38,25 @@ window.sectionComponents.faq = {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
-                            <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'cards';
                     const bgColor = style.bg || '#f9fafb';
-                    const accentColor = style.accent || '#3b82f6';
+                    const accentColor = style.accent || '#14b8a6';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
                     const title = data.title || 'Frequently Asked Questions';
 
                     const faqs = [];
@@ -78,14 +89,14 @@ window.sectionComponents.faq = {
                                     ${headerHtml}
                                     <div class="max-w-md mx-auto space-y-4">
                                         ${faqs.map(faq => `
-                                            <div class="bg-white rounded-xl p-6 shadow-md border-l-4" style="border-color: ${accentColor};">
+                                            <div class="bg-white rounded-xl p-6 ${shadowClass} border-l-4 hover:shadow-xl transition-shadow" style="border-color: ${accentColor};">
                                                 <div class="flex items-start gap-3 mb-3">
-                                                    <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-sm flex-shrink-0" style="background: ${accentColor};">
+                                                    <div class="w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style="background: ${accentColor};">
                                                         ?
                                                     </div>
                                                     <h3 class="font-bold text-base">${faq.q || 'Question'}</h3>
                                                 </div>
-                                                <p class="text-gray-600 text-sm pl-9">${faq.a || 'Answer'}</p>
+                                                <p class="text-gray-600 text-sm pl-10 leading-relaxed">${faq.a || 'Answer'}</p>
                                             </div>
                                         `).join('')}
                                     </div>

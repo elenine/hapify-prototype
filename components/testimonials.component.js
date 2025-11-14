@@ -39,18 +39,29 @@ window.sectionComponents.testimonials = {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                            <input type="color" value="#f9fafb" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
-                            <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'card';
-                    const bgColor = style.bg || '#ffffff';
-                    const accentColor = style.accent || '#3b82f6';
+                    const bgColor = style.bg || '#f9fafb';
+                    const accentColor = style.accent || '#14b8a6';
+                    const shadow = style.shadow || 'lg';
+                    const shadowClass = `shadow-${shadow}`;
                     const title = data.title || 'What Clients Say';
                     const testimonial = data.testimonial || 'Add a client testimonial...';
                     const client = data.client || 'Client Name';
@@ -64,9 +75,9 @@ window.sectionComponents.testimonials = {
                                 <div class="py-12 px-6" style="background: ${bgColor}">
                                     ${headerHtml}
                                     <div class="max-w-md mx-auto">
-                                        <div class="p-6 bg-white rounded-xl shadow-lg border-l-4" style="border-color: ${accentColor};">
+                                        <div class="p-6 bg-white rounded-xl ${shadowClass} border-l-4 hover:shadow-2xl transition-shadow" style="border-color: ${accentColor};">
                                             <div class="text-4xl mb-3" style="color: ${accentColor};">💬</div>
-                                            <p class="text-gray-700 italic mb-4">"${testimonial}"</p>
+                                            <p class="text-gray-700 italic mb-4 leading-relaxed">"${testimonial}"</p>
                                             <div class="border-t pt-3">
                                                 <div class="font-semibold text-sm">${client}</div>
                                                 ${role ? `<div class="text-xs text-gray-500 mt-1">${role}</div>` : ''}

@@ -48,14 +48,25 @@ window.sectionComponents.features = {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
-                            <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'grid';
                     const bgColor = style.bg || '#ffffff';
-                    const accentColor = style.accent || '#3b82f6';
+                    const accentColor = style.accent || '#14b8a6';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
                     const title = data.title || 'Why Choose Us';
 
                     const features = [];

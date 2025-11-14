@@ -39,18 +39,29 @@ window.sectionComponents.contact = {
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" value="#eff6ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
-                            <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                            <input type="color" value="#14b8a6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="sm">Subtle</option>
+                                <option value="md">Medium</option>
+                                <option value="lg">Bold</option>
+                                <option value="xl">Extra Bold</option>
+                            </select>
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
                     const layout = style.layout || 'cards';
-                    const bgColor = style.bg || '#eff6ff';
-                    const accentColor = style.accent || '#3b82f6';
+                    const bgColor = style.bg || '#ffffff';
+                    const accentColor = style.accent || '#14b8a6';
+                    const shadow = style.shadow || 'md';
+                    const shadowClass = `shadow-${shadow}`;
                     const title = data.title || 'Get In Touch';
                     const email = data.email || '';
                     const phone = data.phone || '';
@@ -67,27 +78,27 @@ window.sectionComponents.contact = {
                                     ${headerHtml}
                                     <div class="max-w-md mx-auto space-y-4">
                                         ${email ? `
-                                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
-                                            <div class="w-12 h-12 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}20; color: ${accentColor};">📧</div>
+                                        <div class="flex items-center gap-4 p-5 bg-white rounded-xl ${shadowClass} hover:shadow-xl transition-shadow border-l-4" style="border-left-color: ${accentColor}">
+                                            <div class="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}20; color: ${accentColor};">📧</div>
                                             <div>
-                                                <div class="text-xs text-gray-500 mb-1">Email</div>
-                                                <div class="font-medium text-sm">${email}</div>
+                                                <div class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Email</div>
+                                                <div class="font-semibold text-sm">${email}</div>
                                             </div>
                                         </div>` : ''}
                                         ${phone ? `
-                                        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm">
-                                            <div class="w-12 h-12 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}20; color: ${accentColor};">📞</div>
+                                        <div class="flex items-center gap-4 p-5 bg-white rounded-xl ${shadowClass} hover:shadow-xl transition-shadow border-l-4" style="border-left-color: ${accentColor}">
+                                            <div class="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}20; color: ${accentColor};">📞</div>
                                             <div>
-                                                <div class="text-xs text-gray-500 mb-1">Phone</div>
-                                                <div class="font-medium text-sm">${phone}</div>
+                                                <div class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Phone</div>
+                                                <div class="font-semibold text-sm">${phone}</div>
                                             </div>
                                         </div>` : ''}
                                         ${address ? `
-                                        <div class="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm">
-                                            <div class="w-12 h-12 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}20; color: ${accentColor};">📍</div>
+                                        <div class="flex items-start gap-4 p-5 bg-white rounded-xl ${shadowClass} hover:shadow-xl transition-shadow border-l-4" style="border-left-color: ${accentColor}">
+                                            <div class="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}20; color: ${accentColor};">📍</div>
                                             <div>
-                                                <div class="text-xs text-gray-500 mb-1">Address</div>
-                                                <div class="font-medium text-sm">${address}</div>
+                                                <div class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Address</div>
+                                                <div class="font-semibold text-sm">${address}</div>
                                             </div>
                                         </div>` : ''}
                                         ${!hasInfo ? '<div class="text-center text-gray-500 text-sm">Add contact information</div>' : ''}
