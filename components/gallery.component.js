@@ -21,36 +21,169 @@ window.sectionComponents.gallery = {
                 style: `
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="grid">Grid View</option>
+                                <option value="masonry">Masonry Style</option>
+                                <option value="featured">Featured + Thumbnails</option>
+                                <option value="carousel">Carousel View</option>
+                                <option value="minimal">Minimal List</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Grid Layout</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-style" data-style="columns" onchange="updatePreview()">
-                                <option value="2">2 Columns</option>
-                                <option value="3" selected>3 Columns</option>
-                                <option value="4">4 Columns</option>
-                            </select>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#3b82f6" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                     </div>
                 `,
                 render: (data, style) => {
+                    const layout = style.layout || 'grid';
+                    const bgColor = style.bg || '#ffffff';
+                    const accentColor = style.accent || '#3b82f6';
+                    const title = data.title || 'Our Work';
                     const images = (data.images || '').split('\n').filter(i => i.trim());
-                    const columns = style.columns || '3';
-                    return `
-                        <div class="py-12 px-6" style="background: ${style.bg || '#ffffff'}">
-                            <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Our Work'}</h2>
-                            <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-${columns} gap-4">
-                                ${images.map(image => `
-                                    <div class="aspect-square bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition flex items-center justify-center">
-                                        <div class="text-center p-4">
-                                            <div class="text-4xl mb-2">🖼️</div>
-                                            <div class="text-sm font-medium text-gray-700">${image.trim()}</div>
+
+                    const headerHtml = `<h2 class="text-2xl font-bold text-center mb-8">${title}</h2>`;
+
+                    if (images.length === 0) {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bgColor}">
+                                ${headerHtml}
+                                <div class="text-center text-gray-500 text-sm">Add images to display</div>
+                            </div>
+                        `;
+                    }
+
+                    switch(layout) {
+                        case 'grid':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-3">
+                                        ${images.map(image => `
+                                            <div class="aspect-square rounded-xl overflow-hidden shadow-md hover:shadow-lg transition" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);">
+                                                <div class="h-full flex flex-col items-center justify-center p-4 text-center">
+                                                    <div class="text-3xl mb-2">🖼️</div>
+                                                    <div class="text-xs font-semibold" style="color: ${accentColor};">${image.trim()}</div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'masonry':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-3">
+                                        ${images.map((image, idx) => {
+                                            const heights = ['h-32', 'h-40', 'h-36', 'h-44'];
+                                            const height = heights[idx % heights.length];
+                                            return `
+                                                <div class="${height} rounded-xl overflow-hidden shadow-md hover:shadow-xl transition" style="background: linear-gradient(135deg, ${accentColor}15, ${accentColor}35);">
+                                                    <div class="h-full flex flex-col items-center justify-center p-4 text-center">
+                                                        <div class="text-4xl mb-2">🖼️</div>
+                                                        <div class="text-sm font-semibold" style="color: ${accentColor};">${image.trim()}</div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'featured':
+                            const featured = images[0];
+                            const thumbnails = images.slice(1);
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-3">
+                                        <div class="h-48 rounded-xl overflow-hidden shadow-lg" style="background: linear-gradient(135deg, ${accentColor}30, ${accentColor}50);">
+                                            <div class="h-full flex flex-col items-center justify-center p-6 text-center">
+                                                <div class="text-5xl mb-3">🖼️</div>
+                                                <div class="text-base font-bold text-white">${featured.trim()}</div>
+                                            </div>
+                                        </div>
+                                        ${thumbnails.length > 0 ? `
+                                            <div class="grid grid-cols-3 gap-2">
+                                                ${thumbnails.map(image => `
+                                                    <div class="aspect-square rounded-lg overflow-hidden shadow-sm hover:shadow-md transition" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);">
+                                                        <div class="h-full flex flex-col items-center justify-center p-2 text-center">
+                                                            <div class="text-2xl mb-1">🖼️</div>
+                                                            <div class="text-xs font-medium" style="color: ${accentColor};">${image.trim()}</div>
+                                                        </div>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'carousel':
+                            const currentImage = images[0];
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative rounded-2xl overflow-hidden shadow-2xl" style="background: linear-gradient(135deg, ${accentColor}25, ${accentColor}45);">
+                                            <div class="aspect-video flex flex-col items-center justify-center p-8 text-center">
+                                                <div class="text-6xl mb-4">🖼️</div>
+                                                <div class="text-lg font-bold mb-2" style="color: ${accentColor};">${currentImage.trim()}</div>
+                                                <div class="text-xs text-gray-600">Image 1 of ${images.length}</div>
+                                            </div>
+                                            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                                                ${images.map((_, idx) => `
+                                                    <div class="w-2 h-2 rounded-full ${idx === 0 ? 'opacity-100' : 'opacity-30'}" style="background: ${accentColor};"></div>
+                                                `).join('')}
+                                            </div>
                                         </div>
                                     </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
+                                </div>
+                            `;
+
+                        case 'minimal':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-2">
+                                        ${images.map((image, idx) => `
+                                            <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition border-l-4" style="border-color: ${accentColor};">
+                                                <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-2xl" style="background: ${accentColor}15;">
+                                                    🖼️
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="font-semibold text-sm">${image.trim()}</div>
+                                                    <div class="text-xs text-gray-500">Image ${idx + 1}</div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        default:
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto grid grid-cols-2 gap-3">
+                                        ${images.map(image => `
+                                            <div class="aspect-square rounded-lg overflow-hidden shadow-md" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);">
+                                                <div class="h-full flex flex-col items-center justify-center p-4 text-center">
+                                                    <div class="text-3xl mb-2">🖼️</div>
+                                                    <div class="text-xs font-semibold">${image.trim()}</div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `;
+                    }
                 }
             };
