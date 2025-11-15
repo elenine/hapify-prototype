@@ -530,6 +530,157 @@ This document provides detailed suggestions for new sections to enhance each of 
 
 This section provides a detailed breakdown of implementation tasks organized by priority, tracking progress for adding all 78 new sections.
 
+---
+
+## Execution Instructions Template
+
+Use this detailed prompt template for each phase implementation:
+
+### Phase Execution Prompt
+
+```
+PHASE [N]: [TEMPLATE NAME] - Add [X] New Sections
+
+OBJECTIVE:
+Implement [X] new sections for [template-name.html] template following the existing architecture patterns.
+
+TEMPLATE FILE: [template-name.html]
+COLOR SCHEME: [Gradient colors from CLAUDE.md]
+
+SECTIONS TO IMPLEMENT:
+1. [sectionType1] - [emoji] [Display Name]
+   - allowMultiple: [true/false]
+   - Info Tab Fields: [list of fields]
+   - Style Tab Options: [customization options]
+   - Preview Render: [description of preview output]
+
+2. [sectionType2] - [emoji] [Display Name]
+   ...
+   [repeat for all sections]
+
+IMPLEMENTATION REQUIREMENTS:
+
+1. READ THE TEMPLATE FILE:
+   - Read [template-name.html] completely
+   - Identify the sectionTemplates object location
+   - Note the existing section pattern and structure
+   - Identify the color scheme being used
+
+2. ADD EACH SECTION TO sectionTemplates OBJECT:
+   For each section, add to the sectionTemplates object following this pattern:
+
+   ```javascript
+   sectionType: {
+       name: '[emoji] [Display Name]',
+       allowMultiple: [true/false],
+       info: `
+           <div class="space-y-4">
+               [Info tab HTML with form fields]
+           </div>
+       `,
+       style: `
+           <div class="space-y-4">
+               [Style tab HTML with customization options]
+           </div>
+       `,
+       render: (data, style) => {
+           return `
+               <div style="${style.bgColor || '#ffffff'}">
+                   [Preview HTML rendering using data and style]
+               </div>
+           `;
+       }
+   },
+   ```
+
+3. FOLLOW THESE PATTERNS:
+
+   **Info Tab Pattern:**
+   - Use <label class="block text-sm font-medium text-gray-700">
+   - Use <input class="mt-1 block w-full rounded-md border-gray-300">
+   - Use <textarea class="mt-1 block w-full rounded-md border-gray-300">
+   - Use id="${sectionId}-[fieldname]" for all inputs
+   - Group related fields logically
+
+   **Style Tab Pattern:**
+   - Background Color: <input type="color" id="${sectionId}-bgColor" value="#ffffff">
+   - Text Color: <input type="color" id="${sectionId}-textColor" value="#000000">
+   - Alignment: <select> with left/center/right options
+   - Font Size: <select> with text-sm/text-base/text-lg options
+   - Use consistent styling control names
+
+   **Render Function Pattern:**
+   - Extract data using: document.getElementById('${sectionId}-fieldname')?.value || 'default'
+   - Apply styles from style parameter
+   - Use Tailwind CSS classes for responsive design
+   - Handle empty/missing data gracefully
+   - Use template's color scheme for accents
+
+4. MAINTAIN CONSISTENCY:
+   - Match emoji style used in template (single emoji at start)
+   - Follow existing naming conventions
+   - Use same HTML structure as similar sections
+   - Keep consistent spacing and formatting
+   - Preserve template's color gradient theme
+
+5. TEST EACH SECTION:
+   - Add section via "Add Section" button
+   - Fill in all Info tab fields
+   - Switch to Style tab and test controls
+   - Verify preview renders correctly
+   - Test in mobile/tablet preview modes
+   - Remove and re-add section to verify
+
+6. COMMIT REQUIREMENTS:
+   After implementation, commit with this format:
+
+   ```
+   Add [X] new sections to [Template Name]
+
+   Implemented sections:
+   - [emoji] [Display Name] ([sectionType])
+   - [emoji] [Display Name] ([sectionType])
+   ... [list all sections]
+
+   Each section includes:
+   - Info tab with comprehensive form fields
+   - Style tab with customization options
+   - Responsive preview rendering
+   - Proper data handling and validation
+
+   Template: [template-name.html]
+   Sections added: [X]
+   Total sections in template: [old + X]
+   ```
+
+7. PUSH TO REMOTE:
+   git push -u origin claude/add-event-templates-01F2T8XS3THJPYG9Ft299CCT
+
+VERIFICATION CHECKLIST:
+- [ ] All [X] sections added to sectionTemplates object
+- [ ] Each section appears in "Add Section" modal
+- [ ] Info tabs have all required fields
+- [ ] Style tabs have customization controls
+- [ ] Preview renders correctly with sample data
+- [ ] No JavaScript console errors
+- [ ] Mobile preview works correctly
+- [ ] Tablet preview works correctly
+- [ ] Colors match template theme
+- [ ] Code follows existing patterns
+- [ ] Changes committed with proper message
+- [ ] Changes pushed to remote branch
+
+SUCCESS CRITERIA:
+✓ Template file updated with [X] new sections
+✓ All sections functional in editor
+✓ Preview renders correctly for all sections
+✓ No breaking changes to existing sections
+✓ Code committed and pushed
+✓ Ready for next phase
+```
+
+---
+
 ### 🔴 HIGH PRIORITY TASKS (4 templates, 28 sections)
 
 #### Task 1: Wedding Invitation (+7 sections)
