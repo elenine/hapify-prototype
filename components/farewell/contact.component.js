@@ -39,6 +39,9 @@ window.sectionComponents.contact = {
                                 <option value="buttons">Buttons - Call-to-Action</option>
                                 <option value="modern">Modern - Icon Grid</option>
                                 <option value="business">Business - Professional Card</option>
+                                <option value="minimal">Minimal - Clean & Simple</option>
+                                <option value="social">Social - Media Style</option>
+                                <option value="elegant">Elegant - Bordered</option>
                             </select>
                         </div>
                         <div>
@@ -269,6 +272,138 @@ window.sectionComponents.contact = {
                                                 </div>
                                             ` : ''}
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Minimal Layout - Clean & Simple
+                    if (layout === 'minimal') {
+                        return `
+                            <div class="py-10 px-6 text-center" style="background: ${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="text-4xl mb-3">📞</div>
+                                    <h2 class="text-2xl font-bold mb-2">${data.title || 'Stay In Touch'}</h2>
+                                    <div class="w-16 h-1 mx-auto mb-6" style="background: ${accentColor}"></div>
+                                    <p class="text-gray-600 mb-8">${data.message || "Let's keep in touch!"}</p>
+                                    <div class="space-y-3 text-left">
+                                        ${data.email ? `
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-xl">✉️</span>
+                                                <a href="mailto:${data.email}" class="hover:underline break-all" style="color: ${accentColor}">${data.email}</a>
+                                            </div>
+                                        ` : ''}
+                                        ${data.phone ? `
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-xl">📱</span>
+                                                <a href="tel:${data.phone}" class="hover:underline" style="color: ${accentColor}">${data.phone}</a>
+                                            </div>
+                                        ` : ''}
+                                        ${data.linkedin ? `
+                                            <div class="flex items-center gap-3">
+                                                <span class="text-xl">💼</span>
+                                                <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="hover:underline" style="color: ${accentColor}">LinkedIn</a>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Social Layout - Media Style
+                    if (layout === 'social') {
+                        return `
+                            <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bg}, ${accentColor}05)">
+                                <div class="max-w-md mx-auto">
+                                    <div class="bg-white rounded-3xl shadow-${shadow} overflow-hidden">
+                                        <div class="p-8 text-center">
+                                            <div class="inline-block w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background: ${accentColor}15">
+                                                <span class="text-4xl">📞</span>
+                                            </div>
+                                            <h2 class="text-2xl font-bold mb-3">${data.title || 'Stay In Touch'}</h2>
+                                            <p class="text-gray-600 mb-6">${data.message || "Let's keep in touch!"}</p>
+                                            <div class="flex justify-center gap-4">
+                                                ${data.email ? `
+                                                    <a href="mailto:${data.email}" class="flex-1 p-4 rounded-xl shadow-md hover:shadow-lg transition text-center" style="background: ${accentColor}10">
+                                                        <div class="text-3xl mb-2">✉️</div>
+                                                        <div class="text-xs font-semibold" style="color: ${accentColor}">Email</div>
+                                                    </a>
+                                                ` : ''}
+                                                ${data.phone ? `
+                                                    <a href="tel:${data.phone}" class="flex-1 p-4 rounded-xl shadow-md hover:shadow-lg transition text-center" style="background: ${accentColor}10">
+                                                        <div class="text-3xl mb-2">📱</div>
+                                                        <div class="text-xs font-semibold" style="color: ${accentColor}">Call</div>
+                                                    </a>
+                                                ` : ''}
+                                                ${data.linkedin ? `
+                                                    <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="flex-1 p-4 rounded-xl shadow-md hover:shadow-lg transition text-center" style="background: ${accentColor}10">
+                                                        <div class="text-3xl mb-2">💼</div>
+                                                        <div class="text-xs font-semibold" style="color: ${accentColor}">Connect</div>
+                                                    </a>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Elegant Layout - Bordered
+                    if (layout === 'elegant') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto border-4 rounded-2xl p-10 bg-white shadow-${shadow}" style="border-color: ${accentColor}">
+                                    <div class="text-center mb-8">
+                                        <div class="inline-block p-4 rounded-full mb-4" style="background: ${accentColor}15">
+                                            <div class="text-4xl">📞</div>
+                                        </div>
+                                        <h2 class="text-3xl font-bold mb-3" style="color: ${accentColor}">${data.title || 'Stay In Touch'}</h2>
+                                        <div class="w-24 h-1 mx-auto mb-4" style="background: ${accentColor}30"></div>
+                                        <p class="text-gray-700">${data.message || "Let's keep in touch!"}</p>
+                                    </div>
+                                    <div class="space-y-4">
+                                        ${data.email ? `
+                                            <div class="p-4 rounded-lg border-2" style="border-color: ${accentColor}20">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${accentColor}">
+                                                        ✉️
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-xs uppercase tracking-wide text-gray-500">Email</div>
+                                                        <a href="mailto:${data.email}" class="font-semibold hover:underline break-all" style="color: ${accentColor}">${data.email}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.phone ? `
+                                            <div class="p-4 rounded-lg border-2" style="border-color: ${accentColor}20">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${accentColor}">
+                                                        📱
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-xs uppercase tracking-wide text-gray-500">Phone</div>
+                                                        <a href="tel:${data.phone}" class="font-semibold hover:underline" style="color: ${accentColor}">${data.phone}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.linkedin ? `
+                                            <div class="p-4 rounded-lg border-2" style="border-color: ${accentColor}20">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white" style="background: ${accentColor}">
+                                                        💼
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-xs uppercase tracking-wide text-gray-500">LinkedIn</div>
+                                                        <a href="${data.linkedin.startsWith('http') ? data.linkedin : 'https://' + data.linkedin}" target="_blank" class="font-semibold hover:underline" style="color: ${accentColor}">Connect</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
                                     </div>
                                 </div>
                             </div>

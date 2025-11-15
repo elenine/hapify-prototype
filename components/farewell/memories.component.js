@@ -201,6 +201,109 @@ window.sectionComponents.memories = {
                         `;
                     }
 
+                    // Polaroid Layout - Photo Style
+                    if (layout === 'polaroid') {
+                        const shadow = style.shadow || 'md';
+                        const shadowClass = shadow !== 'none' ? `shadow-${shadow}` : '';
+
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Memories Together'}</h2>
+                                <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    ${memories.map((memory, idx) => `
+                                        <div class="bg-white p-4 ${shadowClass} ${idx % 3 === 0 ? 'rotate-2' : idx % 3 === 1 ? '-rotate-2' : 'rotate-1'} hover:rotate-0 transition-transform duration-300">
+                                            <div class="aspect-square flex items-center justify-center mb-3 rounded-sm" style="background: ${accentColor}${10 + (idx % 3) * 10}">
+                                                <div class="text-6xl opacity-40">${icon}</div>
+                                            </div>
+                                            <p class="text-sm text-gray-700 text-center leading-relaxed">${memory}</p>
+                                            <div class="mt-2 text-center">
+                                                <span class="inline-block w-2 h-2 rounded-full" style="background: ${accentColor}"></span>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Scrapbook Layout - Angled Cards
+                    if (layout === 'scrapbook') {
+                        const borderRadius = style.borderRadius || 'md';
+                        const roundedClass = borderRadius === 'sm' ? 'rounded-lg' :
+                                           borderRadius === 'lg' ? 'rounded-2xl' :
+                                           borderRadius === 'xl' ? 'rounded-3xl' : 'rounded-xl';
+                        const textSize = style.textSize || 'normal';
+                        const textClass = textSize === 'small' ? 'text-sm' : textSize === 'large' ? 'text-lg' : 'text-base';
+
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Memories Together'}</h2>
+                                <div class="max-w-xl mx-auto space-y-6">
+                                    ${memories.map((memory, idx) => `
+                                        <div class="relative">
+                                            <div class="bg-white p-6 ${roundedClass} shadow-xl ${idx % 2 === 0 ? '-rotate-1' : 'rotate-1'} hover:rotate-0 transition-all duration-300 border-4" style="border-color: ${accentColor}${20 + (idx % 4) * 10}">
+                                                <div class="flex items-start gap-4">
+                                                    <div class="flex-shrink-0 w-12 h-12 ${roundedClass} flex items-center justify-center text-2xl" style="background: ${accentColor}20">
+                                                        ${icon}
+                                                    </div>
+                                                    <p class="${textClass} text-gray-700 leading-relaxed flex-1">${memory}</p>
+                                                </div>
+                                            </div>
+                                            ${idx % 3 === 0 ? `
+                                                <div class="absolute -top-3 -right-3 w-8 h-8 flex items-center justify-center rounded-full shadow-lg" style="background: ${accentColor}">
+                                                    <span class="text-white text-xs">📌</span>
+                                                </div>
+                                            ` : idx % 3 === 1 ? `
+                                                <div class="absolute -top-2 -left-2 w-10 h-16 flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}90); clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);">
+                                                    <span class="text-white text-xl -mt-2">🎀</span>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Mosaic Layout - Colorful Tiles
+                    if (layout === 'mosaic') {
+                        const colors = [
+                            `${accentColor}20`,
+                            `${accentColor}30`,
+                            `${accentColor}15`,
+                            `${accentColor}25`,
+                            `${accentColor}35`,
+                            `${accentColor}10`
+                        ];
+                        const borderRadius = style.borderRadius || 'md';
+                        const roundedClass = borderRadius === 'sm' ? 'rounded-lg' :
+                                           borderRadius === 'lg' ? 'rounded-2xl' :
+                                           borderRadius === 'xl' ? 'rounded-3xl' : 'rounded-xl';
+
+                        return `
+                            <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bg}, ${accentColor}05)">
+                                <h2 class="text-3xl font-bold text-center mb-10" style="color: ${accentColor}">${data.title || 'Memories Together'}</h2>
+                                <div class="max-w-3xl mx-auto">
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        ${memories.map((memory, idx) => `
+                                            <div class="group ${roundedClass} p-5 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 cursor-pointer" style="background: ${colors[idx % colors.length]}">
+                                                <div class="text-center mb-3">
+                                                    <div class="inline-flex items-center justify-center w-14 h-14 ${roundedClass} mb-2" style="background: ${accentColor}30">
+                                                        <span class="text-3xl">${icon}</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-sm text-gray-800 text-center leading-relaxed group-hover:text-gray-900 transition-colors">${memory}</p>
+                                                <div class="mt-3 flex justify-center gap-1">
+                                                    ${[1,2,3].map(i => `<div class="w-1.5 h-1.5 rounded-full" style="background: ${accentColor}"></div>`).join('')}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     return '';
                 }
 
