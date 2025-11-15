@@ -30,6 +30,10 @@ window.sectionComponents.team = {
                                 <option value="gradient">Gradient Cards</option>
                                 <option value="badge">Badge Style</option>
                                 <option value="floating">Floating Avatar</option>
+                                <option value="stacked-cards">Stacked Cards</option>
+                                <option value="circular-grid">Circular Avatar Grid</option>
+                                <option value="timeline-view">Timeline View</option>
+                                <option value="split-design">Split Alternating</option>
                             </select>
                         </div>
                         <div>
@@ -271,6 +275,123 @@ window.sectionComponents.team = {
                                                     </div>
                                                     <div class="absolute -left-4 top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center text-3xl text-white ${shadowClass}" style="background: ${color};">
                                                         👤
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'stacked-cards':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto relative" style="min-height: ${members.length * 100}px;">
+                                        ${members.map((member, idx) => {
+                                            const [name, role] = member.split('-').map(s => s.trim());
+                                            const rotation = idx % 2 === 0 ? -2 : 2;
+                                            const color = idx % 2 === 0 ? accentColor : secondaryColor;
+                                            return `
+                                                <div class="absolute left-0 right-0 bg-white ${radius} ${shadowClass} p-6 transform transition-all hover:scale-105 hover:z-10"
+                                                     style="top: ${idx * 80}px; transform: rotate(${rotation}deg); border-top: 4px solid ${color};">
+                                                    <div class="flex items-center gap-4">
+                                                        <div class="w-14 h-14 rounded-full flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, ${color}, ${color}dd); color: white;">
+                                                            👤
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <div class="font-bold text-gray-800">${name || member}</div>
+                                                            ${role ? `<div class="text-sm text-gray-600 mt-1">${role}</div>` : ''}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'circular-grid':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="flex flex-wrap justify-center gap-6">
+                                            ${members.map((member, idx) => {
+                                                const [name, role] = member.split('-').map(s => s.trim());
+                                                const color = idx % 2 === 0 ? accentColor : secondaryColor;
+                                                return `
+                                                    <div class="text-center">
+                                                        <div class="relative inline-block mb-3">
+                                                            <div class="w-20 h-20 rounded-full flex items-center justify-center text-4xl ${shadowClass}" style="background: linear-gradient(135deg, ${color}, ${color}dd); color: white;">
+                                                                👤
+                                                            </div>
+                                                            <div class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${shadowClass}" style="background: ${color}dd; color: white;">
+                                                                ${idx + 1}
+                                                            </div>
+                                                        </div>
+                                                        <div class="font-bold text-sm text-gray-800">${name || member}</div>
+                                                        ${role ? `<div class="text-xs text-gray-600 mt-1">${role}</div>` : ''}
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'timeline-view':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative pl-12">
+                                            <div class="absolute left-5 top-0 bottom-0 w-1 rounded-full" style="background: linear-gradient(to bottom, ${accentColor}, ${secondaryColor});"></div>
+                                            <div class="space-y-8">
+                                                ${members.map((member, idx) => {
+                                                    const [name, role] = member.split('-').map(s => s.trim());
+                                                    const color = idx % 2 === 0 ? accentColor : secondaryColor;
+                                                    return `
+                                                        <div class="relative">
+                                                            <div class="absolute -left-[3.2rem] top-2 w-12 h-12 rounded-full border-4 border-white ${shadowClass} flex items-center justify-center text-xl" style="background: ${color}; color: white;">
+                                                                👤
+                                                            </div>
+                                                            <div class="bg-white ${radius} ${shadowClass} p-5 ml-2 border-l-4" style="border-color: ${color};">
+                                                                <div class="flex items-center justify-between mb-2">
+                                                                    <div class="font-bold text-gray-800">${name || member}</div>
+                                                                    <div class="text-xs px-2 py-1 rounded-full text-white font-semibold" style="background: ${color};">
+                                                                        #${idx + 1}
+                                                                    </div>
+                                                                </div>
+                                                                ${role ? `<div class="text-sm text-gray-600">${role}</div>` : ''}
+                                                            </div>
+                                                        </div>
+                                                    `;
+                                                }).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'split-design':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${members.map((member, idx) => {
+                                            const [name, role] = member.split('-').map(s => s.trim());
+                                            const isEven = idx % 2 === 0;
+                                            const color = isEven ? accentColor : secondaryColor;
+                                            return `
+                                                <div class="flex ${isEven ? 'flex-row' : 'flex-row-reverse'} items-center gap-4">
+                                                    <div class="flex-shrink-0 w-20 h-20 rounded-2xl flex items-center justify-center text-3xl ${shadowClass}" style="background: linear-gradient(135deg, ${color}, ${color}dd); color: white;">
+                                                        👤
+                                                    </div>
+                                                    <div class="flex-1 bg-white ${radius} ${shadowClass} p-4 ${isEven ? 'text-left' : 'text-right'}">
+                                                        <div class="font-bold text-gray-800">${name || member}</div>
+                                                        ${role ? `<div class="text-sm mt-1" style="color: ${color};">${role}</div>` : ''}
+                                                        <div class="mt-2 text-xs text-gray-500">Team Member #${idx + 1}</div>
                                                     </div>
                                                 </div>
                                             `;

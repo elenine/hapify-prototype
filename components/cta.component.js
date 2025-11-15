@@ -34,6 +34,10 @@ window.sectionComponents.cta = {
                                 <option value="split">Split Layout</option>
                                 <option value="badge">Badge Style</option>
                                 <option value="floating">Floating Card</option>
+                                <option value="ribbon">Ribbon Banner</option>
+                                <option value="modern-stack">Modern Stacked</option>
+                                <option value="neon-glow">Neon Glow</option>
+                                <option value="dual-action">Dual Action</option>
                             </select>
                         </div>
                         <div>
@@ -223,6 +227,76 @@ window.sectionComponents.cta = {
                                             <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white text-xl ${shadowClass}" style="background: ${secondaryColor};">
                                                 →
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'ribbon':
+                            return `
+                                <div class="py-12 px-6 relative overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    <div class="absolute top-0 right-0 w-32 h-32 transform translate-x-12 -translate-y-12 rotate-45 opacity-20" style="background: ${secondaryColor};"></div>
+                                    <div class="absolute bottom-0 left-0 w-24 h-24 transform -translate-x-8 translate-y-8 rotate-45 opacity-20" style="background: ${secondaryColor};"></div>
+                                    <div class="max-w-md mx-auto text-center relative z-10">
+                                        <div class="inline-block px-4 py-1 rounded-full text-xs font-bold mb-4 ${shadowClass}" style="background: ${secondaryColor};">
+                                            LIMITED OFFER
+                                        </div>
+                                        <h2 class="text-2xl font-bold mb-3">${heading}</h2>
+                                        <p class="text-base opacity-90 mb-6">${subtext}</p>
+                                        <button class="px-8 py-3 ${radius} font-bold ${shadowClass} hover:shadow-2xl transition" style="background: ${buttonBg}; color: ${buttonTextColor};">
+                                            ${button} →
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'modern-stack':
+                            return `
+                                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bgColor}, ${secondaryColor}); color: ${textColor}">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="space-y-4">
+                                            <div class="bg-white bg-opacity-10 backdrop-blur-sm ${radius} p-6 ${shadowClass} transform -rotate-1">
+                                                <h2 class="text-2xl font-bold mb-2">${heading}</h2>
+                                                <p class="text-sm opacity-90">${subtext}</p>
+                                            </div>
+                                            <div class="bg-white bg-opacity-20 backdrop-blur-sm ${radius} p-5 ${shadowClass} transform rotate-1">
+                                                <button class="w-full py-3 ${radius} font-bold ${shadowClass} hover:shadow-2xl transition" style="background: ${buttonBg}; color: ${buttonTextColor};">
+                                                    ${button}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'neon-glow':
+                            return `
+                                <div class="py-16 px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative inline-block mb-6">
+                                            <h2 class="text-3xl font-bold" style="text-shadow: 0 0 20px ${secondaryColor}, 0 0 40px ${secondaryColor}60;">${heading}</h2>
+                                        </div>
+                                        <p class="text-lg opacity-90 mb-8">${subtext}</p>
+                                        <button class="px-8 py-3 ${radius} font-bold transition transform hover:scale-105" style="background: ${buttonBg}; color: ${buttonTextColor}; box-shadow: 0 0 20px ${buttonBg}80, 0 0 40px ${buttonBg}40;">
+                                            ${button}
+                                        </button>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'dual-action':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                                    <div class="max-w-md mx-auto text-center">
+                                        <h2 class="text-2xl font-bold mb-2">${heading}</h2>
+                                        <p class="text-base opacity-90 mb-6">${subtext}</p>
+                                        <div class="flex gap-3 justify-center">
+                                            <button class="flex-1 px-6 py-3 ${radius} font-bold ${shadowClass} hover:shadow-2xl transition" style="background: ${buttonBg}; color: ${buttonTextColor};">
+                                                ${button}
+                                            </button>
+                                            <button class="flex-1 px-6 py-3 ${radius} font-bold border-2 hover:bg-white hover:bg-opacity-10 transition" style="border-color: ${buttonBg}; color: ${buttonBg};">
+                                                Learn More
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

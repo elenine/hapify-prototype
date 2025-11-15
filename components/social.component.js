@@ -42,6 +42,10 @@ window.sectionComponents.social = {
                                 <option value="gradient">Gradient Badges</option>
                                 <option value="floating">Floating Icons</option>
                                 <option value="badges">Badge Style</option>
+                                <option value="stacked">Stacked Cards</option>
+                                <option value="wave">Wave Pattern</option>
+                                <option value="pills">Pill Buttons</option>
+                                <option value="neon">Neon Style</option>
                             </select>
                         </div>
                         <div>
@@ -231,6 +235,92 @@ window.sectionComponents.social = {
                                             `).join('')}
                                         </div>
                                         ${!hasLinks ? '<p class="text-center text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'stacked':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="relative" style="min-height: ${socialLinks.length * 70 + 50}px;">
+                                            ${socialLinks.map((link, idx) => `
+                                                <div class="absolute left-0 right-0 transform hover:scale-105 hover:z-10 transition"
+                                                     style="top: ${idx * 60}px; transform: rotate(${idx % 2 === 0 ? -2 : 2}deg);">
+                                                    <a href="${link.url}" class="flex items-center gap-4 p-5 bg-white ${radius} ${shadowClass} border-l-4" style="border-color: ${link.color};">
+                                                        <div class="w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl ${shadowClass}" style="background: ${link.color};">
+                                                            ${link.icon}
+                                                        </div>
+                                                        <div class="flex-1 text-left">
+                                                            <div class="font-bold text-gray-800">${link.name}</div>
+                                                            <div class="text-xs text-gray-500">Follow us here</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        ${!hasLinks ? '<p class="text-center text-gray-500 text-sm">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'wave':
+                            return `
+                                <div class="py-12 px-6 text-center" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="flex justify-center items-end gap-2">
+                                            ${socialLinks.map((link, idx) => {
+                                                const heights = ['h-16', 'h-20', 'h-16', 'h-18'];
+                                                return `
+                                                <a href="${link.url}" class="relative flex items-center justify-center w-16 ${heights[idx % heights.length]} rounded-t-3xl ${shadowClass} hover:scale-110 transition transform" style="background: linear-gradient(to top, ${link.color}, ${link.color}dd);">
+                                                    <span class="text-white text-2xl">${link.icon}</span>
+                                                    <div class="absolute -bottom-6 text-xs font-semibold text-gray-600">${link.name}</div>
+                                                </a>
+                                            `}).join('')}
+                                        </div>
+                                        <div class="mt-8"></div>
+                                        ${!hasLinks ? '<p class="text-gray-500 text-sm">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'pills':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="flex flex-wrap gap-2 justify-center">
+                                            ${socialLinks.map((link, idx) => `
+                                                <a href="${link.url}" class="inline-flex items-center gap-2 px-5 py-3 rounded-full ${shadowClass} hover:${shadowClass === 'shadow-xl' ? 'shadow-2xl' : 'shadow-xl'} transition transform hover:scale-105" style="background: ${link.color}; color: white;">
+                                                    <span class="text-xl">${link.icon}</span>
+                                                    <span class="font-semibold text-sm">${link.name}</span>
+                                                </a>
+                                            `).join('')}
+                                        </div>
+                                        ${!hasLinks ? '<p class="text-center text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'neon':
+                            return `
+                                <div class="py-12 px-6 text-center" style="background: ${bgColor}">
+                                    <div class="max-w-md mx-auto">
+                                        ${headerHtml}
+                                        <div class="flex justify-center gap-4 flex-wrap">
+                                            ${socialLinks.map((link, idx) => `
+                                                <a href="${link.url}" class="relative group">
+                                                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl transition transform group-hover:scale-110" style="background: ${link.color}; box-shadow: 0 0 20px ${link.color}80;">
+                                                        ${link.icon}
+                                                    </div>
+                                                    <div class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition" style="box-shadow: 0 0 30px ${link.color}, 0 0 50px ${link.color}60;"></div>
+                                                    <div class="text-xs font-semibold text-gray-700 mt-2 text-center">${link.name}</div>
+                                                </a>
+                                            `).join('')}
+                                        </div>
+                                        ${!hasLinks ? '<p class="text-gray-500 text-sm mt-4">Add social media links</p>' : ''}
                                     </div>
                                 </div>
                             `;

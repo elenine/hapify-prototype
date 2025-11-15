@@ -38,6 +38,10 @@ window.sectionComponents.testimonials = {
                                 <option value="gradient">Gradient Background</option>
                                 <option value="timeline">Timeline Style</option>
                                 <option value="badge">Badge Style</option>
+                                <option value="speech-bubble">Speech Bubble</option>
+                                <option value="spotlight">Spotlight Card</option>
+                                <option value="polaroid">Polaroid Style</option>
+                                <option value="ribbon">Ribbon Accent</option>
                             </select>
                         </div>
                         <div>
@@ -247,6 +251,120 @@ window.sectionComponents.testimonials = {
                                                     <div>
                                                         <div class="font-semibold text-sm">${client}</div>
                                                         ${role ? `<div class="text-xs text-gray-500">${role}</div>` : ''}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'speech-bubble':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative ${radius} ${shadowClass} p-6 mb-8" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);">
+                                            <div class="absolute -top-3 left-6 w-6 h-6 transform rotate-45" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);"></div>
+                                            <div class="flex items-start gap-3 mb-4">
+                                                <div class="text-5xl leading-none" style="color: ${accentColor};">"</div>
+                                                <p class="flex-1 text-gray-800 leading-relaxed italic pt-2">${testimonial}</p>
+                                                <div class="text-5xl leading-none rotate-180" style="color: ${accentColor};">"</div>
+                                            </div>
+                                            <div class="flex items-center gap-3 pt-4 border-t" style="border-color: ${accentColor}40;">
+                                                <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white ${shadowClass}" style="background: ${accentColor};">
+                                                    💬
+                                                </div>
+                                                <div>
+                                                    <div class="font-bold text-gray-800">${client}</div>
+                                                    ${role ? `<div class="text-xs text-gray-600">${role}</div>` : ''}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'spotlight':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative ${radius} ${shadowClass} overflow-hidden" style="background: white;">
+                                            <div class="absolute top-0 left-0 right-0 h-2" style="background: linear-gradient(90deg, ${accentColor}, ${secondaryColor}, ${accentColor});"></div>
+                                            <div class="p-8">
+                                                <div class="flex justify-center mb-4">
+                                                    <div class="flex gap-1">
+                                                        ${[1,2,3,4,5].map(() => `<span class="text-2xl" style="color: ${accentColor};">⭐</span>`).join('')}
+                                                    </div>
+                                                </div>
+                                                <p class="text-gray-700 text-center leading-relaxed italic mb-6">"${testimonial}"</p>
+                                                <div class="text-center">
+                                                    <div class="inline-flex items-center gap-3 px-6 py-3 ${radius}" style="background: linear-gradient(135deg, ${accentColor}10, ${secondaryColor}10);">
+                                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                                            ${client.charAt(0).toUpperCase()}
+                                                        </div>
+                                                        <div class="text-left">
+                                                            <div class="font-bold text-gray-800">${client}</div>
+                                                            ${role ? `<div class="text-xs" style="color: ${accentColor};">${role}</div>` : ''}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'polaroid':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="bg-white ${shadowClass} p-4 transform -rotate-2 hover:rotate-0 transition-transform">
+                                            <div class="aspect-square ${radius} flex items-center justify-center p-6 mb-4" style="background: linear-gradient(135deg, ${accentColor}20, ${secondaryColor}20);">
+                                                <div class="text-center">
+                                                    <div class="text-6xl mb-4">💬</div>
+                                                    <p class="text-gray-700 italic leading-relaxed">"${testimonial}"</p>
+                                                </div>
+                                            </div>
+                                            <div class="text-center py-3">
+                                                <div class="font-bold text-gray-800 mb-1">${client}</div>
+                                                ${role ? `<div class="text-sm text-gray-600">${role}</div>` : ''}
+                                                <div class="mt-3 flex justify-center gap-1">
+                                                    ${[1,2,3,4,5].map(() => `<span class="text-sm" style="color: ${accentColor};">⭐</span>`).join('')}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'ribbon':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative">
+                                            <div class="absolute -top-3 left-8 px-6 py-2 ${radius} ${shadowClass} text-white font-bold text-sm z-10" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                                Client Review
+                                            </div>
+                                            <div class="bg-white ${radius} ${shadowClass} p-6 pt-10">
+                                                <div class="flex items-start gap-4 mb-4">
+                                                    <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-3xl ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}30, ${secondaryColor}30);">
+                                                        💬
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <p class="text-gray-700 italic leading-relaxed mb-4">"${testimonial}"</p>
+                                                        <div class="flex items-center justify-between">
+                                                            <div>
+                                                                <div class="font-bold text-gray-800">${client}</div>
+                                                                ${role ? `<div class="text-xs text-gray-600 mt-1">${role}</div>` : ''}
+                                                            </div>
+                                                            <div class="flex gap-1">
+                                                                ${[1,2,3,4,5].map(() => `<span class="text-lg" style="color: ${accentColor};">★</span>`).join('')}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
