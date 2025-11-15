@@ -31,6 +31,12 @@ window.sectionComponents.schedule = {
                     <option value="cards">Card View</option>
                     <option value="minimal">Minimal List</option>
                     <option value="modern">Modern Steps</option>
+                    <option value="accordion">Accordion Style</option>
+                    <option value="gradient-steps">Gradient Steps</option>
+                    <option value="circular-timeline">Circular Timeline</option>
+                    <option value="agenda">Agenda Planner</option>
+                    <option value="colorful-blocks">Colorful Blocks</option>
+                    <option value="split-view">Split View</option>
                 </select>
             </div>
             <div>
@@ -147,6 +153,206 @@ window.sectionComponents.schedule = {
                                                 <span>${item.time}</span>
                                             </div>` : ''}
                                             <div class="text-gray-800 font-medium">${item.activity}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'accordion':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📅</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Ceremony Schedule'}</h2>
+                                ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            </div>
+                            <div class="space-y-2">
+                                ${parsedItems.map((item, index) => `
+                                    <div class="bg-white rounded-xl overflow-hidden ${shadowClass} border-2" style="border-color: ${accent}20">
+                                        <div class="p-5" style="background: linear-gradient(to right, ${accent}10, transparent)">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex-1">
+                                                    ${item.time ? `<div class="text-xs font-bold uppercase tracking-wide mb-2" style="color: ${accent}">⏰ ${item.time}</div>` : ''}
+                                                    <div class="text-gray-800 font-bold text-lg">${item.activity}</div>
+                                                </div>
+                                                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center" style="background: ${accent}20; color: ${accent}">
+                                                    <span class="text-xl">▶</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'gradient-steps':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}">
+                        <div class="max-w-3xl mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📅</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Ceremony Schedule'}</h2>
+                                ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            </div>
+                            <div class="grid gap-4">
+                                ${parsedItems.map((item, index) => {
+                                    const opacity = 100 - (index * 10);
+                                    return `
+                                        <div class="relative rounded-2xl p-6 ${shadowClass} text-white overflow-hidden" style="background: linear-gradient(135deg, ${accent} 0%, ${accent}${opacity > 50 ? opacity : 50} 100%)">
+                                            <div class="absolute top-2 right-2 w-12 h-12 rounded-full bg-white bg-opacity-20 flex items-center justify-center font-bold text-xl">
+                                                ${index + 1}
+                                            </div>
+                                            ${item.time ? `<div class="text-sm font-bold mb-2 opacity-90">🕐 ${item.time}</div>` : ''}
+                                            <div class="font-bold text-lg pr-14">${item.activity}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'circular-timeline':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📅</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Ceremony Schedule'}</h2>
+                                ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            </div>
+                            <div class="relative">
+                                <div class="absolute left-8 top-0 bottom-0 w-1 rounded-full" style="background: linear-gradient(to bottom, ${accent}, ${accent}50)"></div>
+                                <div class="space-y-8">
+                                    ${parsedItems.map((item, index) => `
+                                        <div class="relative flex gap-6 items-start">
+                                            <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-3xl z-10 ${shadowClass} border-4 border-white" style="background: linear-gradient(135deg, ${accent}, ${accent}dd)">
+                                                ${['🎓', '🎯', '🎤', '📜', '🎊', '📸', '🎉'][index % 7]}
+                                            </div>
+                                            <div class="flex-1 bg-white rounded-2xl p-5 ${shadowClass} mt-2">
+                                                ${item.time ? `<div class="inline-block px-3 py-1 rounded-full text-xs font-bold mb-2" style="background: ${accent}20; color: ${accent}">⏰ ${item.time}</div>` : ''}
+                                                <div class="text-gray-800 font-bold text-lg">${item.activity}</div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'agenda':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="bg-white rounded-2xl ${shadowClass} overflow-hidden">
+                                <div class="p-6 text-center text-white" style="background: linear-gradient(135deg, ${accent}, ${accent}cc)">
+                                    <div class="text-4xl mb-2">📅</div>
+                                    <h2 class="text-2xl font-bold">${data.title || 'Ceremony Schedule'}</h2>
+                                    ${data.description ? `<p class="mt-2 opacity-90">${data.description}</p>` : ''}
+                                </div>
+                                <div class="divide-y divide-gray-200">
+                                    ${parsedItems.map((item, index) => `
+                                        <div class="p-5 hover:bg-gray-50 transition-colors">
+                                            <div class="flex items-center gap-4">
+                                                ${item.time ? `
+                                                    <div class="flex-shrink-0 w-20 text-center">
+                                                        <div class="inline-block px-3 py-2 rounded-lg font-bold text-sm" style="background: ${accent}15; color: ${accent}">
+                                                            ${item.time}
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                                <div class="flex-1">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background: ${accent}">
+                                                            ${index + 1}
+                                                        </div>
+                                                        <div class="text-gray-800 font-medium">${item.activity}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'colorful-blocks':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}">
+                        <div class="max-w-3xl mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📅</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Ceremony Schedule'}</h2>
+                                ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            </div>
+                            <div class="grid gap-4">
+                                ${parsedItems.map((item, index) => {
+                                    const gradients = [
+                                        'linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)',
+                                        'linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)',
+                                        'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                        'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)',
+                                        'linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)',
+                                        'linear-gradient(135deg, #f97316 0%, #dc2626 100%)'
+                                    ];
+                                    const gradient = gradients[index % gradients.length];
+                                    return `
+                                        <div class="rounded-2xl p-6 ${shadowClass} text-white relative overflow-hidden" style="background: ${gradient}">
+                                            <div class="absolute top-2 right-2 w-10 h-10 rounded-full bg-white bg-opacity-25 flex items-center justify-center font-bold">
+                                                ${index + 1}
+                                            </div>
+                                            <div class="pr-12">
+                                                ${item.time ? `<div class="text-sm font-bold mb-2 flex items-center gap-2 opacity-95">
+                                                    <span class="text-xl">⏰</span>
+                                                    <span>${item.time}</span>
+                                                </div>` : ''}
+                                                <div class="font-bold text-lg">${item.activity}</div>
+                                            </div>
+                                            <div class="absolute bottom-0 right-0 w-24 h-24 rounded-full bg-white opacity-10" style="transform: translate(25%, 25%)"></div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'split-view':
+                return `
+                    <div class="py-12 px-6" style="background: ${bg}">
+                        <div class="max-w-3xl mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📅</div>
+                                <h2 class="text-2xl font-bold">${data.title || 'Ceremony Schedule'}</h2>
+                                ${data.description ? `<p class="text-gray-600 mt-2">${data.description}</p>` : ''}
+                            </div>
+                            <div class="bg-white rounded-2xl ${shadowClass} overflow-hidden">
+                                ${parsedItems.map((item, index) => `
+                                    <div class="flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} border-b border-gray-100 last:border-0">
+                                        ${item.time ? `
+                                            <div class="w-32 flex-shrink-0 p-5 flex items-center justify-center text-white font-bold" style="background: ${accent}">
+                                                <div class="text-center">
+                                                    <div class="text-2xl mb-1">🕐</div>
+                                                    <div class="text-sm">${item.time}</div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        <div class="flex-1 p-5 flex items-center">
+                                            <div>
+                                                <div class="inline-block w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white mb-2" style="background: ${accent}">
+                                                    ${index + 1}
+                                                </div>
+                                                <div class="text-gray-800 font-bold text-lg">${item.activity}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 `).join('')}

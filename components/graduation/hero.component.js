@@ -42,6 +42,12 @@ window.sectionComponents.hero = {
                     <option value="modern">Modern Split</option>
                     <option value="minimal">Minimal Card</option>
                     <option value="bold">Bold Gradient</option>
+                    <option value="overlay">Image Overlay</option>
+                    <option value="split-vertical">Vertical Split</option>
+                    <option value="card-floating">Floating Card</option>
+                    <option value="gradient-diagonal">Diagonal Gradient</option>
+                    <option value="circle-frame">Circle Frame</option>
+                    <option value="banner-style">Banner Style</option>
                 </select>
             </div>
             <div>
@@ -231,6 +237,146 @@ window.sectionComponents.hero = {
                             <h1 class="${titleClass} font-black mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.2)">${data.title || 'Graduation Ceremony'}</h1>
                             <div class="inline-block px-6 py-3 rounded-full text-xl font-semibold" style="background: ${accent}; color: ${bg}">
                                 ${data.name || "Graduate Name"}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'overlay':
+                return `
+                    <div class="relative ${paddingClass} px-6 overflow-hidden min-h-[400px] flex items-center justify-center" style="background: ${bg}; color: ${text}">
+                        ${data.image ? `
+                            <div class="absolute inset-0">
+                                <img src="${data.image}" class="w-full h-full object-cover opacity-40">
+                                <div class="absolute inset-0" style="background: linear-gradient(to bottom, ${bg}00, ${bg}99)"></div>
+                            </div>
+                        ` : ''}
+                        ${generateBanner(bannerMode)}
+                        <div class="relative z-10 text-${align} max-w-xl">
+                            <div class="inline-block px-4 py-2 rounded-full mb-4" style="background: ${accent}33; backdrop-filter: blur(10px)">
+                                <span class="text-sm font-semibold" style="color: ${accent}">🎓 Graduation</span>
+                            </div>
+                            <h1 class="${titleClass} font-bold mb-4" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.3)">${data.title || 'Graduation Ceremony'}</h1>
+                            <p class="text-2xl font-light mb-4" style="text-shadow: 1px 1px 4px rgba(0,0,0,0.2)">${data.name || "Graduate Name"}</p>
+                            <div class="h-1 w-24 rounded" style="background: ${accent}; ${align === 'center' ? 'margin: 0 auto' : align === 'right' ? 'margin-left: auto' : ''}"></div>
+                        </div>
+                    </div>
+                `;
+
+            case 'split-vertical':
+                return `
+                    <div class="relative overflow-hidden" style="background: ${bg}; color: ${text}">
+                        ${generateBanner(bannerMode)}
+                        <div class="relative z-10">
+                            <div class="py-8 px-6 text-center" style="background: ${accent}">
+                                ${data.image ? `<img src="${data.image}" class="w-40 h-40 rounded-2xl mx-auto object-cover border-4 border-white shadow-2xl">` : '<div class="text-8xl">🎓</div>'}
+                            </div>
+                            <div class="py-12 px-6 text-${align}">
+                                <h1 class="${titleClass} font-bold mb-3">${data.title || 'Graduation Ceremony'}</h1>
+                                <div class="h-1 w-20 rounded mb-4" style="background: ${accent}; ${align === 'center' ? 'margin-left: auto; margin-right: auto' : align === 'right' ? 'margin-left: auto; margin-right: 0' : 'margin-left: 0'}"></div>
+                                <p class="text-2xl">${data.name || "Graduate Name"}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'card-floating':
+                return `
+                    <div class="relative ${paddingClass} px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bg} 0%, ${accent} 100%); color: ${text}">
+                        ${generateBanner(bannerMode)}
+                        <div class="relative z-10 max-w-lg mx-auto">
+                            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300" style="color: #1f2937">
+                                ${data.image ? `
+                                    <div class="h-48 overflow-hidden">
+                                        <img src="${data.image}" class="w-full h-full object-cover">
+                                    </div>
+                                ` : `
+                                    <div class="h-48 flex items-center justify-center" style="background: ${accent}15">
+                                        <div class="text-8xl">🎓</div>
+                                    </div>
+                                `}
+                                <div class="p-8 text-${align}">
+                                    <h1 class="${titleClass} font-bold mb-3" style="color: ${bg}">${data.title || 'Graduation Ceremony'}</h1>
+                                    <div class="h-1 w-16 rounded mb-4" style="background: ${accent}; ${align === 'center' ? 'margin-left: auto; margin-right: auto' : align === 'right' ? 'margin-left: auto; margin-right: 0' : 'margin-left: 0'}"></div>
+                                    <p class="text-xl font-medium" style="color: ${accent}">${data.name || "Graduate Name"}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'gradient-diagonal':
+                return `
+                    <div class="relative ${paddingClass} px-6 overflow-hidden" style="background: linear-gradient(120deg, ${bg} 0%, ${accent} 100%); color: ${text}">
+                        ${generateBanner(bannerMode)}
+                        <div class="absolute top-0 right-0 w-64 h-64 opacity-20 rounded-full" style="background: ${text}; transform: translate(50%, -50%)"></div>
+                        <div class="absolute bottom-0 left-0 w-80 h-80 opacity-20 rounded-full" style="background: ${text}; transform: translate(-50%, 50%)"></div>
+                        <div class="relative z-10 max-w-2xl mx-auto text-${align}">
+                            <div class="flex flex-col items-${align === 'center' ? 'center' : align === 'right' ? 'end' : 'start'} gap-6 md:flex-row md:items-center ${align === 'center' ? 'md:justify-center' : ''}">
+                                ${data.image ? `
+                                    <img src="${data.image}" class="w-36 h-36 rounded-3xl object-cover border-4 shadow-xl transform rotate-3 hover:rotate-0 transition-transform" style="border-color: ${text}33">
+                                ` : '<div class="text-8xl transform rotate-3">🎓</div>'}
+                                <div>
+                                    <h1 class="${titleClass} font-black mb-3 tracking-tight">${data.title || 'Graduation Ceremony'}</h1>
+                                    <p class="text-2xl font-light opacity-95 mb-4">${data.name || "Graduate Name"}</p>
+                                    <div class="inline-block px-6 py-2 rounded-full font-semibold backdrop-blur-sm" style="background: ${text}33">
+                                        🌟 Class of 2024
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'circle-frame':
+                return `
+                    <div class="relative ${paddingClass} px-6 overflow-hidden" style="background: ${bg}; color: ${text}">
+                        ${generateBanner(bannerMode)}
+                        <div class="relative z-10 max-w-md mx-auto text-center">
+                            <div class="relative inline-block">
+                                <div class="absolute inset-0 rounded-full animate-pulse" style="background: ${accent}; opacity: 0.2; transform: scale(1.1)"></div>
+                                <div class="relative p-4 rounded-full" style="background: ${accent}33">
+                                    ${data.image ? `
+                                        <img src="${data.image}" class="w-48 h-48 rounded-full object-cover border-8 shadow-2xl" style="border-color: ${accent}">
+                                    ` : `
+                                        <div class="w-48 h-48 rounded-full flex items-center justify-center text-8xl" style="background: ${accent}15">
+                                            🎓
+                                        </div>
+                                    `}
+                                </div>
+                            </div>
+                            <div class="mt-8">
+                                <div class="inline-block px-4 py-2 rounded-full mb-4 text-sm font-bold" style="background: ${accent}; color: ${bg}">
+                                    CONGRATULATIONS
+                                </div>
+                                <h1 class="${titleClass} font-bold mb-2">${data.title || 'Graduation Ceremony'}</h1>
+                                <p class="text-2xl font-light opacity-90">${data.name || "Graduate Name"}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'banner-style':
+                return `
+                    <div class="relative overflow-hidden" style="color: ${text}">
+                        ${generateBanner(bannerMode)}
+                        <div class="relative z-10">
+                            <div class="py-6 px-6 text-center" style="background: ${accent}">
+                                <h1 class="${titleClass} font-black tracking-tight">${data.title || 'Graduation Ceremony'}</h1>
+                            </div>
+                            <div class="py-12 px-6 text-center" style="background: ${bg}">
+                                ${data.image ? `
+                                    <img src="${data.image}" class="w-40 h-40 rounded-2xl mx-auto mb-6 object-cover shadow-2xl border-4" style="border-color: ${accent}">
+                                ` : '<div class="text-8xl mb-6">🎓</div>'}
+                                <p class="text-3xl font-bold mb-4">${data.name || "Graduate Name"}</p>
+                                <div class="flex items-center justify-center gap-4 flex-wrap">
+                                    <div class="px-6 py-3 rounded-lg font-semibold" style="background: ${accent}15; color: ${accent}">
+                                        🌟 Graduating Class
+                                    </div>
+                                    <div class="px-6 py-3 rounded-lg font-semibold" style="background: ${accent}; color: ${bg}">
+                                        2024
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
