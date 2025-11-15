@@ -34,6 +34,12 @@ window.sectionComponents.awards = {
                     <option value="certificates">Certificate Style - Formal</option>
                     <option value="minimal">Minimal List - Clean</option>
                     <option value="podium">Podium Style - Unique</option>
+                    <option value="showcase">Showcase Display - Spotlight gallery</option>
+                    <option value="gallery">Gallery Wall - Museum-style frames</option>
+                    <option value="trophy">Trophy Case - Display cabinet style</option>
+                    <option value="medallions">Medallion Circles - Round medal design</option>
+                    <option value="banners">Victory Banners - Flag style display</option>
+                    <option value="carousel">Award Carousel - Rotating showcase</option>
                 </select>
             </div>
             <div>
@@ -248,6 +254,172 @@ window.sectionComponents.awards = {
                                     ${award.desc ? `<p class="text-sm text-gray-600">${award.desc}</p>` : ''}
                                 </div>
                             `).join('') : '<p class="text-center text-gray-500 col-span-3">Add awards in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Showcase Display Layout
+        if (layout === 'showcase') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bgColor}, ${cardBg}); color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="grid gap-8">
+                            ${awards.length > 0 ? awards.map((award, index) => {
+                                const isFeatured = index % 2 === 0;
+                                if (isFeatured) {
+                                    return `
+                                        <div class="p-10 rounded-3xl ${shadowClass} text-center" style="background: linear-gradient(135deg, ${awardColor}, ${awardColor}dd); position: relative; overflow: hidden">
+                                            <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background: radial-gradient(circle at 50% 50%, white, transparent)"></div>
+                                            <div class="relative z-10">
+                                                <div class="text-7xl mb-4 text-white">${icon}</div>
+                                                <h4 class="font-bold text-2xl mb-3 text-white">${award.award}</h4>
+                                                ${award.desc ? `<p class="text-lg text-white opacity-90">${award.desc}</p>` : ''}
+                                            </div>
+                                        </div>
+                                    `;
+                                } else {
+                                    return `
+                                        <div class="${padding} rounded-2xl ${shadowClass}" style="background: ${cardBg}; border: 3px solid ${awardColor}">
+                                            <div class="flex items-center gap-6">
+                                                <div class="text-5xl" style="color: ${awardColor}">${icon}</div>
+                                                <div class="flex-1">
+                                                    <h4 class="font-bold text-xl mb-2">${award.award}</h4>
+                                                    ${award.desc ? `<p class="text-gray-600">${award.desc}</p>` : ''}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }).join('') : '<p class="text-center text-gray-500">Add awards in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gallery Wall Layout
+        if (layout === 'gallery') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            ${awards.length > 0 ? awards.map((award) => `
+                                <div class="p-8 rounded-lg ${shadowClass}" style="background: ${cardBg}; border: 8px solid ${awardColor}22; box-shadow: 0 0 0 2px ${awardColor}">
+                                    <div class="text-center">
+                                        <div class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-5xl mb-4 ${shadowClass}" style="background: linear-gradient(135deg, ${awardColor}, ${awardColor}cc)">
+                                            <span class="text-white">${icon}</span>
+                                        </div>
+                                        <h4 class="font-bold text-xl mb-2" style="color: ${awardColor}">${award.award}</h4>
+                                        ${award.desc ? `<p class="text-gray-600 italic">${award.desc}</p>` : ''}
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500 col-span-2">Add awards in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Trophy Case Layout
+        if (layout === 'trophy') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="p-8 rounded-2xl ${shadowClass}" style="background: linear-gradient(135deg, ${cardBg}, ${bgColor}); border: 4px solid ${awardColor}44">
+                            <div class="grid md:grid-cols-3 gap-6">
+                                ${awards.length > 0 ? awards.map((award) => `
+                                    <div class="relative">
+                                        <div class="absolute inset-0 rounded-xl" style="background: ${awardColor}11"></div>
+                                        <div class="relative ${padding} rounded-xl text-center">
+                                            <div class="text-6xl mb-3" style="color: ${awardColor}">${icon}</div>
+                                            <div class="h-1 w-16 mx-auto mb-3 rounded-full" style="background: ${awardColor}"></div>
+                                            <h4 class="font-bold text-base mb-2">${award.award}</h4>
+                                            ${award.desc ? `<p class="text-xs text-gray-600">${award.desc}</p>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('') : '<p class="text-center text-gray-500 col-span-3">Add awards in the editor</p>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Medallion Circles Layout
+        if (layout === 'medallions') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="flex flex-wrap justify-center gap-8">
+                            ${awards.length > 0 ? awards.map((award) => `
+                                <div class="relative">
+                                    <div class="w-48 h-48 rounded-full ${shadowClass} p-8 text-center flex flex-col items-center justify-center" style="background: linear-gradient(135deg, ${awardColor}, ${awardColor}dd); border: 6px solid ${cardBg}; box-shadow: 0 0 0 3px ${awardColor}">
+                                        <div class="text-5xl mb-2 text-white">${icon}</div>
+                                        <h4 class="font-bold text-sm text-white mb-1">${award.award}</h4>
+                                        ${award.desc ? `<p class="text-xs text-white opacity-90">${award.desc}</p>` : ''}
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add awards in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Victory Banners Layout
+        if (layout === 'banners') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="space-y-6">
+                            ${awards.length > 0 ? awards.map((award) => `
+                                <div class="relative overflow-hidden rounded-2xl ${shadowClass}" style="background: linear-gradient(90deg, ${awardColor}, ${awardColor}dd)">
+                                    <div class="absolute top-0 right-0 w-32 h-full opacity-20" style="background: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22white%22/></svg>') no-repeat center; background-size: contain"></div>
+                                    <div class="relative ${padding} flex items-center gap-6">
+                                        <div class="text-6xl text-white">${icon}</div>
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-2xl text-white mb-2">${award.award}</h4>
+                                            ${award.desc ? `<p class="text-white opacity-90">${award.desc}</p>` : ''}
+                                        </div>
+                                    </div>
+                                    <div class="absolute bottom-0 right-0 w-0 h-0" style="border-left: 40px solid transparent; border-bottom: 40px solid ${bgColor}"></div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add awards in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Award Carousel Layout
+        if (layout === 'carousel') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="overflow-x-auto pb-8">
+                            <div class="flex gap-8 px-4" style="min-width: max-content">
+                                ${awards.length > 0 ? awards.map((award, index) => {
+                                    const rotations = [-3, 2, -2, 3, -3, 2];
+                                    const rotation = rotations[index % rotations.length];
+                                    return `
+                                        <div style="width: 280px; transform: rotate(${rotation}deg)">
+                                            <div class="${padding} rounded-3xl ${shadowClass} text-center" style="background: ${cardBg}; border: 4px solid ${awardColor}">
+                                                <div class="text-6xl mb-4" style="color: ${awardColor}">${icon}</div>
+                                                <h4 class="font-bold text-lg mb-2">${award.award}</h4>
+                                                ${award.desc ? `<p class="text-sm text-gray-600">${award.desc}</p>` : ''}
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('') : '<p class="text-center text-gray-500">Add awards in the editor</p>'}
+                            </div>
                         </div>
                     </div>
                 </div>

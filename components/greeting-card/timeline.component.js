@@ -34,6 +34,12 @@ window.sectionComponents.timeline = {
                     <option value="cards">Card Timeline - Clean</option>
                     <option value="minimal">Minimal Dots - Simple</option>
                     <option value="zigzag">Zigzag Path - Creative</option>
+                    <option value="gradient">Gradient Flow - Colorful gradient backgrounds</option>
+                    <option value="stepped">Stepped Cascade - Staircase offset design</option>
+                    <option value="carousel">Carousel Style - Overlapping cards display</option>
+                    <option value="spotlight">Spotlight Focus - Featured center layout</option>
+                    <option value="wave">Wave Pattern - Curved flowing connections</option>
+                    <option value="spiral">Spiral Burst - Radiating from center</option>
                 </select>
             </div>
             <div>
@@ -267,6 +273,194 @@ window.sectionComponents.timeline = {
                                     <div class="flex-1"></div>
                                 </div>
                             `).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gradient Flow Layout
+        if (layout === 'gradient') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="space-y-6">
+                            ${events.length > 0 ? events.map((evt, index) => {
+                                const opacity = 0.2 + (index * 0.15);
+                                return `
+                                    <div class="${padding} rounded-2xl ${shadowClass}" style="background: linear-gradient(135deg, ${lineColor}${Math.floor(opacity * 255).toString(16).padStart(2, '0')}, ${cardBg}); border: 2px solid ${lineColor}">
+                                        <div class="flex items-start gap-4">
+                                            ${getDotStyle(index)}
+                                            <div class="flex-1">
+                                                <div class="text-sm font-bold mb-2" style="color: ${lineColor}">${evt.date}</div>
+                                                <p class="font-medium">${evt.event}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Stepped Cascade Layout
+        if (layout === 'stepped') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="space-y-4">
+                            ${events.length > 0 ? events.map((evt, index) => {
+                                const marginLeft = index * 40;
+                                return `
+                                    <div style="margin-left: ${marginLeft}px; max-width: calc(100% - ${marginLeft}px)">
+                                        <div class="${padding} rounded-xl ${shadowClass}" style="background: ${cardBg}; border-left: 4px solid ${lineColor}; transform: translateX(0); transition: transform 0.3s">
+                                            <div class="flex items-center gap-3 mb-2">
+                                                ${getDotStyle(index)}
+                                                <div class="text-sm font-bold" style="color: ${lineColor}">${evt.date}</div>
+                                            </div>
+                                            <p class="ml-11">${evt.event}</p>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Carousel Style Layout
+        if (layout === 'carousel') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="relative overflow-x-auto pb-8">
+                            <div class="flex gap-6 px-4" style="min-width: max-content">
+                                ${events.length > 0 ? events.map((evt, index) => {
+                                    const rotation = [-2, 1, -1, 2, -2, 1][index % 6];
+                                    return `
+                                        <div class="flex-shrink-0" style="width: 280px; transform: rotate(${rotation}deg)">
+                                            <div class="${padding} rounded-2xl ${shadowClass}" style="background: ${cardBg}; border-top: 6px solid ${lineColor}">
+                                                <div class="flex justify-center mb-3">
+                                                    ${getDotStyle(index)}
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="text-sm font-bold mb-2" style="color: ${lineColor}">${evt.date}</div>
+                                                    <p>${evt.event}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Spotlight Focus Layout
+        if (layout === 'spotlight') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="grid gap-6">
+                            ${events.length > 0 ? events.map((evt, index) => {
+                                const isSpotlight = index % 3 === 0;
+                                if (isSpotlight) {
+                                    return `
+                                        <div class="col-span-1">
+                                            <div class="${padding} rounded-3xl ${shadowClass}" style="background: linear-gradient(135deg, ${lineColor}, ${cardBg}); transform: scale(1.05)">
+                                                <div class="flex flex-col items-center text-center">
+                                                    <div class="text-6xl mb-4">${getDotStyle(index)}</div>
+                                                    <div class="text-lg font-bold mb-3 text-white">${evt.date}</div>
+                                                    <p class="text-lg text-white">${evt.event}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                } else {
+                                    return `
+                                        <div class="col-span-1">
+                                            <div class="${padding} rounded-xl ${shadowClass}" style="background: ${cardBg}; border: 2px solid ${lineColor}44">
+                                                <div class="flex items-start gap-3">
+                                                    ${getDotStyle(index)}
+                                                    <div>
+                                                        <div class="text-sm font-semibold mb-1" style="color: ${lineColor}">${evt.date}</div>
+                                                        <p class="text-sm">${evt.event}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Wave Pattern Layout
+        if (layout === 'wave') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="space-y-6">
+                            ${events.length > 0 ? events.map((evt, index) => {
+                                const positions = ['ml-0', 'ml-12', 'ml-24', 'ml-12', 'ml-0'];
+                                const position = positions[index % positions.length];
+                                return `
+                                    <div class="${position}">
+                                        <div class="${padding} rounded-full ${shadowClass}" style="background: ${cardBg}; border: 3px solid ${lineColor}; max-width: 90%">
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex-shrink-0">${getDotStyle(index)}</div>
+                                                <div class="flex-1">
+                                                    <div class="text-xs font-bold mb-1" style="color: ${lineColor}">${evt.date}</div>
+                                                    <p class="text-sm">${evt.event}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Spiral Burst Layout
+        if (layout === 'spiral') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="relative" style="min-height: 400px">
+                            ${events.length > 0 ? events.map((evt, index) => {
+                                const angle = (index * 60) % 360;
+                                const radius = 100 + (index * 30);
+                                const x = Math.cos(angle * Math.PI / 180) * radius;
+                                const y = Math.sin(angle * Math.PI / 180) * radius;
+                                return `
+                                    <div class="absolute" style="left: 50%; top: 50%; transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px))">
+                                        <div class="${padding} rounded-xl ${shadowClass}" style="background: ${cardBg}; border: 2px solid ${lineColor}; min-width: 200px">
+                                            <div class="text-center">
+                                                <div class="flex justify-center mb-2">${getDotStyle(index)}</div>
+                                                <div class="text-xs font-bold mb-2" style="color: ${lineColor}">${evt.date}</div>
+                                                <p class="text-sm">${evt.event}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add timeline events in the editor</p>'}
                         </div>
                     </div>
                 </div>

@@ -34,6 +34,12 @@ window.sectionComponents.trivia = {
                     <option value="colorfulBadges">Colorful Badges - Vibrant badge numbers</option>
                     <option value="accordionStyle">Accordion Style - Expandable-looking cards</option>
                     <option value="timelineView">Timeline View - Vertical timeline layout</option>
+                    <option value="flashcards">Flashcards - Card flip style design</option>
+                    <option value="gameShow">Game Show - Scoreboard style layout</option>
+                    <option value="bingo">Bingo Board - Grid pattern display</option>
+                    <option value="puzzle">Puzzle Pieces - Jigsaw puzzle style</option>
+                    <option value="spotlight">Question Spotlight - Theater lights theme</option>
+                    <option value="retro">Retro Arcade - Pixel game aesthetic</option>
                 </select>
             </div>
             <div>
@@ -297,6 +303,178 @@ window.sectionComponents.trivia = {
                                     </div>
                                 `).join('')}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'flashcards') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'How Well Do You Know Me?'}</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            ${questions.map((q, index) => `
+                                <div class="relative" style="perspective: 1000px">
+                                    <div class="${radiusClass} ${shadowClass} p-6" style="background: ${cardBg}; border: 3px solid ${accentColor}; transform: rotateY(-2deg)">
+                                        <div class="absolute top-3 right-3 w-10 h-10 rounded-full flex items-center justify-center font-bold text-white" style="background: ${accentColor}">
+                                            ${index + 1}
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="text-xs font-semibold mb-2" style="color: ${accentColor}">QUESTION</div>
+                                            <p class="text-lg font-semibold">${q.question}</p>
+                                        </div>
+                                        <div class="border-t-2 pt-4" style="border-color: ${accentColor}44">
+                                            <div class="text-xs font-semibold mb-2" style="color: ${accentColor}">ANSWER</div>
+                                            <p class="font-medium">${q.answer}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'gameShow') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(135deg, #1e293b, #334155); color: white">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10 text-yellow-400">${data.title || 'How Well Do You Know Me?'}</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            ${questions.map((q, index) => `
+                                <div class="${radiusClass} overflow-hidden ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd); border: 4px solid gold">
+                                    <div class="p-4" style="background: rgba(0,0,0,0.3)">
+                                        <div class="flex items-center gap-3 mb-3">
+                                            <div class="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-2xl bg-yellow-400 text-gray-900 ${shadowClass}">
+                                                ${index + 1}
+                                            </div>
+                                            <div class="text-xs font-bold text-yellow-400">QUESTION #${index + 1}</div>
+                                        </div>
+                                        <p class="text-lg font-semibold mb-3">${q.question}</p>
+                                        <div class="p-3 rounded-lg ${shadowClass}" style="background: rgba(255,255,255,0.95); color: #1f2937">
+                                            <div class="text-xs font-bold mb-1" style="color: ${accentColor}">✓ CORRECT ANSWER</div>
+                                            <p class="font-bold">${q.answer}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'bingo') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'How Well Do You Know Me?'}</h3>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            ${questions.map((q, index) => `
+                                <div class="${radiusClass} ${shadowClass} p-4 text-center" style="background: ${cardBg}; border: 4px solid ${accentColor}">
+                                    <div class="w-10 h-10 mx-auto rounded-full flex items-center justify-center font-bold text-white mb-3 ${shadowClass}" style="background: ${accentColor}">
+                                        ${index + 1}
+                                    </div>
+                                    <p class="text-sm font-semibold mb-3 min-h-[3rem]">${q.question}</p>
+                                    <div class="p-2 rounded" style="background: ${bgColor}">
+                                        <p class="text-xs font-bold">${q.answer}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'puzzle') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'How Well Do You Know Me?'}</h3>
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            ${questions.map((q, index) => {
+                                const rotations = [-3, 2, -2, 3, -1, 2];
+                                const rotation = rotations[index % rotations.length];
+                                return `
+                                    <div style="transform: rotate(${rotation}deg); max-width: 280px">
+                                        <div class="${radiusClass} ${shadowClass} p-5 relative" style="background: ${cardBg}; border: 3px solid ${accentColor}; clip-path: polygon(0% 10%, 10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%)">
+                                            <div class="absolute top-2 right-2 w-8 h-8 rounded flex items-center justify-center font-bold text-white text-sm" style="background: ${accentColor}">
+                                                ${index + 1}
+                                            </div>
+                                            <div class="mb-3">
+                                                <p class="text-base font-semibold">${q.question}</p>
+                                            </div>
+                                            <div class="p-2 rounded" style="background: ${bgColor}">
+                                                <div class="text-xs font-semibold mb-1" style="color: ${accentColor}">ANSWER</div>
+                                                <p class="text-sm font-medium">${q.answer}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'spotlight') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: linear-gradient(135deg, #1f2937, #111827); color: white">
+                    <div class="absolute inset-0 opacity-20">
+                        ${questions.map((_, i) => `<div class="absolute w-32 h-32 rounded-full" style="background: radial-gradient(circle, ${accentColor}66, transparent); left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; transform: translate(-50%, -50%)"></div>`).join('')}
+                    </div>
+                    <div class="max-w-3xl mx-auto relative z-10">
+                        <h3 class="text-3xl font-bold text-center mb-10 text-yellow-400">${data.title || 'How Well Do You Know Me?'}</h3>
+                        <div class="space-y-6">
+                            ${questions.map((q, index) => `
+                                <div class="${radiusClass} ${shadowClass} p-6 relative overflow-hidden" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 2px solid ${accentColor}66; box-shadow: 0 0 30px ${accentColor}44">
+                                    <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background: radial-gradient(circle at 50% 50%, ${accentColor}, transparent)"></div>
+                                    <div class="relative z-10">
+                                        <div class="flex items-center gap-4 mb-3">
+                                            <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-2xl ${shadowClass}" style="background: ${accentColor}; color: white">
+                                                ${index + 1}
+                                            </div>
+                                            <p class="text-lg font-semibold flex-1">${q.question}</p>
+                                        </div>
+                                        <div class="ml-16 p-4 rounded-lg ${shadowClass}" style="background: rgba(255,255,255,0.95); color: #1f2937">
+                                            <div class="text-xs font-bold mb-1" style="color: ${accentColor}">ANSWER</div>
+                                            <p class="font-semibold">${q.answer}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'retro') {
+            return `
+                <div class="py-12 px-6" style="background: #2d1b69; color: #f0e68c">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10" style="text-shadow: 3px 3px 0px #ff6ec7, 6px 6px 0px #7b68ee; font-family: monospace">${data.title || 'How Well Do You Know Me?'}</h3>
+                        <div class="space-y-4">
+                            ${questions.map((q, index) => `
+                                <div class="${shadowClass} p-6" style="background: #000000; border: 4px solid ${accentColor}; font-family: monospace">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-12 h-12 flex items-center justify-center font-bold text-2xl ${shadowClass}" style="background: ${accentColor}; color: #000; border: 3px solid #fff">
+                                            ${index + 1}
+                                        </div>
+                                        <div class="text-xs font-bold px-3 py-1" style="background: ${accentColor}; color: #000">Q${index + 1}</div>
+                                    </div>
+                                    <p class="text-lg font-bold mb-4 text-white">${q.question}</p>
+                                    <div class="p-4" style="background: ${accentColor}; color: #000; border: 2px dashed #fff">
+                                        <div class="text-xs font-bold mb-2">>>> ANSWER:</div>
+                                        <p class="font-bold text-lg">${q.answer}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
                 </div>

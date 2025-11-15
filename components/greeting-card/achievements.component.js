@@ -34,6 +34,12 @@ window.sectionComponents.achievements = {
                     <option value="timeline">Timeline - Progress</option>
                     <option value="minimal">Minimal - Simple</option>
                     <option value="celebration">Celebration Style - Fun</option>
+                    <option value="stars">Star Burst - Radiating star pattern</option>
+                    <option value="ladder">Success Ladder - Climbing progression</option>
+                    <option value="hexagons">Hexagon Grid - Honeycomb pattern</option>
+                    <option value="waves">Wave Flow - Flowing wave design</option>
+                    <option value="spotlight">Spotlight Shine - Featured highlights</option>
+                    <option value="fireworks">Fireworks Pop - Explosive celebration</option>
                 </select>
             </div>
             <div>
@@ -235,6 +241,180 @@ window.sectionComponents.achievements = {
                                     <div class="mt-3 text-2xl">🎉</div>
                                 </div>
                             `).join('') : '<p class="text-center text-gray-500 col-span-2">Add achievements in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Star Burst Layout
+        if (layout === 'stars') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="flex flex-wrap justify-center gap-6">
+                            ${achievements.length > 0 ? achievements.map((achievement) => `
+                                <div class="relative" style="width: 160px; height: 160px">
+                                    <div class="absolute inset-0 flex items-center justify-center" style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)">
+                                        <div class="w-full h-full ${shadowClass}" style="background: linear-gradient(135deg, ${badgeColor}, ${badgeColor}dd)"></div>
+                                    </div>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                                        <div class="text-3xl mb-2 text-white">${icon}</div>
+                                        <p class="text-xs font-bold text-white">${achievement}</p>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add achievements in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Success Ladder Layout
+        if (layout === 'ladder') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="relative space-y-4">
+                            <div class="absolute left-12 top-0 bottom-0 w-2 rounded-full" style="background: ${badgeColor}22"></div>
+                            <div class="absolute right-12 top-0 bottom-0 w-2 rounded-full" style="background: ${badgeColor}22"></div>
+                            ${achievements.length > 0 ? achievements.map((achievement, index) => `
+                                <div class="relative ${padding} mx-8 rounded-xl ${shadowClass}" style="background: ${cardBg}; border: 3px solid ${badgeColor}">
+                                    <div class="flex items-center gap-4">
+                                        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold" style="background: ${badgeColor}; color: white">
+                                            ${icon}
+                                        </div>
+                                        <p class="flex-1 font-medium">${achievement}</p>
+                                    </div>
+                                    <div class="absolute -left-12 top-1/2 transform -translate-y-1/2 w-8 h-1 rounded-full" style="background: ${badgeColor}"></div>
+                                    <div class="absolute -right-12 top-1/2 transform -translate-y-1/2 w-8 h-1 rounded-full" style="background: ${badgeColor}"></div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add achievements in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Hexagon Grid Layout
+        if (layout === 'hexagons') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            ${achievements.length > 0 ? achievements.map((achievement) => `
+                                <div class="relative" style="width: 140px; height: 160px">
+                                    <div class="absolute inset-0 flex items-center justify-center" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)">
+                                        <div class="w-full h-full ${shadowClass}" style="background: linear-gradient(135deg, ${badgeColor}, ${badgeColor}cc); border: 3px solid ${cardBg}"></div>
+                                    </div>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                                        <div class="text-2xl mb-2 text-white">${icon}</div>
+                                        <p class="text-xs font-semibold text-white">${achievement}</p>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add achievements in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Wave Flow Layout
+        if (layout === 'waves') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="space-y-6">
+                            ${achievements.length > 0 ? achievements.map((achievement, index) => {
+                                const positions = ['ml-0', 'ml-16', 'ml-32', 'ml-16', 'ml-0'];
+                                const position = positions[index % positions.length];
+                                return `
+                                    <div class="${position} transition-all">
+                                        <div class="${padding} rounded-full ${shadowClass}" style="background: linear-gradient(90deg, ${badgeColor}, ${badgeColor}dd); max-width: 85%">
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${shadowClass}" style="background: white; color: ${badgeColor}">
+                                                    ${icon}
+                                                </div>
+                                                <p class="flex-1 font-semibold text-white">${achievement}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add achievements in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Spotlight Shine Layout
+        if (layout === 'spotlight') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="grid gap-6">
+                            ${achievements.length > 0 ? achievements.map((achievement, index) => {
+                                const isFeatured = index % 3 === 0;
+                                if (isFeatured) {
+                                    return `
+                                        <div class="p-10 rounded-3xl ${shadowClass} text-center" style="background: linear-gradient(135deg, ${badgeColor}, ${badgeColor}dd); position: relative; overflow: hidden">
+                                            <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 50% 50%, white 0%, transparent 70%)"></div>
+                                            <div class="relative z-10">
+                                                <div class="text-6xl mb-4 text-white">${icon}</div>
+                                                <p class="text-xl font-bold text-white">${achievement}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                } else {
+                                    return `
+                                        <div class="${padding} rounded-xl ${shadowClass}" style="background: ${cardBg}; border: 2px solid ${badgeColor}44">
+                                            <div class="flex items-center gap-4">
+                                                <div class="text-2xl" style="color: ${badgeColor}">${icon}</div>
+                                                <p class="flex-1">${achievement}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }).join('') : '<p class="text-center text-gray-500">Add achievements in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fireworks Pop Layout
+        if (layout === 'fireworks') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="flex flex-wrap justify-center gap-6">
+                            ${achievements.length > 0 ? achievements.map((achievement, index) => {
+                                const colors = ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'];
+                                const color = colors[index % colors.length];
+                                const rotations = [-8, 5, -3, 7, -5, 4];
+                                const rotation = rotations[index % rotations.length];
+                                return `
+                                    <div style="transform: rotate(${rotation}deg)">
+                                        <div class="${padding} rounded-2xl ${shadowClass}" style="background: ${cardBg}; border: 4px dashed ${color}; box-shadow: 0 0 20px ${color}44; min-width: 200px; max-width: 250px">
+                                            <div class="text-center">
+                                                <div class="text-5xl mb-3" style="color: ${color}">${icon}</div>
+                                                <p class="font-bold text-sm">${achievement}</p>
+                                                <div class="mt-2 flex justify-center gap-1">
+                                                    <div class="w-2 h-2 rounded-full" style="background: ${color}"></div>
+                                                    <div class="w-2 h-2 rounded-full" style="background: ${color}"></div>
+                                                    <div class="w-2 h-2 rounded-full" style="background: ${color}"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add achievements in the editor</p>'}
                         </div>
                     </div>
                 </div>

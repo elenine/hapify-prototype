@@ -34,6 +34,12 @@ window.sectionComponents.collage = {
                     <option value="featuredLarge">Featured Large - One large photo with smaller ones</option>
                     <option value="circleCluster">Circle Cluster - Circular photo arrangement</option>
                     <option value="diagonalFlow">Diagonal Flow - Diagonal cascading layout</option>
+                    <option value="heartShape">Heart Shape - Romantic heart arrangement</option>
+                    <option value="magazine">Magazine Spread - Editorial layout style</option>
+                    <option value="filmStrip">Film Strip - Horizontal film reel design</option>
+                    <option value="overlap">Layered Overlap - Stacked overlapping photos</option>
+                    <option value="mirror">Mirror Split - Symmetrical mirrored layout</option>
+                    <option value="hexagons">Hexagon Tiles - Honeycomb pattern grid</option>
                 </select>
             </div>
             <div>
@@ -241,6 +247,147 @@ window.sectionComponents.collage = {
                                     </div>
                                 `;
                             }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'heartShape') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'Birthday Memories'}</h3>
+                        <div class="relative" style="min-height: 400px">
+                            ${photos.map((photo, index) => {
+                                const positions = [
+                                    {x: '25%', y: '20%'}, {x: '75%', y: '20%'},
+                                    {x: '15%', y: '40%'}, {x: '50%', y: '35%'}, {x: '85%', y: '40%'},
+                                    {x: '30%', y: '60%'}, {x: '70%', y: '60%'},
+                                    {x: '50%', y: '80%'}
+                                ];
+                                const pos = positions[index % positions.length];
+                                return `
+                                    <div class="absolute" style="left: ${pos.x}; top: ${pos.y}; transform: translate(-50%, -50%)">
+                                        <div class="w-24 h-24 overflow-hidden rounded-full ${shadowClass}" style="border: ${borderWidth}px solid ${borderColor}">
+                                            <img src="${photo}" class="w-full h-full object-cover" alt="Memory ${index + 1}">
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'magazine') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'Birthday Memories'}</h3>
+                        <div class="grid grid-cols-4 gap-4">
+                            ${photos.map((photo, index) => {
+                                const layouts = [
+                                    'col-span-2 row-span-2', 'col-span-2 row-span-1',
+                                    'col-span-1 row-span-1', 'col-span-1 row-span-2',
+                                    'col-span-2 row-span-1', 'col-span-1 row-span-1'
+                                ];
+                                const span = layouts[index % layouts.length];
+                                return `
+                                    <div class="${span}">
+                                        <div class="h-full overflow-hidden ${radiusClass} ${shadowClass}" style="border: ${borderWidth}px solid ${borderColor}">
+                                            <img src="${photo}" class="w-full h-full object-cover" alt="Memory ${index + 1}">
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'filmStrip') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-full mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'Birthday Memories'}</h3>
+                        <div class="relative overflow-x-auto pb-8">
+                            <div class="flex gap-2 px-4 py-6" style="min-width: max-content; background: linear-gradient(to right, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%)">
+                                ${photos.map((photo, index) => `
+                                    <div class="flex-shrink-0 relative" style="width: 200px">
+                                        <div class="absolute -left-1 -right-1 -top-3 -bottom-3 border-l-4 border-r-4" style="border-color: #1a1a1a"></div>
+                                        <div class="aspect-[3/4] overflow-hidden ${shadowClass}" style="border: 3px solid ${borderColor}">
+                                            <img src="${photo}" class="w-full h-full object-cover" alt="Memory ${index + 1}">
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'overlap') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'Birthday Memories'}</h3>
+                        <div class="relative" style="min-height: 500px">
+                            ${photos.map((photo, index) => {
+                                const offset = index * 40;
+                                const rotation = [-3, 2, -2, 3, -1, 2][index % 6];
+                                return `
+                                    <div class="absolute" style="left: 50%; top: ${offset}px; transform: translateX(-50%) rotate(${rotation}deg); z-index: ${photos.length - index}; width: 300px">
+                                        <div class="aspect-square overflow-hidden ${radiusClass} ${shadowClass}" style="border: ${borderWidth}px solid ${borderColor}">
+                                            <img src="${photo}" class="w-full h-full object-cover" alt="Memory ${index + 1}">
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'mirror') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'Birthday Memories'}</h3>
+                        <div class="grid grid-cols-2 ${gapClass}">
+                            ${photos.map((photo, index) => {
+                                const isLeft = index % 2 === 0;
+                                return `
+                                    <div class="${isLeft ? 'justify-self-end' : 'justify-self-start'}">
+                                        <div class="aspect-square overflow-hidden ${radiusClass} ${shadowClass}" style="border: ${borderWidth}px solid ${borderColor}; width: 250px; transform: ${isLeft ? 'scaleX(-1)' : 'scaleX(1)'}">
+                                            <img src="${photo}" class="w-full h-full object-cover" style="transform: ${isLeft ? 'scaleX(-1)' : 'scaleX(1)'}" alt="Memory ${index + 1}">
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'hexagons') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${data.title || 'Birthday Memories'}</h3>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            ${photos.map((photo, index) => `
+                                <div class="relative" style="width: 150px; height: 173px">
+                                    <div class="absolute inset-0 overflow-hidden ${shadowClass}" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); border: ${borderWidth}px solid ${borderColor}">
+                                        <img src="${photo}" class="w-full h-full object-cover" alt="Memory ${index + 1}">
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>
                     </div>
                 </div>
