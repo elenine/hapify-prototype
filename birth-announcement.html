@@ -249,6 +249,7 @@
     </div>
 
     <!-- Load Component System -->
+    <script src="components/dynamic-templates.js"></script>
     <script src="components/layout.component.js"></script>
     <script src="components/birth-announcement/hero.component.js"></script>
     <script src="components/birth-announcement/stats.component.js"></script>
@@ -332,6 +333,11 @@
 
         function addSection(type) {
             const template = sectionTemplates[type];
+            if (!template) {
+                console.error(\`Template not found for type: \${type}\`);
+                console.log('Available templates:', Object.keys(sectionTemplates));
+                return;
+            }
             const id = \`section-\${sectionCounter++}\`;
             const isLayout = type === 'layout';
             const isHero = type === 'hero';

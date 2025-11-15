@@ -8,7 +8,7 @@ console.log('🔄 Birth Announcement component loader started');
 
 // List of all available components
 const componentFiles = [
-    'hero', 'stats', 'parents', 'story', 'message',
+    'layout', 'hero', 'stats', 'parents', 'story', 'message',
     'visiting', 'thankyou', 'gallery', 'contact',
     'nameMeaning', 'milestones', 'timeline', 'funfacts',
     'grandparents', 'video', 'wishes'
