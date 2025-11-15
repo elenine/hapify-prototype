@@ -46,6 +46,12 @@ window.sectionComponents.hero = {
                                 <option value="banner">Banner - Full Width</option>
                                 <option value="floating">Floating - Elevated Card</option>
                                 <option value="asymmetric">Asymmetric - Modern Layout</option>
+                                <option value="magazine">Magazine - Editorial Style</option>
+                                <option value="spotlight">Spotlight - Dramatic Effect</option>
+                                <option value="cinematic">Cinematic - Widescreen</option>
+                                <option value="geometric">Geometric - Modern Shapes</option>
+                                <option value="polaroid">Polaroid - Vintage Frame</option>
+                                <option value="ribbon">Ribbon - Decorative Banner</option>
                             </select>
                         </div>
                         <div>
@@ -393,6 +399,187 @@ window.sectionComponents.hero = {
                                     </div>
                                 </div>
                                 <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5" style="background: ${accentBg}; transform: translate(40%, -40%);"></div>
+                            </div>
+                        `;
+                    }
+
+                    // Magazine Layout - Editorial Style
+                    if (layout === 'magazine') {
+                        return `
+                            <div class="relative py-16 px-6 overflow-hidden" style="background: ${bg}">
+                                ${generateBanner(bannerMode)}
+                                <div class="max-w-4xl mx-auto relative z-10">
+                                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                                        <div class="${align === 'center' ? 'text-center' : 'text-left'}">
+                                            <div class="text-xs font-bold tracking-widest mb-4 opacity-60" style="color: ${textColor}">SPECIAL EDITION • ${new Date().getFullYear()}</div>
+                                            <h1 class="text-6xl md:text-7xl font-black mb-4 leading-none" style="color: ${textColor}; font-family: serif">${data.title || 'FAREWELL'}</h1>
+                                            <div class="w-24 h-1 mb-6" style="background: ${accentBg}"></div>
+                                            <p class="text-3xl font-light italic mb-2" style="color: ${accentBg}; font-family: serif">${data.name || "Person's Name"}</p>
+                                            <div class="text-sm tracking-wide opacity-75" style="color: ${textColor}">Celebrating an incredible journey</div>
+                                        </div>
+                                        ${data.image ? `
+                                            <div class="relative">
+                                                <div class="absolute inset-0 ${shadowClass}" style="background: ${accentBg}; transform: translate(-8px, -8px); z-index: -1;"></div>
+                                                <img src="${data.image}" class="w-full h-96 object-cover ${imageRoundClass} ${shadowClass}">
+                                                <div class="absolute bottom-4 right-4 bg-white px-4 py-2 ${shadowClass}" style="color: ${bg}">
+                                                    <div class="text-xs font-bold">FEATURED</div>
+                                                </div>
+                                            </div>
+                                        ` : '<div class="text-9xl ${alignClass}">👋</div>'}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Spotlight Layout - Dramatic Effect
+                    if (layout === 'spotlight') {
+                        return `
+                            <div class="relative py-20 px-6 overflow-hidden" style="background: #1a1a1a">
+                                ${generateBanner(bannerMode)}
+                                <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                                    <div class="absolute top-1/2 left-1/2 w-96 h-96 rounded-full opacity-30 blur-3xl" style="background: radial-gradient(circle, ${bg}, transparent); transform: translate(-50%, -50%);"></div>
+                                </div>
+                                <div class="max-w-2xl mx-auto ${alignClass} relative z-10">
+                                    ${data.image ? `
+                                        <div class="relative inline-block mb-8">
+                                            <div class="absolute inset-0 rounded-full blur-2xl opacity-50" style="background: ${accentBg};"></div>
+                                            <img src="${data.image}" class="relative w-48 h-48 ${imageRoundClass} object-cover border-4 ${shadowClass}" style="border-color: ${bg}">
+                                        </div>
+                                    ` : '<div class="text-7xl mb-6">👋</div>'}
+                                    <div class="inline-block px-6 py-2 rounded-full text-xs font-bold tracking-wider mb-4" style="background: linear-gradient(90deg, ${bg}, ${accentBg}); color: white;">ON STAGE NOW</div>
+                                    <h1 class="${titleSizeClass} font-black mb-4 tracking-tight" style="color: white; text-shadow: 0 0 40px ${bg}50">${data.title || 'Farewell Party'}</h1>
+                                    <p class="text-3xl font-semibold" style="color: ${bg}">${data.name || "Person's Name"}</p>
+                                    <div class="mt-8 flex gap-2 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : 'justify-start'}">
+                                        <div class="w-16 h-1 rounded-full" style="background: ${bg}"></div>
+                                        <div class="w-8 h-1 rounded-full" style="background: ${accentBg}"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Cinematic Layout - Widescreen
+                    if (layout === 'cinematic') {
+                        return `
+                            <div class="relative overflow-hidden" style="background: #000;">
+                                ${generateBanner(bannerMode)}
+                                <div class="relative" style="padding-top: 42.85%; background: linear-gradient(135deg, ${bg}40, ${accentBg}40);">
+                                    <div class="absolute inset-0 flex items-center justify-center px-6">
+                                        <div class="max-w-4xl w-full ${alignClass} relative z-10">
+                                            ${data.image ? `
+                                                <div class="absolute ${align === 'center' ? 'left-1/2 -translate-x-1/2' : align === 'right' ? 'right-8' : 'left-8'} top-0 opacity-20">
+                                                    <img src="${data.image}" class="w-64 h-64 object-cover ${imageRoundClass}">
+                                                </div>
+                                            ` : ''}
+                                            <div class="relative z-10">
+                                                <div class="text-xs font-bold tracking-widest mb-3 opacity-70" style="color: white; letter-spacing: 0.3em;">A STORY OF EXCELLENCE</div>
+                                                <h1 class="text-5xl md:text-7xl font-black mb-4 uppercase tracking-tight" style="color: white; text-shadow: 2px 2px 20px rgba(0,0,0,0.8)">${data.title || 'Farewell Party'}</h1>
+                                                <div class="w-32 h-1 mb-4 ${align === 'center' ? 'mx-auto' : align === 'right' ? 'ml-auto' : ''}" style="background: linear-gradient(90deg, ${bg}, ${accentBg});"></div>
+                                                <p class="text-2xl font-light tracking-wide" style="color: ${bg}; text-shadow: 1px 1px 10px rgba(0,0,0,0.8)">${data.name || "Person's Name"}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="h-8" style="background: #000;"></div>
+                            </div>
+                        `;
+                    }
+
+                    // Geometric Layout - Modern Shapes
+                    if (layout === 'geometric') {
+                        return `
+                            <div class="relative ${paddingClass} overflow-hidden" style="background: ${bg}">
+                                ${generateBanner(bannerMode)}
+                                <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
+                                    <div class="absolute top-0 left-0 w-64 h-64 rotate-45" style="background: ${accentBg};"></div>
+                                    <div class="absolute bottom-0 right-0 w-48 h-48 rounded-full" style="background: ${textColor};"></div>
+                                    <div class="absolute top-1/2 right-1/4 w-32 h-32 -rotate-12" style="background: ${accentBg}; clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);"></div>
+                                </div>
+                                <div class="max-w-3xl mx-auto ${alignClass} relative z-10">
+                                    <div class="inline-flex items-center gap-3 mb-6">
+                                        <div class="w-12 h-12" style="background: ${accentBg}; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></div>
+                                        <div class="text-xs font-bold tracking-wider" style="color: ${textColor}">FAREWELL</div>
+                                    </div>
+                                    ${data.image ? `
+                                        <div class="relative inline-block mb-6">
+                                            <div class="absolute -inset-4 rotate-6" style="background: linear-gradient(135deg, ${accentBg}, ${bg}); opacity: 0.3;"></div>
+                                            <img src="${data.image}" class="relative w-40 h-40 object-cover ${imageRoundClass} ${shadowClass}">
+                                        </div>
+                                    ` : '<div class="text-6xl mb-6">👋</div>'}
+                                    <h1 class="${titleSizeClass} font-black mb-4 uppercase" style="color: ${textColor}">${data.title || 'Farewell Party'}</h1>
+                                    <div class="flex items-center gap-3 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : 'justify-start'} mb-4">
+                                        <div class="w-8 h-1" style="background: ${accentBg};"></div>
+                                        <div class="w-8 h-8 rounded-full" style="background: ${accentBg};"></div>
+                                        <div class="w-12 h-1" style="background: ${accentBg};"></div>
+                                    </div>
+                                    <p class="text-2xl font-bold" style="color: ${accentBg}">${data.name || "Person's Name"}</p>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Polaroid Layout - Vintage Frame
+                    if (layout === 'polaroid') {
+                        return `
+                            <div class="relative py-16 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bg}20, ${accentBg}20)">
+                                ${generateBanner(bannerMode)}
+                                <div class="max-w-md mx-auto ${alignClass} relative z-10">
+                                    <div class="bg-white p-4 pb-16 ${shadowClass} transform rotate-1 hover:rotate-0 transition-transform duration-300" style="box-shadow: 0 10px 40px rgba(0,0,0,0.3)">
+                                        ${data.image ? `
+                                            <img src="${data.image}" class="w-full h-72 object-cover mb-4">
+                                        ` : `
+                                            <div class="w-full h-72 flex items-center justify-center text-6xl mb-4" style="background: ${bg}20">
+                                                👋
+                                            </div>
+                                        `}
+                                        <div class="px-2 text-center" style="font-family: 'Courier New', monospace; color: #333;">
+                                            <div class="text-xl font-bold mb-1">${data.title || 'Farewell Party'}</div>
+                                            <div class="text-sm opacity-70">${data.name || "Person's Name"}</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-6 text-center">
+                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background: ${bg}; color: ${textColor};">
+                                            <div class="w-2 h-2 rounded-full" style="background: ${accentBg};"></div>
+                                            <span class="text-xs font-semibold">Memories To Treasure</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Ribbon Layout - Decorative Banner
+                    if (layout === 'ribbon') {
+                        return `
+                            <div class="relative py-20 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bg}, ${accentBg})">
+                                ${generateBanner(bannerMode)}
+                                <div class="max-w-3xl mx-auto ${alignClass} relative z-10">
+                                    ${data.image ? `
+                                        <div class="relative inline-block mb-8">
+                                            <img src="${data.image}" class="w-40 h-40 ${imageRoundClass} object-cover border-6 ${shadowClass}" style="border-color: white;">
+                                            <div class="absolute -bottom-4 -right-4 w-20 h-20 rounded-full flex items-center justify-center text-2xl" style="background: ${accentBg}; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                                                ✨
+                                            </div>
+                                        </div>
+                                    ` : '<div class="text-7xl mb-8">👋</div>'}
+                                    <div class="relative inline-block mb-6">
+                                        <div class="absolute inset-0 ${shadowClass}" style="background: ${accentBg}; transform: skewY(-2deg);"></div>
+                                        <div class="relative px-8 py-4" style="background: white; clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);">
+                                            <h1 class="text-4xl md:text-5xl font-black uppercase tracking-tight" style="color: ${bg}">${data.title || 'Farewell Party'}</h1>
+                                        </div>
+                                        <div class="absolute -left-2 top-0 w-0 h-0 border-t-[20px] border-t-transparent border-r-[20px] border-b-[20px] border-b-transparent" style="border-right-color: ${accentBg}80; filter: brightness(0.7);"></div>
+                                        <div class="absolute -right-2 top-0 w-0 h-0 border-t-[20px] border-t-transparent border-l-[20px] border-b-[20px] border-b-transparent" style="border-left-color: ${accentBg}80; filter: brightness(0.7);"></div>
+                                    </div>
+                                    <div class="relative inline-block px-6 py-3 ${shadowClass}" style="background: rgba(255,255,255,0.95); border-radius: 100px;">
+                                        <p class="text-xl font-bold" style="color: ${accentBg}">${data.name || "Person's Name"}</p>
+                                        <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45" style="background: rgba(255,255,255,0.95);"></div>
+                                    </div>
+                                    <div class="mt-8 flex gap-3 ${align === 'center' ? 'justify-center' : align === 'right' ? 'justify-end' : 'justify-start'}">
+                                        <div class="w-12 h-12 rounded-full border-4 border-white ${shadowClass}" style="background: ${accentBg};"></div>
+                                        <div class="w-12 h-12 rounded-full border-4 border-white ${shadowClass}" style="background: ${bg};"></div>
+                                    </div>
+                                </div>
                             </div>
                         `;
                     }
