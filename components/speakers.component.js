@@ -93,7 +93,7 @@ window.sectionComponents.speakers = {
                                         ${speakers.map(speaker => {
                                             const [name, title] = speaker.split('-').map(s => s.trim());
                                             return `
-                                                <div class="p-5 bg-white rounded-xl border-l-4 ${shadowClass} hover:shadow-xl transition-shadow" style="border-left-color: ${accentColor}">
+                                                <div class="p-5 bg-white rounded-xl border-l-4 ${shadow} hover:shadow-xl transition-shadow" style="border-left-color: ${accentColor}">
                                                     <div class="flex items-start gap-4">
                                                         <div class="flex-shrink-0 w-16 h-16 rounded-lg flex items-center justify-center text-3xl" style="background: ${accentColor}20">
                                                             🎤
@@ -160,7 +160,7 @@ window.sectionComponents.speakers = {
                                         ${speakers.map((speaker, index) => {
                                             const [name, title] = speaker.split('-').map(s => s.trim());
                                             return `
-                                                <div class="relative p-6 rounded-2xl ${shadowClass} overflow-hidden" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)">
+                                                <div class="relative p-6 rounded-2xl ${shadow} overflow-hidden" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)">
                                                     <div class="absolute top-0 right-0 text-9xl opacity-10 -mt-8 -mr-4">🎤</div>
                                                     <div class="relative">
                                                         <div class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs text-white font-medium mb-3">

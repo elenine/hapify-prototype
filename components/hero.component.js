@@ -54,6 +54,10 @@ window.sectionComponents.hero = {
                                 <option value="gradient">Gradient Overlay</option>
                                 <option value="countdown">Event Countdown</option>
                                 <option value="floating">Floating Badge</option>
+                                <option value="asymmetric">Asymmetric Modern</option>
+                                <option value="layered">Layered Card</option>
+                                <option value="spotlight">Spotlight Focus</option>
+                                <option value="ribbon">Ribbon Banner</option>
                             </select>
                         </div>
                         <div>
@@ -406,6 +410,175 @@ window.sectionComponents.hero = {
                                                         <div class="flex-1 text-left text-sm font-semibold text-gray-700">
                                                             ${location}
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'asymmetric':
+                            return `
+                                <div class="relative py-16 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="absolute top-0 right-0 w-48 h-48" style="background: ${accentColor}; opacity: 0.15; border-radius: 0 0 0 100%;"></div>
+                                    <div class="absolute bottom-0 left-0 w-32 h-32" style="background: ${textColor}; opacity: 0.1; border-radius: 0 100% 0 0;"></div>
+                                    <div class="max-w-md mx-auto relative z-10">
+                                        <div class="flex flex-col items-start">
+                                            ${imageSrc ? `
+                                                <img src="${imageSrc}" class="w-24 h-24 ${imageRadius} object-cover mb-5 ${shadow}" style="border: 4px solid ${textColor}40;">
+                                            ` : `
+                                                <div class="w-24 h-24 rounded-2xl flex items-center justify-center mb-5 ${shadow}" style="background: ${textColor}20;">
+                                                    <span class="text-5xl">🎤</span>
+                                                </div>
+                                            `}
+                                            <div class="inline-block px-3 py-1 bg-white bg-opacity-20 backdrop-blur-sm rounded-lg text-xs font-bold uppercase tracking-wide mb-3">
+                                                Upcoming Event
+                                            </div>
+                                            <h1 class="text-4xl font-black mb-3 leading-tight" style="text-shadow: 0 2px 10px ${bgColor}80;">${name}</h1>
+                                            <p class="text-xl opacity-90 mb-6 max-w-xs">${tagline}</p>
+                                            <div class="grid grid-cols-2 gap-3 w-full">
+                                                <div class="p-4 rounded-xl bg-white bg-opacity-15 backdrop-blur-sm">
+                                                    <div class="text-xs opacity-75 mb-1">Date</div>
+                                                    <div class="text-sm font-bold">📅 ${date.split(',')[0] || date}</div>
+                                                </div>
+                                                <div class="p-4 rounded-xl bg-white bg-opacity-15 backdrop-blur-sm">
+                                                    <div class="text-xs opacity-75 mb-1">Location</div>
+                                                    <div class="text-sm font-bold truncate">📍 ${location.split(',')[0] || location}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'layered':
+                            return `
+                                <div class="relative py-12 px-6" style="background: linear-gradient(to bottom, ${bgColor}15, transparent);">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto relative z-10">
+                                        <div class="relative">
+                                            <div class="absolute top-4 left-4 right-4 h-full rounded-3xl ${shadow}" style="background: ${bgColor}40;"></div>
+                                            <div class="absolute top-2 left-2 right-2 h-full rounded-3xl ${shadow}" style="background: ${bgColor}60;"></div>
+                                            <div class="relative bg-white rounded-3xl shadow-2xl p-8">
+                                                <div class="text-center">
+                                                    ${imageSrc ? `
+                                                        <div class="relative inline-block mb-5">
+                                                            <img src="${imageSrc}" class="w-32 h-32 ${imageRadius} object-cover ${shadow}">
+                                                            <div class="absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-xs font-bold ${shadow}" style="background: ${bgColor}; color: white;">
+                                                                New
+                                                            </div>
+                                                        </div>
+                                                    ` : `
+                                                        <div class="relative inline-block mb-5">
+                                                            <div class="w-32 h-32 rounded-2xl flex items-center justify-center ${shadow}" style="background: linear-gradient(135deg, ${bgColor}, ${accentColor})">
+                                                                <span class="text-6xl">🎤</span>
+                                                            </div>
+                                                            <div class="absolute -bottom-2 -right-2 px-3 py-1 rounded-full text-xs font-bold ${shadow}" style="background: ${accentColor}; color: white;">
+                                                                New
+                                                            </div>
+                                                        </div>
+                                                    `}
+                                                    <h1 class="text-3xl font-bold text-gray-900 mb-2">${name}</h1>
+                                                    <p class="text-lg text-gray-600 mb-6">${tagline}</p>
+                                                    <div class="space-y-2">
+                                                        <div class="p-3 rounded-xl" style="background: ${bgColor}10;">
+                                                            <div class="text-xs font-bold uppercase tracking-wide mb-1" style="color: ${bgColor}">When</div>
+                                                            <div class="text-sm font-semibold text-gray-900">${date}</div>
+                                                        </div>
+                                                        <div class="p-3 rounded-xl" style="background: ${accentColor}10;">
+                                                            <div class="text-xs font-bold uppercase tracking-wide mb-1" style="color: ${accentColor}">Where</div>
+                                                            <div class="text-sm font-semibold text-gray-900">${location}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'spotlight':
+                            return `
+                                <div class="relative py-20 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bgColor}, ${bgColor}dd); color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="absolute inset-0 overflow-hidden z-0">
+                                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full" style="background: radial-gradient(circle, ${textColor}20 0%, transparent 70%);"></div>
+                                    </div>
+                                    <div class="max-w-md mx-auto text-center relative z-10">
+                                        <div class="relative inline-block mb-6">
+                                            ${imageSrc ? `
+                                                <div class="relative">
+                                                    <div class="absolute inset-0 rounded-full animate-ping" style="background: ${textColor}30;"></div>
+                                                    <img src="${imageSrc}" class="relative w-36 h-36 ${imageRadius} object-cover border-4 ${shadow}" style="border-color: ${textColor};">
+                                                </div>
+                                            ` : `
+                                                <div class="relative">
+                                                    <div class="absolute inset-0 rounded-full animate-ping" style="background: ${textColor}30;"></div>
+                                                    <div class="relative w-36 h-36 rounded-full flex items-center justify-center border-4 ${shadow}" style="background: ${textColor}20; border-color: ${textColor};">
+                                                        <span class="text-7xl">🎤</span>
+                                                    </div>
+                                                </div>
+                                            `}
+                                        </div>
+                                        <div class="inline-block px-4 py-1.5 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-xs font-bold mb-4 uppercase tracking-widest">
+                                            Featured Event
+                                        </div>
+                                        <h1 class="text-5xl font-black mb-4 leading-tight">${name}</h1>
+                                        <p class="text-xl opacity-95 mb-8 max-w-sm mx-auto">${tagline}</p>
+                                        <div class="flex justify-center gap-4 text-sm font-semibold flex-wrap">
+                                            <div class="px-6 py-3 bg-white bg-opacity-20 backdrop-blur-sm rounded-xl">
+                                                <div class="text-xs opacity-80 mb-1">📅</div>
+                                                <div>${date}</div>
+                                            </div>
+                                            <div class="px-6 py-3 bg-white bg-opacity-20 backdrop-blur-sm rounded-xl">
+                                                <div class="text-xs opacity-80 mb-1">📍</div>
+                                                <div>${location}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'ribbon':
+                            return `
+                                <div class="relative py-16 px-6" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto relative z-10">
+                                        <div class="relative">
+                                            <div class="absolute -top-3 -left-6 px-6 py-2 text-xs font-bold text-white ${shadow}" style="background: ${accentColor}; transform: rotate(-3deg);">
+                                                CONFERENCE 2025
+                                            </div>
+                                            <div class="mt-6 text-center">
+                                                ${imageSrc ? `
+                                                    <div class="inline-block relative mb-5">
+                                                        <img src="${imageSrc}" class="w-28 h-28 ${imageRadius} object-cover ${shadow}" style="border: 3px solid ${textColor};">
+                                                        <div class="absolute -top-2 -right-2 w-12 h-12 rounded-full flex items-center justify-center ${shadow}" style="background: ${accentColor}; color: white; transform: rotate(15deg);">
+                                                            <span class="text-2xl">⭐</span>
+                                                        </div>
+                                                    </div>
+                                                ` : `
+                                                    <div class="inline-block relative mb-5">
+                                                        <div class="w-28 h-28 rounded-2xl flex items-center justify-center ${shadow}" style="background: ${textColor}20; border: 3px solid ${textColor};">
+                                                            <span class="text-6xl">🎤</span>
+                                                        </div>
+                                                        <div class="absolute -top-2 -right-2 w-12 h-12 rounded-full flex items-center justify-center ${shadow}" style="background: ${accentColor}; color: white; transform: rotate(15deg);">
+                                                            <span class="text-2xl">⭐</span>
+                                                        </div>
+                                                    </div>
+                                                `}
+                                                <h1 class="text-4xl font-bold mb-3 leading-tight">${name}</h1>
+                                                <div class="w-24 h-1 mx-auto mb-4 rounded-full" style="background: ${accentColor};"></div>
+                                                <p class="text-xl opacity-90 mb-6">${tagline}</p>
+                                                <div class="flex flex-col gap-2 items-center">
+                                                    <div class="inline-flex items-center gap-2 px-5 py-2 bg-white bg-opacity-20 rounded-full">
+                                                        <span class="text-lg">📅</span>
+                                                        <span class="text-sm font-semibold">${date}</span>
+                                                    </div>
+                                                    <div class="inline-flex items-center gap-2 px-5 py-2 bg-white bg-opacity-20 rounded-full">
+                                                        <span class="text-lg">📍</span>
+                                                        <span class="text-sm font-semibold">${location}</span>
                                                     </div>
                                                 </div>
                                             </div>
