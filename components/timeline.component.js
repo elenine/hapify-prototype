@@ -33,6 +33,11 @@ window.sectionComponents['timeline'] = {
                     <option value="dots">Dot Connection</option>
                     <option value="modern">Modern Blocks</option>
                     <option value="romantic">Romantic Hearts</option>
+                    <option value="roadmap">Love Roadmap</option>
+                    <option value="storybook">Storybook Pages</option>
+                    <option value="polaroid-timeline">Polaroid Timeline</option>
+                    <option value="metro">Metro Line</option>
+                    <option value="ribbon-flow">Ribbon Flow</option>
                 </select>
             </div>
             <div>
@@ -194,6 +199,119 @@ window.sectionComponents['timeline'] = {
                                 <div class="text-sm font-bold" style="color: ${accentColor}">${milestone.date}</div>
                             </div>
                             <h3 class="text-xl font-bold mb-2" style="color: ${accentColor}">${milestone.title}</h3>
+                            <p class="text-gray-700">${milestone.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } else if (layout === 'roadmap') {
+            timelineHTML = `
+                <div class="relative">
+                    <!-- Road path -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-24 h-full" style="background: repeating-linear-gradient(to bottom, ${accentColor}40 0px, ${accentColor}40 20px, transparent 20px, transparent 40px); border-left: 3px solid ${accentColor}; border-right: 3px solid ${accentColor};"></div>
+                    ${milestones.map((milestone, index) => `
+                        <div class="relative mb-16 ${index % 2 === 0 ? 'text-right pr-32' : 'text-left pl-32'}">
+                            <div class="inline-block bg-white rounded-2xl p-6 shadow-xl max-w-md">
+                                <div class="flex items-center gap-3 mb-3 ${index % 2 === 0 ? 'justify-end' : 'justify-start'}">
+                                    <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style="background: ${accentColor};">
+                                        🚗
+                                    </div>
+                                    <div class="text-sm font-bold" style="color: ${accentColor}">${milestone.date}</div>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-900">${milestone.title}</h3>
+                                <p class="text-gray-700">${milestone.description}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        } else if (layout === 'storybook') {
+            timelineHTML = milestones.map((milestone, index) => `
+                <div class="mb-12">
+                    <div class="bg-white rounded-lg shadow-2xl overflow-hidden" style="border: 8px solid ${accentColor}20;">
+                        <div class="grid md:grid-cols-2">
+                            <div class="p-8 flex items-center justify-center" style="background: linear-gradient(135deg, ${accentColor}10, ${accentColor}20);">
+                                <div class="text-center">
+                                    <div class="text-6xl mb-4">📖</div>
+                                    <div class="text-sm font-bold tracking-widest mb-2" style="color: ${accentColor};">CHAPTER ${index + 1}</div>
+                                    <div class="text-lg font-bold" style="color: ${accentColor}">${milestone.date}</div>
+                                </div>
+                            </div>
+                            <div class="p-8">
+                                <h3 class="text-2xl font-serif font-bold mb-4" style="color: ${accentColor}; font-family: Georgia, serif;">
+                                    ${milestone.title}
+                                </h3>
+                                <p class="text-gray-700 leading-relaxed" style="font-family: Georgia, serif;">
+                                    ${milestone.description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } else if (layout === 'polaroid-timeline') {
+            timelineHTML = milestones.map((milestone, index) => {
+                const rotation = (index % 2 === 0 ? 1 : -1) * (Math.random() * 4 + 2);
+                return `
+                    <div class="mb-8 transform hover:scale-105 transition" style="transform: rotate(${rotation}deg);">
+                        <div class="bg-white p-4 shadow-2xl inline-block">
+                            <div class="h-48 flex items-center justify-center mb-3" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}10);">
+                                <div class="text-center">
+                                    <div class="text-5xl mb-2">💕</div>
+                                    <div class="text-sm font-bold" style="color: ${accentColor}">${milestone.date}</div>
+                                </div>
+                            </div>
+                            <div class="text-center" style="font-family: 'Comic Sans MS', cursive;">
+                                <h3 class="text-lg font-bold mb-2" style="color: ${accentColor};">${milestone.title}</h3>
+                                <p class="text-sm text-gray-700">${milestone.description.substring(0, 60)}${milestone.description.length > 60 ? '...' : ''}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            timelineHTML = `<div class="flex flex-wrap justify-center gap-6">${timelineHTML}</div>`;
+        } else if (layout === 'metro') {
+            timelineHTML = `
+                <div class="relative">
+                    <!-- Metro line -->
+                    <div class="absolute left-12 top-0 w-2 h-full rounded-full" style="background: linear-gradient(to bottom, ${accentColor}, ${accentColor}dd);"></div>
+                    ${milestones.map((milestone, index) => `
+                        <div class="relative flex items-start gap-6 mb-8">
+                            <div class="relative z-10">
+                                <div class="w-24 h-24 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-xl" style="background: ${accentColor}; border: 6px solid white;">
+                                    ${index + 1}
+                                </div>
+                            </div>
+                            <div class="flex-1 bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition" style="margin-top: 16px;">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="px-3 py-1 rounded-full text-xs font-bold text-white" style="background: ${accentColor};">
+                                        ${milestone.date}
+                                    </div>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-900">${milestone.title}</h3>
+                                <p class="text-gray-700">${milestone.description}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        } else if (layout === 'ribbon-flow') {
+            timelineHTML = milestones.map((milestone, index) => `
+                <div class="relative mb-12 ${index % 2 === 0 ? 'ml-0' : 'ml-8'}">
+                    <div class="relative inline-block w-full max-w-lg">
+                        <!-- Ribbon -->
+                        <div class="py-4 px-6 relative" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                            <div class="flex items-center gap-4">
+                                <div class="text-3xl">💕</div>
+                                <div>
+                                    <div class="text-sm font-bold opacity-90">${milestone.date}</div>
+                                    <h3 class="text-xl font-bold">${milestone.title}</h3>
+                                </div>
+                            </div>
+                            <!-- Ribbon tail -->
+                            <div class="absolute ${index % 2 === 0 ? '-right-4' : '-left-4'} top-1/2 transform -translate-y-1/2 w-0 h-0" style="border-style: solid; border-width: 20px ${index % 2 === 0 ? '0 20px 20px' : '20px 20px 0'}; border-color: ${index % 2 === 0 ? `transparent transparent ${accentColor}dd transparent` : `${accentColor}dd transparent transparent transparent`};"></div>
+                        </div>
+                        <div class="bg-white rounded-b-xl p-6 shadow-lg">
                             <p class="text-gray-700">${milestone.description}</p>
                         </div>
                     </div>
