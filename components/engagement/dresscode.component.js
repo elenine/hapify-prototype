@@ -43,6 +43,9 @@ window.sectionComponents.dresscode = {
                     <option value="split">Split View</option>
                     <option value="banner">Elegant Banner</option>
                     <option value="grid">Icon Grid</option>
+                    <option value="modern">Modern Minimal</option>
+                    <option value="boutique">Boutique Style</option>
+                    <option value="illustrated">Illustrated Guide</option>
                 </select>
             </div>
             <div>
@@ -184,6 +187,93 @@ window.sectionComponents.dresscode = {
                             <div class="mt-6 p-4 rounded-lg inline-block" style="background: ${cardBg};">
                                 <div class="text-sm font-semibold mb-2" style="color: ${accent};">Suggested Colors</div>
                                 <div class="text-gray-600">${data.colors}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'modern') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-4xl font-bold mb-2">${data.title || 'Dress Code'}</h2>
+                                ${data.dresscodeType ? `<div class="inline-block px-4 py-1 rounded-full text-sm font-semibold text-white" style="background: ${accent};">${displayType}</div>` : ''}
+                            </div>
+                            <div class="text-7xl">👔</div>
+                        </div>
+                        ${description ? `<p class="text-xl text-gray-700 mb-6 leading-relaxed">${description}</p>` : ''}
+                        ${data.details && data.dresscodeType !== 'custom' ? `<p class="text-gray-600 mb-6">${data.details}</p>` : ''}
+                        ${data.colors ? `
+                            <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full shadow-lg" style="background: ${cardBg};">
+                                <span style="color: ${accent};">🎨</span>
+                                <span class="text-sm font-semibold text-gray-700">Suggested Colors:</span>
+                                <span class="text-gray-600">${data.colors}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'boutique') {
+            return `
+                <div class="py-16 px-6" style="background: linear-gradient(135deg, ${bg} 0%, #fff 100%); color: ${textColor};">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="text-center mb-12">
+                            <div class="inline-block mb-4">
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-12 h-px" style="background: ${accent};"></div>
+                                    <span class="text-5xl">👔</span>
+                                    <div class="w-12 h-px" style="background: ${accent};"></div>
+                                </div>
+                            </div>
+                            <h2 class="text-4xl font-light mb-3" style="font-family: 'Georgia', serif; letter-spacing: 0.1em;">${data.title || 'Dress Code'}</h2>
+                            <div class="w-24 h-px mx-auto mb-6" style="background: ${accent};"></div>
+                            ${data.dresscodeType ? `<div class="inline-block px-8 py-2 rounded-full text-lg font-semibold mb-6" style="background: ${cardBg}; color: ${accent}; font-family: 'Georgia', serif;">${displayType}</div>` : ''}
+                        </div>
+                        ${description ? `<p class="text-center text-lg text-gray-700 mb-8 max-w-2xl mx-auto" style="font-family: 'Georgia', serif; line-height: 1.8;">${description}</p>` : ''}
+                        ${data.details && data.dresscodeType !== 'custom' ? `<p class="text-center text-gray-600 mb-8 max-w-xl mx-auto">${data.details}</p>` : ''}
+                        ${data.colors ? `
+                            <div class="text-center">
+                                <div class="inline-block p-6 rounded-lg shadow-lg" style="background: ${cardBg};">
+                                    <div class="text-sm font-semibold mb-3" style="color: ${accent}; letter-spacing: 0.1em;">SUGGESTED PALETTE</div>
+                                    <div class="text-gray-700 text-lg" style="font-family: 'Georgia', serif;">${data.colors}</div>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'illustrated') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h2 class="text-3xl font-bold mb-8">${data.title || 'Dress Code'}</h2>
+                        ${data.dresscodeType ? `
+                            <div class="mb-8 p-8 rounded-2xl shadow-xl" style="background: ${cardBg};">
+                                <div class="flex items-center justify-center gap-8 mb-6">
+                                    <div class="text-7xl">👗</div>
+                                    <div class="text-5xl" style="color: ${accent};">+</div>
+                                    <div class="text-7xl">🤵</div>
+                                </div>
+                                <div class="inline-block px-8 py-3 rounded-full text-xl font-bold text-white shadow-lg mb-4" style="background: ${accent};">${displayType}</div>
+                                ${description ? `<p class="text-gray-700 text-lg mt-4 leading-relaxed">${description}</p>` : ''}
+                            </div>
+                        ` : ''}
+                        ${data.details && data.dresscodeType !== 'custom' ? `
+                            <div class="p-6 rounded-xl shadow-md mb-6" style="background: white; border-left: 4px solid ${accent};">
+                                <p class="text-gray-700 leading-relaxed">${data.details}</p>
+                            </div>
+                        ` : ''}
+                        ${data.colors ? `
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="col-span-3 md:col-span-1 flex items-center justify-center">
+                                    <div class="text-5xl">🎨</div>
+                                </div>
+                                <div class="col-span-3 md:col-span-2 p-6 rounded-xl shadow-lg text-left" style="background: ${cardBg};">
+                                    <div class="font-bold mb-2" style="color: ${accent};">Suggested Colors</div>
+                                    <p class="text-gray-700">${data.colors}</p>
+                                </div>
                             </div>
                         ` : ''}
                     </div>

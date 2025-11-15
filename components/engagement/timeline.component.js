@@ -40,6 +40,9 @@ window.sectionComponents.timeline = {
                     <option value="minimal">Minimal List</option>
                     <option value="zigzag">Zigzag Timeline</option>
                     <option value="modern">Modern Dots</option>
+                    <option value="illustrated">Illustrated Journey</option>
+                    <option value="elegant">Elegant Milestones</option>
+                    <option value="compact">Compact Timeline</option>
                 </select>
             </div>
             <div>
@@ -163,6 +166,64 @@ window.sectionComponents.timeline = {
             `).join('');
         };
 
+        const renderIllustratedTimeline = () => {
+            const icons = ['💕', '💑', '💐', '💍', '💝', '🎉', '✨', '💖'];
+            return events.map((event, index) => `
+                <div class="relative ${index < events.length - 1 ? 'pb-12' : ''}">
+                    ${index < events.length - 1 ? `<div class="absolute left-1/2 top-24 bottom-0 w-1 transform -translate-x-1/2" style="background: linear-gradient(180deg, ${lineColor} 0%, ${lineColor}30 100%);"></div>` : ''}
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div class="w-20 h-20 rounded-full flex items-center justify-center shadow-2xl mb-4" style="background: ${accent};">
+                            <span class="text-4xl">${icons[index % icons.length]}</span>
+                        </div>
+                        <div class="inline-block px-5 py-2 rounded-full text-sm font-bold text-white mb-3 shadow-md" style="background: ${accent};">${new Date(event.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                        <div class="max-w-md p-6 bg-white rounded-2xl shadow-xl border-2" style="border-color: ${lineColor};">
+                            <div class="font-bold text-xl mb-3" style="color: ${textColor};">${event.title}</div>
+                            ${event.description ? `<p class="text-sm text-gray-600 leading-relaxed">${event.description}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        const renderElegantTimeline = () => {
+            return events.map((event, index) => `
+                <div class="relative ${index < events.length - 1 ? 'pb-16' : ''}">
+                    <div class="flex items-center gap-6 mb-4">
+                        <div class="flex-shrink-0 text-right" style="width: 150px;">
+                            <div class="text-sm font-bold mb-1" style="color: ${accent};">${new Date(event.date).toLocaleDateString('en-US', {year: 'numeric'})}</div>
+                            <div class="text-xs text-gray-600">${new Date(event.date).toLocaleDateString('en-US', {month: 'long', day: 'numeric'})}</div>
+                        </div>
+                        <div class="flex-shrink-0 w-4 h-4 rounded-full border-4 border-white shadow-lg z-10" style="background: ${accent};"></div>
+                        <div class="flex-1 h-px" style="background: ${lineColor};"></div>
+                    </div>
+                    <div class="ml-44">
+                        <div class="p-6 rounded-lg border-l-4 shadow-md" style="background: white; border-left-color: ${accent};">
+                            <div class="font-bold text-lg mb-2" style="color: ${textColor}; font-family: 'Georgia', serif;">${event.title}</div>
+                            ${event.description ? `<p class="text-sm text-gray-600 leading-relaxed italic">${event.description}</p>` : ''}
+                        </div>
+                    </div>
+                    ${index < events.length - 1 ? `<div class="absolute left-44 top-20 bottom-0 w-px" style="background: ${lineColor}; margin-left: -2px;"></div>` : ''}
+                </div>
+            `).join('');
+        };
+
+        const renderCompactTimeline = () => {
+            return events.map((event, index) => `
+                <div class="flex items-center gap-3 py-2 ${index < events.length - 1 ? 'border-b' : ''}" style="border-color: ${lineColor}30;">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md" style="background: ${accent};">
+                        ${index + 1}
+                    </div>
+                    <div class="flex-shrink-0 text-xs font-semibold" style="color: ${accent}; width: 100px;">
+                        ${new Date(event.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short'})}
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-semibold text-sm" style="color: ${textColor};">${event.title}</div>
+                        ${event.description ? `<p class="text-xs text-gray-600 mt-1 line-clamp-1">${event.description}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        };
+
         let timelineHtml = '';
         if (events.length > 0) {
             switch(timelineStyle) {
@@ -177,6 +238,15 @@ window.sectionComponents.timeline = {
                     break;
                 case 'modern':
                     timelineHtml = renderModernTimeline();
+                    break;
+                case 'illustrated':
+                    timelineHtml = renderIllustratedTimeline();
+                    break;
+                case 'elegant':
+                    timelineHtml = renderElegantTimeline();
+                    break;
+                case 'compact':
+                    timelineHtml = `<div class="space-y-1">${renderCompactTimeline()}</div>`;
                     break;
                 case 'vertical':
                 default:

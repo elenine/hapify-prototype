@@ -31,6 +31,9 @@ window.sectionComponents.thankyou = {
                     <option value="hearts">Hearts Background</option>
                     <option value="gradient">Gradient Banner</option>
                     <option value="minimal">Minimal Signature</option>
+                    <option value="classic">Classic Thank You</option>
+                    <option value="modern">Modern Gratitude</option>
+                    <option value="heartfelt">Heartfelt Message</option>
                 </select>
             </div>
             <div>
@@ -137,6 +140,85 @@ window.sectionComponents.thankyou = {
                             <div class="relative inline-block">
                                 <div class="text-2xl font-bold italic" style="color: ${accent}; font-family: 'Brush Script MT', cursive;">${data.closing}</div>
                                 <div class="mt-2 h-0.5 w-full" style="background: ${accent};"></div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'classic') {
+            return `
+                <div class="py-20 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="relative p-12 rounded-2xl shadow-2xl" style="background: ${cardBg};">
+                            <div class="absolute top-0 left-0 w-full h-2 rounded-t-2xl" style="background: linear-gradient(90deg, ${accent} 0%, ${accent}80 100%);"></div>
+                            <div class="text-center">
+                                <div class="flex items-center justify-center gap-4 mb-8">
+                                    <div class="w-16 h-px" style="background: ${accent};"></div>
+                                    <div class="text-6xl">💝</div>
+                                    <div class="w-16 h-px" style="background: ${accent};"></div>
+                                </div>
+                                <h2 class="text-4xl font-bold mb-8" style="font-family: 'Georgia', serif;">${data.title || 'Thank You'}</h2>
+                                ${data.message ? `
+                                    <div class="max-w-xl mx-auto p-6 mb-8 rounded-lg" style="background: white; border-left: 4px solid ${accent};">
+                                        <p class="text-lg text-gray-700 leading-relaxed italic">${data.message}</p>
+                                    </div>
+                                ` : ''}
+                                ${data.closing ? `
+                                    <div class="pt-6 border-t" style="border-color: ${accent}20;">
+                                        <div class="text-2xl font-bold" style="color: ${accent}; font-family: 'Georgia', serif;">${data.closing}</div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'modern') {
+            return `
+                <div class="py-20 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="grid md:grid-cols-2 gap-10 items-center">
+                            <div class="text-center md:text-left">
+                                <div class="inline-block text-8xl mb-6">💝</div>
+                                <h2 class="text-5xl font-bold mb-6">${data.title || 'Thank You'}</h2>
+                            </div>
+                            <div>
+                                ${data.message ? `
+                                    <div class="p-8 rounded-2xl shadow-xl mb-6" style="background: ${cardBg};">
+                                        <p class="text-xl text-gray-700 leading-relaxed">${data.message}</p>
+                                    </div>
+                                ` : ''}
+                                ${data.closing ? `
+                                    <div class="inline-block px-8 py-4 rounded-full shadow-lg" style="background: ${accent};">
+                                        <div class="text-xl font-bold text-white">${data.closing}</div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'heartfelt') {
+            return `
+                <div class="relative py-24 px-6 overflow-hidden" style="background: ${bg}; color: ${textColor};">
+                    <div class="absolute inset-0" style="background: radial-gradient(circle at top right, ${accent}15 0%, transparent 50%);"></div>
+                    <div class="relative max-w-3xl mx-auto text-center">
+                        <div class="relative inline-block mb-10">
+                            <div class="absolute inset-0 blur-2xl opacity-30" style="background: ${accent};"></div>
+                            <div class="relative text-8xl">💝</div>
+                        </div>
+                        <h2 class="text-5xl font-bold mb-10" style="font-family: 'Georgia', serif;">${data.title || 'Thank You'}</h2>
+                        ${data.message ? `
+                            <div class="relative mb-12">
+                                <div class="absolute -top-6 -left-6 text-6xl opacity-20" style="color: ${accent};">"</div>
+                                <div class="absolute -bottom-6 -right-6 text-6xl opacity-20" style="color: ${accent};">"</div>
+                                <p class="relative text-2xl text-gray-700 leading-relaxed max-w-2xl mx-auto px-12" style="font-family: 'Georgia', serif; font-style: italic;">${data.message}</p>
+                            </div>
+                        ` : ''}
+                        ${data.closing ? `
+                            <div class="relative">
+                                <div class="text-3xl font-bold mb-2" style="color: ${accent}; font-family: 'Georgia', serif;">${data.closing}</div>
+                                <div class="w-32 h-1 mx-auto rounded-full" style="background: linear-gradient(90deg, transparent 0%, ${accent} 50%, transparent 100%);"></div>
                             </div>
                         ` : ''}
                     </div>
