@@ -337,6 +337,10 @@
                             <input type="text" placeholder="Housewarming Party" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent section-data" data-field="title" oninput="updatePreview()">
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Subtitle</label>
+                            <input type="text" placeholder="Join us in celebrating our new home" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent section-data" data-field="subtitle" oninput="updatePreview()">
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Home Photo</label>
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-orange-400 cursor-pointer" onclick="this.querySelector('input').click()">
                                 <div class="text-3xl mb-2">📸</div>
@@ -349,28 +353,168 @@
                 style: \`
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="centered">Centered Classic</option>
+                                <option value="minimal">Minimal Modern</option>
+                                <option value="bold">Bold & Dramatic</option>
+                                <option value="elegant">Elegant Card</option>
+                                <option value="overlap">Overlapping Photo</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="bgStyle" onchange="updatePreview()">
+                                <option value="solid">Solid Color</option>
+                                <option value="gradient">Gradient</option>
+                                <option value="pattern">Subtle Pattern</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
                             <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Secondary Color (for gradients)</label>
+                            <input type="color" value="#fb923c" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg2" oninput="updatePreview()">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="text" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Shape</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="imageShape" onchange="updatePreview()">
+                                <option value="circle">Circle</option>
+                                <option value="rounded">Rounded Square</option>
+                                <option value="square">Square</option>
+                                <option value="wide">Wide Rectangle</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Add Shadow</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="shadow" onchange="updatePreview()">
+                                <option value="none">No Shadow</option>
+                                <option value="sm">Small Shadow</option>
+                                <option value="md">Medium Shadow</option>
+                                <option value="lg">Large Shadow</option>
+                                <option value="xl">Extra Large Shadow</option>
+                            </select>
+                        </div>
                     </div>
                 \`,
-                render: (data, style) => \`
-                    <div class="text-center py-16 px-6" style="background: \${style.bg || '#f97316'}; color: \${style.text || '#ffffff'}">
-                        \${data.image ? \`<img src="\${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">\` : '<div class="text-6xl mb-4">🏠</div>'}
-                        <h1 class="text-3xl font-bold mb-2">\${data.title || 'Housewarming Party'}</h1>
-                        <p class="text-xl">\${data.hosts || "Host Names"}</p>
-                    </div>
-                \`
+                render: (data, style) => {
+                    const layout = style.layout || 'centered';
+                    const bgStyle = style.bgStyle || 'solid';
+                    const bg = style.bg || '#f97316';
+                    const bg2 = style.bg2 || '#fb923c';
+                    const textColor = style.text || '#ffffff';
+                    const imageShape = style.imageShape || 'circle';
+                    const shadow = style.shadow || 'none';
+
+                    let background = bg;
+                    if (bgStyle === 'gradient') {
+                        background = \`linear-gradient(135deg, \${bg}, \${bg2})\`;
+                    } else if (bgStyle === 'pattern') {
+                        background = \`linear-gradient(135deg, \${bg} 0%, \${bg} 100%), repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px)\`;
+                    }
+
+                    const shadowClass = shadow !== 'none' ? \`shadow-\${shadow}\` : '';
+
+                    let imageClass = 'mx-auto mb-6 object-cover';
+                    if (imageShape === 'circle') {
+                        imageClass += ' w-32 h-32 rounded-full border-4 border-white';
+                    } else if (imageShape === 'rounded') {
+                        imageClass += ' w-40 h-40 rounded-2xl border-4 border-white';
+                    } else if (imageShape === 'square') {
+                        imageClass += ' w-40 h-40 border-4 border-white';
+                    } else if (imageShape === 'wide') {
+                        imageClass += ' w-full max-w-md h-48 rounded-xl border-4 border-white';
+                    }
+
+                    if (layout === 'centered') {
+                        return \`
+                            <div class="text-center py-16 px-6" style="background: \${background}; color: \${textColor}">
+                                \${data.image ? \`<img src="\${data.image}" class="\${imageClass} \${shadowClass}">\` : '<div class="text-6xl mb-4">🏠</div>'}
+                                <h1 class="text-3xl font-bold mb-2">\${data.title || 'Housewarming Party'}</h1>
+                                <p class="text-xl opacity-90">\${data.hosts || "Host Names"}</p>
+                                \${data.subtitle ? \`<p class="text-sm mt-3 opacity-75">\${data.subtitle}</p>\` : ''}
+                            </div>
+                        \`;
+                    } else if (layout === 'minimal') {
+                        return \`
+                            <div class="py-20 px-6" style="background: \${background}; color: \${textColor}">
+                                <div class="max-w-2xl mx-auto text-center space-y-6">
+                                    \${data.image ? \`<img src="\${data.image}" class="\${imageClass} \${shadowClass}">\` : '<div class="text-5xl mb-2">🏠</div>'}
+                                    <div class="space-y-2">
+                                        <p class="text-sm uppercase tracking-wider opacity-75">\${data.hosts || "Host Names"}</p>
+                                        <h1 class="text-4xl font-light">\${data.title || 'Housewarming Party'}</h1>
+                                        \${data.subtitle ? \`<p class="text-base opacity-80">\${data.subtitle}</p>\` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'bold') {
+                        return \`
+                            <div class="relative py-24 px-6 overflow-hidden" style="background: \${background}; color: \${textColor}">
+                                <div class="relative z-10 max-w-2xl mx-auto text-center">
+                                    \${data.image ? \`<img src="\${data.image}" class="\${imageClass} \${shadowClass}">\` : '<div class="text-7xl mb-6">🏠</div>'}
+                                    <h1 class="text-5xl font-extrabold mb-3 tracking-tight">\${data.title || 'Housewarming Party'}</h1>
+                                    <div class="w-24 h-1 bg-white mx-auto mb-4 opacity-75"></div>
+                                    <p class="text-2xl font-medium">\${data.hosts || "Host Names"}</p>
+                                    \${data.subtitle ? \`<p class="text-lg mt-4 opacity-90">\${data.subtitle}</p>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'elegant') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${background}; color: \${textColor}">
+                                <div class="max-w-md mx-auto bg-white bg-opacity-10 backdrop-blur-sm rounded-3xl p-8 \${shadowClass}" style="border: 2px solid rgba(255,255,255,0.2)">
+                                    \${data.image ? \`<img src="\${data.image}" class="\${imageClass}">\` : '<div class="text-6xl mb-4 text-center">🏠</div>'}
+                                    <div class="text-center space-y-3">
+                                        <h1 class="text-3xl font-serif font-bold">\${data.title || 'Housewarming Party'}</h1>
+                                        <p class="text-lg">\${data.hosts || "Host Names"}</p>
+                                        \${data.subtitle ? \`<p class="text-sm opacity-90 italic">\${data.subtitle}</p>\` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'overlap') {
+                        return \`
+                            <div class="relative py-24 px-6" style="background: \${background}; color: \${textColor}">
+                                <div class="max-w-lg mx-auto">
+                                    \${data.image ? \`
+                                        <div class="relative mb-16">
+                                            <img src="\${data.image}" class="w-full h-56 object-cover rounded-2xl \${shadowClass}">
+                                            <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2 bg-white rounded-2xl p-6 w-11/12 \${shadowClass}" style="color: #1f2937">
+                                                <h1 class="text-2xl font-bold mb-1">\${data.title || 'Housewarming Party'}</h1>
+                                                <p class="text-base text-gray-600">\${data.hosts || "Host Names"}</p>
+                                                \${data.subtitle ? \`<p class="text-sm text-gray-500 mt-2">\${data.subtitle}</p>\` : ''}
+                                            </div>
+                                        </div>
+                                    \` : \`
+                                        <div class="text-center">
+                                            <div class="text-6xl mb-4">🏠</div>
+                                            <h1 class="text-3xl font-bold mb-2">\${data.title || 'Housewarming Party'}</h1>
+                                            <p class="text-xl">\${data.hosts || "Host Names"}</p>
+                                            \${data.subtitle ? \`<p class="text-sm mt-3 opacity-75">\${data.subtitle}</p>\` : ''}
+                                        </div>
+                                    \`}
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             homedetails: {
                 name: '🏡 New Home Details',
                 allowMultiple: false,
                 info: \`
                     <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Our New Home" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Home Address</label>
                             <textarea placeholder="123 Main Street, City, State ZIP" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="address" oninput="updatePreview()"></textarea>
@@ -379,34 +523,185 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Home Description</label>
                             <textarea placeholder="Beautiful 3-bedroom home in quiet neighborhood..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Home Features (one per line)</label>
+                            <textarea placeholder="3 Bedrooms&#10;2 Bathrooms&#10;Large backyard&#10;Modern kitchen" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="features" oninput="updatePreview()"></textarea>
+                        </div>
                     </div>
                 \`,
                 style: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Layout</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="classic">Classic Card</option>
+                                <option value="modern">Modern Minimal</option>
+                                <option value="bordered">Bordered Accent</option>
+                                <option value="split">Split Layout</option>
+                                <option value="floating">Floating Card</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
-                    </div>
-                \`,
-                render: (data, style) => \`
-                    <div class="py-12 px-6" style="background: \${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto text-center">
-                            <h2 class="text-2xl font-bold mb-6">Our New Home</h2>
-                            <div class="p-6 bg-orange-50 rounded-lg">
-                                <div class="text-4xl mb-3">🏡</div>
-                                \${data.address ? \`<div class="font-medium text-lg mb-3">\${data.address}</div>\` : ''}
-                                \${data.description ? \`<p class="text-gray-700 text-sm">\${data.description}</p>\` : ''}
-                            </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card Color</label>
+                            <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardBg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="align" onchange="updatePreview()">
+                                <option value="center">Center</option>
+                                <option value="left">Left</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Show Icon</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="showIcon" onchange="updatePreview()">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
                         </div>
                     </div>
-                \`
+                \`,
+                render: (data, style) => {
+                    const layout = style.layout || 'classic';
+                    const bg = style.bg || '#ffffff';
+                    const cardBg = style.cardBg || '#fff7ed';
+                    const accent = style.accent || '#f97316';
+                    const align = style.align || 'center';
+                    const showIcon = style.showIcon !== 'no';
+                    const title = data.title || 'Our New Home';
+                    const features = data.features ? data.features.split('\n').filter(f => f.trim()) : [];
+
+                    if (layout === 'classic') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto text-\${align}">
+                                    <h2 class="text-2xl font-bold mb-6">\${title}</h2>
+                                    <div class="p-6 rounded-lg shadow-sm" style="background: \${cardBg}">
+                                        \${showIcon ? '<div class="text-4xl mb-3">🏡</div>' : ''}
+                                        \${data.address ? \`<div class="font-medium text-lg mb-3">\${data.address}</div>\` : ''}
+                                        \${data.description ? \`<p class="text-gray-700 text-sm mb-4">\${data.description}</p>\` : ''}
+                                        \${features.length > 0 ? \`
+                                            <div class="mt-4 space-y-2">
+                                                \${features.map(f => \`<div class="flex items-center \${align === 'center' ? 'justify-center' : ''} gap-2 text-sm"><span style="color: \${accent}">✓</span><span>\${f}</span></div>\`).join('')}
+                                            </div>
+                                        \` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'modern') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    \${showIcon ? '<div class="text-5xl mb-4 text-center">🏡</div>' : ''}
+                                    <h2 class="text-3xl font-bold mb-3 text-center">\${title}</h2>
+                                    \${data.address ? \`<div class="text-center text-gray-600 mb-6 text-sm">\${data.address}</div>\` : ''}
+                                    <div class="space-y-6">
+                                        \${data.description ? \`<p class="text-gray-700 text-center leading-relaxed">\${data.description}</p>\` : ''}
+                                        \${features.length > 0 ? \`
+                                            <div class="grid grid-cols-2 gap-3">
+                                                \${features.map(f => \`
+                                                    <div class="p-3 rounded-lg text-sm text-center" style="background: \${cardBg}; border-left: 3px solid \${accent}">
+                                                        \${f}
+                                                    </div>
+                                                \`).join('')}
+                                            </div>
+                                        \` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'bordered') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="border-4 rounded-xl p-8" style="border-color: \${accent}; background: \${cardBg}">
+                                        \${showIcon ? '<div class="text-5xl mb-4 text-center">🏡</div>' : ''}
+                                        <h2 class="text-2xl font-bold mb-4 text-center" style="color: \${accent}">\${title}</h2>
+                                        \${data.address ? \`<div class="text-center font-medium mb-4 text-lg">\${data.address}</div>\` : ''}
+                                        <div class="h-1 w-16 mx-auto mb-4" style="background: \${accent}"></div>
+                                        \${data.description ? \`<p class="text-gray-700 text-center mb-4">\${data.description}</p>\` : ''}
+                                        \${features.length > 0 ? \`
+                                            <div class="mt-4 space-y-2">
+                                                \${features.map(f => \`<div class="flex items-center justify-center gap-2"><span style="color: \${accent}">●</span><span>\${f}</span></div>\`).join('')}
+                                            </div>
+                                        \` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'split') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="rounded-xl overflow-hidden shadow-md" style="background: \${cardBg}">
+                                        <div class="p-6 text-white text-center" style="background: \${accent}">
+                                            \${showIcon ? '<div class="text-5xl mb-3">🏡</div>' : ''}
+                                            <h2 class="text-2xl font-bold mb-2">\${title}</h2>
+                                            \${data.address ? \`<div class="text-sm opacity-90">\${data.address}</div>\` : ''}
+                                        </div>
+                                        <div class="p-6">
+                                            \${data.description ? \`<p class="text-gray-700 mb-4 text-center">\${data.description}</p>\` : ''}
+                                            \${features.length > 0 ? \`
+                                                <div class="grid grid-cols-2 gap-3">
+                                                    \${features.map(f => \`
+                                                        <div class="flex items-center gap-2 text-sm">
+                                                            <span style="color: \${accent}">✓</span>
+                                                            <span>\${f}</span>
+                                                        </div>
+                                                    \`).join('')}
+                                                </div>
+                                            \` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'floating') {
+                        return \`
+                            <div class="py-16 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="bg-white rounded-2xl shadow-2xl p-8 transform hover:scale-105 transition-transform" style="border-top: 6px solid \${accent}">
+                                        <div class="text-center mb-6">
+                                            \${showIcon ? \`<div class="w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4" style="background: \${cardBg}">\n🏡\n</div>\` : ''}
+                                            <h2 class="text-2xl font-bold mb-2">\${title}</h2>
+                                            \${data.address ? \`<div class="text-gray-600 text-sm">\${data.address}</div>\` : ''}
+                                        </div>
+                                        \${data.description ? \`<p class="text-gray-700 text-center mb-6 leading-relaxed">\${data.description}</p>\` : ''}
+                                        \${features.length > 0 ? \`
+                                            <div class="space-y-3">
+                                                \${features.map(f => \`
+                                                    <div class="flex items-center gap-3 p-2 rounded-lg" style="background: \${cardBg}">
+                                                        <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background: \${accent}">✓</div>
+                                                        <span class="text-sm">\${f}</span>
+                                                    </div>
+                                                \`).join('')}
+                                            </div>
+                                        \` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             partyinfo: {
                 name: '🎉 Party Info',
                 allowMultiple: false,
                 info: \`
                     <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Party Details" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Party Date</label>
                             <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="date" oninput="updatePreview()">
@@ -416,46 +711,248 @@
                             <input type="time" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="time" oninput="updatePreview()">
                         </div>
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                            <input type="text" placeholder="3-7 PM" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="duration" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Dress Code</label>
+                            <input type="text" placeholder="Casual" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="dressCode" oninput="updatePreview()">
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Special Notes</label>
-                            <textarea placeholder="Casual attire, food and drinks provided..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="notes" oninput="updatePreview()"></textarea>
+                            <textarea placeholder="Food and drinks provided..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="notes" oninput="updatePreview()"></textarea>
                         </div>
                     </div>
                 \`,
                 style: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Info Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="cards">Info Cards</option>
+                                <option value="timeline">Timeline Style</option>
+                                <option value="grid">Grid Layout</option>
+                                <option value="minimal">Minimal List</option>
+                                <option value="banner">Banner Style</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
-                    </div>
-                \`,
-                render: (data, style) => \`
-                    <div class="py-12 px-6" style="background: \${style.bg || '#fff7ed'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">Party Details</h2>
-                        <div class="max-w-md mx-auto space-y-4">
-                            \${data.date ? \`
-                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">📅</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Date</div>
-                                    <div class="font-medium">\${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
-                                </div>
-                            </div>\` : ''}
-                            \${data.time ? \`
-                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">🕐</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Time</div>
-                                    <div class="font-medium">\${data.time}</div>
-                                </div>
-                            </div>\` : ''}
-                            \${data.notes ? \`
-                            <div class="p-4 bg-white rounded-lg">
-                                <p class="text-sm text-gray-700">\${data.notes}</p>
-                            </div>\` : ''}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Card/Item Color</label>
+                            <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="cardBg" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Icon Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="iconStyle" onchange="updatePreview()">
+                                <option value="emoji">Emoji Icons</option>
+                                <option value="circle">Circle Badges</option>
+                                <option value="square">Square Badges</option>
+                            </select>
                         </div>
                     </div>
-                \`
+                \`,
+                render: (data, style) => {
+                    const layout = style.layout || 'cards';
+                    const bg = style.bg || '#fff7ed';
+                    const cardBg = style.cardBg || '#ffffff';
+                    const accent = style.accent || '#f97316';
+                    const iconStyle = style.iconStyle || 'emoji';
+                    const title = data.title || 'Party Details';
+
+                    const formatDate = (dateStr) => {
+                        if (!dateStr) return '';
+                        return new Date(dateStr).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+                    };
+
+                    const getIcon = (type, emoji) => {
+                        if (iconStyle === 'emoji') return \`<div class="text-2xl">\${emoji}</div>\`;
+                        if (iconStyle === 'circle') return \`<div class="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm" style="background: \${accent}">\${emoji}</div>\`;
+                        if (iconStyle === 'square') return \`<div class="w-10 h-10 rounded-lg flex items-center justify-center text-white text-sm" style="background: \${accent}">\${emoji}</div>\`;
+                    };
+
+                    if (layout === 'cards') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">\${title}</h2>
+                                <div class="max-w-md mx-auto space-y-4">
+                                    \${data.date ? \`
+                                    <div class="flex items-start gap-4 p-4 rounded-lg shadow-sm" style="background: \${cardBg}">
+                                        \${getIcon('date', '📅')}
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Date</div>
+                                            <div class="font-medium">\${formatDate(data.date)}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.time || data.duration ? \`
+                                    <div class="flex items-start gap-4 p-4 rounded-lg shadow-sm" style="background: \${cardBg}">
+                                        \${getIcon('time', '🕐')}
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Time</div>
+                                            <div class="font-medium">\${data.duration || data.time}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.dressCode ? \`
+                                    <div class="flex items-start gap-4 p-4 rounded-lg shadow-sm" style="background: \${cardBg}">
+                                        \${getIcon('dress', '👔')}
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Dress Code</div>
+                                            <div class="font-medium">\${data.dressCode}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.notes ? \`
+                                    <div class="p-4 rounded-lg shadow-sm" style="background: \${cardBg}">
+                                        <p class="text-sm text-gray-700">\${data.notes}</p>
+                                    </div>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'timeline') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">\${title}</h2>
+                                <div class="max-w-md mx-auto">
+                                    <div class="relative pl-8 space-y-6">
+                                        <div class="absolute left-3 top-0 bottom-0 w-0.5" style="background: \${accent}"></div>
+                                        \${data.date ? \`
+                                        <div class="relative">
+                                            <div class="absolute -left-8 w-6 h-6 rounded-full border-4 border-white shadow" style="background: \${accent}"></div>
+                                            <div class="p-4 rounded-lg" style="background: \${cardBg}">
+                                                <div class="text-sm font-medium" style="color: \${accent}">📅 Date</div>
+                                                <div class="font-medium mt-1">\${formatDate(data.date)}</div>
+                                            </div>
+                                        </div>\` : ''}
+                                        \${data.time || data.duration ? \`
+                                        <div class="relative">
+                                            <div class="absolute -left-8 w-6 h-6 rounded-full border-4 border-white shadow" style="background: \${accent}"></div>
+                                            <div class="p-4 rounded-lg" style="background: \${cardBg}">
+                                                <div class="text-sm font-medium" style="color: \${accent}">🕐 Time</div>
+                                                <div class="font-medium mt-1">\${data.duration || data.time}</div>
+                                            </div>
+                                        </div>\` : ''}
+                                        \${data.dressCode ? \`
+                                        <div class="relative">
+                                            <div class="absolute -left-8 w-6 h-6 rounded-full border-4 border-white shadow" style="background: \${accent}"></div>
+                                            <div class="p-4 rounded-lg" style="background: \${cardBg}">
+                                                <div class="text-sm font-medium" style="color: \${accent}">👔 Dress Code</div>
+                                                <div class="font-medium mt-1">\${data.dressCode}</div>
+                                            </div>
+                                        </div>\` : ''}
+                                    </div>
+                                    \${data.notes ? \`
+                                    <div class="mt-6 p-4 rounded-lg" style="background: \${cardBg}; border-left: 4px solid \${accent}">
+                                        <p class="text-sm text-gray-700">\${data.notes}</p>
+                                    </div>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'grid') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">\${title}</h2>
+                                <div class="max-w-lg mx-auto">
+                                    <div class="grid grid-cols-2 gap-4 mb-4">
+                                        \${data.date ? \`
+                                        <div class="p-4 rounded-lg text-center" style="background: \${cardBg}">
+                                            <div class="text-3xl mb-2">📅</div>
+                                            <div class="text-xs text-gray-500 mb-1">Date</div>
+                                            <div class="font-medium text-sm">\${formatDate(data.date)}</div>
+                                        </div>\` : ''}
+                                        \${data.time || data.duration ? \`
+                                        <div class="p-4 rounded-lg text-center" style="background: \${cardBg}">
+                                            <div class="text-3xl mb-2">🕐</div>
+                                            <div class="text-xs text-gray-500 mb-1">Time</div>
+                                            <div class="font-medium text-sm">\${data.duration || data.time}</div>
+                                        </div>\` : ''}
+                                        \${data.dressCode ? \`
+                                        <div class="p-4 rounded-lg text-center col-span-2" style="background: \${cardBg}">
+                                            <div class="text-3xl mb-2">👔</div>
+                                            <div class="text-xs text-gray-500 mb-1">Dress Code</div>
+                                            <div class="font-medium text-sm">\${data.dressCode}</div>
+                                        </div>\` : ''}
+                                    </div>
+                                    \${data.notes ? \`
+                                    <div class="p-4 rounded-lg" style="background: \${cardBg}">
+                                        <p class="text-sm text-gray-700 text-center">\${data.notes}</p>
+                                    </div>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'minimal') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto text-center space-y-6">
+                                    <h2 class="text-2xl font-bold mb-6">\${title}</h2>
+                                    \${data.date ? \`
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider text-gray-500 mb-1">Date</div>
+                                        <div class="text-lg font-medium">\${formatDate(data.date)}</div>
+                                    </div>\` : ''}
+                                    \${data.time || data.duration ? \`
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider text-gray-500 mb-1">Time</div>
+                                        <div class="text-lg font-medium">\${data.duration || data.time}</div>
+                                    </div>\` : ''}
+                                    \${data.dressCode ? \`
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider text-gray-500 mb-1">Dress Code</div>
+                                        <div class="text-lg font-medium">\${data.dressCode}</div>
+                                    </div>\` : ''}
+                                    \${data.notes ? \`
+                                    <div class="mt-6 pt-6 border-t-2" style="border-color: \${accent}">
+                                        <p class="text-sm text-gray-700">\${data.notes}</p>
+                                    </div>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'banner') {
+                        return \`
+                            <div class="py-0" style="background: \${bg}">
+                                <div class="text-white text-center py-12" style="background: \${accent}">
+                                    <h2 class="text-3xl font-bold mb-8">\${title}</h2>
+                                    <div class="max-w-3xl mx-auto px-6">
+                                        <div class="flex flex-wrap justify-center gap-8 text-left">
+                                            \${data.date ? \`
+                                            <div class="flex items-start gap-3">
+                                                <div class="text-3xl">📅</div>
+                                                <div>
+                                                    <div class="text-xs opacity-75 mb-1">Date</div>
+                                                    <div class="font-medium">\${formatDate(data.date)}</div>
+                                                </div>
+                                            </div>\` : ''}
+                                            \${data.time || data.duration ? \`
+                                            <div class="flex items-start gap-3">
+                                                <div class="text-3xl">🕐</div>
+                                                <div>
+                                                    <div class="text-xs opacity-75 mb-1">Time</div>
+                                                    <div class="font-medium">\${data.duration || data.time}</div>
+                                                </div>
+                                            </div>\` : ''}
+                                            \${data.dressCode ? \`
+                                            <div class="flex items-start gap-3">
+                                                <div class="text-3xl">👔</div>
+                                                <div>
+                                                    <div class="text-xs opacity-75 mb-1">Dress Code</div>
+                                                    <div class="font-medium">\${data.dressCode}</div>
+                                                </div>
+                                            </div>\` : ''}
+                                        </div>
+                                        \${data.notes ? \`
+                                        <div class="mt-8 p-4 bg-white bg-opacity-20 rounded-lg backdrop-blur-sm">
+                                            <p class="text-sm">\${data.notes}</p>
+                                        </div>\` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             housetour: {
                 name: '🚪 House Tour',
@@ -588,28 +1085,145 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">RSVP Deadline</label>
                             <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="deadline" oninput="updatePreview()">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Contact Method</label>
+                            <input type="text" placeholder="Email or Phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="contact" oninput="updatePreview()">
+                        </div>
                     </div>
                 \`,
                 style: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Form Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="simple">Simple Button</option>
+                                <option value="card">Card Style</option>
+                                <option value="boxed">Boxed Invitation</option>
+                                <option value="gradient">Gradient Banner</option>
+                                <option value="minimal">Minimal Text</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
-                    </div>
-                \`,
-                render: (data, style) => \`
-                    <div class="py-12 px-6 text-center" style="background: \${style.bg || '#fff7ed'}">
-                        <div class="max-w-md mx-auto">
-                            <h2 class="text-2xl font-bold mb-4">\${data.title || 'Please RSVP'}</h2>
-                            <p class="text-gray-600 mb-6">\${data.message || "Let us know if you can join us"}</p>
-                            \${data.deadline ? \`<p class="text-sm text-gray-500 mb-6">Please respond by \${new Date(data.deadline).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>\` : ''}
-                            <button class="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-600 transition">
-                                RSVP Now
-                            </button>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Button/Accent Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Button Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="buttonStyle" onchange="updatePreview()">
+                                <option value="solid">Solid</option>
+                                <option value="outline">Outline</option>
+                                <option value="rounded">Rounded Pill</option>
+                            </select>
                         </div>
                     </div>
-                \`
+                \`,
+                render: (data, style) => {
+                    const layout = style.layout || 'simple';
+                    const bg = style.bg || '#fff7ed';
+                    const accent = style.accent || '#f97316';
+                    const buttonStyle = style.buttonStyle || 'solid';
+                    const title = data.title || 'Please RSVP';
+                    const message = data.message || "Let us know if you can join us";
+
+                    const formatDate = (dateStr) => {
+                        if (!dateStr) return '';
+                        return new Date(dateStr).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+                    };
+
+                    let buttonClass = 'px-8 py-3 font-semibold transition';
+                    if (buttonStyle === 'solid') {
+                        buttonClass += ' text-white rounded-lg';
+                    } else if (buttonStyle === 'outline') {
+                        buttonClass += ' border-2 rounded-lg';
+                    } else if (buttonStyle === 'rounded') {
+                        buttonClass += ' text-white rounded-full';
+                    }
+
+                    if (layout === 'simple') {
+                        return \`
+                            <div class="py-12 px-6 text-center" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="text-4xl mb-4">✉️</div>
+                                    <h2 class="text-2xl font-bold mb-4">\${title}</h2>
+                                    <p class="text-gray-600 mb-6">\${message}</p>
+                                    \${data.deadline ? \`<p class="text-sm text-gray-500 mb-6">Please respond by \${formatDate(data.deadline)}</p>\` : ''}
+                                    \${data.contact ? \`<p class="text-sm text-gray-600 mb-6">\${data.contact}</p>\` : ''}
+                                    <button class="\${buttonClass}" style="background: \${buttonStyle === 'solid' || buttonStyle === 'rounded' ? accent : 'transparent'}; border-color: \${accent}; color: \${buttonStyle === 'outline' ? accent : 'white'}">
+                                        RSVP Now
+                                    </button>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'card') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8 text-center">
+                                    <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center text-2xl" style="background: \${accent}20">
+                                        ✉️
+                                    </div>
+                                    <h2 class="text-2xl font-bold mb-3">\${title}</h2>
+                                    <p class="text-gray-600 mb-4">\${message}</p>
+                                    \${data.deadline ? \`<p class="text-sm mb-4" style="color: \${accent}">Respond by \${formatDate(data.deadline)}</p>\` : ''}
+                                    \${data.contact ? \`<p class="text-sm text-gray-600 mb-6">\${data.contact}</p>\` : ''}
+                                    <button class="\${buttonClass}" style="background: \${buttonStyle === 'solid' || buttonStyle === 'rounded' ? accent : 'transparent'}; border-color: \${accent}; color: \${buttonStyle === 'outline' ? accent : 'white'}">
+                                        RSVP Now
+                                    </button>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'boxed') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto border-4 rounded-xl p-8 text-center" style="border-color: \${accent}; background: white">
+                                    <div class="text-5xl mb-4">✉️</div>
+                                    <div class="h-1 w-20 mx-auto mb-4" style="background: \${accent}"></div>
+                                    <h2 class="text-2xl font-bold mb-3" style="color: \${accent}">\${title}</h2>
+                                    <p class="text-gray-700 mb-4">\${message}</p>
+                                    \${data.deadline ? \`<div class="bg-gray-50 rounded-lg p-3 mb-4"><p class="text-sm text-gray-700">Please respond by<br><strong>\${formatDate(data.deadline)}</strong></p></div>\` : ''}
+                                    \${data.contact ? \`<p class="text-sm text-gray-600 mb-6">\${data.contact}</p>\` : ''}
+                                    <button class="\${buttonClass}" style="background: \${buttonStyle === 'solid' || buttonStyle === 'rounded' ? accent : 'transparent'}; border-color: \${accent}; color: \${buttonStyle === 'outline' ? accent : 'white'}">
+                                        Confirm Attendance
+                                    </button>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'gradient') {
+                        return \`
+                            <div class="text-white text-center py-16 px-6" style="background: linear-gradient(135deg, \${accent}, \${accent}dd)">
+                                <div class="max-w-md mx-auto">
+                                    <div class="text-5xl mb-4">✉️</div>
+                                    <h2 class="text-3xl font-bold mb-4">\${title}</h2>
+                                    <p class="text-lg mb-6 opacity-90">\${message}</p>
+                                    \${data.deadline ? \`<p class="text-sm mb-6 opacity-80">Respond by \${formatDate(data.deadline)}</p>\` : ''}
+                                    \${data.contact ? \`<p class="text-sm mb-6 opacity-80">\${data.contact}</p>\` : ''}
+                                    <button class="bg-white px-8 py-3 rounded-lg font-semibold transition hover:shadow-lg" style="color: \${accent}">
+                                        RSVP Now
+                                    </button>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'minimal') {
+                        return \`
+                            <div class="py-12 px-6 text-center" style="background: \${bg}">
+                                <div class="max-w-md mx-auto space-y-4">
+                                    <h2 class="text-2xl font-light">\${title}</h2>
+                                    <p class="text-gray-600">\${message}</p>
+                                    \${data.deadline ? \`<p class="text-sm text-gray-500">Deadline: \${formatDate(data.deadline)}</p>\` : ''}
+                                    \${data.contact ? \`<p class="text-sm text-gray-600">\${data.contact}</p>\` : ''}
+                                    <div class="pt-4">
+                                        <button class="\${buttonClass}" style="background: \${buttonStyle === 'solid' || buttonStyle === 'rounded' ? accent : 'transparent'}; border-color: \${accent}; color: \${buttonStyle === 'outline' ? accent : 'white'}">
+                                            Respond
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             homephotos: {
                 name: '📸 Home Photos',
