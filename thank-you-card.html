@@ -290,6 +290,14 @@
                                 <option value="gradient">Gradient Overlay</option>
                                 <option value="minimal">Minimal</option>
                                 <option value="elegant">Elegant Border</option>
+                                <option value="modernSplit">Modern Split</option>
+                                <option value="floatingCard">Floating Card</option>
+                                <option value="cornerAccent">Corner Accent</option>
+                                <option value="circleFrame">Circle Frame</option>
+                                <option value="asymmetric">Asymmetric Modern</option>
+                                <option value="ribbon">Ribbon Style</option>
+                                <option value="stackedCards">Stacked Cards</option>
+                                <option value="waveBackground">Wave Background</option>
                             </select>
                         </div>
                         <div>
@@ -399,6 +407,118 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'modernSplit') {
+                        return `
+                            <div class="min-h-[300px] flex items-stretch overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="w-2/5 flex items-center justify-center p-6" style="background: linear-gradient(135deg, ${textColor}20 0%, ${textColor}40 100%);">
+                                    <div class="${sizes.emoji}">${emoji}</div>
+                                </div>
+                                <div class="w-3/5 flex items-center justify-center p-6" style="color: ${textColor};">
+                                    <div style="text-align: ${align};">
+                                        <h2 class="${sizes.title} font-bold mb-3">Thank You</h2>
+                                        <h3 class="${sizes.name} font-semibold mb-3">${name}</h3>
+                                        <p class="${sizes.message}">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingCard') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background: linear-gradient(135deg, ${bgColor} 0%, ${textColor}15 100%);">
+                                <div class="bg-white rounded-3xl p-8 max-w-md w-full transform transition-transform hover:scale-105" style="text-align: ${align}; color: ${textColor}; box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 10px 20px rgba(0,0,0,0.1);">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerAccent') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute top-0 right-0 w-32 h-32 rounded-bl-full" style="background-color: ${textColor}; opacity: 0.15;"></div>
+                                <div class="absolute bottom-0 left-0 w-24 h-24 rounded-tr-full" style="background-color: ${textColor}; opacity: 0.1;"></div>
+                                <div class="relative z-10 max-w-md w-full" style="text-align: ${align}; color: ${textColor};">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'circleFrame') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-md w-full">
+                                    <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6" style="background: linear-gradient(135deg, ${textColor}30 0%, ${textColor}50 100%);">
+                                        <div class="${sizes.emoji}">${emoji}</div>
+                                    </div>
+                                    <div style="text-align: ${align}; color: ${textColor};">
+                                        <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                        <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                        <p class="${sizes.message}">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'asymmetric') {
+                        return `
+                            <div class="min-h-[300px] flex items-center p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute top-0 right-0 w-48 h-full" style="background: linear-gradient(90deg, transparent 0%, ${textColor}10 100%); transform: skewX(-15deg); transform-origin: top;"></div>
+                                <div class="relative z-10 max-w-md pl-4" style="color: ${textColor};">
+                                    <div class="${sizes.emoji} mb-4" style="text-align: left;">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4" style="text-align: left;">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4" style="text-align: left;">${name}</h3>
+                                    <p class="${sizes.message}" style="text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ribbon') {
+                        return `
+                            <div class="min-h-[300px] flex flex-col items-center justify-center p-8" style="background-color: ${bgColor};">
+                                <div class="relative mb-8">
+                                    <div class="px-8 py-3 rounded-lg relative" style="background-color: ${textColor}; color: white;">
+                                        <h2 class="${sizes.title} font-bold">Thank You</h2>
+                                        <div class="absolute -bottom-2 left-0 w-0 h-0 border-t-8 border-l-8 border-transparent" style="border-t-color: ${textColor}; opacity: 0.7;"></div>
+                                        <div class="absolute -bottom-2 right-0 w-0 h-0 border-t-8 border-r-8 border-transparent" style="border-t-color: ${textColor}; opacity: 0.7;"></div>
+                                    </div>
+                                </div>
+                                <div style="text-align: ${align}; color: ${textColor};">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'stackedCards') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8" style="background-color: ${bgColor};">
+                                <div class="relative max-w-md w-full">
+                                    <div class="absolute inset-0 bg-white rounded-2xl transform rotate-2 opacity-30" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+                                    <div class="absolute inset-0 bg-white rounded-2xl transform -rotate-1 opacity-50" style="box-shadow: 0 4px 6px rgba(0,0,0,0.1);"></div>
+                                    <div class="relative bg-white rounded-2xl p-8" style="text-align: ${align}; color: ${textColor}; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
+                                        <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                        <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                        <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                        <p class="${sizes.message}">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'waveBackground') {
+                        return `
+                            <div class="min-h-[300px] flex items-center justify-center p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 320">
+                                    <path fill="${textColor}" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,117.3C1248,117,1344,139,1392,149.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                                </svg>
+                                <div class="relative z-10 max-w-md w-full" style="text-align: ${align}; color: ${textColor};">
+                                    <div class="${sizes.emoji} mb-4">${emoji}</div>
+                                    <h2 class="${sizes.title} font-bold mb-4">Thank You</h2>
+                                    <h3 class="${sizes.name} font-semibold mb-4">${name}</h3>
+                                    <p class="${sizes.message}">${message}</p>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         // classic
                         return `
@@ -434,6 +554,14 @@
                                 <option value="quote">Quote Style</option>
                                 <option value="sidebar">Icon Sidebar</option>
                                 <option value="highlighted">Highlighted</option>
+                                <option value="paperCard">Paper Card</option>
+                                <option value="cornerHeart">Corner Heart</option>
+                                <option value="gradientBox">Gradient Box</option>
+                                <option value="doubleBorder">Double Border</option>
+                                <option value="floatingText">Floating Text</option>
+                                <option value="heartFrame">Heart Frame</option>
+                                <option value="ribbonTop">Ribbon Top</option>
+                                <option value="coloredPanel">Colored Panel</option>
                             </select>
                         </div>
                         <div>
@@ -515,6 +643,104 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'paperCard') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-lg p-8 border-2 border-amber-200" style="box-shadow: 4px 4px 0px #f59e0b;">
+                                    <div class="text-4xl mb-4 text-center">💛</div>
+                                    <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerHeart') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-8 -right-8 text-9xl opacity-10">💛</div>
+                                <div class="absolute -bottom-8 -left-8 text-8xl opacity-10">💛</div>
+                                <div class="max-w-lg mx-auto relative z-10">
+                                    <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'gradientBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-2xl p-8" style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);">
+                                    <div class="text-4xl mb-4 text-center">💛</div>
+                                    <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'doubleBorder') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double border-amber-400 rounded-2xl p-8">
+                                    <div class="border-2 border-amber-300 rounded-xl p-6">
+                                        <div class="text-4xl mb-4 text-center">💛</div>
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingText') {
+                        return `
+                            <div class="p-8 relative" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block bg-white rounded-full w-20 h-20 flex items-center justify-center mb-6" style="box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);">
+                                        <div class="text-5xl">💛</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'heartFrame') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="flex justify-center gap-2 mb-4">
+                                        <span class="text-3xl">💛</span>
+                                        <span class="text-3xl">💛</span>
+                                        <span class="text-3xl">💛</span>
+                                    </div>
+                                    <div class="bg-amber-50 rounded-xl p-8 border-l-4 border-r-4 border-amber-400">
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                    <div class="flex justify-center gap-2 mt-4">
+                                        <span class="text-3xl">💛</span>
+                                        <span class="text-3xl">💛</span>
+                                        <span class="text-3xl">💛</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ribbonTop') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-gradient-to-r from-amber-400 to-orange-400 text-white text-center py-3 rounded-t-xl mb-0">
+                                        <div class="text-4xl">💛</div>
+                                    </div>
+                                    <div class="bg-white border-2 border-t-0 border-amber-300 rounded-b-xl p-8">
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'coloredPanel') {
+                        return `
+                            <div class="p-8 flex items-stretch min-h-[200px]" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto flex items-stretch rounded-xl overflow-hidden" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                    <div class="bg-gradient-to-b from-amber-300 to-orange-400 w-16 flex items-center justify-center flex-shrink-0">
+                                        <div class="text-4xl transform -rotate-90">💛</div>
+                                    </div>
+                                    <div class="bg-white p-8 flex-1 flex items-center">
+                                        <p class="text-lg leading-relaxed ${fontClass}" style="color: ${textColor}; text-align: ${align};">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         // simple
                         return `
@@ -547,6 +773,14 @@
                                 <option value="card">Card</option>
                                 <option value="accent">Accent Border</option>
                                 <option value="split">Split Layout</option>
+                                <option value="targetBox">Target Box</option>
+                                <option value="cornerTarget">Corner Target</option>
+                                <option value="shadedBox">Shaded Box</option>
+                                <option value="iconCircle">Icon Circle</option>
+                                <option value="topBanner">Top Banner</option>
+                                <option value="dualTone">Dual Tone</option>
+                                <option value="bulletPoint">Bullet Point</option>
+                                <option value="frameStyle">Frame Style</option>
                             </select>
                         </div>
                         <div>
@@ -605,6 +839,116 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'targetBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-xl p-6" style="background: linear-gradient(135deg, ${accentColor}20 0%, ${accentColor}05 100%); border: 3px solid ${accentColor}40;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block rounded-full p-3" style="background-color: ${accentColor}20;">
+                                            <div class="text-4xl">🎯</div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: ${align};">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                        <p class="text-gray-700">${reason}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerTarget') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute top-4 right-4 text-7xl opacity-20">🎯</div>
+                                <div class="max-w-lg mx-auto relative z-10" style="text-align: ${align};">
+                                    <h3 class="text-xl font-semibold mb-3" style="color: ${accentColor};">What You Did</h3>
+                                    <p class="text-gray-700">${reason}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'shadedBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 relative" style="box-shadow: 8px 8px 0px ${accentColor}30;">
+                                    <div class="text-4xl mb-4 text-center">🎯</div>
+                                    <div style="text-align: ${align};">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                        <p class="text-gray-700">${reason}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'iconCircle') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background-color: ${accentColor};">
+                                            🎯
+                                        </div>
+                                        <div class="flex-1" style="text-align: ${align};">
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                            <p class="text-gray-700">${reason}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'topBanner') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-center py-4 mb-4 rounded-t-xl" style="background-color: ${accentColor};">
+                                        <div class="text-5xl">🎯</div>
+                                    </div>
+                                    <div class="bg-white rounded-b-xl p-6 border-2 border-t-0" style="border-color: ${accentColor}40; text-align: ${align};">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                        <p class="text-gray-700">${reason}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'dualTone') {
+                        return `
+                            <div class="p-8 flex min-h-[200px]" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto flex rounded-xl overflow-hidden" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                    <div class="w-1/3 flex items-center justify-center p-4" style="background-color: ${accentColor};">
+                                        <div class="text-6xl">🎯</div>
+                                    </div>
+                                    <div class="w-2/3 bg-white p-6 flex flex-col justify-center" style="text-align: ${align};">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                        <p class="text-gray-700">${reason}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'bulletPoint') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="flex items-start gap-4">
+                                        <div class="text-5xl mt-1" style="color: ${accentColor};">🎯</div>
+                                        <div class="flex-1 border-l-4 pl-4" style="border-color: ${accentColor}; text-align: ${align};">
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                            <p class="text-gray-700">${reason}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'frameStyle') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-1" style="border-color: ${accentColor};">
+                                    <div class="border-2 rounded-xl p-6" style="border-color: ${accentColor}40;">
+                                        <div class="text-4xl mb-4 text-center">🎯</div>
+                                        <div style="text-align: ${align};">
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">What You Did</h3>
+                                            <p class="text-gray-700">${reason}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -637,6 +981,14 @@
                                 <option value="highlighted">Highlighted</option>
                                 <option value="bordered">Bordered</option>
                                 <option value="bubbles">Speech Bubble</option>
+                                <option value="glowCard">Glow Card</option>
+                                <option value="cornerStar">Corner Star</option>
+                                <option value="shadowBox">Shadow Box</option>
+                                <option value="gradientSplit">Gradient Split</option>
+                                <option value="iconCircle">Icon Circle</option>
+                                <option value="wavyBorder">Wavy Border</option>
+                                <option value="doubleFrame">Double Frame</option>
+                                <option value="floatingImpact">Floating Impact</option>
                             </select>
                         </div>
                         <div>
@@ -699,6 +1051,110 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'glowCard') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 40px ${highlightColor}40;">
+                                    <div class="text-4xl mb-4 text-center">💫</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${highlightColor};">The Impact</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center ${textClass}">${impact}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerStar') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-4 -right-4 text-8xl opacity-15">💫</div>
+                                <div class="max-w-lg mx-auto relative z-10">
+                                    <h3 class="text-xl font-semibold mb-3" style="color: ${highlightColor};">The Impact</h3>
+                                    <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'shadowBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 10px 10px 0px ${highlightColor}30;">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="text-4xl">💫</div>
+                                        <h3 class="text-xl font-semibold text-gray-900">The Impact</h3>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'gradientSplit') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, ${highlightColor}20 0%, transparent 100%);">
+                                    <div class="p-6">
+                                        <div class="flex items-start gap-4">
+                                            <div class="text-5xl" style="color: ${highlightColor};">💫</div>
+                                            <div>
+                                                <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
+                                                <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'iconCircle') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background-color: ${highlightColor};">
+                                            💫
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
+                                            <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'wavyBorder') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-dashed rounded-3xl p-6" style="border-color: ${highlightColor};">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block rounded-full p-3" style="background-color: ${highlightColor}20;">
+                                            <div class="text-4xl">💫</div>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center text-gray-900">The Impact</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center ${textClass}">${impact}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'doubleFrame') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-6" style="border-color: ${highlightColor};">
+                                    <div class="border-2 rounded-xl p-6" style="border-color: ${highlightColor}60;">
+                                        <div class="text-4xl mb-4 text-center">💫</div>
+                                        <h3 class="text-xl font-semibold mb-3 text-center text-gray-900">The Impact</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center ${textClass}">${impact}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingImpact') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block bg-white rounded-full w-24 h-24 flex items-center justify-center mb-6" style="box-shadow: 0 15px 40px ${highlightColor}30;">
+                                        <div class="text-6xl">💫</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6" style="box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">The Impact</h3>
+                                        <p class="text-gray-700 leading-relaxed ${textClass}">${impact}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -731,6 +1187,14 @@
                                 <option value="journal">Journal Style</option>
                                 <option value="vintage">Vintage Card</option>
                                 <option value="modern">Modern Minimal</option>
+                                <option value="polaroid">Polaroid Photo</option>
+                                <option value="dreamCloud">Dream Cloud</option>
+                                <option value="scrapbook">Scrapbook Style</option>
+                                <option value="starryNight">Starry Night</option>
+                                <option value="memoryBox">Memory Box</option>
+                                <option value="glowMemory">Glow Memory</option>
+                                <option value="cornerSparkle">Corner Sparkle</option>
+                                <option value="floatingMemory">Floating Memory</option>
                             </select>
                         </div>
                         <div>
@@ -788,6 +1252,107 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'polaroid') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white p-4 rounded-lg shadow-xl">
+                                    <div class="bg-amber-50 rounded p-6 mb-4">
+                                        <div class="text-4xl text-center mb-2">✨</div>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">A Special Memory</h3>
+                                    <p class="text-gray-700 text-sm ${textClass} text-center">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'dreamCloud') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-full p-8" style="box-shadow: 0 10px 50px rgba(251, 146, 60, 0.2);">
+                                    <div class="text-center">
+                                        <div class="text-4xl mb-3">✨</div>
+                                        <h3 class="text-lg font-semibold mb-3 text-gray-900">A Special Memory</h3>
+                                        <p class="text-gray-700 ${textClass}">${memory}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'scrapbook') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white p-6 rounded-lg relative" style="box-shadow: 3px 3px 0px #fb923c, 6px 6px 0px #fed7aa; transform: rotate(-1deg);">
+                                        <div class="absolute -top-3 -right-3 text-3xl transform rotate-12">✨</div>
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">A Special Memory</h3>
+                                        <p class="text-gray-700 ${textClass}">${memory}</p>
+                                        <div class="absolute -bottom-2 -left-2 text-2xl transform -rotate-12">✨</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'starryNight') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);">
+                                <div class="absolute top-4 right-8 text-2xl opacity-70">✨</div>
+                                <div class="absolute top-12 left-12 text-xl opacity-60">✨</div>
+                                <div class="absolute bottom-8 right-16 text-3xl opacity-80">✨</div>
+                                <div class="max-w-lg mx-auto bg-white bg-opacity-95 rounded-2xl p-6 relative z-10">
+                                    <div class="text-4xl mb-4 text-center">✨</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">A Special Memory</h3>
+                                    <p class="text-gray-700 ${textClass}">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'memoryBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-amber-300 rounded-2xl p-1 bg-amber-100">
+                                    <div class="bg-white rounded-xl p-6">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <div class="text-4xl">✨</div>
+                                            <h3 class="text-xl font-semibold text-gray-900">A Special Memory</h3>
+                                        </div>
+                                        <p class="text-gray-700 ${textClass}">${memory}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'glowMemory') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6" style="box-shadow: 0 0 50px rgba(251, 146, 60, 0.3);">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-5xl animate-pulse">✨</div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900 text-center">A Special Memory</h3>
+                                    <p class="text-gray-700 ${textClass} text-center">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerSparkle') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-6 -left-6 text-9xl opacity-10 transform rotate-45">✨</div>
+                                <div class="absolute -bottom-6 -right-6 text-8xl opacity-10 transform -rotate-45">✨</div>
+                                <div class="max-w-lg mx-auto relative z-10 bg-white rounded-xl p-6 shadow-lg">
+                                    <h3 class="text-xl font-semibold mb-3 text-amber-600">A Special Memory</h3>
+                                    <p class="text-gray-700 ${textClass}">${memory}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingMemory') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block bg-gradient-to-br from-amber-400 to-orange-500 rounded-full w-20 h-20 flex items-center justify-center mb-6" style="box-shadow: 0 15px 35px rgba(251, 146, 60, 0.4);">
+                                        <div class="text-5xl">✨</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6" style="box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">A Special Memory</h3>
+                                        <p class="text-gray-700 ${textClass}">${memory}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -824,6 +1389,14 @@
                                 <option value="card">Gift Card</option>
                                 <option value="banner">Banner</option>
                                 <option value="split">Split Layout</option>
+                                <option value="ribbonBox">Ribbon Box</option>
+                                <option value="wrappedGift">Wrapped Gift</option>
+                                <option value="giftTag">Gift Tag</option>
+                                <option value="cornerBow">Corner Bow</option>
+                                <option value="giftBurst">Gift Burst</option>
+                                <option value="floatingGift">Floating Gift</option>
+                                <option value="presentStack">Present Stack</option>
+                                <option value="giftGlow">Gift Glow</option>
                             </select>
                         </div>
                         <div>
@@ -875,6 +1448,120 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'ribbonBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 border-4 border-dashed" style="border-color: ${accentColor};">
+                                    <div class="relative">
+                                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 text-6xl">🎀</div>
+                                        <div class="text-center pt-8">
+                                            <div class="text-5xl mb-4">🎁</div>
+                                            <h3 class="text-xl font-semibold mb-3" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                            <p class="text-gray-700">${enjoyment}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'wrappedGift') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-gradient-to-br from-white to-orange-50 rounded-2xl p-6 relative overflow-hidden">
+                                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-full" style="background-color: ${accentColor};"></div>
+                                    <div class="absolute top-1/2 left-0 transform -translate-y-1/2 w-full h-8" style="background-color: ${accentColor};"></div>
+                                    <div class="relative z-10 bg-white bg-opacity-90 rounded-xl p-6">
+                                        <div class="text-5xl mb-4 text-center">🎁</div>
+                                        <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                        <p class="text-gray-700 text-center">${enjoyment}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'giftTag') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-tr-3xl rounded-br-3xl rounded-bl-3xl p-6 shadow-lg relative" style="border-top: 4px solid ${accentColor};">
+                                        <div class="absolute -top-6 left-6 w-12 h-12 rounded-full flex items-center justify-center text-3xl" style="background-color: ${accentColor};">
+                                            🎁
+                                        </div>
+                                        <div class="pt-6">
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">Thank you for ${giftName}</h3>
+                                            <p class="text-gray-700">${enjoyment}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerBow') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-8 -right-8 text-9xl opacity-20 transform rotate-12">🎀</div>
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-lg relative z-10">
+                                    <div class="text-5xl mb-4 text-center">🎁</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                    <p class="text-gray-700 text-center">${enjoyment}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'giftBurst') {
+                        return `
+                            <div class="p-8" style="background: radial-gradient(circle, ${bgColor} 0%, ${accentColor}20 100%);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block relative">
+                                        <div class="text-7xl mb-4">🎁</div>
+                                        <div class="absolute -top-2 -right-2 text-3xl">✨</div>
+                                        <div class="absolute -bottom-2 -left-2 text-3xl">✨</div>
+                                    </div>
+                                    <h3 class="text-2xl font-bold mb-3" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                    <p class="text-gray-700">${enjoyment}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingGift') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-24 h-24 flex items-center justify-center mb-6" style="background-color: ${accentColor}; box-shadow: 0 15px 40px ${accentColor}50;">
+                                        <div class="text-6xl">🎁</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">Thank you for ${giftName}</h3>
+                                        <p class="text-gray-700">${enjoyment}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'presentStack') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-2xl p-6 transform -rotate-1 shadow-md mb-2">
+                                        <div class="bg-orange-50 rounded-xl p-6 transform rotate-1">
+                                            <div class="flex items-center gap-4">
+                                                <div class="text-5xl">🎁</div>
+                                                <div>
+                                                    <h3 class="text-xl font-semibold mb-2" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                                    <p class="text-gray-700">${enjoyment}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'giftGlow') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 60px ${accentColor}40;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-6xl animate-pulse">🎁</div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Thank you for ${giftName}</h3>
+                                    <p class="text-gray-700 text-center">${enjoyment}</p>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -906,6 +1593,14 @@
                                 <option value="centered">Centered</option>
                                 <option value="optimistic">Optimistic Card</option>
                                 <option value="bright">Bright Banner</option>
+                                <option value="starryPath">Starry Path</option>
+                                <option value="horizonGlow">Horizon Glow</option>
+                                <option value="dreamBubble">Dream Bubble</option>
+                                <option value="shiningFuture">Shining Future</option>
+                                <option value="hopefulBanner">Hopeful Banner</option>
+                                <option value="starCircle">Star Circle</option>
+                                <option value="gradientHope">Gradient Hope</option>
+                                <option value="floatingStars">Floating Stars</option>
                             </select>
                         </div>
                         <div>
@@ -944,6 +1639,109 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'starryPath') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute top-8 left-1/4 text-3xl opacity-30">🌟</div>
+                                <div class="absolute top-16 right-1/3 text-2xl opacity-40">✨</div>
+                                <div class="absolute bottom-12 left-1/3 text-4xl opacity-25">🌟</div>
+                                <div class="max-w-lg mx-auto relative z-10 bg-white rounded-2xl p-6 shadow-lg">
+                                    <div class="text-5xl mb-4 text-center">🌟</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Looking Forward</h3>
+                                    <p class="text-gray-700 text-center">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'horizonGlow') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(to bottom, ${accentColor}20 0%, ${bgColor} 50%, ${accentColor}10 100%);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-6xl mb-4">🌟</div>
+                                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Looking Forward</h3>
+                                    <p class="text-gray-700 text-lg">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'dreamBubble') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-full p-8 text-center" style="box-shadow: 0 10px 60px ${accentColor}30;">
+                                        <div class="text-5xl mb-4">🌟</div>
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">Looking Forward</h3>
+                                        <p class="text-gray-700">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'shiningFuture') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-6 border-2 border-dashed" style="border-color: ${accentColor};">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="text-5xl">🌟</div>
+                                        <h3 class="text-xl font-semibold text-gray-900">Looking Forward</h3>
+                                    </div>
+                                    <p class="text-gray-700">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'hopefulBanner') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-2xl p-2 shadow-lg">
+                                        <div class="rounded-xl p-6" style="background: linear-gradient(135deg, ${accentColor}20 0%, transparent 100%);">
+                                            <div class="text-5xl mb-4 text-center">🌟</div>
+                                            <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Looking Forward</h3>
+                                            <p class="text-gray-700 text-center">${message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'starCircle') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex-shrink-0 w-20 h-20 rounded-full flex items-center justify-center text-4xl" style="background-color: ${accentColor};">
+                                            🌟
+                                        </div>
+                                        <div class="flex-1 pt-2">
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">Looking Forward</h3>
+                                            <p class="text-gray-700">${message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'gradientHope') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-2xl p-6" style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fdba74 100%);">
+                                    <div class="bg-white bg-opacity-90 rounded-xl p-6">
+                                        <div class="text-5xl mb-4 text-center">🌟</div>
+                                        <h3 class="text-xl font-semibold mb-3 text-center text-gray-900">Looking Forward</h3>
+                                        <p class="text-gray-700 text-center">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingStars') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-24 h-24 flex items-center justify-center mb-6" style="background: linear-gradient(135deg, ${accentColor} 0%, #fcd34d 100%); box-shadow: 0 20px 50px ${accentColor}40;">
+                                        <div class="text-6xl">🌟</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">Looking Forward</h3>
+                                        <p class="text-gray-700">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -975,6 +1773,14 @@
                                 <option value="standard">Standard</option>
                                 <option value="highlighted">Highlighted Box</option>
                                 <option value="stars">Star Border</option>
+                                <option value="starBurst">Star Burst</option>
+                                <option value="goldenFrame">Golden Frame</option>
+                                <option value="shiningQualities">Shining Qualities</option>
+                                <option value="starGlow">Star Glow</option>
+                                <option value="constellationBox">Constellation Box</option>
+                                <option value="ribbonStar">Ribbon Star</option>
+                                <option value="floatingStar">Floating Star</option>
+                                <option value="starryBackground">Starry Background</option>
                             </select>
                         </div>
                         <div>
@@ -1015,6 +1821,112 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'starBurst') {
+                        return `
+                            <div class="p-8" style="background: radial-gradient(circle, ${bgColor} 0%, ${starColor}15 100%);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block relative mb-4">
+                                        <div class="text-7xl">⭐</div>
+                                        <div class="absolute -top-2 -right-2 text-2xl">✨</div>
+                                        <div class="absolute -bottom-2 -left-2 text-2xl">✨</div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-gray-900">What Makes You Special</h3>
+                                    <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'goldenFrame') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-6" style="border-color: ${starColor};">
+                                    <div class="border-2 rounded-xl p-6" style="border-color: ${starColor}60;">
+                                        <div class="text-4xl mb-4 text-center">⭐</div>
+                                        <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${starColor};">What Makes You Special</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center">${qualities}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'shiningQualities') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-6">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="text-5xl">⭐</div>
+                                        <h3 class="text-xl font-semibold" style="color: ${starColor};">What Makes You Special</h3>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'starGlow') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 50px ${starColor}30;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-6xl animate-pulse">⭐</div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${starColor};">What Makes You Special</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center">${qualities}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'constellationBox') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute top-4 right-8 text-2xl opacity-20">⭐</div>
+                                <div class="absolute top-12 left-12 text-3xl opacity-25">⭐</div>
+                                <div class="absolute bottom-8 right-16 text-xl opacity-20">⭐</div>
+                                <div class="absolute bottom-12 left-20 text-2xl opacity-15">⭐</div>
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-lg relative z-10">
+                                    <div class="text-5xl mb-4 text-center">⭐</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center text-gray-900">What Makes You Special</h3>
+                                    <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ribbonStar') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 border-t-4" style="border-color: ${starColor}; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center text-3xl" style="background-color: ${starColor};">
+                                        ⭐
+                                    </div>
+                                    <div class="pt-6">
+                                        <h3 class="text-xl font-semibold mb-3 text-center text-gray-900">What Makes You Special</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center">${qualities}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingStar') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-24 h-24 flex items-center justify-center mb-6" style="background-color: ${starColor}; box-shadow: 0 20px 50px ${starColor}40;">
+                                        <div class="text-6xl">⭐</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">What Makes You Special</h3>
+                                        <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'starryBackground') {
+                        return `
+                            <div class="p-8 relative" style="background: linear-gradient(135deg, ${starColor}10 0%, ${bgColor} 50%, ${starColor}10 100%);">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-md">
+                                    <div class="flex items-start gap-4">
+                                        <div class="text-5xl flex-shrink-0" style="color: ${starColor};">⭐</div>
+                                        <div>
+                                            <h3 class="text-xl font-semibold mb-3 text-gray-900">What Makes You Special</h3>
+                                            <p class="text-gray-700 leading-relaxed">${qualities}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -1046,6 +1958,14 @@
                                 <option value="bordered">Bordered</option>
                                 <option value="letter">Letter Style</option>
                                 <option value="card">Card Style</option>
+                                <option value="loveEnvelope">Love Envelope</option>
+                                <option value="heartFrame">Heart Frame</option>
+                                <option value="sealedLetter">Sealed Letter</option>
+                                <option value="romanticCard">Romantic Card</option>
+                                <option value="cornerHeart">Corner Heart</option>
+                                <option value="floatingNote">Floating Note</option>
+                                <option value="ribbonNote">Ribbon Note</option>
+                                <option value="heartGlow">Heart Glow</option>
                             </select>
                         </div>
                         <div>
@@ -1092,6 +2012,106 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'loveEnvelope') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                                    <div class="h-16 relative" style="background: linear-gradient(135deg, ${borderColor} 0%, ${borderColor}80 100%);">
+                                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 text-5xl">💌</div>
+                                    </div>
+                                    <div class="p-8 pt-12">
+                                        <p class="text-gray-700 leading-relaxed italic text-center">${note}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'heartFrame') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-6" style="border-color: ${borderColor};">
+                                    <div class="flex items-center justify-center gap-2 mb-4">
+                                        <span class="text-3xl">💕</span>
+                                        <span class="text-4xl">💌</span>
+                                        <span class="text-3xl">💕</span>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed italic text-center">${note}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'sealedLetter') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-lg p-8 shadow-lg relative">
+                                    <div class="absolute -top-4 right-8 w-12 h-12 rounded-full flex items-center justify-center text-3xl" style="background-color: ${borderColor};">
+                                        💌
+                                    </div>
+                                    <div class="border-l-4 pl-6" style="border-color: ${borderColor};">
+                                        <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'romanticCard') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(135deg, ${bgColor} 0%, ${borderColor}10 100%);">
+                                <div class="max-w-lg mx-auto bg-white bg-opacity-95 rounded-2xl p-8 shadow-xl">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-6xl">💌</div>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed italic text-center">${note}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerHeart') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-6 -right-6 text-9xl opacity-10">💕</div>
+                                <div class="absolute -bottom-6 -left-6 text-8xl opacity-10">💕</div>
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-lg relative z-10">
+                                    <div class="text-4xl mb-4 text-center">💌</div>
+                                    <p class="text-gray-700 leading-relaxed italic text-center">${note}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingNote') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-24 h-24 flex items-center justify-center mb-6" style="background-color: ${borderColor}; box-shadow: 0 20px 50px ${borderColor}40;">
+                                        <div class="text-6xl">💌</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ribbonNote') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-lg">
+                                        <div class="absolute top-0 right-8 w-8 h-full" style="background-color: ${borderColor}30;"></div>
+                                        <div class="absolute -top-2 right-8 text-4xl">🎀</div>
+                                        <div class="relative z-10">
+                                            <div class="text-4xl mb-4">💌</div>
+                                            <p class="text-gray-700 leading-relaxed italic">${note}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'heartGlow') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 60px ${borderColor}30;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-6xl animate-pulse">💌</div>
+                                    </div>
+                                    <p class="text-gray-700 leading-relaxed italic text-center">${note}</p>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -1125,6 +2145,13 @@
                                 <option value="numbered">Numbered List</option>
                                 <option value="columns">Two Columns</option>
                                 <option value="cards">Card Style</option>
+                                <option value="checkboxes">Checkbox Style</option>
+                                <option value="bubbles">Speech Bubbles</option>
+                                <option value="timeline">Timeline Style</option>
+                                <option value="tags">Tag Cloud</option>
+                                <option value="gradientCards">Gradient Cards</option>
+                                <option value="stickyNotes">Sticky Notes</option>
+                                <option value="ribbonList">Ribbon List</option>
                             </select>
                         </div>
                         <div>
@@ -1243,6 +2270,150 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'checkboxes') {
+                        const itemList = itemsArray.map(item =>
+                            `<li class="flex items-start gap-3 mb-3">
+                                <div class="flex-shrink-0 w-6 h-6 rounded border-2 flex items-center justify-center" style="border-color: ${accentColor}; background-color: ${accentColor};">
+                                    <span class="text-white text-sm">✓</span>
+                                </div>
+                                <span class="flex-1 text-gray-700">${item.trim()}</span>
+                            </li>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <ul class="text-gray-700">
+                                        ${itemList}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'bubbles') {
+                        const itemBubbles = itemsArray.map(item =>
+                            `<div class="bg-white rounded-3xl p-4 shadow-md relative">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xl" style="color: ${accentColor};">${icon}</span>
+                                    <span class="text-gray-700">${item.trim()}</span>
+                                </div>
+                            </div>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="space-y-3">
+                                        ${itemBubbles}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'timeline') {
+                        const itemTimeline = itemsArray.map((item, index) =>
+                            `<div class="flex items-start gap-4">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: ${accentColor};">
+                                        <span class="text-white">${icon}</span>
+                                    </div>
+                                    ${index < itemsArray.length - 1 ? `<div class="w-1 h-12" style="background-color: ${accentColor}40;"></div>` : ''}
+                                </div>
+                                <div class="flex-1 pt-2">
+                                    <p class="text-gray-700">${item.trim()}</p>
+                                </div>
+                            </div>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="space-y-2">
+                                        ${itemTimeline}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'tags') {
+                        const itemTags = itemsArray.map(item =>
+                            `<span class="inline-block px-4 py-2 rounded-full text-sm font-medium text-white m-1" style="background-color: ${accentColor};">
+                                ${icon} ${item.trim()}
+                            </span>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900">Thank You For...</h3>
+                                    <div class="flex flex-wrap justify-center">
+                                        ${itemTags}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'gradientCards') {
+                        const itemCards = itemsArray.map((item, index) =>
+                            `<div class="rounded-xl p-4 shadow-md" style="background: linear-gradient(135deg, ${accentColor}20 0%, ${accentColor}05 100%);">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-2xl" style="color: ${accentColor};">${icon}</span>
+                                    <span class="text-gray-700 font-medium">${item.trim()}</span>
+                                </div>
+                            </div>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="grid gap-3">
+                                        ${itemCards}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'stickyNotes') {
+                        const colors = ['#fef3c7', '#fed7aa', '#fdba74', '#fef3c7', '#fed7aa'];
+                        const itemNotes = itemsArray.map((item, index) =>
+                            `<div class="rounded-lg p-4 shadow-md transform rotate-${index % 2 === 0 ? '1' : '-1'}" style="background-color: ${colors[index % colors.length]};">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl" style="color: ${accentColor};">${icon}</span>
+                                    <span class="text-gray-700">${item.trim()}</span>
+                                </div>
+                            </div>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <div class="grid gap-3">
+                                        ${itemNotes}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ribbonList') {
+                        const itemList = itemsArray.map(item =>
+                            `<li class="relative pl-6 mb-3">
+                                <div class="absolute left-0 top-0 w-4 h-full rounded-r" style="background-color: ${accentColor};"></div>
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl" style="color: ${accentColor};">${icon}</span>
+                                    <span class="flex-1 text-gray-700">${item.trim()}</span>
+                                </div>
+                            </li>`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📝</div>
+                                    <h3 class="text-xl font-semibold mb-6 text-gray-900 text-center">Thank You For...</h3>
+                                    <ul class="text-gray-700">
+                                        ${itemList}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         const itemList = itemsArray.map(item =>
                             `<li class="flex items-start gap-3 mb-2"><span style="color: ${accentColor};" class="text-xl">${icon}</span><span class="flex-1">${item.trim()}</span></li>`
@@ -1284,6 +2455,14 @@
                                 <option value="card">Invitation Card</option>
                                 <option value="banner">Banner Style</option>
                                 <option value="badge">Badge Style</option>
+                                <option value="cozyInvite">Cozy Invitation</option>
+                                <option value="coffeeCup">Coffee Cup</option>
+                                <option value="callout">Call Out Box</option>
+                                <option value="ticketStyle">Ticket Style</option>
+                                <option value="floatingInvite">Floating Invite</option>
+                                <option value="speechBubble">Speech Bubble</option>
+                                <option value="cornerIcon">Corner Icon</option>
+                                <option value="glowInvite">Glow Invite</option>
                             </select>
                         </div>
                         <div>
@@ -1348,6 +2527,106 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'cozyInvite') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border-2 border-dashed" style="border-color: ${accentColor};">
+                                    <div class="text-6xl mb-4 text-center">${icon}</div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Let's Connect</h3>
+                                    <p class="text-gray-700 text-center">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'coffeeCup') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-2xl p-6 shadow-xl overflow-hidden relative">
+                                        <div class="absolute -bottom-4 -right-4 text-9xl opacity-10">${icon}</div>
+                                        <div class="relative z-10" style="text-align: ${align};">
+                                            <div class="text-5xl mb-4">${icon}</div>
+                                            <h3 class="text-xl font-semibold mb-3" style="color: ${accentColor};">Let's Connect</h3>
+                                            <p class="text-gray-700">${message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'callout') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-6" style="border-color: ${accentColor};">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="text-5xl">${icon}</div>
+                                        <h3 class="text-xl font-bold" style="color: ${accentColor};">Let's Connect</h3>
+                                    </div>
+                                    <p class="text-gray-700" style="text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ticketStyle') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-lg p-6 shadow-lg border-l-8 border-r-8 border-dashed" style="border-color: ${accentColor};">
+                                    <div class="text-center">
+                                        <div class="text-6xl mb-4">${icon}</div>
+                                        <h3 class="text-2xl font-bold mb-3" style="color: ${accentColor};">Let's Connect</h3>
+                                        <p class="text-gray-700">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingInvite') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-24 h-24 flex items-center justify-center mb-6" style="background-color: ${accentColor}; box-shadow: 0 20px 50px ${accentColor}40;">
+                                        <div class="text-6xl">${icon}</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h3 class="text-xl font-semibold mb-3 text-gray-900">Let's Connect</h3>
+                                        <p class="text-gray-700">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'speechBubble') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-3xl p-6 shadow-lg relative">
+                                        <div class="absolute -bottom-3 left-12 w-6 h-6 bg-white transform rotate-45"></div>
+                                        <div class="flex items-center gap-4 mb-3">
+                                            <div class="text-4xl">${icon}</div>
+                                            <h3 class="text-xl font-semibold" style="color: ${accentColor};">Let's Connect</h3>
+                                        </div>
+                                        <p class="text-gray-700">${message}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerIcon') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-6 -right-6 text-9xl opacity-15">${icon}</div>
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-lg relative z-10">
+                                    <h3 class="text-xl font-semibold mb-3" style="color: ${accentColor}; text-align: ${align};">Let's Connect</h3>
+                                    <p class="text-gray-700" style="text-align: ${align};">${message}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'glowInvite') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 60px ${accentColor}30;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-7xl animate-pulse">${icon}</div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-3 text-center" style="color: ${accentColor};">Let's Connect</h3>
+                                    <p class="text-gray-700 text-center">${message}</p>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
@@ -1381,6 +2660,14 @@
                                 <option value="line">Line with Icon</option>
                                 <option value="dots">Dotted Line</option>
                                 <option value="wave">Wave Pattern</option>
+                                <option value="doubleLine">Double Line</option>
+                                <option value="circlePattern">Circle Pattern</option>
+                                <option value="gradientLine">Gradient Line</option>
+                                <option value="zigzag">Zigzag Pattern</option>
+                                <option value="ornamental">Ornamental</option>
+                                <option value="modernMinimal">Modern Minimal</option>
+                                <option value="dashedDouble">Dashed Double</option>
+                                <option value="floralSpread">Floral Spread</option>
                             </select>
                         </div>
                         <div>
@@ -1446,6 +2733,78 @@
                         return `
                             <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
                                 <div style="font-size: ${fontSize}; color: ${patternColor}; opacity: 0.6;">～ ～ ～</div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'doubleLine') {
+                        return `
+                            <div style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="space-y-2">
+                                    <div class="h-px" style="background-color: ${patternColor};"></div>
+                                    <div class="h-px" style="background-color: ${patternColor}; opacity: 0.5;"></div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'circlePattern') {
+                        return `
+                            <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-3 h-3 rounded-full border-2" style="border-color: ${patternColor};"></div>
+                                    <div class="w-4 h-4 rounded-full" style="background-color: ${patternColor};"></div>
+                                    <div class="w-3 h-3 rounded-full border-2" style="border-color: ${patternColor};"></div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'gradientLine') {
+                        return `
+                            <div style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="h-1 rounded-full" style="background: linear-gradient(to right, transparent, ${patternColor}, transparent);"></div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'zigzag') {
+                        return `
+                            <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div style="font-size: ${fontSize}; color: ${patternColor}; letter-spacing: 0.2em;">∧ ∨ ∧ ∨ ∧</div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'ornamental') {
+                        return `
+                            <div class="flex items-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="flex-1 h-px" style="background-color: ${patternColor};"></div>
+                                <div class="px-6 flex items-center gap-2">
+                                    <span style="font-size: ${fontSize}; color: ${patternColor};">◆</span>
+                                    <span style="font-size: ${fontSize}; color: ${patternColor};">${pattern}</span>
+                                    <span style="font-size: ${fontSize}; color: ${patternColor};">◆</span>
+                                </div>
+                                <div class="flex-1 h-px" style="background-color: ${patternColor};"></div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'modernMinimal') {
+                        return `
+                            <div class="flex items-center justify-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="w-16 h-px" style="background-color: ${patternColor};"></div>
+                                <div class="px-4 w-2 h-2 rounded-full" style="background-color: ${patternColor};"></div>
+                                <div class="w-16 h-px" style="background-color: ${patternColor};"></div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'dashedDouble') {
+                        return `
+                            <div style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="space-y-2">
+                                    <div class="border-t-2 border-dashed" style="border-color: ${patternColor};"></div>
+                                    <div class="border-t-2 border-dashed" style="border-color: ${patternColor}; opacity: 0.5;"></div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (dividerStyle === 'floralSpread') {
+                        return `
+                            <div class="text-center" style="background-color: ${bgColor}; padding: ${padding} 2rem;">
+                                <div class="flex items-center justify-center gap-4" style="font-size: ${fontSize}; color: ${patternColor};">
+                                    <span class="opacity-60">${pattern}</span>
+                                    <span class="opacity-80">${pattern}</span>
+                                    <span class="opacity-100">${pattern}</span>
+                                    <span class="opacity-80">${pattern}</span>
+                                    <span class="opacity-60">${pattern}</span>
+                                </div>
                             </div>
                         `;
                     } else {
@@ -1687,6 +3046,14 @@
                                 <option value="card">Card Style</option>
                                 <option value="colorful">Colorful Banner</option>
                                 <option value="elegant">Elegant</option>
+                                <option value="rainbowGlow">Rainbow Glow</option>
+                                <option value="wishingWell">Wishing Well</option>
+                                <option value="skyHigh">Sky High</option>
+                                <option value="dreamyWishes">Dreamy Wishes</option>
+                                <option value="cornerRainbow">Corner Rainbow</option>
+                                <option value="floatingWishes">Floating Wishes</option>
+                                <option value="gradientBox">Gradient Box</option>
+                                <option value="doubleBorder">Double Border</option>
                             </select>
                         </div>
                         <div>
@@ -1747,6 +3114,98 @@
                                 </div>
                             </div>
                         `;
+                    } else if (layout === 'rainbowGlow') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 60px ${accentColor}40;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-7xl animate-pulse">🌈</div>
+                                    </div>
+                                    <h3 class="text-xl font-semibold mb-4 text-center" style="color: ${accentColor};">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'wishingWell') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border-4 border-double" style="border-color: ${accentColor};">
+                                    <div class="text-6xl mb-4 text-center">🌈</div>
+                                    <h3 class="text-2xl font-semibold mb-4 text-center text-gray-900">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'skyHigh') {
+                        return `
+                            <div class="p-8" style="background: linear-gradient(to bottom, ${accentColor}20 0%, ${bgColor} 50%, ${accentColor}10 100%);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-7xl mb-4">🌈</div>
+                                    <h3 class="text-2xl font-bold mb-4 text-gray-900">${title}</h3>
+                                    <p class="text-gray-700 text-lg leading-relaxed ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'dreamyWishes') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-full p-10 text-center" style="box-shadow: 0 15px 60px ${accentColor}30;">
+                                    <div class="text-6xl mb-4">🌈</div>
+                                    <h3 class="text-xl font-semibold mb-4 text-gray-900">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'cornerRainbow') {
+                        return `
+                            <div class="p-8 relative overflow-hidden" style="background-color: ${bgColor};">
+                                <div class="absolute -top-8 -right-8 text-9xl opacity-15">🌈</div>
+                                <div class="absolute -bottom-8 -left-8 text-8xl opacity-15">🌈</div>
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-lg relative z-10">
+                                    <div class="text-5xl mb-4 text-center">🌈</div>
+                                    <h3 class="text-xl font-semibold mb-4 text-center" style="color: ${accentColor};">${title}</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center ${styleClass}">${wishes}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingWishes') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-28 h-28 flex items-center justify-center mb-6" style="background: linear-gradient(135deg, ${accentColor} 0%, #fcd34d 100%); box-shadow: 0 25px 60px ${accentColor}40;">
+                                        <div class="text-7xl">🌈</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h3 class="text-xl font-semibold mb-4 text-gray-900">${title}</h3>
+                                        <p class="text-gray-700 leading-relaxed ${styleClass}">${wishes}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'gradientBox') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto rounded-2xl p-6" style="background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fdba74 100%);">
+                                    <div class="bg-white bg-opacity-90 rounded-xl p-6">
+                                        <div class="text-6xl mb-4 text-center">🌈</div>
+                                        <h3 class="text-xl font-semibold mb-4 text-center text-gray-900">${title}</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center ${styleClass}">${wishes}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'doubleBorder') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-6" style="border-color: ${accentColor};">
+                                    <div class="border-2 rounded-xl p-6" style="border-color: ${accentColor}60;">
+                                        <div class="text-6xl mb-4 text-center">🌈</div>
+                                        <h3 class="text-xl font-semibold mb-4 text-center text-gray-900">${title}</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center ${styleClass}">${wishes}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     } else {
                         return `
                             <div class="p-8" style="background-color: ${bgColor};">
@@ -1783,6 +3242,14 @@
                                 <option value="trophy">Trophy Card</option>
                                 <option value="confetti">Confetti Style</option>
                                 <option value="banner">Banner</option>
+                                <option value="goldFrame">Gold Frame</option>
+                                <option value="podium">Podium Style</option>
+                                <option value="victoryCircle">Victory Circle</option>
+                                <option value="championBadge">Champion Badge</option>
+                                <option value="starBurst">Star Burst</option>
+                                <option value="trophyGlow">Trophy Glow</option>
+                                <option value="ribbonAward">Ribbon Award</option>
+                                <option value="floatingTrophy">Floating Trophy</option>
                             </select>
                         </div>
                         <div>
@@ -1835,6 +3302,121 @@
                                         <h3 class="text-2xl font-bold mb-3 text-center" style="color: ${goldColor};">${achievement}</h3>
                                         <p class="text-gray-700 leading-relaxed text-center">${message}</p>
                                         <div class="mt-4 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'goldFrame') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto border-4 border-double rounded-2xl p-6" style="border-color: ${goldColor};">
+                                    <div class="border-2 rounded-xl p-6" style="border-color: ${goldColor}80;">
+                                        <div class="text-7xl mb-4 text-center">🏆</div>
+                                        <h3 class="text-2xl font-bold mb-3 text-center" style="color: ${goldColor};">${achievement}</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center">${message}</p>
+                                        <div class="mt-4 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'podium') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-8 shadow-xl">
+                                    <div class="text-center mb-6">
+                                        <div class="inline-block px-8 py-4 rounded-t-2xl" style="background-color: ${goldColor};">
+                                            <div class="text-7xl">🏆</div>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-2xl font-bold mb-3 text-center text-gray-900">${achievement}</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center">${message}</p>
+                                    <div class="mt-6 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'victoryCircle') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-full p-10 text-center" style="box-shadow: 0 20px 70px ${goldColor}40;">
+                                    <div class="text-8xl mb-4">🏆</div>
+                                    <h3 class="text-2xl font-bold mb-3" style="color: ${goldColor};">${achievement}</h3>
+                                    <p class="text-gray-700 leading-relaxed">${message}</p>
+                                    <div class="mt-4 text-3xl">🎉 ⭐ 🎊</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'championBadge') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg border-t-8" style="border-color: ${goldColor};">
+                                        <div class="flex items-center gap-4 mb-4">
+                                            <div class="w-20 h-20 rounded-full flex items-center justify-center text-5xl" style="background-color: ${goldColor};">
+                                                🏆
+                                            </div>
+                                            <h3 class="text-2xl font-bold flex-1" style="color: ${goldColor};">${achievement}</h3>
+                                        </div>
+                                        <p class="text-gray-700 leading-relaxed">${message}</p>
+                                        <div class="mt-4 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'starBurst') {
+                        return `
+                            <div class="p-8" style="background: radial-gradient(circle, ${bgColor} 0%, ${goldColor}20 100%);">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="relative inline-block mb-4">
+                                        <div class="text-9xl">🏆</div>
+                                        <div class="absolute -top-2 -right-2 text-4xl">⭐</div>
+                                        <div class="absolute -bottom-2 -left-2 text-4xl">⭐</div>
+                                        <div class="absolute top-1/2 -left-6 text-3xl">✨</div>
+                                        <div class="absolute top-1/2 -right-6 text-3xl">✨</div>
+                                    </div>
+                                    <h3 class="text-3xl font-bold mb-4 text-gray-900">${achievement}</h3>
+                                    <p class="text-gray-700 text-lg leading-relaxed">${message}</p>
+                                    <div class="mt-6 text-4xl">🎉 🎊 🎈</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'trophyGlow') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6" style="box-shadow: 0 0 70px ${goldColor}50;">
+                                    <div class="text-center mb-4">
+                                        <div class="inline-block text-9xl animate-pulse">🏆</div>
+                                    </div>
+                                    <h3 class="text-2xl font-bold mb-3 text-center" style="color: ${goldColor};">${achievement}</h3>
+                                    <p class="text-gray-700 leading-relaxed text-center">${message}</p>
+                                    <div class="mt-6 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'ribbonAward') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto bg-white rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                                    <div class="absolute top-0 right-0 w-32 h-32" style="background: linear-gradient(135deg, ${goldColor} 0%, ${goldColor}60 100%); clip-path: polygon(100% 0, 0 0, 100% 100%);"></div>
+                                    <div class="absolute top-2 right-2 text-4xl">🏆</div>
+                                    <div class="relative z-10 pt-8">
+                                        <h3 class="text-2xl font-bold mb-3 text-center text-gray-900">${achievement}</h3>
+                                        <p class="text-gray-700 leading-relaxed text-center">${message}</p>
+                                        <div class="mt-6 text-3xl text-center">🎉 ⭐ 🎊</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floatingTrophy') {
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block rounded-full w-32 h-32 flex items-center justify-center mb-6" style="background: linear-gradient(135deg, ${goldColor} 0%, #fcd34d 100%); box-shadow: 0 30px 70px ${goldColor}50;">
+                                        <div class="text-8xl">🏆</div>
+                                    </div>
+                                    <div class="bg-white rounded-2xl p-6 shadow-lg">
+                                        <h3 class="text-2xl font-bold mb-3 text-gray-900">${achievement}</h3>
+                                        <p class="text-gray-700 leading-relaxed">${message}</p>
+                                        <div class="mt-4 text-3xl">🎉 ⭐ 🎊</div>
                                     </div>
                                 </div>
                             </div>
