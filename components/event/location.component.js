@@ -31,6 +31,10 @@ window.sectionComponents.location = {
                     <option value="map-style">Map Style - Pin design</option>
                     <option value="list">List - Simple rows</option>
                     <option value="minimal">Minimal - Clean text</option>
+                    <option value="modern">Modern - Gradient card</option>
+                    <option value="elegant">Elegant - Spacious</option>
+                    <option value="compact">Compact - Dense</option>
+                    <option value="destination">Destination - Travel style</option>
                 </select>
             </div>
             <div>
@@ -63,6 +67,33 @@ window.sectionComponents.location = {
                     <option value="large">Large</option>
                 </select>
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Animation Style</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 section-style" data-style="animation" onchange="updatePreview()">
+                    <option value="none">No Animation</option>
+                    <option value="fade">Fade In</option>
+                    <option value="slide">Slide Up</option>
+                    <option value="zoom">Zoom In</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Border Radius</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 section-style" data-style="borderRadius" onchange="updatePreview()">
+                    <option value="none">None</option>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="xl">Extra Large</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Spacing</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 section-style" data-style="spacing" onchange="updatePreview()">
+                    <option value="compact">Compact</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="relaxed">Relaxed</option>
+                </select>
+            </div>
         </div>
     `,
     render: (data, style, globalStyles) => {
@@ -72,6 +103,9 @@ window.sectionComponents.location = {
         const accentColor = style.accentColor || '#059669';
         const iconStyle = style.iconStyle || 'emoji';
         const shadow = style.shadow || 'none';
+        const animation = style.animation || 'none';
+        const borderRadius = style.borderRadius || 'medium';
+        const spacing = style.spacing || 'normal';
 
         const shadowMap = {
             none: '',
@@ -79,6 +113,48 @@ window.sectionComponents.location = {
             medium: 'shadow-md',
             large: 'shadow-lg'
         };
+
+        const borderRadiusMap = {
+            none: '0px',
+            small: '8px',
+            medium: '16px',
+            large: '24px',
+            xl: '32px'
+        };
+
+        const spacingMap = {
+            compact: { padding: 'py-8', gap: 'space-y-2' },
+            normal: { padding: 'py-12', gap: 'space-y-4' },
+            relaxed: { padding: 'py-16', gap: 'space-y-6' }
+        };
+
+        const animationMap = {
+            none: '',
+            fade: 'animation: fadeIn 0.6s ease-out;',
+            slide: 'animation: slideUp 0.6s ease-out;',
+            zoom: 'animation: zoomIn 0.6s ease-out;'
+        };
+
+        const radius = borderRadiusMap[borderRadius];
+        const space = spacingMap[spacing];
+        const animationCSS = animationMap[animation];
+
+        const animations = `
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes slideUp {
+                    from { opacity: 0; transform: translateY(20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes zoomIn {
+                    from { opacity: 0; transform: scale(0.95); }
+                    to { opacity: 1; transform: scale(1); }
+                }
+            </style>
+        `;
 
         const getIcon = (emoji, label) => {
             switch (iconStyle) {
@@ -166,15 +242,84 @@ window.sectionComponents.location = {
 
                 case 'minimal':
                     return items.map(item => `
-                        <div class="text-center py-3">
+                        <div class="text-center py-3" style="${animationCSS}">
                             <div class="text-xs font-semibold mb-2" style="color: ${accentColor};">${item.label.toUpperCase()}</div>
                             <div class="text-sm text-gray-700">${item.value}</div>
                         </div>
                     `).join('');
 
+                case 'modern':
+                    return `
+                        <div class="p-8 ${shadowMap[shadow]}" style="background: linear-gradient(135deg, ${accentColor} 0%, ${cardBg} 100%); border-radius: ${radius}; ${animationCSS}">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl">
+                                    📍
+                                </div>
+                                <h3 class="text-xl font-bold text-white">${data.venue || 'Venue'}</h3>
+                            </div>
+                            ${items.slice(1).map(item => `
+                                <div class="mb-4 last:mb-0">
+                                    <div class="text-xs font-semibold text-white/70 mb-1">${item.label.toUpperCase()}</div>
+                                    <div class="text-sm text-white">${item.value}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                case 'elegant':
+                    return `
+                        <div class="p-10 ${shadowMap[shadow]} text-center" style="background: ${cardBg}; border-radius: ${radius}; ${animationCSS}">
+                            <div class="text-6xl mb-6">📍</div>
+                            <h3 class="text-2xl font-bold mb-6" style="color: ${accentColor};">${data.venue || 'Venue'}</h3>
+                            <div class="space-y-4">
+                                ${items.slice(1).map(item => `
+                                    <div class="border-t border-gray-100 pt-4">
+                                        <div class="text-xs uppercase tracking-wider text-gray-500 mb-2">${item.label}</div>
+                                        <div class="text-sm text-gray-700 leading-relaxed">${item.value}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+
+                case 'compact':
+                    return items.map(item => `
+                        <div class="flex items-center gap-3 p-3 border-l-4 ${shadowMap[shadow]}" style="background: ${cardBg}; border-color: ${accentColor}; border-radius: ${radius}; ${animationCSS}">
+                            <div class="text-xl">${item.icon}</div>
+                            <div class="flex-1">
+                                <span class="text-xs font-semibold mr-2" style="color: ${accentColor};">${item.label}:</span>
+                                <span class="text-sm text-gray-700">${item.value}</span>
+                            </div>
+                        </div>
+                    `).join('');
+
+                case 'destination':
+                    return `
+                        <div class="relative overflow-hidden p-8 ${shadowMap[shadow]}" style="background: ${cardBg}; border-radius: ${radius}; ${animationCSS}">
+                            <div class="absolute top-0 right-0 text-8xl opacity-5">🗺️</div>
+                            <div class="relative">
+                                <div class="inline-block px-4 py-2 rounded-full mb-4 text-sm font-semibold" style="background: ${accentColor}; color: white;">
+                                    📍 DESTINATION
+                                </div>
+                                <h3 class="text-2xl font-bold mb-6 text-gray-900">${data.venue || 'Venue Name'}</h3>
+                                ${items.slice(1).map((item, index) => `
+                                    <div class="flex gap-4 mb-4 last:mb-0 pb-4 last:pb-0 border-b border-gray-100 last:border-0">
+                                        <div class="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-lg" style="background: ${accentColor}20; color: ${accentColor};">
+                                            ${item.icon}
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="text-xs font-semibold text-gray-500 mb-1">${item.label.toUpperCase()}</div>
+                                            <div class="text-sm text-gray-700">${item.value}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+
                 default:
                     return items.map(item => `
-                        <div class="flex items-start gap-4 p-4" style="background: ${cardBg}; border-radius: 12px;">
+                        <div class="flex items-start gap-4 p-4" style="background: ${cardBg}; border-radius: ${radius}; ${animationCSS}">
                             ${getIcon(item.icon, item.label)}
                             <div>
                                 <div class="text-xs text-gray-500 mb-1">${item.label}</div>
@@ -185,10 +330,13 @@ window.sectionComponents.location = {
             }
         };
 
+        const needsUnifiedLayout = ['unified', 'map-style', 'modern', 'elegant', 'destination'].includes(layoutStyle);
+
         return `
-            <div class="py-12 px-6" style="background: ${bgColor}">
+            ${animations}
+            <div class="${space.padding} px-6" style="background: ${bgColor}">
                 <h2 class="text-2xl font-bold text-center mb-8">Location</h2>
-                <div class="max-w-md mx-auto ${layoutStyle === 'unified' || layoutStyle === 'map-style' ? '' : 'space-y-4'}">
+                <div class="max-w-md mx-auto ${needsUnifiedLayout ? '' : space.gap}">
                     ${items.length > 0 ? renderItems() : '<p class="text-center text-gray-500">Add location details</p>'}
                 </div>
             </div>
