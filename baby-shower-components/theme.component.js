@@ -38,6 +38,10 @@ window.sectionComponents.theme = {
                     <option value="badge">Badge - Circular Theme</option>
                     <option value="magazine">Magazine - Editorial</option>
                     <option value="ribbon">Ribbon - Banner Style</option>
+                    <option value="sticker">Sticker - Playful Cards</option>
+                    <option value="confetti">Confetti - Festive Style</option>
+                    <option value="timeline">Timeline - Visual Flow</option>
+                    <option value="polaroid">Polaroid - Frame Style</option>
                 </select>
             </div>
             <div>
@@ -216,15 +220,186 @@ window.sectionComponents.theme = {
 
             case 'banner':
                 return `
-                    <div class="py-12 px-6" style="background: ${bg};">
+                    <div class="py-10 sm:py-12 px-4 sm:px-6" style="background: ${bg};">
                         <div class="max-w-2xl mx-auto">
                             <div class="text-center">
-                                <h2 class="text-3xl font-bold mb-6">${data.themeName || 'Shower Theme'}</h2>
-                                <div class="grid grid-cols-2 gap-6 mb-6">
-                                    ${data.colors ? `<div class="bg-white bg-opacity-70 rounded-lg p-4"><div class="font-semibold mb-1" style="color: ${accent};">Colors</div><div class="text-gray-700">${data.colors}</div></div>` : ''}
-                                    ${data.dressCode ? `<div class="bg-white bg-opacity-70 rounded-lg p-4"><div class="font-semibold mb-1" style="color: ${accent};">Dress Code</div><div class="text-gray-700">${data.dressCode}</div></div>` : ''}
+                                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">${data.themeName || 'Shower Theme'}</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                                    ${data.colors ? `<div class="bg-white bg-opacity-70 rounded-lg p-3 sm:p-4"><div class="font-semibold mb-1 text-sm sm:text-base" style="color: ${accent};">Colors</div><div class="text-gray-700 text-sm sm:text-base">${data.colors}</div></div>` : ''}
+                                    ${data.dressCode ? `<div class="bg-white bg-opacity-70 rounded-lg p-3 sm:p-4"><div class="font-semibold mb-1 text-sm sm:text-base" style="color: ${accent};">Dress Code</div><div class="text-gray-700 text-sm sm:text-base">${data.dressCode}</div></div>` : ''}
                                 </div>
-                                ${data.description ? `<p class="text-gray-700 italic">${data.description}</p>` : ''}
+                                ${data.description ? `<p class="text-gray-700 italic text-sm sm:text-base">${data.description}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'sticker':
+                return `
+                    <div class="py-10 sm:py-12 px-4 sm:px-6" style="background: ${bg};">
+                        <div class="max-w-2xl mx-auto">
+                            <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">Shower Theme</h2>
+                            <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                                ${data.themeName ? `
+                                <div class="transform -rotate-2 hover:rotate-0 transition-transform">
+                                    <div class="px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg" style="background: ${accent}; color: white;">
+                                        <div class="text-xl sm:text-2xl mb-1">🎨</div>
+                                        <div class="font-bold text-xs sm:text-sm uppercase tracking-wider">Theme</div>
+                                        <div class="font-semibold text-sm sm:text-base mt-1">${data.themeName}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.colors ? `
+                                <div class="transform rotate-2 hover:rotate-0 transition-transform">
+                                    <div class="px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg border-3" style="background: white; border: 3px solid ${accent};">
+                                        <div class="text-xl sm:text-2xl mb-1">🌈</div>
+                                        <div class="font-bold text-xs sm:text-sm uppercase tracking-wider" style="color: ${accent};">Colors</div>
+                                        <div class="font-semibold text-sm sm:text-base mt-1">${data.colors}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.dressCode ? `
+                                <div class="transform -rotate-1 hover:rotate-0 transition-transform">
+                                    <div class="px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-lg border-3" style="background: white; border: 3px solid ${accent};">
+                                        <div class="text-xl sm:text-2xl mb-1">👔</div>
+                                        <div class="font-bold text-xs sm:text-sm uppercase tracking-wider" style="color: ${accent};">Dress Code</div>
+                                        <div class="font-semibold text-sm sm:text-base mt-1">${data.dressCode}</div>
+                                    </div>
+                                </div>` : ''}
+                            </div>
+                            ${data.description ? `
+                            <div class="mt-6 transform rotate-1 hover:rotate-0 transition-transform">
+                                <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 text-center border-3" style="border: 3px dashed ${accent};">
+                                    <p class="italic text-gray-600 text-sm sm:text-base">${data.description}</p>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'confetti':
+                return `
+                    <div class="py-10 sm:py-12 px-4 sm:px-6 relative overflow-hidden" style="background: ${bg};">
+                        <!-- Animated confetti -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                            <div class="absolute top-8 left-4 w-2 h-2 sm:w-3 sm:h-3 rounded-full animate-bounce" style="background: ${accent}; animation-delay: 0s;"></div>
+                            <div class="absolute top-12 left-20 w-2 h-2 rounded-full animate-bounce" style="background: #fbbf24; animation-delay: 0.2s;"></div>
+                            <div class="absolute top-8 right-16 w-2 h-2 sm:w-3 sm:h-3 rounded-full animate-bounce" style="background: ${accent}; animation-delay: 0.4s;"></div>
+                            <div class="absolute top-16 right-4 w-2 h-2 rounded-full animate-bounce" style="background: #fcd34d; animation-delay: 0.6s;"></div>
+                            <div class="absolute top-24 left-1/3 w-2 h-2 sm:w-3 sm:h-3 rounded-full animate-bounce" style="background: ${accent}; animation-delay: 0.8s;"></div>
+                            <div class="absolute top-20 right-1/4 w-2 h-2 rounded-full animate-bounce" style="background: #fbbf24; animation-delay: 1s;"></div>
+                        </div>
+
+                        <div class="max-w-2xl mx-auto relative z-10">
+                            <div class="text-center mb-6 sm:mb-8">
+                                <div class="text-4xl sm:text-5xl mb-3">🎨</div>
+                                <h2 class="text-2xl sm:text-3xl font-bold">Shower Theme</h2>
+                            </div>
+
+                            <div class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8" style="border: 4px solid ${accent};">
+                                ${data.themeName ? `
+                                <div class="text-center mb-6">
+                                    <div class="inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg" style="background: ${accent}; color: white;">
+                                        <div class="font-bold text-lg sm:text-xl">${data.themeName}</div>
+                                    </div>
+                                </div>` : ''}
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                                    ${data.colors ? `
+                                    <div class="p-3 sm:p-4 rounded-xl text-center" style="background: ${accent}20;">
+                                        <div class="text-2xl sm:text-3xl mb-2">🌈</div>
+                                        <div class="text-xs opacity-60 mb-1">Colors</div>
+                                        <div class="font-bold text-sm sm:text-base">${data.colors}</div>
+                                    </div>` : ''}
+                                    ${data.dressCode ? `
+                                    <div class="p-3 sm:p-4 rounded-xl text-center" style="background: ${accent}20;">
+                                        <div class="text-2xl sm:text-3xl mb-2">👔</div>
+                                        <div class="text-xs opacity-60 mb-1">Dress Code</div>
+                                        <div class="font-bold text-sm sm:text-base">${data.dressCode}</div>
+                                    </div>` : ''}
+                                </div>
+
+                                ${data.description ? `
+                                <div class="pt-4 border-t" style="border-color: ${accent}40;">
+                                    <p class="italic text-gray-600 text-center text-sm sm:text-base">${data.description}</p>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'timeline':
+                return `
+                    <div class="py-10 sm:py-12 px-4 sm:px-6" style="background: ${bg};">
+                        <div class="max-w-md mx-auto">
+                            <h2 class="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8">Shower Theme</h2>
+                            <div class="relative">
+                                <!-- Timeline line -->
+                                <div class="absolute left-6 top-0 bottom-0 w-1" style="background: ${accent};"></div>
+
+                                <div class="space-y-4 sm:space-y-6 relative">
+                                    ${data.themeName ? `
+                                    <div class="flex items-start gap-3 sm:gap-4">
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl sm:text-2xl z-10 shadow-lg flex-shrink-0" style="background: ${accent}; color: white;">🎨</div>
+                                        <div class="flex-1 pt-1 sm:pt-2">
+                                            <div class="text-xs opacity-60 mb-1">Theme Name</div>
+                                            <div class="font-bold text-base sm:text-lg">${data.themeName}</div>
+                                        </div>
+                                    </div>` : ''}
+
+                                    ${data.colors ? `
+                                    <div class="flex items-start gap-3 sm:gap-4">
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl sm:text-2xl z-10 shadow-lg flex-shrink-0" style="background: ${accent}; color: white;">🌈</div>
+                                        <div class="flex-1 pt-1 sm:pt-2">
+                                            <div class="text-xs opacity-60 mb-1">Theme Colors</div>
+                                            <div class="font-bold text-base sm:text-lg">${data.colors}</div>
+                                        </div>
+                                    </div>` : ''}
+
+                                    ${data.dressCode ? `
+                                    <div class="flex items-start gap-3 sm:gap-4">
+                                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl sm:text-2xl z-10 shadow-lg flex-shrink-0" style="background: ${accent}; color: white;">👔</div>
+                                        <div class="flex-1 pt-1 sm:pt-2">
+                                            <div class="text-xs opacity-60 mb-1">Dress Code</div>
+                                            <div class="font-bold text-base sm:text-lg">${data.dressCode}</div>
+                                        </div>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+
+                            ${data.description ? `
+                            <div class="mt-6 p-4 sm:p-6 rounded-xl bg-white shadow-lg">
+                                <p class="italic text-gray-600 text-sm sm:text-base">${data.description}</p>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'polaroid':
+                return `
+                    <div class="py-10 sm:py-12 px-4 sm:px-6" style="background: ${bg};">
+                        <div class="max-w-md mx-auto">
+                            <div class="bg-white p-3 sm:p-4 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform">
+                                <div class="aspect-square rounded mb-3 sm:mb-4 flex flex-col items-center justify-center p-4 sm:p-6" style="background: ${accent}20;">
+                                    <div class="text-5xl sm:text-6xl mb-4">🎨</div>
+                                    <h2 class="text-xl sm:text-2xl font-bold mb-2 text-center" style="font-family: 'Brush Script MT', cursive;">${data.themeName || 'Shower Theme'}</h2>
+                                    <div class="h-1 w-12 sm:w-16 mb-4" style="background: ${accent};"></div>
+
+                                    <div class="space-y-2 text-center w-full">
+                                        ${data.colors ? `
+                                        <div class="bg-white bg-opacity-70 rounded-lg p-2 sm:p-3">
+                                            <div class="text-xs opacity-60">Colors</div>
+                                            <div class="font-semibold text-sm sm:text-base">${data.colors}</div>
+                                        </div>` : ''}
+                                        ${data.dressCode ? `
+                                        <div class="bg-white bg-opacity-70 rounded-lg p-2 sm:p-3">
+                                            <div class="text-xs opacity-60">Dress Code</div>
+                                            <div class="font-semibold text-sm sm:text-base">${data.dressCode}</div>
+                                        </div>` : ''}
+                                    </div>
+                                </div>
+                                ${data.description ? `
+                                <div class="text-center py-3 sm:py-4">
+                                    <p class="text-xs sm:text-sm italic" style="font-family: 'Brush Script MT', cursive; color: ${accent};">${data.description}</p>
+                                </div>` : ''}
                             </div>
                         </div>
                     </div>
