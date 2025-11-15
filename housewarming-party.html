@@ -155,6 +155,38 @@
                             <div class="text-4xl mb-2">📸</div>
                             <div class="font-semibold text-sm">Home Photos</div>
                         </button>
+                        <button data-section-type="hometour" onclick="addSection('hometour')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🏠</div>
+                            <div class="font-semibold text-sm">Virtual Home Tour</div>
+                        </button>
+                        <button data-section-type="renovation" onclick="addSection('renovation')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🔨</div>
+                            <div class="font-semibold text-sm">Renovation Journey</div>
+                        </button>
+                        <button data-section-type="neighborhood" onclick="addSection('neighborhood')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🗺️</div>
+                            <div class="font-semibold text-sm">Neighborhood</div>
+                        </button>
+                        <button data-section-type="wishlist" onclick="addSection('wishlist')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🎁</div>
+                            <div class="font-semibold text-sm">Wishlist</div>
+                        </button>
+                        <button data-section-type="parking" onclick="addSection('parking')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🅿️</div>
+                            <div class="font-semibold text-sm">Parking & Directions</div>
+                        </button>
+                        <button data-section-type="petintro" onclick="addSection('petintro')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🐾</div>
+                            <div class="font-semibold text-sm">Meet Our Pets</div>
+                        </button>
+                        <button data-section-type="houserules" onclick="addSection('houserules')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">📋</div>
+                            <div class="font-semibold text-sm">House Guidelines</div>
+                        </button>
+                        <button data-section-type="activities" onclick="addSection('activities')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-orange-500 hover:bg-orange-50 transition text-center">
+                            <div class="text-4xl mb-2">🎮</div>
+                            <div class="font-semibold text-sm">Party Activities</div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -662,6 +694,499 @@
                             <h2 class="text-2xl font-bold mb-6">Thank You</h2>
                             <p class="text-gray-700 text-lg mb-6">\${data.message || 'Thank you for helping us celebrate our new home!'}</p>
                             \${data.closing ? \`<p class="text-gray-600 italic">\${data.closing}</p>\` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            hometour: {
+                name: '🏠 Virtual Home Tour',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Introduction</label>
+                            <textarea placeholder="Take a sneak peek at our new space!" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="intro" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-3">
+                            <h4 class="font-medium text-gray-900 mb-2">Room 1</h4>
+                            <input type="text" placeholder="Living Room" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="room1name" oninput="updatePreview()">
+                            <textarea placeholder="Describe this room..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="room1desc" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-3">
+                            <h4 class="font-medium text-gray-900 mb-2">Room 2</h4>
+                            <input type="text" placeholder="Kitchen" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="room2name" oninput="updatePreview()">
+                            <textarea placeholder="Describe this room..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="room2desc" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-3">
+                            <h4 class="font-medium text-gray-900 mb-2">Room 3 (Optional)</h4>
+                            <input type="text" placeholder="Backyard" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="room3name" oninput="updatePreview()">
+                            <textarea placeholder="Describe this area..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="room3desc" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fef3c7" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fef3c7'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🏠</div>
+                                <h2 class="text-2xl font-bold mb-2">Virtual Home Tour</h2>
+                                \${data.intro ? \`<p class="text-gray-600">\${data.intro}</p>\` : ''}
+                            </div>
+                            <div class="space-y-4">
+                                \${data.room1name ? \`
+                                <div class="bg-white rounded-lg p-4 shadow-sm">
+                                    <h3 class="font-bold text-lg text-orange-600 mb-2">\${data.room1name}</h3>
+                                    \${data.room1desc ? \`<p class="text-gray-700 text-sm">\${data.room1desc}</p>\` : ''}
+                                </div>
+                                \` : ''}
+                                \${data.room2name ? \`
+                                <div class="bg-white rounded-lg p-4 shadow-sm">
+                                    <h3 class="font-bold text-lg text-orange-600 mb-2">\${data.room2name}</h3>
+                                    \${data.room2desc ? \`<p class="text-gray-700 text-sm">\${data.room2desc}</p>\` : ''}
+                                </div>
+                                \` : ''}
+                                \${data.room3name ? \`
+                                <div class="bg-white rounded-lg p-4 shadow-sm">
+                                    <h3 class="font-bold text-lg text-orange-600 mb-2">\${data.room3name}</h3>
+                                    \${data.room3desc ? \`<p class="text-gray-700 text-sm">\${data.room3desc}</p>\` : ''}
+                                </div>
+                                \` : ''}
+                            </div>
+                        </div>
+                    </div>
+                \`
+            },
+            renovation: {
+                name: '🔨 Renovation Journey',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Story Title</label>
+                            <input type="text" placeholder="Our Renovation Journey" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Renovation Timeline</label>
+                            <input type="text" placeholder="6 months, March - August 2024" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="timeline" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Renovation Story</label>
+                            <textarea placeholder="Share the story of your renovation journey..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="story" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Key Highlights</label>
+                            <textarea placeholder="• New kitchen cabinets\n• Hardwood floors\n• Fresh paint throughout" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="highlights" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fed7aa" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fed7aa'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🔨</div>
+                                <h2 class="text-2xl font-bold mb-2">\${data.title || 'Renovation Journey'}</h2>
+                                \${data.timeline ? \`<p class="text-sm text-gray-600">⏱️ \${data.timeline}</p>\` : ''}
+                            </div>
+                            <div class="bg-white rounded-lg p-6 shadow-md">
+                                \${data.story ? \`<p class="text-gray-700 mb-4 whitespace-pre-wrap">\${data.story}</p>\` : ''}
+                                \${data.highlights ? \`
+                                    <div class="border-t pt-4">
+                                        <h3 class="font-semibold text-gray-900 mb-2">Highlights:</h3>
+                                        <div class="text-gray-700 text-sm whitespace-pre-wrap">\${data.highlights}</div>
+                                    </div>
+                                \` : ''}
+                            </div>
+                        </div>
+                    </div>
+                \`
+            },
+            neighborhood: {
+                name: '🗺️ Our New Neighborhood',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Neighborhood Name</label>
+                            <input type="text" placeholder="Downtown Historic District" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="name" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">About the Area</label>
+                            <textarea placeholder="Describe what you love about your new neighborhood..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="description" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Favorite Local Spots</label>
+                            <textarea placeholder="• Coffee Shop on Main St\n• The Park around the corner\n• Farmers Market on Saturdays" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="favorites" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fun Facts</label>
+                            <textarea placeholder="Share interesting facts about the neighborhood..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="facts" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#dbeafe" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#dbeafe'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🗺️</div>
+                                <h2 class="text-2xl font-bold mb-2">Our New Neighborhood</h2>
+                                \${data.name ? \`<p class="text-lg text-orange-600 font-medium">\${data.name}</p>\` : ''}
+                            </div>
+                            \${data.description ? \`<p class="text-gray-700 mb-6">\${data.description}</p>\` : ''}
+                            \${data.favorites ? \`
+                                <div class="bg-white rounded-lg p-5 shadow-sm mb-4">
+                                    <h3 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                        <span>⭐</span>
+                                        <span>Our Favorite Spots</span>
+                                    </h3>
+                                    <div class="text-gray-700 text-sm whitespace-pre-wrap">\${data.favorites}</div>
+                                </div>
+                            \` : ''}
+                            \${data.facts ? \`
+                                <div class="bg-orange-50 rounded-lg p-5">
+                                    <h3 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                        <span>💡</span>
+                                        <span>Fun Facts</span>
+                                    </h3>
+                                    <p class="text-gray-700 text-sm">\${data.facts}</p>
+                                </div>
+                            \` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            wishlist: {
+                name: '🎁 Housewarming Wishlist',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Introduction Message</label>
+                            <textarea placeholder="Your presence is the best gift, but if you'd like to bring something..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="intro" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Registry Link (Optional)</label>
+                            <input type="url" placeholder="https://registry.com/yourname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="registryUrl" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Wishlist Items/Categories</label>
+                            <textarea placeholder="• Kitchen gadgets\n• Plants for the garden\n• Tools for DIY projects\n• Gift cards to local shops" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="items" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Alternative Suggestion</label>
+                            <input type="text" placeholder="Or bring your favorite bottle of wine!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="alternative" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fce7f3" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fce7f3'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🎁</div>
+                                <h2 class="text-2xl font-bold mb-4">Housewarming Wishlist</h2>
+                                \${data.intro ? \`<p class="text-gray-600">\${data.intro}</p>\` : ''}
+                            </div>
+                            \${data.items ? \`
+                                <div class="bg-white rounded-lg p-6 shadow-md mb-4">
+                                    <div class="text-gray-700 whitespace-pre-wrap">\${data.items}</div>
+                                </div>
+                            \` : ''}
+                            \${data.registryUrl ? \`
+                                <div class="text-center mb-4">
+                                    <a href="\${data.registryUrl}" target="_blank" class="inline-block bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 transition">
+                                        View Our Registry
+                                    </a>
+                                </div>
+                            \` : ''}
+                            \${data.alternative ? \`
+                                <p class="text-center text-gray-600 italic text-sm">\${data.alternative}</p>
+                            \` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            parking: {
+                name: '🅿️ Parking & Directions',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Parking Information</label>
+                            <textarea placeholder="Street parking available on Main St and Oak Ave. Driveway fits 2 cars." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="parking" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Driving Directions</label>
+                            <textarea placeholder="From downtown: Take Main St north for 2 miles, turn left on Oak Ave..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="directions" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Landmarks</label>
+                            <textarea placeholder="Look for the blue house across from the library" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="landmarks" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">GPS Coordinates (Optional)</label>
+                            <input type="text" placeholder="40.7128° N, 74.0060° W" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="gps" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#e0e7ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#e0e7ff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🅿️</div>
+                                <h2 class="text-2xl font-bold">Parking & Directions</h2>
+                            </div>
+                            <div class="space-y-4">
+                                \${data.parking ? \`
+                                    <div class="bg-white rounded-lg p-5 shadow-sm">
+                                        <h3 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                            <span>🚗</span>
+                                            <span>Parking</span>
+                                        </h3>
+                                        <p class="text-gray-700 text-sm">\${data.parking}</p>
+                                    </div>
+                                \` : ''}
+                                \${data.directions ? \`
+                                    <div class="bg-white rounded-lg p-5 shadow-sm">
+                                        <h3 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                            <span>🧭</span>
+                                            <span>Directions</span>
+                                        </h3>
+                                        <p class="text-gray-700 text-sm whitespace-pre-wrap">\${data.directions}</p>
+                                    </div>
+                                \` : ''}
+                                \${data.landmarks ? \`
+                                    <div class="bg-white rounded-lg p-5 shadow-sm">
+                                        <h3 class="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                                            <span>🏛️</span>
+                                            <span>Landmarks</span>
+                                        </h3>
+                                        <p class="text-gray-700 text-sm">\${data.landmarks}</p>
+                                    </div>
+                                \` : ''}
+                                \${data.gps ? \`
+                                    <div class="text-center">
+                                        <p class="text-xs text-gray-500">GPS: \${data.gps}</p>
+                                    </div>
+                                \` : ''}
+                            </div>
+                        </div>
+                    </div>
+                \`
+            },
+            petintro: {
+                name: '🐾 Meet Our Pets',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Introduction</label>
+                            <textarea placeholder="We have furry family members we'd love you to meet!" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="intro" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-3">
+                            <h4 class="font-medium text-gray-900 mb-2">Pet 1</h4>
+                            <input type="text" placeholder="Pet Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="pet1name" oninput="updatePreview()">
+                            <input type="text" placeholder="Dog, Cat, etc." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="pet1type" oninput="updatePreview()">
+                            <textarea placeholder="Personality & fun facts..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="pet1desc" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div class="border-t pt-3">
+                            <h4 class="font-medium text-gray-900 mb-2">Pet 2 (Optional)</h4>
+                            <input type="text" placeholder="Pet Name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="pet2name" oninput="updatePreview()">
+                            <input type="text" placeholder="Dog, Cat, etc." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data mb-2" data-field="pet2type" oninput="updatePreview()">
+                            <textarea placeholder="Personality & fun facts..." rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="pet2desc" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Allergy Warning (Optional)</label>
+                            <input type="text" placeholder="Please note: We have pets in the home" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="allergyNote" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fef9c3" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fef9c3'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🐾</div>
+                                <h2 class="text-2xl font-bold mb-2">Meet Our Pets</h2>
+                                \${data.intro ? \`<p class="text-gray-600">\${data.intro}</p>\` : ''}
+                            </div>
+                            <div class="space-y-4">
+                                \${data.pet1name ? \`
+                                    <div class="bg-white rounded-lg p-5 shadow-sm">
+                                        <div class="flex items-start gap-3">
+                                            <div class="text-3xl">🐕</div>
+                                            <div class="flex-1">
+                                                <h3 class="font-bold text-lg text-orange-600">\${data.pet1name}</h3>
+                                                \${data.pet1type ? \`<p class="text-sm text-gray-500 mb-2">\${data.pet1type}</p>\` : ''}
+                                                \${data.pet1desc ? \`<p class="text-gray-700 text-sm">\${data.pet1desc}</p>\` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                \` : ''}
+                                \${data.pet2name ? \`
+                                    <div class="bg-white rounded-lg p-5 shadow-sm">
+                                        <div class="flex items-start gap-3">
+                                            <div class="text-3xl">🐈</div>
+                                            <div class="flex-1">
+                                                <h3 class="font-bold text-lg text-orange-600">\${data.pet2name}</h3>
+                                                \${data.pet2type ? \`<p class="text-sm text-gray-500 mb-2">\${data.pet2type}</p>\` : ''}
+                                                \${data.pet2desc ? \`<p class="text-gray-700 text-sm">\${data.pet2desc}</p>\` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                \` : ''}
+                            </div>
+                            \${data.allergyNote ? \`
+                                <div class="mt-6 text-center">
+                                    <p class="text-xs text-gray-600 bg-yellow-50 rounded-lg py-2 px-4 inline-block">
+                                        ⚠️ \${data.allergyNote}
+                                    </p>
+                                </div>
+                            \` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            houserules: {
+                name: '📋 House Guidelines',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Introduction Message</label>
+                            <textarea placeholder="A few friendly reminders to help everyone enjoy the party..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="intro" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Guidelines</label>
+                            <textarea placeholder="• Please remove shoes at the door\n• Feel free to tour the house\n• Kids are welcome to play in the backyard\n• Smoking outside only" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="rules" oninput="updatePreview()"></textarea>
+                            <p class="text-xs text-gray-500">Keep the tone friendly and welcoming!</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Closing Note</label>
+                            <input type="text" placeholder="Most importantly, come ready to have fun!" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="closing" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#f0fdf4" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#f0fdf4'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📋</div>
+                                <h2 class="text-2xl font-bold mb-2">House Guidelines</h2>
+                                \${data.intro ? \`<p class="text-gray-600">\${data.intro}</p>\` : ''}
+                            </div>
+                            \${data.rules ? \`
+                                <div class="bg-white rounded-lg p-6 shadow-sm mb-4">
+                                    <div class="text-gray-700 whitespace-pre-wrap">\${data.rules}</div>
+                                </div>
+                            \` : ''}
+                            \${data.closing ? \`
+                                <div class="text-center">
+                                    <p class="text-orange-600 font-medium italic">\${data.closing}</p>
+                                </div>
+                            \` : ''}
+                        </div>
+                    </div>
+                \`
+            },
+            activities: {
+                name: '🎮 Party Activities',
+                allowMultiple: false,
+                info: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Introduction</label>
+                            <textarea placeholder="Here's what we have planned for entertainment..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="intro" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Activities List</label>
+                            <textarea placeholder="• House tour at 2:00 PM\n• Backyard games\n• Music and dancing\n• Photo booth in the living room\n• Pool/hot tub available" rows="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="activities" oninput="updatePreview()"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Special Features</label>
+                            <textarea placeholder="Check out our newly renovated game room!" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="features" oninput="updatePreview()"></textarea>
+                        </div>
+                    </div>
+                \`,
+                style: \`
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
+                            <input type="color" value="#fae8ff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
+                        </div>
+                    </div>
+                \`,
+                render: (data, style) => \`
+                    <div class="py-12 px-6" style="background: \${style.bg || '#fae8ff'}">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">🎮</div>
+                                <h2 class="text-2xl font-bold mb-2">Party Activities</h2>
+                                \${data.intro ? \`<p class="text-gray-600">\${data.intro}</p>\` : ''}
+                            </div>
+                            \${data.activities ? \`
+                                <div class="bg-white rounded-lg p-6 shadow-sm mb-4">
+                                    <div class="text-gray-700 whitespace-pre-wrap">\${data.activities}</div>
+                                </div>
+                            \` : ''}
+                            \${data.features ? \`
+                                <div class="bg-orange-50 rounded-lg p-5 border-l-4 border-orange-500">
+                                    <p class="text-gray-700 font-medium">\${data.features}</p>
+                                </div>
+                            \` : ''}
                         </div>
                     </div>
                 \`
