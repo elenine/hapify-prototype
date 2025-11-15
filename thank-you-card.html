@@ -2842,6 +2842,14 @@
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="timelineStyle" onchange="updatePreview()">
                                 <option value="vertical">Vertical</option>
                                 <option value="simple">Simple List</option>
+                                <option value="cards">Card Timeline</option>
+                                <option value="zigzag">Zigzag Path</option>
+                                <option value="minimal">Minimal Dots</option>
+                                <option value="boxed">Boxed Events</option>
+                                <option value="roadmap">Roadmap Style</option>
+                                <option value="modern">Modern Timeline</option>
+                                <option value="elegant">Elegant Path</option>
+                                <option value="colorful">Colorful Journey</option>
                             </select>
                         </div>
                     </div>
@@ -2852,17 +2860,18 @@
                     const title = data.title || 'Our Journey Together';
                     const milestones = data.milestones || '2023 | We met\n2024 | You were there for me\nToday | Thank you';
 
-                    const items = milestones.split('\n').filter(item => item.trim()).map(item => {
+                    const items = milestones.split('\n').filter(item => item.trim()).map((item, index, array) => {
                         const parts = item.split('|');
                         const date = parts[0]?.trim() || '';
                         const event = parts[1]?.trim() || item.trim();
+                        const isLast = index === array.length - 1;
 
                         if (timelineStyle === 'vertical') {
                             return `
                                 <div class="flex gap-4 mb-4">
                                     <div class="flex flex-col items-center">
                                         <div class="w-3 h-3 bg-amber-500 rounded-full"></div>
-                                        <div class="w-0.5 h-full bg-amber-300 mt-1"></div>
+                                        ${!isLast ? '<div class="w-0.5 h-full bg-amber-300 mt-1"></div>' : ''}
                                     </div>
                                     <div class="flex-1 pb-4">
                                         <div class="text-sm font-semibold text-amber-700">${date}</div>
@@ -2870,7 +2879,119 @@
                                     </div>
                                 </div>
                             `;
+                        } else if (timelineStyle === 'cards') {
+                            return `
+                                <div class="mb-4 flex gap-4 items-center">
+                                    <div class="flex-shrink-0 w-20 h-20 rounded-full bg-amber-500 flex items-center justify-center text-white font-bold text-sm">
+                                        ${date}
+                                    </div>
+                                    <div class="flex-1 bg-white rounded-xl p-4 shadow-md">
+                                        <p class="text-gray-700">${event}</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'zigzag') {
+                            const alignRight = index % 2 === 1;
+                            return `
+                                <div class="mb-6 flex ${alignRight ? 'flex-row-reverse' : 'flex-row'} gap-4 items-center">
+                                    <div class="flex-1 ${alignRight ? 'text-right' : 'text-left'}">
+                                        <div class="bg-amber-50 rounded-lg p-4 border-l-4 ${alignRight ? 'border-r-4 border-l-0' : ''} border-amber-500">
+                                            <div class="text-sm font-bold text-amber-700">${date}</div>
+                                            <div class="text-gray-700 mt-1">${event}</div>
+                                        </div>
+                                    </div>
+                                    <div class="w-4 h-4 bg-amber-500 rounded-full flex-shrink-0"></div>
+                                    <div class="flex-1"></div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'minimal') {
+                            return `
+                                <div class="mb-4 flex gap-3 items-start">
+                                    <div class="w-2 h-2 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                                    <div class="flex-1">
+                                        <div class="text-xs font-semibold text-amber-600 uppercase tracking-wide">${date}</div>
+                                        <div class="text-gray-700 mt-1">${event}</div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'boxed') {
+                            return `
+                                <div class="mb-4">
+                                    <div class="border-2 border-amber-300 rounded-xl p-4 bg-amber-50">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="px-3 py-1 bg-amber-500 text-white rounded-full text-sm font-bold">${date}</div>
+                                        </div>
+                                        <p class="text-gray-700">${event}</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'roadmap') {
+                            return `
+                                <div class="mb-6 relative">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex flex-col items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-xs">
+                                                ${index + 1}
+                                            </div>
+                                            ${!isLast ? '<div class="w-1 h-12 bg-gradient-to-b from-amber-400 to-orange-300 mt-2"></div>' : ''}
+                                        </div>
+                                        <div class="flex-1 pt-2">
+                                            <div class="font-bold text-amber-700 mb-1">${date}</div>
+                                            <div class="text-gray-700">${event}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'modern') {
+                            return `
+                                <div class="mb-6 flex gap-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="w-12 h-12 rounded-full border-4 border-amber-500 bg-white flex items-center justify-center">
+                                            <div class="text-xs font-bold text-amber-700">📅</div>
+                                        </div>
+                                        ${!isLast ? '<div class="w-0.5 h-full bg-gradient-to-b from-amber-500 to-amber-200 mt-2"></div>' : ''}
+                                    </div>
+                                    <div class="flex-1 pb-4">
+                                        <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-amber-500">
+                                            <div class="text-sm font-bold text-amber-700 mb-2">${date}</div>
+                                            <div class="text-gray-700">${event}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'elegant') {
+                            return `
+                                <div class="mb-8 flex gap-6 items-start">
+                                    <div class="flex-shrink-0 text-right" style="min-width: 80px;">
+                                        <div class="inline-block px-3 py-1 bg-gradient-to-r from-amber-400 to-orange-400 text-white rounded-full text-xs font-semibold">
+                                            ${date}
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-center flex-shrink-0">
+                                        <div class="w-4 h-4 bg-amber-500 rounded-full border-4 border-amber-200"></div>
+                                        ${!isLast ? '<div class="w-0.5 h-16 bg-amber-300"></div>' : ''}
+                                    </div>
+                                    <div class="flex-1 pt-0">
+                                        <p class="text-gray-700 italic">${event}</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (timelineStyle === 'colorful') {
+                            const colors = ['#f59e0b', '#ef4444', '#10b981', '#3b82f6', '#8b5cf6'];
+                            const color = colors[index % colors.length];
+                            return `
+                                <div class="mb-4">
+                                    <div class="rounded-xl p-5 text-white" style="background: linear-gradient(135deg, ${color} 0%, ${color}dd 100%);">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="text-2xl">•</div>
+                                            <div class="font-bold text-sm opacity-90">${date}</div>
+                                        </div>
+                                        <p class="ml-7">${event}</p>
+                                    </div>
+                                </div>
+                            `;
                         } else {
+                            // simple
                             return `
                                 <div class="mb-3">
                                     <span class="font-semibold text-amber-700">${date}</span>
@@ -2919,6 +3040,14 @@
                                 <option value="grid">Grid</option>
                                 <option value="list">List</option>
                                 <option value="signatures">Handwritten Style</option>
+                                <option value="circles">Circle Avatars</option>
+                                <option value="cards">Name Cards</option>
+                                <option value="badges">Badge Style</option>
+                                <option value="flowing">Flowing Text</option>
+                                <option value="stacked">Stacked Names</option>
+                                <option value="colorful">Colorful Boxes</option>
+                                <option value="elegant">Elegant List</option>
+                                <option value="modern">Modern Grid</option>
                             </select>
                         </div>
                     </div>
@@ -2939,6 +3068,88 @@
                     } else if (layout === 'list') {
                         namesHTML = `<div class="mt-4 space-y-2">
                             ${names.map(name => `<div class="text-gray-800">• ${name.trim()}</div>`).join('')}
+                        </div>`;
+                    } else if (layout === 'signatures') {
+                        namesHTML = `<div class="mt-6 flex flex-wrap gap-6 justify-center">
+                            ${names.map(name => `<div class="text-gray-700 font-serif italic text-lg">${name.trim()}</div>`).join('')}
+                        </div>`;
+                    } else if (layout === 'circles') {
+                        namesHTML = `<div class="mt-6 flex flex-wrap gap-4 justify-center">
+                            ${names.map(name => {
+                                const initial = name.trim()[0] || '?';
+                                return `<div class="flex flex-col items-center gap-2">
+                                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold text-xl">
+                                        ${initial}
+                                    </div>
+                                    <div class="text-sm text-gray-700 font-medium">${name.trim()}</div>
+                                </div>`;
+                            }).join('')}
+                        </div>`;
+                    } else if (layout === 'cards') {
+                        namesHTML = `<div class="mt-4 grid grid-cols-2 gap-3">
+                            ${names.map(name => `
+                                <div class="bg-white border-2 border-amber-300 rounded-xl p-4 text-center shadow-sm">
+                                    <div class="text-2xl mb-2">👤</div>
+                                    <div class="text-gray-800 font-semibold">${name.trim()}</div>
+                                </div>
+                            `).join('')}
+                        </div>`;
+                    } else if (layout === 'badges') {
+                        namesHTML = `<div class="mt-6 flex flex-wrap gap-3 justify-center">
+                            ${names.map(name => `
+                                <div class="px-4 py-2 bg-gradient-to-r from-amber-400 to-orange-400 text-white rounded-full font-semibold text-sm shadow-md">
+                                    ${name.trim()}
+                                </div>
+                            `).join('')}
+                        </div>`;
+                    } else if (layout === 'flowing') {
+                        namesHTML = `<div class="mt-6 text-center text-gray-700 text-lg leading-relaxed">
+                            ${names.map((name, i) => name.trim() + (i < names.length - 1 ? '<span class="text-amber-500 mx-2">•</span>' : '')).join('')}
+                        </div>`;
+                    } else if (layout === 'stacked') {
+                        namesHTML = `<div class="mt-4 space-y-3">
+                            ${names.map((name, i) => `
+                                <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg transform transition-transform hover:translate-x-2" style="margin-left: ${i * 10}px;">
+                                    <span class="text-gray-800 font-medium">${name.trim()}</span>
+                                </div>
+                            `).join('')}
+                        </div>`;
+                    } else if (layout === 'colorful') {
+                        const colors = [
+                            'from-amber-400 to-orange-400',
+                            'from-blue-400 to-indigo-400',
+                            'from-green-400 to-emerald-400',
+                            'from-pink-400 to-rose-400',
+                            'from-purple-400 to-violet-400'
+                        ];
+                        namesHTML = `<div class="mt-4 grid grid-cols-2 gap-3">
+                            ${names.map((name, i) => `
+                                <div class="bg-gradient-to-br ${colors[i % colors.length]} text-white rounded-xl p-4 text-center font-semibold shadow-md">
+                                    ${name.trim()}
+                                </div>
+                            `).join('')}
+                        </div>`;
+                    } else if (layout === 'elegant') {
+                        namesHTML = `<div class="mt-6 space-y-4">
+                            ${names.map(name => `
+                                <div class="flex items-center gap-4">
+                                    <div class="w-2 h-2 bg-amber-500 rounded-full"></div>
+                                    <div class="text-gray-800 font-serif text-lg italic">${name.trim()}</div>
+                                </div>
+                            `).join('')}
+                        </div>`;
+                    } else if (layout === 'modern') {
+                        namesHTML = `<div class="mt-4 grid grid-cols-2 gap-4">
+                            ${names.map(name => `
+                                <div class="bg-white rounded-lg p-4 border-2 border-gray-200 hover:border-amber-400 transition-colors shadow-sm">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-orange-400 flex items-center justify-center text-white font-bold">
+                                            ${name.trim()[0] || '?'}
+                                        </div>
+                                        <div class="text-gray-800 font-medium">${name.trim()}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
                         </div>`;
                     } else {
                         namesHTML = `<div class="mt-6 flex flex-wrap gap-6 justify-center">
@@ -2988,6 +3199,14 @@
                             <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
                                 <option value="grid">Grid</option>
                                 <option value="masonry">Masonry</option>
+                                <option value="polaroid">Polaroid Style</option>
+                                <option value="filmStrip">Film Strip</option>
+                                <option value="collage">Collage</option>
+                                <option value="carousel">Carousel Style</option>
+                                <option value="scattered">Scattered Photos</option>
+                                <option value="framed">Framed Gallery</option>
+                                <option value="modern">Modern Grid</option>
+                                <option value="album">Album Style</option>
                             </select>
                         </div>
                     </div>
@@ -2998,26 +3217,135 @@
                     const caption = data.caption || 'Our Memories';
                     const photoCount = parseInt(data.photoCount) || 4;
 
-                    const photos = Array(photoCount).fill(0).map((_, i) => {
-                        const emojis = ['📷', '🎨', '🌟', '💫', '✨', '🎭'];
-                        const emoji = emojis[i % emojis.length];
-                        return `
-                            <div class="bg-gray-200 rounded-lg flex items-center justify-center" style="height: 150px;">
-                                <span class="text-4xl opacity-50">${emoji}</span>
-                            </div>
-                        `;
-                    }).join('');
-
+                    const emojis = ['📷', '🎨', '🌟', '💫', '✨', '🎭'];
                     const gridClass = photoCount === 2 ? 'grid-cols-2' : photoCount === 3 ? 'grid-cols-3' : 'grid-cols-2';
+
+                    let galleryHTML = '';
+
+                    if (layout === 'grid') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="bg-gray-200 rounded-lg flex items-center justify-center" style="height: 150px;">
+                                <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-3">${galleryHTML}</div>`;
+                    } else if (layout === 'masonry') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => {
+                            const heights = ['120px', '180px', '150px', '140px', '160px', '130px'];
+                            return `
+                                <div class="bg-gray-200 rounded-lg flex items-center justify-center" style="height: ${heights[i % heights.length]};">
+                                    <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                                </div>
+                            `;
+                        }).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-3">${galleryHTML}</div>`;
+                    } else if (layout === 'polaroid') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="bg-white rounded-lg p-3 shadow-lg transform rotate-${i % 2 === 0 ? '2' : '-2'}">
+                                <div class="bg-gray-200 rounded flex items-center justify-center" style="height: 140px;">
+                                    <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                                </div>
+                                <div class="text-center text-gray-500 text-sm mt-3 font-handwriting">Memory #${i + 1}</div>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-4">${galleryHTML}</div>`;
+                    } else if (layout === 'filmStrip') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="bg-black p-2 rounded">
+                                <div class="bg-gray-200 flex items-center justify-center" style="height: 120px;">
+                                    <span class="text-3xl opacity-50">${emojis[i % emojis.length]}</span>
+                                </div>
+                                <div class="flex gap-1 mt-1">
+                                    <div class="w-2 h-2 bg-gray-400"></div>
+                                    <div class="w-2 h-2 bg-gray-400"></div>
+                                    <div class="w-2 h-2 bg-gray-400"></div>
+                                </div>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-2 bg-gray-800 p-3 rounded-xl">${galleryHTML}</div>`;
+                    } else if (layout === 'collage') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => {
+                            const rotations = ['rotate-1', '-rotate-2', 'rotate-3', '-rotate-1', 'rotate-2', '-rotate-3'];
+                            return `
+                                <div class="transform ${rotations[i % rotations.length]}">
+                                    <div class="bg-gray-200 rounded-xl flex items-center justify-center shadow-md" style="height: 140px;">
+                                        <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-4">${galleryHTML}</div>`;
+                    } else if (layout === 'carousel') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => {
+                            const scale = i === 0 ? 'scale-110' : 'scale-90 opacity-60';
+                            return `
+                                <div class="transform ${scale} transition-transform">
+                                    <div class="bg-gray-200 rounded-2xl flex items-center justify-center shadow-xl" style="height: 160px;">
+                                        <span class="text-5xl opacity-50">${emojis[i % emojis.length]}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                        galleryHTML = `<div class="flex gap-4 overflow-x-auto pb-4">${galleryHTML}</div>`;
+                    } else if (layout === 'scattered') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => {
+                            const positions = ['', 'ml-4', 'ml-8', '-ml-4', 'ml-6', 'ml-2'];
+                            const rotations = ['rotate-2', '-rotate-3', 'rotate-1', '-rotate-2', 'rotate-3', '-rotate-1'];
+                            return `
+                                <div class="transform ${rotations[i % rotations.length]} ${positions[i % positions.length]} mb-4">
+                                    <div class="bg-white rounded-lg p-2 shadow-lg inline-block">
+                                        <div class="bg-gray-200 rounded flex items-center justify-center" style="width: 140px; height: 140px;">
+                                            <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                        galleryHTML = `<div>${galleryHTML}</div>`;
+                    } else if (layout === 'framed') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="border-8 border-double border-amber-400 rounded-lg p-2 bg-white shadow-lg">
+                                <div class="bg-gray-200 flex items-center justify-center" style="height: 130px;">
+                                    <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                                </div>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-4">${galleryHTML}</div>`;
+                    } else if (layout === 'modern') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="relative group">
+                                <div class="bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl flex items-center justify-center overflow-hidden" style="height: 150px;">
+                                    <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                                </div>
+                                <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity rounded-2xl"></div>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-2">${galleryHTML}</div>`;
+                    } else if (layout === 'album') {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="bg-amber-50 rounded-xl p-4 border-2 border-amber-200">
+                                <div class="bg-gray-200 rounded flex items-center justify-center mb-2" style="height: 120px;">
+                                    <span class="text-3xl opacity-50">${emojis[i % emojis.length]}</span>
+                                </div>
+                                <div class="text-center text-xs text-gray-500">Photo ${i + 1}</div>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-3">${galleryHTML}</div>`;
+                    } else {
+                        galleryHTML = Array(photoCount).fill(0).map((_, i) => `
+                            <div class="bg-gray-200 rounded-lg flex items-center justify-center" style="height: 150px;">
+                                <span class="text-4xl opacity-50">${emojis[i % emojis.length]}</span>
+                            </div>
+                        `).join('');
+                        galleryHTML = `<div class="grid ${gridClass} gap-3">${galleryHTML}</div>`;
+                    }
 
                     return `
                         <div class="p-8" style="background-color: ${bgColor};">
                             <div class="max-w-lg mx-auto">
                                 <div class="text-4xl mb-4 text-center">🖼️</div>
                                 ${caption ? `<h3 class="text-xl font-semibold mb-4 text-gray-900 text-center">${caption}</h3>` : ''}
-                                <div class="grid ${gridClass} gap-3">
-                                    ${photos}
-                                </div>
+                                ${galleryHTML}
                             </div>
                         </div>
                     `;
@@ -3466,6 +3794,14 @@
                                 <option value="horizontal">Horizontal</option>
                                 <option value="card">Card Style</option>
                                 <option value="buttons">Button Style</option>
+                                <option value="modern">Modern Icons</option>
+                                <option value="elegant">Elegant Cards</option>
+                                <option value="minimal">Minimal List</option>
+                                <option value="colorful">Colorful Boxes</option>
+                                <option value="badge">Badge Style</option>
+                                <option value="business">Business Card</option>
+                                <option value="floating">Floating Icons</option>
+                                <option value="inline">Inline Style</option>
                             </select>
                         </div>
                         <div>
@@ -3553,6 +3889,153 @@
                                     <h3 class="text-xl font-semibold text-gray-900 mb-4">${title}</h3>
                                     <div class="flex gap-6 justify-center flex-wrap">
                                         ${contactItems}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'modern') {
+                        const contactItems = contacts.map(c => `
+                            <div class="flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background-color: ${accentColor}20;">
+                                    ${c.icon}
+                                </div>
+                                <div class="text-gray-700 font-medium">${c.value}</div>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-4xl mb-4 text-center">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6 text-center">${title}</h3>
+                                    <div class="space-y-3">
+                                        ${contactItems}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'elegant') {
+                        const contactCards = contacts.map(c => `
+                            <div class="bg-white rounded-2xl p-6 text-center border-2 border-gray-200 hover:border-amber-400 transition-colors shadow-sm">
+                                <div class="text-4xl mb-3">${c.icon}</div>
+                                <p class="text-gray-700 text-sm break-all">${c.value}</p>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="grid grid-cols-${contacts.length === 1 ? '1' : contacts.length === 2 ? '2' : '3'} gap-4">
+                                        ${contactCards}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'minimal') {
+                        const contactItems = contacts.map(c => `
+                            <div class="flex items-center gap-3 text-sm">
+                                <div class="w-1 h-1 rounded-full" style="background-color: ${accentColor};"></div>
+                                <span class="text-gray-500">${c.icon}</span>
+                                <span class="text-gray-700">${c.value}</span>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="space-y-3 inline-block text-left">
+                                        ${contactItems}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'colorful') {
+                        const colors = ['from-blue-400 to-blue-600', 'from-green-400 to-green-600', 'from-purple-400 to-purple-600'];
+                        const contactBoxes = contacts.map((c, i) => `
+                            <div class="bg-gradient-to-br ${colors[i % colors.length]} text-white rounded-xl p-5 text-center shadow-md">
+                                <div class="text-3xl mb-2">${c.icon}</div>
+                                <p class="text-sm font-medium break-all">${c.value}</p>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="grid grid-cols-${contacts.length === 1 ? '1' : contacts.length === 2 ? '2' : '3'} gap-4">
+                                        ${contactBoxes}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'badge') {
+                        const contactBadges = contacts.map(c => `
+                            <div class="inline-flex items-center gap-2 px-5 py-3 rounded-full border-2 shadow-sm" style="border-color: ${accentColor}; background-color: white;">
+                                <span class="text-xl">${c.icon}</span>
+                                <span class="text-gray-700 font-medium text-sm">${c.value}</span>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="flex flex-wrap gap-3 justify-center">
+                                        ${contactBadges}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'business') {
+                        const contactItems = contacts.map(c => `
+                            <div class="flex items-center gap-3 border-l-4 pl-4 py-2" style="border-color: ${accentColor};">
+                                <span class="text-2xl">${c.icon}</span>
+                                <span class="text-gray-700 font-medium">${c.value}</span>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white rounded-2xl p-8 shadow-xl border-2" style="border-color: ${accentColor};">
+                                        <div class="text-4xl mb-4 text-center">📧</div>
+                                        <h3 class="text-xl font-bold text-gray-900 mb-6 text-center">${title}</h3>
+                                        <div class="space-y-4">
+                                            ${contactItems}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'floating') {
+                        const contactFloats = contacts.map(c => `
+                            <div class="bg-white rounded-full px-6 py-4 shadow-lg hover:shadow-xl transition-shadow flex items-center gap-3">
+                                <div class="text-2xl">${c.icon}</div>
+                                <div class="text-gray-700 font-medium">${c.value}</div>
+                            </div>
+                        `).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-6">${title}</h3>
+                                    <div class="space-y-4 inline-block">
+                                        ${contactFloats}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (layout === 'inline') {
+                        const contactInline = contacts.map((c, i) =>
+                            `${c.icon} ${c.value}${i < contacts.length - 1 ? '<span class="mx-3" style="color: ' + accentColor + ';">•</span>' : ''}`
+                        ).join('');
+                        return `
+                            <div class="p-8" style="background-color: ${bgColor};">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-4">📧</div>
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-4">${title}</h3>
+                                    <div class="text-gray-700 text-lg">
+                                        ${contactInline}
                                     </div>
                                 </div>
                             </div>
