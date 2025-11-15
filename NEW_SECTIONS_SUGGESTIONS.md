@@ -706,16 +706,26 @@ This section provides a detailed breakdown of implementation tasks organized by 
 - [ ] Check responsive layouts on actual mobile device
 - [ ] Verify all emoji icons display correctly
 
-#### Task 16: Git Operations (By Phase)
-- [ ] **Phase 1 Commit**: Commit all HIGH PRIORITY templates (Wedding, Business, Housewarming, Conference)
-- [ ] Push Phase 1 changes to remote branch
-- [ ] **Phase 2 Commit**: Commit all MEDIUM PRIORITY templates (Retirement, Graduation, Baby Shower, Engagement)
-- [ ] Push Phase 2 changes to remote branch
-- [ ] **Phase 3 Commit**: Commit all LOWER PRIORITY templates (Birthday, Event, Anniversary, Birth, Farewell)
-- [ ] Push Phase 3 changes to remote branch
-- [ ] **Phase 4 Commit**: Commit testing fixes and bug corrections
-- [ ] Push Phase 4 changes to remote branch
-- [ ] **Phase 5**: Update documentation, create pull request with comprehensive description
+#### Task 16: Git Operations (Per Template)
+
+**Implementation Commits (One per template):**
+- [ ] Phase 1: Commit & push Wedding Invitation
+- [ ] Phase 2: Commit & push Business Portfolio
+- [ ] Phase 3: Commit & push Housewarming Party
+- [ ] Phase 4: Commit & push Conference & Seminar
+- [ ] Phase 5: Commit & push Retirement Celebration
+- [ ] Phase 6: Commit & push Graduation Ceremony
+- [ ] Phase 7: Commit & push Baby Shower
+- [ ] Phase 8: Commit & push Engagement Announcement
+- [ ] Phase 9: Commit & push Birthday Wishes
+- [ ] Phase 10: Commit & push Event Invitation
+- [ ] Phase 11: Commit & push Anniversary Wishes
+- [ ] Phase 12: Commit & push Birth Announcement
+- [ ] Phase 13: Commit & push Farewell Party
+
+**QA & Completion Commits:**
+- [ ] Phase 14: Commit & push testing fixes
+- [ ] Phase 15: Update docs & create pull request
 
 ---
 
@@ -730,27 +740,70 @@ This section provides a detailed breakdown of implementation tasks organized by 
 
 ### Recommended Approach (Phased Implementation):
 
-#### Phase 1: HIGH PRIORITY Implementation
-- Implement Tasks 1-4 (Wedding, Business, Housewarming, Conference)
-- 28 sections across 4 templates
-- Commit and push as single phase
+Each template is implemented as a separate phase with its own commit. This allows for:
+- Focused, reviewable commits
+- Easy rollback if needed
+- Clear progress tracking
+- Independent testing per template
 
-#### Phase 2: MEDIUM PRIORITY Implementation
-- Implement Tasks 5-8 (Retirement, Graduation, Baby Shower, Engagement)
-- 20 sections across 4 templates
-- Commit and push as single phase
+#### Phase 1: Wedding Invitation
+- Add 7 sections (weddingParty, attire, ceremony, lodging, travel, giftRegistry, honeymoon)
+- Commit and push
 
-#### Phase 3: LOWER PRIORITY Implementation
-- Implement Tasks 9-13 (Birthday, Event, Anniversary, Birth, Farewell)
-- 22 sections across 5 templates
-- Commit and push as single phase
+#### Phase 2: Business Portfolio
+- Add 5 sections (awards, clients, process, caseStudy, skills)
+- Commit and push
 
-#### Phase 4: Testing & Bug Fixes
-- Perform comprehensive testing (Task 14-15)
+#### Phase 3: Housewarming Party
+- Add 8 sections (homeTour, renovation, neighborhood, wishlist, parking, petIntro, houseRules, activities)
+- Commit and push
+
+#### Phase 4: Conference & Seminar
+- Add 8 sections (keynote, breakoutSessions, sponsors, venue, networking, exhibition, certificates, materials)
+- Commit and push
+
+#### Phase 5: Retirement Celebration
+- Add 6 sections (career, achievements, colleagues, retirementPlans, legacy, advice)
+- Commit and push
+
+#### Phase 6: Graduation Ceremony
+- Add 5 sections (major, thesis, professors, nextSteps, classmates)
+- Commit and push
+
+#### Phase 7: Baby Shower
+- Add 5 sections (registry, genderReveal, babyPredictions, parentMessage, bookRequest)
+- Commit and push
+
+#### Phase 8: Engagement Announcement
+- Add 4 sections (proposal, ring, weddingPlans, celebration)
+- Commit and push
+
+#### Phase 9: Birthday Wishes
+- Add 4 sections (guestBook, games, musicPlaylist, photoChallenge)
+- Commit and push
+
+#### Phase 10: Event Invitation
+- Add 4 sections (speakers, parking, accessibility, weather)
+- Commit and push
+
+#### Phase 11: Anniversary Wishes
+- Add 4 sections (renewal, familyTree, advice, favorites)
+- Commit and push
+
+#### Phase 12: Birth Announcement
+- Add 5 sections (birthDetails, siblings, nameStory, thankyou, milestoneTracker)
+- Commit and push
+
+#### Phase 13: Farewell Party
+- Add 5 sections (memories, destination, tribute, stayInTouch, gift)
+- Commit and push
+
+#### Phase 14: Testing & Bug Fixes
+- Comprehensive testing across all 13 templates
 - Fix any issues found
 - Commit and push bug fixes
 
-#### Phase 5: Final Review & Pull Request
+#### Phase 15: Final Review & Pull Request
 - Update progress tracking in documentation
 - Create comprehensive pull request
 - Document all changes and enhancements
@@ -761,11 +814,25 @@ This section provides a detailed breakdown of implementation tasks organized by 
 - **Tests Passed**: 0/13 templates tested
 
 ### Phase Completion Status:
-- [ ] **Phase 1**: HIGH PRIORITY (28 sections, 4 templates)
-- [ ] **Phase 2**: MEDIUM PRIORITY (20 sections, 4 templates)
-- [ ] **Phase 3**: LOWER PRIORITY (22 sections, 5 templates)
-- [ ] **Phase 4**: Testing & Bug Fixes
-- [ ] **Phase 5**: Final Review & PR
+
+**Implementation Phases (13 templates):**
+- [ ] **Phase 1**: Wedding Invitation (7 sections)
+- [ ] **Phase 2**: Business Portfolio (5 sections)
+- [ ] **Phase 3**: Housewarming Party (8 sections)
+- [ ] **Phase 4**: Conference & Seminar (8 sections)
+- [ ] **Phase 5**: Retirement Celebration (6 sections)
+- [ ] **Phase 6**: Graduation Ceremony (5 sections)
+- [ ] **Phase 7**: Baby Shower (5 sections)
+- [ ] **Phase 8**: Engagement Announcement (4 sections)
+- [ ] **Phase 9**: Birthday Wishes (4 sections)
+- [ ] **Phase 10**: Event Invitation (4 sections)
+- [ ] **Phase 11**: Anniversary Wishes (4 sections)
+- [ ] **Phase 12**: Birth Announcement (5 sections)
+- [ ] **Phase 13**: Farewell Party (5 sections)
+
+**QA & Completion Phases:**
+- [ ] **Phase 14**: Testing & Bug Fixes
+- [ ] **Phase 15**: Final Review & PR
 
 ---
 
