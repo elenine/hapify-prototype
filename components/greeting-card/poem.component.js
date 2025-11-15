@@ -15,6 +15,12 @@ window.sectionComponents.poem = {
                     <option value="cardElegant">Card Elegant - Elevated card design</option>
                     <option value="decorativeBorder">Decorative Border - Ornate border frame</option>
                     <option value="modernMinimal">Modern Minimal - Clean minimalist style</option>
+                    <option value="scroll">Scroll - Ancient scroll style</option>
+                    <option value="book">Book - Open book layout</option>
+                    <option value="frame">Frame - Picture frame style</option>
+                    <option value="gradient">Gradient - Colorful gradient</option>
+                    <option value="handwritten">Handwritten - Note style</option>
+                    <option value="floating">Floating - Elevated shadow</option>
                 </select>
             </div>
             <div>
@@ -140,6 +146,96 @@ window.sectionComponents.poem = {
                         <div class="border-l-4 pl-6" style="border-color: ${accentColor}">
                             ${title ? `<h3 class="text-xl font-bold mb-4" style="color: ${accentColor}">${title}</h3>` : ''}
                             <pre class="${textSize} ${lineHeight} whitespace-pre-wrap ${fontFamily}" style="color: ${textColor}">${poem}</pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'scroll') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-xl mx-auto relative">
+                        <div class="p-8 rounded-2xl shadow-xl" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 12px solid #92400e; border-right: 12px solid #92400e">
+                            <div class="absolute top-0 left-0 w-full h-3" style="background: repeating-linear-gradient(90deg, #92400e 0px, #92400e 20px, transparent 20px, transparent 40px)"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-3" style="background: repeating-linear-gradient(90deg, #92400e 0px, #92400e 20px, transparent 20px, transparent 40px)"></div>
+                            ${title ? `<h3 class="text-2xl font-bold mb-6 text-center font-serif" style="color: #92400e">${title}</h3>` : ''}
+                            <pre class="${textSize} ${lineHeight} whitespace-pre-wrap font-serif text-center" style="color: #78350f">${poem}</pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'book') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto flex gap-4">
+                        <div class="flex-1 bg-white p-8 shadow-lg" style="border-right: 2px solid #e5e7eb">
+                            ${title ? `<h3 class="text-xl font-bold mb-4 font-serif" style="color: ${accentColor}">${title}</h3>` : ''}
+                            <pre class="${textSize} ${lineHeight} whitespace-pre-wrap font-serif" style="color: ${textColor}">${poem}</pre>
+                        </div>
+                        <div class="flex-1 bg-white p-8 shadow-lg opacity-50">
+                            <div class="h-full flex items-center justify-center">
+                                <span class="text-6xl opacity-30" style="color: ${accentColor}">📖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'frame') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="relative p-12 bg-white shadow-2xl">
+                            <div class="absolute inset-0 border-8" style="border-color: ${accentColor}"></div>
+                            <div class="absolute inset-4 border-2 border-gray-200"></div>
+                            <div class="relative z-10">
+                                ${title ? `<h3 class="text-2xl font-bold mb-6 text-center" style="color: ${accentColor}">${title}</h3>` : ''}
+                                <pre class="${textSize} ${lineHeight} whitespace-pre-wrap ${fontFamily} text-center" style="color: ${textColor}">${poem}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'gradient') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${accentColor}, ${bgColor})">
+                    <div class="max-w-xl mx-auto">
+                        <div class="bg-white bg-opacity-95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+                            ${title ? `<h3 class="text-2xl font-bold mb-6 text-center" style="color: ${accentColor}">${title}</h3>` : ''}
+                            <pre class="${textSize} ${lineHeight} whitespace-pre-wrap ${fontFamily} text-center" style="color: ${textColor}">${poem}</pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'handwritten') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-xl mx-auto relative">
+                        <div class="absolute -top-4 right-4 text-5xl transform rotate-12" style="color: ${accentColor}">📝</div>
+                        <div class="p-8 rounded-lg shadow-lg transform -rotate-1" style="background: #fef9c3; border: 2px solid #fbbf24">
+                            ${title ? `<h3 class="text-xl font-bold mb-4 font-serif italic" style="color: ${accentColor}">${title}</h3>` : ''}
+                            <pre class="${textSize} ${lineHeight} whitespace-pre-wrap font-serif italic" style="color: ${textColor}">${poem}</pre>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'floating') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="bg-white rounded-2xl p-8 transform hover:-translate-y-2 transition-transform" style="box-shadow: 0 20px 60px rgba(0,0,0,0.3)">
+                            ${title ? `<h3 class="text-2xl font-bold mb-6 text-center" style="color: ${accentColor}">${title}</h3>` : ''}
+                            <pre class="${textSize} ${lineHeight} whitespace-pre-wrap ${fontFamily} text-center" style="color: ${textColor}">${poem}</pre>
                         </div>
                     </div>
                 </div>
