@@ -31,6 +31,14 @@ window.sectionComponents.hero = {
                                 <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
                             </div>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Image (Optional)</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-teal-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                                <div class="text-3xl mb-2">🖼️</div>
+                                <div class="text-sm text-gray-600">Click to upload banner</div>
+                                <input type="file" class="hidden section-data" data-field="bannerImage" accept="image/*" onchange="handleImageUpload(this)">
+                            </div>
+                        </div>
                     </div>
                 `,
                 style: `
@@ -79,6 +87,40 @@ window.sectionComponents.hero = {
                                 <option value="shadow-2xl">Dramatic</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Display Mode</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="bannerMode" onchange="updatePreview()">
+                                <option value="none">No Banner</option>
+                                <option value="background">Background</option>
+                                <option value="top">Top Banner</option>
+                                <option value="bottom">Bottom Banner</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Opacity (%)</label>
+                            <input type="range" min="0" max="100" value="30" class="w-full section-style" data-style="bannerOpacity" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Overlay Color</label>
+                            <input type="color" value="#000000" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bannerOverlay" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Overlay Opacity (%)</label>
+                            <input type="range" min="0" max="100" value="50" class="w-full section-style" data-style="bannerOverlayOpacity" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Blur (px)</label>
+                            <input type="range" min="0" max="10" value="0" class="w-full section-style" data-style="bannerBlur" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Banner Height</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 section-style" data-style="bannerHeight" onchange="updatePreview()">
+                                <option value="small">Small (200px)</option>
+                                <option value="medium">Medium (300px)</option>
+                                <option value="large">Large (400px)</option>
+                                <option value="full">Full Height</option>
+                            </select>
+                        </div>
                     </div>
                 `,
                 render: (data, style) => {
@@ -94,21 +136,69 @@ window.sectionComponents.hero = {
                     const date = data.date || 'March 15-17, 2025';
                     const location = data.location || 'San Francisco, CA';
 
+                    // Banner image properties
+                    const bannerImage = data.bannerImage || '';
+                    const bannerMode = style.bannerMode || 'none';
+                    const bannerOpacity = style.bannerOpacity || 30;
+                    const bannerOverlay = style.bannerOverlay || '#000000';
+                    const bannerOverlayOpacity = style.bannerOverlayOpacity || 50;
+                    const bannerBlur = style.bannerBlur || 0;
+                    const bannerHeight = style.bannerHeight || 'medium';
+
+                    // Banner height mapping
+                    const bannerHeights = {
+                        small: '200px',
+                        medium: '300px',
+                        large: '400px',
+                        full: '100%'
+                    };
+
+                    // Generate banner HTML based on mode
+                    const generateBanner = (mode, position = '') => {
+                        if (!bannerImage || mode === 'none') return '';
+
+                        const opacity = bannerOpacity / 100;
+                        const overlayOp = bannerOverlayOpacity / 100;
+                        const blur = bannerBlur > 0 ? `blur(${bannerBlur}px)` : 'none';
+
+                        if (mode === 'background') {
+                            return `
+                                <div class="absolute inset-0 overflow-hidden">
+                                    <img src="${bannerImage}" class="w-full h-full object-cover" style="opacity: ${opacity}; filter: ${blur};">
+                                    <div class="absolute inset-0" style="background: ${bannerOverlay}; opacity: ${overlayOp};"></div>
+                                </div>
+                            `;
+                        } else if (mode === 'top' || mode === 'bottom') {
+                            const positionClass = mode === 'top' ? 'top-0' : 'bottom-0';
+                            const height = bannerHeights[bannerHeight];
+                            return `
+                                <div class="absolute ${positionClass} left-0 right-0 overflow-hidden" style="height: ${height};">
+                                    <img src="${bannerImage}" class="w-full h-full object-cover" style="opacity: ${opacity}; filter: ${blur};">
+                                    <div class="absolute inset-0" style="background: ${bannerOverlay}; opacity: ${overlayOp};"></div>
+                                </div>
+                            `;
+                        }
+                        return '';
+                    };
+
                     switch(layout) {
                         case 'centered':
                             return `
-                                <div class="text-center py-20 px-6" style="background: ${bgColor}; color: ${textColor}">
-                                    ${imageSrc ? `<img src="${imageSrc}" class="w-32 h-32 ${imageRadius} mx-auto mb-6 object-cover border-4 border-white ${shadow}">` : '<div class="text-7xl mb-6">🎤</div>'}
-                                    <h1 class="text-4xl font-bold mb-3 leading-tight">${name}</h1>
-                                    <p class="text-xl opacity-90 mb-4">${tagline}</p>
-                                    <div class="flex flex-col gap-2 items-center text-sm opacity-80">
-                                        <div class="flex items-center gap-2">
-                                            <span>📅</span>
-                                            <span>${date}</span>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <span>📍</span>
-                                            <span>${location}</span>
+                                <div class="relative text-center py-20 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="relative z-10">
+                                        ${imageSrc ? `<img src="${imageSrc}" class="w-32 h-32 ${imageRadius} mx-auto mb-6 object-cover border-4 border-white ${shadow}">` : '<div class="text-7xl mb-6">🎤</div>'}
+                                        <h1 class="text-4xl font-bold mb-3 leading-tight">${name}</h1>
+                                        <p class="text-xl opacity-90 mb-4">${tagline}</p>
+                                        <div class="flex flex-col gap-2 items-center text-sm opacity-80">
+                                            <div class="flex items-center gap-2">
+                                                <span>📅</span>
+                                                <span>${date}</span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <span>📍</span>
+                                                <span>${location}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -116,8 +206,9 @@ window.sectionComponents.hero = {
 
                         case 'modern':
                             return `
-                                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bgColor}15, ${accentColor}15);">
-                                    <div class="max-w-md mx-auto">
+                                <div class="relative py-12 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bgColor}15, ${accentColor}15);">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto relative z-10">
                                         <div class="bg-white rounded-3xl ${shadow} overflow-hidden border-t-4" style="border-top-color: ${bgColor}">
                                             <div class="p-8 text-center">
                                                 ${imageSrc ? `<img src="${imageSrc}" class="w-28 h-28 ${imageRadius} mx-auto mb-5 object-cover ${shadow}">` : `<div class="inline-flex items-center justify-center w-28 h-28 rounded-2xl mb-5 ${shadow}" style="background: linear-gradient(135deg, ${bgColor}, ${accentColor})"><span class="text-6xl">🎤</span></div>`}
@@ -139,8 +230,9 @@ window.sectionComponents.hero = {
 
                         case 'split':
                             return `
-                                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
-                                    <div class="max-w-md mx-auto flex flex-col gap-6">
+                                <div class="relative py-12 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto flex flex-col gap-6 relative z-10">
                                         <div class="flex-shrink-0 text-center">
                                             ${imageSrc ? `<img src="${imageSrc}" class="w-40 h-40 ${imageRadius} mx-auto object-cover border-4 border-white ${shadow}">` : `<div class="inline-flex items-center justify-center w-40 h-40 ${imageRadius} bg-white bg-opacity-20 ${shadow}"><span class="text-8xl">🎤</span></div>`}
                                         </div>
@@ -162,8 +254,9 @@ window.sectionComponents.hero = {
 
                         case 'minimal':
                             return `
-                                <div class="text-center py-24 px-6" style="background: ${bgColor}; color: ${textColor}">
-                                    <div class="max-w-md mx-auto">
+                                <div class="relative text-center py-24 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto relative z-10">
                                         <div class="text-5xl mb-5">🎤</div>
                                         <h1 class="text-5xl font-light mb-4 tracking-wide">${name}</h1>
                                         <div class="w-20 h-0.5 mx-auto mb-5" style="background: ${textColor}; opacity: 0.4;"></div>
@@ -180,11 +273,12 @@ window.sectionComponents.hero = {
                         case 'bold':
                             return `
                                 <div class="relative py-24 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
-                                    <div class="absolute inset-0 opacity-10">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="absolute inset-0 opacity-10 z-0">
                                         <div class="absolute top-0 right-0 w-72 h-72 rounded-full" style="background: ${textColor}; transform: translate(50%, -50%);"></div>
                                         <div class="absolute bottom-0 left-0 w-56 h-56 rounded-full" style="background: ${accentColor}; transform: translate(-50%, 50%);"></div>
                                     </div>
-                                    <div class="relative text-center max-w-md mx-auto">
+                                    <div class="relative text-center max-w-md mx-auto z-10">
                                         ${imageSrc ? `<img src="${imageSrc}" class="w-32 h-32 ${imageRadius} mx-auto mb-6 object-cover border-4 border-white shadow-2xl">` : '<div class="text-8xl mb-6">🎤</div>'}
                                         <h1 class="text-5xl font-black mb-4 tracking-tight leading-tight">${name}</h1>
                                         <p class="text-2xl font-semibold opacity-90 mb-6">${tagline}</p>
@@ -203,16 +297,17 @@ window.sectionComponents.hero = {
                         case 'gradient':
                             return `
                                 <div class="relative py-20 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bgColor} 0%, ${accentColor} 100%); color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
                                     ${imageSrc ? `
-                                        <div class="absolute inset-0 opacity-20">
+                                        <div class="absolute inset-0 opacity-20 z-0">
                                             <img src="${imageSrc}" class="w-full h-full object-cover">
                                         </div>
-                                        <div class="absolute inset-0" style="background: linear-gradient(135deg, ${bgColor}cc 0%, ${accentColor}cc 100%);"></div>
+                                        <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, ${bgColor}cc 0%, ${accentColor}cc 100%);"></div>
                                     ` : `
-                                        <div class="absolute top-0 right-0 text-9xl opacity-10 -mt-8 -mr-8">🎤</div>
-                                        <div class="absolute bottom-0 left-0 text-9xl opacity-10 -mb-8 -ml-8">🎤</div>
+                                        <div class="absolute top-0 right-0 text-9xl opacity-10 -mt-8 -mr-8 z-0">🎤</div>
+                                        <div class="absolute bottom-0 left-0 text-9xl opacity-10 -mb-8 -ml-8 z-0">🎤</div>
                                     `}
-                                    <div class="relative text-center max-w-md mx-auto">
+                                    <div class="relative text-center max-w-md mx-auto z-10">
                                         <div class="inline-block px-4 py-1.5 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-xs font-bold mb-5 uppercase tracking-wide">
                                             Upcoming Event
                                         </div>
@@ -232,8 +327,9 @@ window.sectionComponents.hero = {
 
                         case 'countdown':
                             return `
-                                <div class="py-16 px-6" style="background: ${bgColor}; color: ${textColor}">
-                                    <div class="max-w-md mx-auto text-center">
+                                <div class="relative py-16 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto text-center relative z-10">
                                         <div class="mb-6">
                                             ${imageSrc ? `<img src="${imageSrc}" class="w-24 h-24 ${imageRadius} mx-auto mb-4 object-cover border-3 border-white ${shadow}">` : '<div class="text-7xl mb-4">🎤</div>'}
                                             <h1 class="text-4xl font-bold mb-2">${name}</h1>
@@ -268,8 +364,9 @@ window.sectionComponents.hero = {
 
                         case 'floating':
                             return `
-                                <div class="py-12 px-6" style="background: linear-gradient(to bottom, ${bgColor}10, transparent);">
-                                    <div class="max-w-md mx-auto">
+                                <div class="relative py-12 px-6 overflow-hidden" style="background: linear-gradient(to bottom, ${bgColor}10, transparent);">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="max-w-md mx-auto relative z-10">
                                         <div class="bg-white rounded-3xl ${shadow} p-8">
                                             <div class="flex flex-col items-center text-center">
                                                 ${imageSrc ? `
@@ -319,13 +416,16 @@ window.sectionComponents.hero = {
 
                         default:
                             return `
-                                <div class="text-center py-16 px-6" style="background: ${bgColor}; color: ${textColor}">
-                                    ${imageSrc ? `<img src="${imageSrc}" class="w-28 h-28 ${imageRadius} mx-auto mb-6 object-cover border-4 border-white ${shadow}">` : '<div class="text-7xl mb-6">🎤</div>'}
-                                    <h1 class="text-4xl font-bold mb-3">${name}</h1>
-                                    <p class="text-xl opacity-90 mb-4">${tagline}</p>
-                                    <div class="flex flex-col gap-2 items-center text-sm opacity-80">
-                                        <div>📅 ${date}</div>
-                                        <div>📍 ${location}</div>
+                                <div class="relative text-center py-16 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                                    ${generateBanner(bannerMode)}
+                                    <div class="relative z-10">
+                                        ${imageSrc ? `<img src="${imageSrc}" class="w-28 h-28 ${imageRadius} mx-auto mb-6 object-cover border-4 border-white ${shadow}">` : '<div class="text-7xl mb-6">🎤</div>'}
+                                        <h1 class="text-4xl font-bold mb-3">${name}</h1>
+                                        <p class="text-xl opacity-90 mb-4">${tagline}</p>
+                                        <div class="flex flex-col gap-2 items-center text-sm opacity-80">
+                                            <div>📅 ${date}</div>
+                                            <div>📍 ${location}</div>
+                                        </div>
                                     </div>
                                 </div>
                             `;
