@@ -216,6 +216,99 @@ window.sectionComponents.gallery = {
                         `;
                     }
 
+                    // Filmstrip Layout - Horizontal Row
+                    if (layout === 'filmstrip') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-full mx-auto">
+                                    <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Photo Gallery'}</h2>
+                                    ${data.description ? `<p class="text-center text-gray-600 mb-8">${data.description}</p>` : ''}
+                                    <div class="p-4 rounded-xl shadow-${shadow}" style="background: ${accentColor}15">
+                                        <div class="flex gap-2 overflow-x-auto pb-2">
+                                            ${[1,2,3,4,5,6].map(i => `
+                                                <div class="flex-shrink-0 w-32 h-40 ${borderClass} ${shadowClass} flex flex-col items-center justify-center" style="background: ${accentColor}20">
+                                                    <span class="text-4xl opacity-50 mb-2">📷</span>
+                                                    <div class="text-xs text-gray-600 font-mono">${i}</div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        <div class="flex justify-center gap-1 mt-3">
+                                            ${[1,2,3,4,5,6].map(() => `
+                                                <div class="w-2 h-2 rounded-full" style="background: ${accentColor}40"></div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Scrapbook Layout - Tilted Style
+                    if (layout === 'scrapbook') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Photo Gallery'}</h2>
+                                    ${data.description ? `<p class="text-center text-gray-600 mb-8">${data.description}</p>` : ''}
+                                    <div class="space-y-6">
+                                        ${[1,2,3,4].map((i, idx) => {
+                                            const rotations = ['-rotate-1', 'rotate-2', '-rotate-2', 'rotate-1'];
+                                            return `
+                                                <div class="relative ${rotations[idx]} hover:rotate-0 transition-transform duration-300">
+                                                    <div class="bg-white p-4 rounded-lg ${shadowClass}">
+                                                        <div class="aspect-video ${borderClass} mb-3 flex items-center justify-center" style="background: ${accentColor}15">
+                                                            <span class="text-6xl opacity-50">📷</span>
+                                                        </div>
+                                                        <div class="flex items-center justify-between">
+                                                            <div class="text-sm text-gray-600 italic">Memory ${i}</div>
+                                                            <div class="flex gap-1">
+                                                                ${[1,2,3].map(() => `<div class="w-1.5 h-1.5 rounded-full" style="background: ${accentColor}"></div>`).join('')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shadow-md" style="background: ${accentColor}; color: white">
+                                                        ${i}
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Showcase Layout - Large Featured
+                    if (layout === 'showcase') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Photo Gallery'}</h2>
+                                    ${data.description ? `<p class="text-center text-gray-600 mb-8">${data.description}</p>` : ''}
+                                    <div class="space-y-4">
+                                        <!-- Featured Large Photo -->
+                                        <div class="relative group">
+                                            <div class="aspect-[4/3] ${borderClass} ${shadowClass} flex items-center justify-center overflow-hidden" style="background: linear-gradient(135deg, ${accentColor}30, ${accentColor}10)">
+                                                <span class="text-9xl opacity-50">📷</span>
+                                            </div>
+                                            <div class="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold shadow-lg" style="background: ${accentColor}; color: white">
+                                                Featured
+                                            </div>
+                                        </div>
+                                        <!-- Thumbnail Grid -->
+                                        <div class="grid grid-cols-3 gap-3">
+                                            ${[1,2,3].map(i => `
+                                                <div class="aspect-square ${borderClass} shadow-md flex items-center justify-center cursor-pointer hover:scale-105 transition-transform" style="background: ${accentColor}${10 + (i * 5)}">
+                                                    <span class="text-3xl opacity-60">📷</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     return '';
                 }
 

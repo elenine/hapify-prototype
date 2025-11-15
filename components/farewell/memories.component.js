@@ -201,6 +201,90 @@ window.sectionComponents.memories = {
                         `;
                     }
 
+                    // Polaroid Layout - Photo Style
+                    if (layout === 'polaroid') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Memories Together'}</h2>
+                                <div class="max-w-lg mx-auto grid grid-cols-2 gap-6">
+                                    ${memories.map((memory, idx) => {
+                                        const rotations = ['rotate-2', '-rotate-2', '-rotate-1', 'rotate-1'];
+                                        return `
+                                            <div class="bg-white p-4 shadow-xl ${rotations[idx % 4]} hover:rotate-0 hover:scale-105 transition-all duration-300">
+                                                <div class="aspect-square flex items-center justify-center mb-3 rounded" style="background: ${accentColor}15">
+                                                    <span class="text-5xl">${icon}</span>
+                                                </div>
+                                                <p class="text-xs text-gray-700 leading-relaxed text-center font-handwriting">${memory}</p>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Scrapbook Layout - Angled Cards
+                    if (layout === 'scrapbook') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Memories Together'}</h2>
+                                <div class="max-w-md mx-auto space-y-6">
+                                    ${memories.map((memory, idx) => {
+                                        const rotations = ['-rotate-1', 'rotate-2', '-rotate-2', 'rotate-1'];
+                                        const patterns = ['dots', 'stripes', 'grid', 'solid'];
+                                        return `
+                                            <div class="relative ${rotations[idx % 4]} hover:rotate-0 transition-transform duration-300">
+                                                <div class="bg-white p-6 rounded-2xl shadow-lg border-4" style="border-color: ${accentColor}40">
+                                                    <div class="flex items-start gap-4">
+                                                        <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background: ${accentColor}20">
+                                                            ${icon}
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <div class="inline-block px-2 py-1 rounded text-xs font-bold mb-2" style="background: ${accentColor}; color: white">
+                                                                #${idx + 1}
+                                                            </div>
+                                                            <p class="text-gray-700 leading-relaxed text-sm">${memory}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Decorative tape -->
+                                                <div class="absolute -top-3 ${idx % 2 === 0 ? 'left-8' : 'right-8'} w-16 h-6 rounded opacity-60" style="background: ${accentColor}40"></div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Mosaic Layout - Colorful Tiles
+                    if (layout === 'mosaic') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Memories Together'}</h2>
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                        ${memories.map((memory, idx) => {
+                                            const opacities = ['20', '30', '25', '35', '15', '40'];
+                                            const sizes = idx % 5 === 0 ? 'md:col-span-2 md:row-span-2' : '';
+                                            return `
+                                                <div class="${sizes} p-5 rounded-2xl shadow-md hover:scale-105 transition-transform cursor-pointer" style="background: ${accentColor}${opacities[idx % opacities.length]}">
+                                                    <div class="flex flex-col h-full justify-between">
+                                                        <div class="text-3xl mb-3">${icon}</div>
+                                                        <p class="text-sm text-gray-800 leading-relaxed font-medium">${memory}</p>
+                                                        <div class="flex gap-1 mt-3">
+                                                            ${[1,2,3].map(() => `<div class="w-1 h-1 rounded-full" style="background: ${accentColor}"></div>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     return '';
                 }
 

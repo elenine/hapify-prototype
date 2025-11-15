@@ -243,6 +243,111 @@ window.sectionComponents.wellwishes = {
                         `;
                     }
 
+                    // Testimonial Layout - Quote Cards
+                    if (layout === 'testimonial') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="text-center mb-10">
+                                        <div class="text-5xl mb-4">${icon}</div>
+                                        <h2 class="text-3xl font-bold mb-3">${data.title || 'Well Wishes'}</h2>
+                                        <p class="text-gray-600">${data.description || 'Share your messages and well wishes'}</p>
+                                    </div>
+                                    <div class="space-y-6">
+                                        ${sampleMessages.map((msg, idx) => `
+                                            <div class="relative p-8 rounded-2xl shadow-${shadow}" style="background: ${idx % 2 === 0 ? 'white' : accentColor + '10'}">
+                                                <!-- Quote Mark -->
+                                                <div class="absolute top-4 left-4 text-6xl font-serif opacity-20" style="color: ${accentColor}">"</div>
+                                                <div class="relative z-10">
+                                                    <p class="text-gray-800 text-lg leading-relaxed mb-4 italic pl-8">${msg.message}</p>
+                                                    <div class="flex items-center gap-3 pl-8">
+                                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl" style="background: ${accentColor}; color: white">
+                                                            ${icon}
+                                                        </div>
+                                                        <div>
+                                                            <div class="font-bold" style="color: ${accentColor}">${msg.author}</div>
+                                                            <div class="text-xs text-gray-500">Colleague</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Compact Layout - Dense Layout
+                    if (layout === 'compact') {
+                        return `
+                            <div class="py-10 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="text-center mb-6">
+                                        <div class="inline-block text-3xl mb-2">${icon}</div>
+                                        <h2 class="text-2xl font-bold mb-2">${data.title || 'Well Wishes'}</h2>
+                                        <p class="text-sm text-gray-600">${data.description || 'Messages from your team'}</p>
+                                    </div>
+                                    <div class="bg-white rounded-xl shadow-${shadow} p-4">
+                                        <div class="space-y-3 divide-y">
+                                            ${sampleMessages.map((msg, idx) => `
+                                                <div class="${idx === 0 ? '' : 'pt-3'}">
+                                                    <div class="flex items-start gap-3">
+                                                        <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm" style="background: ${accentColor}15">
+                                                            ${icon}
+                                                        </div>
+                                                        <div class="flex-1 min-w-0">
+                                                            <p class="text-sm text-gray-700 leading-relaxed mb-1">"${msg.message}"</p>
+                                                            <div class="text-xs font-semibold" style="color: ${accentColor}">- ${msg.author}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Showcase Layout - Featured Display
+                    if (layout === 'showcase') {
+                        return `
+                            <div class="py-14 px-6" style="background: linear-gradient(to bottom, ${bg}, ${accentColor}10)">
+                                <div class="max-w-3xl mx-auto">
+                                    <div class="text-center mb-12">
+                                        <div class="inline-block p-6 rounded-full shadow-xl mb-6" style="background: ${accentColor}">
+                                            <div class="text-6xl">${icon}</div>
+                                        </div>
+                                        <h2 class="text-4xl font-bold mb-4" style="color: ${accentColor}">${data.title || 'Well Wishes'}</h2>
+                                        <p class="text-lg text-gray-700 max-w-xl mx-auto">${data.description || 'Heartfelt messages from those who care'}</p>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        ${sampleMessages.map((msg, idx) => `
+                                            <div class="group">
+                                                <div class="relative p-6 rounded-2xl shadow-xl bg-white hover:scale-105 transition-transform duration-300">
+                                                    <div class="absolute -top-3 -left-3 w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg" style="background: ${accentColor}">
+                                                        ${icon}
+                                                    </div>
+                                                    <div class="pt-4">
+                                                        <div class="mb-4">
+                                                            <div class="text-4xl font-serif opacity-30" style="color: ${accentColor}">"</div>
+                                                        </div>
+                                                        <p class="text-gray-700 leading-relaxed mb-4">${msg.message}</p>
+                                                        <div class="flex items-center gap-2 pt-4 border-t" style="border-color: ${accentColor}20">
+                                                            <div class="h-px flex-1" style="background: ${accentColor}30"></div>
+                                                            <span class="text-sm font-bold" style="color: ${accentColor}">${msg.author}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     return '';
                 }
             };

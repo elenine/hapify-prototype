@@ -235,6 +235,97 @@ window.sectionComponents.rsvp = {
                         `;
                     }
 
+                    // Minimal Layout - Clean Design
+                    if (layout === 'minimal') {
+                        return `
+                            <div class="py-10 px-6" style="background: ${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="mb-6 text-center">
+                                        <div class="inline-block w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3" style="background: ${buttonColor}15">
+                                            ✉️
+                                        </div>
+                                        <h2 class="text-2xl font-bold mb-2">${data.title || 'Please RSVP'}</h2>
+                                        <p class="text-gray-600 text-sm">${data.message || "Let us know if you can join the celebration"}</p>
+                                        ${data.deadline ? `
+                                            <div class="mt-4 text-xs text-gray-500">
+                                                Please respond by ${new Date(data.deadline).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <button class="${buttonSizeClass} ${getButtonClasses()} w-full rounded-lg font-semibold transition" style="${getButtonStyles()}">
+                                        Confirm Attendance
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Bold Layout - Large CTA
+                    if (layout === 'bold') {
+                        return `
+                            <div class="py-16 px-6" style="background: linear-gradient(to bottom, ${bg}, ${buttonColor}10)">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="inline-block p-6 rounded-full mb-6 shadow-xl" style="background: ${buttonColor}">
+                                        <div class="text-6xl">✉️</div>
+                                    </div>
+                                    <h2 class="text-5xl font-black mb-6" style="color: ${buttonColor}">${data.title || 'RSVP NOW'}</h2>
+                                    <p class="text-xl text-gray-700 mb-8 font-medium">${data.message || "Join us for the celebration"}</p>
+                                    ${data.deadline ? `
+                                        <div class="mb-8 inline-block px-6 py-3 rounded-full shadow-md" style="background: ${buttonColor}20">
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-2xl">⏰</span>
+                                                <div class="text-left">
+                                                    <div class="text-xs font-bold uppercase tracking-wide" style="color: ${buttonColor}">Deadline</div>
+                                                    <div class="text-sm font-semibold">${new Date(data.deadline).toLocaleDateString('en-US', {month: 'long', day: 'numeric'})}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                    <div>
+                                        <button class="px-16 py-5 text-2xl ${getButtonClasses()} rounded-full font-black transition shadow-2xl hover:scale-105 transform" style="${getButtonStyles()}">
+                                            YES, I'M COMING! →
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Modern Layout - Gradient Box
+                    if (layout === 'modern') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="rounded-3xl overflow-hidden shadow-2xl">
+                                        <!-- Gradient Header -->
+                                        <div class="p-8 text-center text-white" style="background: linear-gradient(135deg, ${buttonColor}, ${buttonColor}dd)">
+                                            <div class="text-5xl mb-4">✉️</div>
+                                            <h2 class="text-3xl font-bold mb-2">${data.title || 'Please RSVP'}</h2>
+                                            ${data.deadline ? `
+                                                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mt-3" style="background: rgba(255,255,255,0.2)">
+                                                    <span>⏰</span>
+                                                    <span>Deadline: ${new Date(data.deadline).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}</span>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                        <!-- Content Area -->
+                                        <div class="p-8 bg-white">
+                                            <p class="text-gray-700 text-center mb-6 leading-relaxed">${data.message || "Let us know if you can join the celebration"}</p>
+                                            <div class="flex gap-3">
+                                                <button class="flex-1 px-6 py-4 rounded-xl font-bold transition shadow-md hover:shadow-lg" style="background: ${buttonColor}; color: white">
+                                                    ✓ Attending
+                                                </button>
+                                                <button class="flex-1 px-6 py-4 rounded-xl font-bold transition border-2 hover:bg-gray-50" style="border-color: #e5e7eb; color: #6b7280">
+                                                    ✗ Not Attending
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     return '';
                 }
 
