@@ -16,7 +16,13 @@
             'quote',
             'futureWishes',
             'celebration',
-            'signature'
+            'signature',
+            'memories',
+            'teamMessages',
+            'successTimeline',
+            'advice',
+            'video',
+            'gallery'
         ];
 
         const loadedComponents = Object.keys(window.sectionComponents || {});
