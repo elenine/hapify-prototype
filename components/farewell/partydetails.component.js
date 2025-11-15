@@ -38,6 +38,12 @@ window.sectionComponents.partydetails = {
                                 <option value="elegant">Elegant - Centered Display</option>
                                 <option value="minimal">Minimal - Clean Lines</option>
                                 <option value="bold">Bold - Large Icons</option>
+                                <option value="ticket">Ticket - Event Pass Style</option>
+                                <option value="calendar">Calendar - Date Block</option>
+                                <option value="infographic">Infographic - Visual Stats</option>
+                                <option value="postcard">Postcard - Invitation Card</option>
+                                <option value="metro">Metro - Transit Style</option>
+                                <option value="newspaper">Newspaper - Classified Ad</option>
                             </select>
                         </div>
                         <div>
@@ -480,6 +486,300 @@ window.sectionComponents.partydetails = {
                                                 </div>
                                             </div>
                                         ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Ticket Layout - Event Pass Style
+                    if (layout === 'ticket') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="bg-white ${roundedClass} shadow-2xl overflow-hidden" style="border: 2px dashed ${accentColor}">
+                                        <div class="p-2" style="background: linear-gradient(90deg, ${accentColor}, ${accentColor}90);"></div>
+                                        <div class="p-8">
+                                            <div class="text-center mb-8">
+                                                <div class="text-xs font-bold tracking-widest mb-2" style="color: ${accentColor}">ADMIT ONE</div>
+                                                <h2 class="text-3xl font-black uppercase" style="color: ${accentColor}">Farewell Party</h2>
+                                            </div>
+                                            <div class="grid grid-cols-2 gap-6">
+                                                ${data.date ? `
+                                                    <div class="text-center p-4 ${roundedClass}" style="background: ${accentColor}10">
+                                                        <div class="text-3xl mb-2">📅</div>
+                                                        <div class="text-xs uppercase tracking-wide mb-1 opacity-60">Date</div>
+                                                        <div class="font-bold">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.time ? `
+                                                    <div class="text-center p-4 ${roundedClass}" style="background: ${accentColor}10">
+                                                        <div class="text-3xl mb-2">🕐</div>
+                                                        <div class="text-xs uppercase tracking-wide mb-1 opacity-60">Time</div>
+                                                        <div class="font-bold">${data.time}</div>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                            ${data.venue ? `
+                                                <div class="mt-6 p-4 border-t-2 border-dashed" style="border-color: ${accentColor}30">
+                                                    <div class="text-center">
+                                                        <div class="text-xs uppercase tracking-wide mb-1 opacity-60">Venue</div>
+                                                        <div class="font-bold text-lg">${data.venue}</div>
+                                                        ${data.address ? `<div class="text-sm mt-2 opacity-70">${data.address}</div>` : ''}
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                        <div class="h-12 relative overflow-hidden" style="background: ${accentColor}">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <div class="text-xs font-bold tracking-widest text-white opacity-75">EVENT PASS • NON-TRANSFERABLE</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Calendar Layout - Date Block
+                    if (layout === 'calendar') {
+                        const dateObj = data.date ? new Date(data.date) : new Date();
+                        const month = dateObj.toLocaleDateString('en-US', {month: 'short'}).toUpperCase();
+                        const day = dateObj.getDate();
+                        const year = dateObj.getFullYear();
+
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="bg-white ${roundedClass} shadow-2xl overflow-hidden">
+                                        <div class="text-center p-4" style="background: ${accentColor}">
+                                            <div class="text-xs font-bold tracking-wider text-white opacity-90">${month}</div>
+                                        </div>
+                                        <div class="text-center p-8" style="background: white; border-left: 4px solid ${accentColor}; border-right: 4px solid ${accentColor}">
+                                            <div class="text-7xl font-black mb-2" style="color: ${accentColor}">${day}</div>
+                                            <div class="text-2xl font-bold mb-6">${year}</div>
+                                            ${data.time ? `
+                                                <div class="flex items-center justify-center gap-2 mb-4">
+                                                    <div class="text-2xl">🕐</div>
+                                                    <div class="font-bold text-xl">${data.time}</div>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                        ${data.venue || data.address ? `
+                                            <div class="p-6 border-t-2" style="border-color: ${accentColor}20">
+                                                ${data.venue ? `
+                                                    <div class="flex items-center gap-3 mb-2">
+                                                        <div class="text-xl">🏛️</div>
+                                                        <div class="font-bold">${data.venue}</div>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.address ? `
+                                                    <div class="flex items-start gap-3">
+                                                        <div class="text-xl">📍</div>
+                                                        <div class="text-sm opacity-70">${data.address}</div>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Infographic Layout - Visual Stats
+                    if (layout === 'infographic') {
+                        return `
+                            <div class="py-12 px-6" style="background: linear-gradient(135deg, ${bg}, ${accentColor}05)">
+                                <div class="max-w-3xl mx-auto">
+                                    <h2 class="text-3xl font-black text-center mb-12 uppercase tracking-wide" style="color: ${accentColor}">Event Information</h2>
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                        ${data.date ? `
+                                            <div class="relative">
+                                                <div class="absolute inset-0 ${roundedClass}" style="background: ${accentColor}; opacity: 0.1;"></div>
+                                                <div class="relative p-6 text-center">
+                                                    <div class="w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center text-2xl" style="background: ${accentColor}; color: white;">📅</div>
+                                                    <div class="text-xs uppercase tracking-wide mb-2 opacity-60">Date</div>
+                                                    <div class="font-bold text-sm leading-tight">${new Date(data.date).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.time ? `
+                                            <div class="relative">
+                                                <div class="absolute inset-0 ${roundedClass}" style="background: ${accentColor}; opacity: 0.1;"></div>
+                                                <div class="relative p-6 text-center">
+                                                    <div class="w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center text-2xl" style="background: ${accentColor}; color: white;">🕐</div>
+                                                    <div class="text-xs uppercase tracking-wide mb-2 opacity-60">Time</div>
+                                                    <div class="font-bold text-sm">${data.time}</div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.venue ? `
+                                            <div class="relative">
+                                                <div class="absolute inset-0 ${roundedClass}" style="background: ${accentColor}; opacity: 0.1;"></div>
+                                                <div class="relative p-6 text-center">
+                                                    <div class="w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center text-2xl" style="background: ${accentColor}; color: white;">🏛️</div>
+                                                    <div class="text-xs uppercase tracking-wide mb-2 opacity-60">Venue</div>
+                                                    <div class="font-bold text-sm leading-tight">${data.venue}</div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.address ? `
+                                            <div class="relative">
+                                                <div class="absolute inset-0 ${roundedClass}" style="background: ${accentColor}; opacity: 0.1;"></div>
+                                                <div class="relative p-6 text-center">
+                                                    <div class="w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center text-2xl" style="background: ${accentColor}; color: white;">📍</div>
+                                                    <div class="text-xs uppercase tracking-wide mb-2 opacity-60">Location</div>
+                                                    <div class="font-bold text-xs leading-tight">${data.address}</div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Postcard Layout - Invitation Card
+                    if (layout === 'postcard') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white ${roundedClass} shadow-2xl overflow-hidden transform rotate-1 hover:rotate-0 transition-transform">
+                                        <div class="h-4" style="background: repeating-linear-gradient(90deg, ${accentColor} 0px, ${accentColor} 10px, white 10px, white 20px);"></div>
+                                        <div class="p-8">
+                                            <div class="text-center mb-6">
+                                                <div class="text-5xl mb-3">🎉</div>
+                                                <div class="text-xs uppercase tracking-widest mb-2" style="color: ${accentColor}">You're Invited To</div>
+                                                <h2 class="text-2xl font-bold">A Farewell Celebration</h2>
+                                            </div>
+                                            <div class="space-y-4">
+                                                ${data.date ? `
+                                                    <div class="flex items-center gap-3 pb-3 border-b" style="border-color: ${accentColor}20">
+                                                        <div class="text-2xl">📅</div>
+                                                        <div>
+                                                            <div class="text-xs opacity-60">When</div>
+                                                            <div class="font-semibold">${new Date(data.date).toLocaleDateString('en-US', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.time ? `
+                                                    <div class="flex items-center gap-3 pb-3 border-b" style="border-color: ${accentColor}20">
+                                                        <div class="text-2xl">🕐</div>
+                                                        <div>
+                                                            <div class="text-xs opacity-60">Time</div>
+                                                            <div class="font-semibold">${data.time}</div>
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.venue ? `
+                                                    <div class="flex items-center gap-3 pb-3 border-b" style="border-color: ${accentColor}20">
+                                                        <div class="text-2xl">🏛️</div>
+                                                        <div>
+                                                            <div class="text-xs opacity-60">Where</div>
+                                                            <div class="font-semibold">${data.venue}</div>
+                                                            ${data.address ? `<div class="text-xs mt-1 opacity-70">${data.address}</div>` : ''}
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                        <div class="p-4 text-center text-xs" style="background: ${accentColor}10">
+                                            <div class="font-semibold" style="color: ${accentColor}">We hope to see you there!</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Metro Layout - Transit Style
+                    if (layout === 'metro') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="bg-white ${roundedClass} shadow-xl p-6" style="border: 3px solid ${accentColor}">
+                                        <div class="flex items-center gap-3 mb-6">
+                                            <div class="w-12 h-12 rounded-full flex items-center justify-center font-black text-xl text-white" style="background: ${accentColor}">🎉</div>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-wider opacity-60">Destination</div>
+                                                <div class="font-black text-lg uppercase">Farewell Party</div>
+                                            </div>
+                                        </div>
+                                        <div class="relative">
+                                            <div class="absolute left-6 top-0 bottom-0 w-1" style="background: ${accentColor}30"></div>
+                                            <div class="space-y-6 relative">
+                                                ${data.date ? `
+                                                    <div class="flex items-start gap-4">
+                                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white z-10" style="background: ${accentColor}">1</div>
+                                                        <div class="flex-1 pt-2">
+                                                            <div class="text-xs uppercase tracking-wide mb-1 opacity-60">Date</div>
+                                                            <div class="font-bold">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.time ? `
+                                                    <div class="flex items-start gap-4">
+                                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white z-10" style="background: ${accentColor}">2</div>
+                                                        <div class="flex-1 pt-2">
+                                                            <div class="text-xs uppercase tracking-wide mb-1 opacity-60">Time</div>
+                                                            <div class="font-bold">${data.time}</div>
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                                ${data.venue ? `
+                                                    <div class="flex items-start gap-4">
+                                                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold text-white z-10" style="background: ${accentColor}">3</div>
+                                                        <div class="flex-1 pt-2">
+                                                            <div class="text-xs uppercase tracking-wide mb-1 opacity-60">Station</div>
+                                                            <div class="font-bold">${data.venue}</div>
+                                                            ${data.address ? `<div class="text-xs mt-1 opacity-60">${data.address}</div>` : ''}
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Newspaper Layout - Classified Ad
+                    if (layout === 'newspaper') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}; font-family: 'Georgia', serif;">
+                                <div class="max-w-md mx-auto">
+                                    <div class="bg-white p-6 ${roundedClass} shadow-lg" style="border: 4px double ${accentColor}">
+                                        <div class="text-center border-b-2 pb-4 mb-4" style="border-color: ${accentColor}">
+                                            <div class="text-xs uppercase tracking-widest mb-2 opacity-60">Public Notice</div>
+                                            <h2 class="text-2xl font-black uppercase" style="letter-spacing: 0.1em; color: ${accentColor}">Farewell Event</h2>
+                                        </div>
+                                        <div class="space-y-3 text-sm">
+                                            ${data.date ? `
+                                                <div>
+                                                    <span class="font-bold">DATE:</span> ${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}
+                                                </div>
+                                            ` : ''}
+                                            ${data.time ? `
+                                                <div>
+                                                    <span class="font-bold">TIME:</span> ${data.time}
+                                                </div>
+                                            ` : ''}
+                                            ${data.venue ? `
+                                                <div>
+                                                    <span class="font-bold">LOCATION:</span> ${data.venue}
+                                                </div>
+                                            ` : ''}
+                                            ${data.address ? `
+                                                <div>
+                                                    <span class="font-bold">ADDRESS:</span> ${data.address}
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                        <div class="mt-4 pt-4 border-t" style="border-color: ${accentColor}">
+                                            <div class="text-center text-xs italic">All are cordially invited to attend</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
