@@ -27,6 +27,10 @@ window.sectionComponents.story = {
                     <option value="timeline">Timeline Story</option>
                     <option value="quote">Elegant Quote</option>
                     <option value="card">Card with Border</option>
+                    <option value="letter">Love Letter</option>
+                    <option value="polaroid-story">Polaroid Memory</option>
+                    <option value="chapter">Chapter Book</option>
+                    <option value="scroll">Decorative Scroll</option>
                 </select>
             </div>
             <div>
@@ -106,13 +110,100 @@ window.sectionComponents.story = {
                     </div>
                 `;
 
+            case 'letter':
+                return `
+                    <div class="py-16 px-6" style="background: linear-gradient(to bottom, ${bgColor}, ${accentColor}10);">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="bg-white rounded-lg shadow-2xl p-10 transform -rotate-1 hover:rotate-0 transition-transform" style="background-image: linear-gradient(#f9fafb 1px, transparent 1px); background-size: 100% 30px; background-position: 0 10px;">
+                                <div class="mb-6 flex items-center gap-3">
+                                    <div class="text-4xl" style="color: ${accentColor};">💌</div>
+                                    <h2 class="text-3xl font-handwriting" style="color: ${accentColor};">${title}</h2>
+                                </div>
+                                <p class="text-gray-700 leading-loose text-lg font-serif italic mb-8">${story}</p>
+                                <div class="text-right text-3xl" style="color: ${accentColor};">💕</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'polaroid-story':
+                return `
+                    <div class="py-16 px-6" style="background: ${bgColor}">
+                        <div class="max-w-xl mx-auto">
+                            <div class="bg-white p-5 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform">
+                                <div class="bg-gradient-to-br from-purple-100 to-pink-100 h-64 flex items-center justify-center mb-4">
+                                    <div class="text-center">
+                                        <div class="text-7xl mb-4">💕</div>
+                                        <h2 class="text-2xl font-bold" style="color: ${accentColor};">${title}</h2>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <p class="text-gray-700 leading-relaxed font-handwriting">${story}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'chapter':
+                return `
+                    <div class="py-16 px-6" style="background: ${bgColor}">
+                        <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl p-12">
+                            <div class="text-center mb-8">
+                                <div class="inline-block">
+                                    <div class="text-sm uppercase tracking-[0.3em] text-gray-400 mb-2">Chapter One</div>
+                                    <div class="h-px w-full" style="background: ${accentColor}30;"></div>
+                                    <h2 class="text-4xl font-serif font-bold mt-4 mb-2" style="color: ${accentColor};">${title}</h2>
+                                    <div class="h-px w-full" style="background: ${accentColor}30;"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="text-8xl font-serif leading-none" style="color: ${accentColor}30; margin-top: -10px;">"</div>
+                                <p class="text-gray-700 leading-relaxed text-lg font-serif flex-1 pt-4">${story}</p>
+                                <div class="text-8xl font-serif leading-none self-end" style="color: ${accentColor}30; margin-bottom: -30px;">"</div>
+                            </div>
+                            <div class="text-center mt-8">
+                                <div class="inline-block text-4xl" style="color: ${accentColor};">💕</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'scroll':
+                return `
+                    <div class="py-16 px-6" style="background: ${bgColor}">
+                        <div class="max-w-2xl mx-auto">
+                            <div class="relative bg-amber-50 rounded-3xl shadow-2xl p-10" style="border: 4px solid ${accentColor}30;">
+                                <!-- Decorative corners -->
+                                <div class="absolute top-4 left-4 w-12 h-12 border-t-4 border-l-4" style="border-color: ${accentColor}40;"></div>
+                                <div class="absolute top-4 right-4 w-12 h-12 border-t-4 border-r-4" style="border-color: ${accentColor}40;"></div>
+                                <div class="absolute bottom-4 left-4 w-12 h-12 border-b-4 border-l-4" style="border-color: ${accentColor}40;"></div>
+                                <div class="absolute bottom-4 right-4 w-12 h-12 border-b-4 border-r-4" style="border-color: ${accentColor}40;"></div>
+
+                                <div class="text-center mb-8">
+                                    <div class="text-5xl mb-3">✨</div>
+                                    <h2 class="text-3xl font-serif font-bold" style="color: ${accentColor};">${title}</h2>
+                                    <div class="flex items-center justify-center gap-2 mt-3">
+                                        <div class="h-px w-12" style="background: ${accentColor};"></div>
+                                        <span style="color: ${accentColor};">💕</span>
+                                        <div class="h-px w-12" style="background: ${accentColor};"></div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed text-center font-serif">${story}</p>
+                                <div class="text-center mt-6 text-3xl">✨</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
             case 'centered':
             default:
                 return `
                     <div class="py-12 px-6" style="background: ${bgColor}">
-                        <div class="max-w-md mx-auto text-center">
-                            <h2 class="text-2xl font-bold mb-6">${title}</h2>
-                            <p class="text-gray-600 leading-relaxed">${story}</p>
+                        <div class="max-w-2xl mx-auto text-center bg-white p-8 rounded-xl shadow-lg">
+                            <div class="text-4xl mb-4" style="color: ${accentColor};">💕</div>
+                            <h2 class="text-3xl font-bold mb-6" style="color: ${accentColor};">${title}</h2>
+                            <p class="text-gray-600 leading-relaxed text-lg">${story}</p>
                         </div>
                     </div>
                 `;
