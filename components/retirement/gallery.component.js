@@ -35,6 +35,10 @@ window.sectionComponents.gallery = {
                     <option value="carousel">Carousel View</option>
                     <option value="polaroid">Polaroid Style</option>
                     <option value="collage">Creative Collage</option>
+                    <option value="filmstrip">Film Strip</option>
+                    <option value="scattered">Scattered Photos</option>
+                    <option value="showcase">Featured Showcase</option>
+                    <option value="timeline">Timeline Gallery</option>
                 </select>
             </div>
             <div>
