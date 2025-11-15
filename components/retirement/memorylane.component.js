@@ -27,6 +27,10 @@ window.sectionComponents.memorylane = {
                     <option value="bubbles">Speech Bubbles</option>
                     <option value="scrapbook">Scrapbook Style</option>
                     <option value="minimal">Minimal List</option>
+                    <option value="polaroid">Polaroid Grid</option>
+                    <option value="notebook">Notebook Pages</option>
+                    <option value="comic">Comic Panels</option>
+                    <option value="gallery">Gallery Wall</option>
                 </select>
             </div>
             <div>

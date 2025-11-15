@@ -28,6 +28,10 @@ window.sectionComponents.thankyou = {
                     <option value="warm">Warm & Personal</option>
                     <option value="minimal">Minimal Modern</option>
                     <option value="framed">Framed Card</option>
+                    <option value="handwritten">Handwritten Note</option>
+                    <option value="signature">Signature Style</option>
+                    <option value="banner">Banner Message</option>
+                    <option value="quote">Quotation Style</option>
                 </select>
             </div>
             <div>

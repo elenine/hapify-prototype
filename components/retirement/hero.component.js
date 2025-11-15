@@ -46,6 +46,14 @@ window.sectionComponents.hero = {
                     <option value="split">Split Design</option>
                     <option value="vintage">Vintage Classic</option>
                     <option value="confetti">Confetti Party</option>
+                    <option value="waves">Modern Waves</option>
+                    <option value="geometric">Geometric Pattern</option>
+                    <option value="ribbon">Ribbon Banner</option>
+                    <option value="polaroid">Polaroid Frame</option>
+                    <option value="floating">Floating Card</option>
+                    <option value="diagonal">Diagonal Split</option>
+                    <option value="framed">Framed Portrait</option>
+                    <option value="spotlight">Spotlight Focus</option>
                 </select>
             </div>
             <div>
@@ -291,6 +299,164 @@ window.sectionComponents.hero = {
                             <h1 class="text-4xl font-bold mb-2">${data.name || "Retiree Name"}</h1>
                             <p class="text-xl font-semibold mb-2">is retiring!</p>
                             ${data.position ? `<p class="text-lg opacity-90">${data.position}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'waves':
+                return `
+                    <div class="relative py-20 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor};">
+                        ${generateBanner(bannerMode)}
+                        <div class="absolute inset-0 z-0">
+                            <svg class="absolute bottom-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height: 180px; opacity: 0.3;">
+                                <path fill="${accentColor}" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                            </svg>
+                            <svg class="absolute bottom-0 w-full" viewBox="0 0 1440 320" preserveAspectRatio="none" style="height: 150px; opacity: 0.2;">
+                                <path fill="${textColor}" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                            </svg>
+                        </div>
+                        <div class="relative text-center z-10">
+                            ${data.image ? `<img src="${data.image}" class="w-36 h-36 rounded-full mx-auto mb-6 object-cover border-4 shadow-xl" style="border-color: ${accentColor};">` : '<div class="text-7xl mb-6">🌴</div>'}
+                            <h1 class="text-4xl font-bold mb-3">${data.name || "Retiree Name"}</h1>
+                            <div class="inline-block px-6 py-2 rounded-full mb-3" style="background: ${accentColor}; color: ${bgColor};">
+                                <span class="text-sm font-bold tracking-wide">HAPPY RETIREMENT</span>
+                            </div>
+                            ${data.position ? `<p class="text-lg opacity-90 mt-2">${data.position}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'geometric':
+                return `
+                    <div class="relative py-20 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor};">
+                        ${generateBanner(bannerMode)}
+                        <div class="absolute inset-0 opacity-10 z-0">
+                            <div class="absolute top-0 left-0 w-32 h-32" style="background: ${accentColor}; clip-path: polygon(0 0, 100% 0, 0 100%);"></div>
+                            <div class="absolute top-0 right-0 w-40 h-40" style="background: ${textColor}; clip-path: polygon(100% 0, 100% 100%, 0 0);"></div>
+                            <div class="absolute bottom-0 left-0 w-36 h-36 rounded-full" style="background: ${accentColor}; transform: translate(-50%, 50%);"></div>
+                            <div class="absolute bottom-0 right-0 w-48 h-48" style="background: ${textColor}; clip-path: polygon(100% 100%, 0 100%, 100% 0);"></div>
+                            <div class="absolute top-1/2 left-1/2 w-24 h-24 -translate-x-1/2 -translate-y-1/2 rotate-45" style="background: ${accentColor};"></div>
+                        </div>
+                        <div class="relative text-center z-10">
+                            ${data.image ? `<img src="${data.image}" class="w-32 h-32 mx-auto mb-6 object-cover shadow-2xl" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);">` : '<div class="text-7xl mb-6">🌴</div>'}
+                            <div class="mb-4 inline-block px-6 py-2" style="background: ${accentColor}; clip-path: polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%);">
+                                <span class="text-xs font-bold tracking-widest">RETIREMENT</span>
+                            </div>
+                            <h1 class="text-3xl font-bold mb-2">${data.name || "Retiree Name"}</h1>
+                            ${data.position ? `<p class="text-base opacity-90">${data.position}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbon':
+                return `
+                    <div class="relative py-20 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor};">
+                        ${generateBanner(bannerMode)}
+                        <div class="relative text-center z-10">
+                            ${data.image ? `<img src="${data.image}" class="w-36 h-36 rounded-full mx-auto mb-8 object-cover border-4 border-white shadow-xl">` : '<div class="text-7xl mb-8">🌴</div>'}
+                            <div class="relative inline-block mb-6">
+                                <div class="relative px-12 py-3" style="background: ${accentColor};">
+                                    <div class="absolute left-0 top-0 bottom-0 w-4" style="background: ${accentColor}; transform: translateX(-100%) skewY(-10deg); transform-origin: bottom right;"></div>
+                                    <div class="absolute right-0 top-0 bottom-0 w-4" style="background: ${accentColor}; transform: translateX(100%) skewY(10deg); transform-origin: bottom left;"></div>
+                                    <span class="text-sm font-bold tracking-wider" style="color: ${bgColor};">★ HAPPY RETIREMENT ★</span>
+                                </div>
+                            </div>
+                            <h1 class="text-3xl font-bold mb-2">${data.name || "Retiree Name"}</h1>
+                            ${data.position ? `<p class="text-lg opacity-90">${data.position}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'polaroid':
+                return `
+                    <div class="relative py-12 px-6" style="background: linear-gradient(135deg, ${bgColor}20 0%, ${bgColor}40 100%);">
+                        ${generateBanner(bannerMode)}
+                        <div class="max-w-sm mx-auto relative z-10">
+                            <div class="bg-white p-4 shadow-2xl" style="transform: rotate(-2deg);">
+                                ${data.image ? `<img src="${data.image}" class="w-full aspect-square object-cover mb-4">` : '<div class="w-full aspect-square flex items-center justify-center text-8xl mb-4" style="background: #f3f4f6;">🌴</div>'}
+                                <div class="text-center py-4">
+                                    <h1 class="text-2xl font-bold mb-1" style="color: ${bgColor};">${data.name || "Retiree Name"}</h1>
+                                    ${data.position ? `<p class="text-sm text-gray-600">${data.position}</p>` : ''}
+                                    <div class="mt-3 inline-block px-4 py-1 rounded-full text-xs font-semibold" style="background: ${accentColor}; color: white;">
+                                        Happy Retirement! 🌴
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'floating':
+                return `
+                    <div class="relative py-16 px-6" style="background: linear-gradient(135deg, ${bgColor} 0%, ${bgSecondary} 100%);">
+                        ${generateBanner(bannerMode)}
+                        <div class="max-w-sm mx-auto relative z-10">
+                            <div class="bg-white rounded-3xl shadow-2xl p-8 text-center" style="transform: translateY(-10px);">
+                                ${data.image ? `<img src="${data.image}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 shadow-lg" style="border-color: ${accentColor}; margin-top: -80px;">` : '<div class="text-6xl mb-4" style="margin-top: -60px;">🌴</div>'}
+                                <div class="inline-block px-6 py-2 rounded-full mb-4" style="background: ${bgColor}20; border: 2px solid ${bgColor};">
+                                    <span class="text-xs font-bold tracking-wider" style="color: ${bgColor};">CELEBRATING</span>
+                                </div>
+                                <h1 class="text-3xl font-bold mb-2" style="color: #1f2937;">${data.name || "Retiree Name"}</h1>
+                                ${data.position ? `<p class="text-base text-gray-600 mb-4">${data.position}</p>` : ''}
+                                <div class="pt-4 border-t border-gray-200">
+                                    <p class="text-sm font-medium" style="color: ${bgColor};">✨ Happy Retirement ✨</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'diagonal':
+                return `
+                    <div class="relative overflow-hidden" style="min-height: 400px;">
+                        ${generateBanner(bannerMode)}
+                        <div class="absolute inset-0" style="background: linear-gradient(135deg, ${bgColor} 0%, ${bgColor} 60%, ${accentColor} 60%, ${accentColor} 100%);"></div>
+                        <div class="relative z-10 py-20 px-6 text-center" style="color: ${textColor};">
+                            ${data.image ? `<img src="${data.image}" class="w-36 h-36 rounded-2xl mx-auto mb-6 object-cover border-4 border-white shadow-2xl">` : '<div class="text-7xl mb-6">🌴</div>'}
+                            <h1 class="text-4xl font-bold mb-3">${data.name || "Retiree Name"}</h1>
+                            <div class="inline-block px-6 py-2 rounded-lg mb-2" style="background: ${textColor}20;">
+                                <span class="text-sm font-bold tracking-wide">RETIREMENT CELEBRATION</span>
+                            </div>
+                            ${data.position ? `<p class="text-lg opacity-90 mt-2">${data.position}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'framed':
+                return `
+                    <div class="relative py-16 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        ${generateBanner(bannerMode)}
+                        <div class="max-w-sm mx-auto relative z-10">
+                            <div class="border-8 p-8 text-center" style="border-color: ${accentColor}; background: ${bgColor};">
+                                <div class="border-2 border-dashed p-6" style="border-color: ${accentColor};">
+                                    ${data.image ? `<img src="${data.image}" class="w-32 h-32 rounded-lg mx-auto mb-6 object-cover border-4 border-white shadow-lg">` : '<div class="text-6xl mb-6">🌴</div>'}
+                                    <h1 class="text-3xl font-bold mb-3" style="font-family: serif;">${data.name || "Retiree Name"}</h1>
+                                    <div class="w-24 h-1 mx-auto mb-3" style="background: ${accentColor};"></div>
+                                    <p class="text-xs uppercase tracking-widest mb-2">Celebrating</p>
+                                    <p class="text-lg font-semibold">A Remarkable Career</p>
+                                    ${data.position ? `<p class="text-sm mt-3 opacity-90">${data.position}</p>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'spotlight':
+                return `
+                    <div class="relative py-20 px-6 overflow-hidden" style="background: ${bgColor}; color: ${textColor};">
+                        ${generateBanner(bannerMode)}
+                        <div class="absolute inset-0 z-0">
+                            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full" style="background: radial-gradient(circle, ${accentColor}40 0%, transparent 70%);"></div>
+                        </div>
+                        <div class="relative text-center z-10">
+                            ${data.image ? `<img src="${data.image}" class="w-40 h-40 rounded-full mx-auto mb-6 object-cover border-4 shadow-2xl" style="border-color: ${accentColor};">` : '<div class="text-8xl mb-6">🌴</div>'}
+                            <div class="inline-block mb-4">
+                                <div class="text-xs tracking-widest mb-2" style="color: ${accentColor};">★ ★ ★</div>
+                                <h1 class="text-4xl font-bold mb-2">${data.name || "Retiree Name"}</h1>
+                                <div class="text-xs tracking-widest mt-2" style="color: ${accentColor};">★ ★ ★</div>
+                            </div>
+                            <p class="text-xl font-semibold mb-2">Retirement Celebration</p>
+                            ${data.position ? `<p class="text-base opacity-90">${data.position}</p>` : ''}
                         </div>
                     </div>
                 `;

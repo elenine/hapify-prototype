@@ -31,6 +31,10 @@ window.sectionComponents.rsvp = {
                     <option value="gradient">Gradient Background</option>
                     <option value="form">Form Style</option>
                     <option value="elegant">Elegant Classic</option>
+                    <option value="modern">Modern Minimal</option>
+                    <option value="interactive">Interactive Buttons</option>
+                    <option value="invitation">Invitation Style</option>
+                    <option value="badge">Badge Design</option>
                 </select>
             </div>
             <div>

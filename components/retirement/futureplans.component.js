@@ -27,6 +27,10 @@ window.sectionComponents.futureplans = {
                     <option value="horizon">Horizon View</option>
                     <option value="boxed">Boxed Design</option>
                     <option value="quote">Quote Style</option>
+                    <option value="journey">Journey Map</option>
+                    <option value="vision">Vision Board</option>
+                    <option value="postcard">Postcard Style</option>
+                    <option value="dream">Dream Cloud</option>
                 </select>
             </div>
             <div>

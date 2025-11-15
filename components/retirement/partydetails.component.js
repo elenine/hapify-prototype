@@ -35,6 +35,13 @@ window.sectionComponents.partydetails = {
                     <option value="minimal">Minimal List</option>
                     <option value="boxed">Boxed Design</option>
                     <option value="elegant">Elegant Classic</option>
+                    <option value="compact">Compact Single Card</option>
+                    <option value="grid">Grid Display</option>
+                    <option value="banner">Modern Banner</option>
+                    <option value="ticket">Ticket Style</option>
+                    <option value="sidebar">Sidebar Info</option>
+                    <option value="floating">Floating Info Cards</option>
+                    <option value="magazine">Magazine Layout</option>
                 </select>
             </div>
             <div>
@@ -240,6 +247,303 @@ window.sectionComponents.partydetails = {
                                     <div class="text-4xl mb-2">📍</div>
                                     <div class="text-xs uppercase tracking-widest mb-1" style="color: ${accentColor};">Address</div>
                                     <div class="text-sm">${data.address}</div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'compact':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="rounded-2xl shadow-xl overflow-hidden" style="background: ${accentColor};">
+                                <div class="p-6 text-center text-white">
+                                    <h2 class="text-2xl font-bold mb-4">Party Details</h2>
+                                    <div class="space-y-3 text-sm">
+                                        ${data.date ? `<div class="flex items-center justify-center gap-2"><span>📅</span><span>${dateFormatted}</span></div>` : ''}
+                                        ${data.time ? `<div class="flex items-center justify-center gap-2"><span>🕐</span><span>${data.time}</span></div>` : ''}
+                                        ${data.venue ? `<div class="flex items-center justify-center gap-2"><span>🏛️</span><span>${data.venue}</span></div>` : ''}
+                                        ${data.address ? `<div class="flex items-center justify-center gap-2"><span>📍</span><span>${data.address}</span></div>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'grid':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">Party Details</h2>
+                        <div class="max-w-md mx-auto">
+                            <div class="grid grid-cols-2 gap-4">
+                                ${data.date ? `
+                                <div class="p-4 rounded-xl text-center shadow-md" style="background: ${accentColor}20;">
+                                    <div class="text-3xl mb-2">📅</div>
+                                    <div class="text-xs font-bold mb-1" style="color: ${accentColor};">DATE</div>
+                                    <div class="text-xs font-medium">${dateFormatted}</div>
+                                </div>` : ''}
+                                ${data.time ? `
+                                <div class="p-4 rounded-xl text-center shadow-md" style="background: ${accentColor}20;">
+                                    <div class="text-3xl mb-2">🕐</div>
+                                    <div class="text-xs font-bold mb-1" style="color: ${accentColor};">TIME</div>
+                                    <div class="text-xs font-medium">${data.time}</div>
+                                </div>` : ''}
+                                ${data.venue ? `
+                                <div class="p-4 rounded-xl text-center shadow-md col-span-2" style="background: ${accentColor}20;">
+                                    <div class="text-3xl mb-2">🏛️</div>
+                                    <div class="text-xs font-bold mb-1" style="color: ${accentColor};">VENUE</div>
+                                    <div class="text-sm font-medium">${data.venue}</div>
+                                </div>` : ''}
+                                ${data.address ? `
+                                <div class="p-4 rounded-xl text-center shadow-md col-span-2" style="background: ${accentColor}20;">
+                                    <div class="text-3xl mb-2">📍</div>
+                                    <div class="text-xs font-bold mb-1" style="color: ${accentColor};">ADDRESS</div>
+                                    <div class="text-xs">${data.address}</div>
+                                </div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'banner':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="rounded-2xl overflow-hidden shadow-2xl" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}CC 100%);">
+                                <div class="p-8 text-white text-center">
+                                    <h2 class="text-3xl font-bold mb-6">Join Us!</h2>
+                                    <div class="space-y-4">
+                                        ${data.date ? `
+                                        <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                            <div class="text-2xl mb-1">📅</div>
+                                            <div class="font-bold text-sm">${dateFormatted}</div>
+                                        </div>` : ''}
+                                        ${data.time ? `
+                                        <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                            <div class="text-2xl mb-1">🕐</div>
+                                            <div class="font-bold text-sm">${data.time}</div>
+                                        </div>` : ''}
+                                        ${data.venue ? `
+                                        <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                            <div class="text-2xl mb-1">🏛️</div>
+                                            <div class="font-bold text-sm">${data.venue}</div>
+                                        </div>` : ''}
+                                        ${data.address ? `
+                                        <div class="bg-white bg-opacity-20 rounded-lg p-3">
+                                            <div class="text-2xl mb-1">📍</div>
+                                            <div class="text-xs">${data.address}</div>
+                                        </div>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'ticket':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="relative rounded-xl shadow-2xl overflow-hidden" style="background: white;">
+                                <div class="absolute top-0 left-0 right-0 h-2" style="background: ${accentColor};"></div>
+                                <div class="pt-6 pb-8 px-6">
+                                    <div class="text-center mb-6">
+                                        <div class="inline-block px-6 py-2 rounded-full text-white text-sm font-bold" style="background: ${accentColor};">
+                                            RETIREMENT PARTY
+                                        </div>
+                                    </div>
+                                    <div class="space-y-4">
+                                        ${data.date ? `
+                                        <div class="flex items-start gap-3 border-l-4 pl-3" style="border-color: ${accentColor};">
+                                            <span class="text-2xl">📅</span>
+                                            <div>
+                                                <div class="text-xs uppercase font-bold" style="color: ${accentColor};">Date</div>
+                                                <div class="font-medium">${dateFormatted}</div>
+                                            </div>
+                                        </div>` : ''}
+                                        ${data.time ? `
+                                        <div class="flex items-start gap-3 border-l-4 pl-3" style="border-color: ${accentColor};">
+                                            <span class="text-2xl">🕐</span>
+                                            <div>
+                                                <div class="text-xs uppercase font-bold" style="color: ${accentColor};">Time</div>
+                                                <div class="font-medium">${data.time}</div>
+                                            </div>
+                                        </div>` : ''}
+                                        ${data.venue ? `
+                                        <div class="flex items-start gap-3 border-l-4 pl-3" style="border-color: ${accentColor};">
+                                            <span class="text-2xl">🏛️</span>
+                                            <div>
+                                                <div class="text-xs uppercase font-bold" style="color: ${accentColor};">Venue</div>
+                                                <div class="font-medium">${data.venue}</div>
+                                            </div>
+                                        </div>` : ''}
+                                        ${data.address ? `
+                                        <div class="flex items-start gap-3 border-l-4 pl-3" style="border-color: ${accentColor};">
+                                            <span class="text-2xl">📍</span>
+                                            <div>
+                                                <div class="text-xs uppercase font-bold" style="color: ${accentColor};">Location</div>
+                                                <div class="text-sm">${data.address}</div>
+                                            </div>
+                                        </div>` : ''}
+                                    </div>
+                                </div>
+                                <div class="border-t-2 border-dashed py-3 px-6 text-center text-xs" style="border-color: ${accentColor}40; background: ${accentColor}10;">
+                                    <span style="color: ${accentColor};">🎉 We Can't Wait to Celebrate! 🎉</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'sidebar':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="flex rounded-xl shadow-xl overflow-hidden">
+                                <div class="w-16 flex-shrink-0 flex flex-col items-center justify-center text-white py-6" style="background: ${accentColor};">
+                                    <div class="transform -rotate-90 whitespace-nowrap text-sm font-bold tracking-widest">
+                                        DETAILS
+                                    </div>
+                                </div>
+                                <div class="flex-1 p-6 bg-white space-y-4">
+                                    ${data.date ? `
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-xl">📅</span>
+                                            <span class="text-xs font-bold uppercase" style="color: ${accentColor};">Date</span>
+                                        </div>
+                                        <div class="font-medium text-sm pl-7">${dateFormatted}</div>
+                                    </div>` : ''}
+                                    ${data.time ? `
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-xl">🕐</span>
+                                            <span class="text-xs font-bold uppercase" style="color: ${accentColor};">Time</span>
+                                        </div>
+                                        <div class="font-medium text-sm pl-7">${data.time}</div>
+                                    </div>` : ''}
+                                    ${data.venue ? `
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-xl">🏛️</span>
+                                            <span class="text-xs font-bold uppercase" style="color: ${accentColor};">Venue</span>
+                                        </div>
+                                        <div class="font-medium text-sm pl-7">${data.venue}</div>
+                                    </div>` : ''}
+                                    ${data.address ? `
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="text-xl">📍</span>
+                                            <span class="text-xs font-bold uppercase" style="color: ${accentColor};">Address</span>
+                                        </div>
+                                        <div class="text-xs pl-7">${data.address}</div>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'floating':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">Party Details</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${data.date ? `
+                            <div class="ml-4 p-5 rounded-2xl shadow-lg transform hover:scale-105 transition" style="background: white;">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md" style="background: ${accentColor}; color: white;">
+                                        📅
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold" style="color: ${accentColor};">DATE</div>
+                                        <div class="font-semibold">${dateFormatted}</div>
+                                    </div>
+                                </div>
+                            </div>` : ''}
+                            ${data.time ? `
+                            <div class="mr-4 p-5 rounded-2xl shadow-lg transform hover:scale-105 transition" style="background: white;">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md" style="background: ${accentColor}; color: white;">
+                                        🕐
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold" style="color: ${accentColor};">TIME</div>
+                                        <div class="font-semibold">${data.time}</div>
+                                    </div>
+                                </div>
+                            </div>` : ''}
+                            ${data.venue ? `
+                            <div class="ml-4 p-5 rounded-2xl shadow-lg transform hover:scale-105 transition" style="background: white;">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md" style="background: ${accentColor}; color: white;">
+                                        🏛️
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold" style="color: ${accentColor};">VENUE</div>
+                                        <div class="font-semibold">${data.venue}</div>
+                                    </div>
+                                </div>
+                            </div>` : ''}
+                            ${data.address ? `
+                            <div class="mr-4 p-5 rounded-2xl shadow-lg transform hover:scale-105 transition" style="background: white;">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-md" style="background: ${accentColor}; color: white;">
+                                        📍
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold" style="color: ${accentColor};">ADDRESS</div>
+                                        <div class="text-sm">${data.address}</div>
+                                    </div>
+                                </div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'magazine':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="mb-6">
+                                <div class="text-4xl font-bold mb-2" style="color: ${accentColor};">PARTY</div>
+                                <div class="text-2xl font-light">Details</div>
+                                <div class="w-20 h-1 mt-2" style="background: ${accentColor};"></div>
+                            </div>
+                            <div class="space-y-6">
+                                ${data.date ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="text-4xl" style="color: ${accentColor};">📅</div>
+                                    <div class="flex-1 pt-1">
+                                        <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: ${accentColor};">When</div>
+                                        <div class="text-lg font-semibold">${dateFormatted}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.time ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="text-4xl" style="color: ${accentColor};">🕐</div>
+                                    <div class="flex-1 pt-1">
+                                        <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: ${accentColor};">Time</div>
+                                        <div class="text-lg font-semibold">${data.time}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.venue ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="text-4xl" style="color: ${accentColor};">🏛️</div>
+                                    <div class="flex-1 pt-1">
+                                        <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: ${accentColor};">Where</div>
+                                        <div class="text-lg font-semibold">${data.venue}</div>
+                                    </div>
+                                </div>` : ''}
+                                ${data.address ? `
+                                <div class="flex items-start gap-4">
+                                    <div class="text-4xl" style="color: ${accentColor};">📍</div>
+                                    <div class="flex-1 pt-1">
+                                        <div class="text-xs font-bold uppercase tracking-wider mb-1" style="color: ${accentColor};">Address</div>
+                                        <div class="text-sm leading-relaxed">${data.address}</div>
+                                    </div>
                                 </div>` : ''}
                             </div>
                         </div>
