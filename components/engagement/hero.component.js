@@ -28,6 +28,14 @@ window.sectionComponents.hero = {
                     <input type="file" class="hidden section-data" data-field="image" accept="image/*" onchange="handleImageUpload(this)">
                 </div>
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Image (Optional)</label>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-rose-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                    <div class="text-3xl mb-2">🖼️</div>
+                    <div class="text-sm text-gray-600">Click to upload banner</div>
+                    <input type="file" class="hidden section-data" data-field="bannerImage" accept="image/*" onchange="handleImageUpload(this)">
+                </div>
+            </div>
         </div>
     `,
     style: `
@@ -93,6 +101,40 @@ window.sectionComponents.hero = {
                     <option value="strong">Strong Shadow</option>
                 </select>
             </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Display Mode</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="bannerMode" onchange="updatePreview()">
+                    <option value="none">No Banner</option>
+                    <option value="background">Background</option>
+                    <option value="top">Top Banner</option>
+                    <option value="bottom">Bottom Banner</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Opacity (%)</label>
+                <input type="range" min="0" max="100" value="30" class="w-full section-style" data-style="bannerOpacity" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Overlay Color</label>
+                <input type="color" value="#000000" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bannerOverlay" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Overlay Opacity (%)</label>
+                <input type="range" min="0" max="100" value="50" class="w-full section-style" data-style="bannerOverlayOpacity" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Blur (px)</label>
+                <input type="range" min="0" max="10" value="0" class="w-full section-style" data-style="bannerBlur" oninput="updatePreview()">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Height</label>
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-style" data-style="bannerHeight" onchange="updatePreview()">
+                    <option value="small">Small (200px)</option>
+                    <option value="medium">Medium (300px)</option>
+                    <option value="large">Large (400px)</option>
+                    <option value="full">Full Height</option>
+                </select>
+            </div>
         </div>
     `,
     render: (data, style) => {
@@ -140,11 +182,57 @@ window.sectionComponents.hero = {
         const imgClass = `${imageSizes[imageSize]} ${imageShapes[imageShape]} object-cover border-4 ${shadows[shadow]}`;
         const fonts = fontSizes[fontSize];
 
+        // Banner image properties
+        const bannerImage = data.bannerImage || '';
+        const bannerMode = style.bannerMode || 'none';
+        const bannerOpacity = style.bannerOpacity || 30;
+        const bannerOverlay = style.bannerOverlay || '#000000';
+        const bannerOverlayOpacity = style.bannerOverlayOpacity || 50;
+        const bannerBlur = style.bannerBlur || 0;
+        const bannerHeight = style.bannerHeight || 'medium';
+
+        // Banner height mapping
+        const bannerHeights = {
+            small: '200px',
+            medium: '300px',
+            large: '400px',
+            full: '100%'
+        };
+
+        // Generate banner HTML based on mode
+        const generateBanner = (mode, position = '') => {
+            if (!bannerImage || mode === 'none') return '';
+
+            const opacity = bannerOpacity / 100;
+            const overlayOp = bannerOverlayOpacity / 100;
+            const blur = bannerBlur > 0 ? `blur(${bannerBlur}px)` : 'none';
+
+            if (mode === 'background') {
+                return `
+                    <div class="absolute inset-0 overflow-hidden">
+                        <img src="${bannerImage}" class="w-full h-full object-cover" style="opacity: ${opacity}; filter: ${blur};">
+                        <div class="absolute inset-0" style="background: ${bannerOverlay}; opacity: ${overlayOp};"></div>
+                    </div>
+                `;
+            } else if (mode === 'top' || mode === 'bottom') {
+                const positionClass = mode === 'top' ? 'top-0' : 'bottom-0';
+                const height = bannerHeights[bannerHeight];
+                return `
+                    <div class="absolute ${positionClass} left-0 right-0 overflow-hidden" style="height: ${height};">
+                        <img src="${bannerImage}" class="w-full h-full object-cover" style="opacity: ${opacity}; filter: ${blur};">
+                        <div class="absolute inset-0" style="background: ${bannerOverlay}; opacity: ${overlayOp};"></div>
+                    </div>
+                `;
+            }
+            return '';
+        };
+
         // Layout variations
         if (layout === 'minimal') {
             return `
-                <div class="py-20 px-6" style="background: ${bg}; color: ${text}">
-                    <div class="max-w-md mx-auto text-center space-y-6">
+                <div class="relative py-20 px-6 overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-md mx-auto text-center space-y-6">
                         ${data.image ? `<img src="${data.image}" class="${imgClass} mx-auto" style="border-color: ${accent};">` : `<div class="text-6xl">💍</div>`}
                         <div class="space-y-2">
                             <p class="${fonts.subtitle} font-light tracking-wide">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</p>
@@ -156,8 +244,9 @@ window.sectionComponents.hero = {
         } else if (layout === 'dramatic') {
             return `
                 <div class="relative py-24 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bg} 0%, ${accent} 100%); color: ${text}">
-                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, ${text} 1px, transparent 1px); background-size: 20px 20px;"></div>
-                    <div class="relative max-w-lg mx-auto text-center space-y-6">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 opacity-10 z-0" style="background-image: radial-gradient(circle, ${text} 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    <div class="relative z-10 max-w-lg mx-auto text-center space-y-6">
                         ${data.image ? `<img src="${data.image}" class="${imgClass} mx-auto ${shadows[shadow]}" style="border-color: ${text};">` : `<div class="text-7xl mb-4 animate-pulse">💍</div>`}
                         <h1 class="${fonts.title} font-black mb-4 tracking-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">We're Engaged!</h1>
                         <p class="${fonts.subtitle} font-bold">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</p>
@@ -167,11 +256,12 @@ window.sectionComponents.hero = {
             `;
         } else if (layout === 'split') {
             return `
-                <div class="grid md:grid-cols-2 min-h-[400px]">
-                    <div class="flex items-center justify-center p-8" style="background: ${bg};">
+                <div class="relative grid md:grid-cols-2 min-h-[400px] overflow-hidden">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 flex items-center justify-center p-8" style="background: ${bg};">
                         ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]}" style="border-color: ${accent};">` : `<div class="text-8xl">💍</div>`}
                     </div>
-                    <div class="flex flex-col items-center justify-center p-8 text-center" style="background: ${accent}; color: ${text}">
+                    <div class="relative z-10 flex flex-col items-center justify-center p-8 text-center" style="background: ${accent}; color: ${text}">
                         <h1 class="${fonts.title} font-bold mb-4">We're Engaged!</h1>
                         <p class="${fonts.subtitle} font-semibold mb-2">${data.partner1 || 'Sarah'}</p>
                         <p class="text-xl opacity-75">&</p>
@@ -182,8 +272,9 @@ window.sectionComponents.hero = {
             `;
         } else if (layout === 'modern') {
             return `
-                <div class="py-16 px-6" style="background: ${bg}; color: ${text}">
-                    <div class="max-w-2xl mx-auto">
+                <div class="relative py-16 px-6 overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-2xl mx-auto">
                         <div class="flex flex-col md:flex-row items-center gap-8">
                             ${data.image ? `<img src="${data.image}" class="${imgClass} flex-shrink-0 ${shadows[shadow]}" style="border-color: ${accent};">` : `<div class="text-7xl flex-shrink-0">💍</div>`}
                             <div class="text-center md:text-left">
@@ -198,7 +289,8 @@ window.sectionComponents.hero = {
         } else if (layout === 'artistic') {
             return `
                 <div class="relative py-20 px-6 overflow-hidden" style="background: ${bg}; color: ${text}">
-                    <div class="absolute inset-0 opacity-5">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 opacity-5 z-0">
                         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                             <defs>
                                 <pattern id="hearts" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
@@ -208,7 +300,7 @@ window.sectionComponents.hero = {
                             <rect width="100%" height="100%" fill="url(#hearts)"/>
                         </svg>
                     </div>
-                    <div class="relative max-w-3xl mx-auto text-center">
+                    <div class="relative z-10 max-w-3xl mx-auto text-center">
                         <div class="relative inline-block mb-8">
                             <div class="absolute -inset-4 rounded-full border-4 border-dashed opacity-30" style="border-color: ${accent}; animation: spin 20s linear infinite;"></div>
                             ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]}" style="border-color: ${accent};">` : `<div class="text-8xl">💍</div>`}
@@ -230,11 +322,12 @@ window.sectionComponents.hero = {
         } else if (layout === 'romantic') {
             return `
                 <div class="relative py-24 px-6 overflow-hidden" style="background: linear-gradient(to bottom, ${bg}, ${accent}20); color: ${text}">
-                    <div class="absolute top-10 left-10 text-6xl opacity-20 animate-pulse">🌹</div>
-                    <div class="absolute top-20 right-20 text-5xl opacity-20 animate-pulse" style="animation-delay: 1s;">🌺</div>
-                    <div class="absolute bottom-20 left-20 text-5xl opacity-20 animate-pulse" style="animation-delay: 2s;">🌷</div>
-                    <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-pulse" style="animation-delay: 3s;">🌸</div>
-                    <div class="relative max-w-2xl mx-auto text-center">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute top-10 left-10 text-6xl opacity-20 animate-pulse z-0">🌹</div>
+                    <div class="absolute top-20 right-20 text-5xl opacity-20 animate-pulse z-0" style="animation-delay: 1s;">🌺</div>
+                    <div class="absolute bottom-20 left-20 text-5xl opacity-20 animate-pulse z-0" style="animation-delay: 2s;">🌷</div>
+                    <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-pulse z-0" style="animation-delay: 3s;">🌸</div>
+                    <div class="relative z-10 max-w-2xl mx-auto text-center">
                         <div class="mb-6">
                             <div class="inline-block relative">
                                 ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]}" style="border-color: ${accent}; border-width: 6px;">` : `<div class="text-8xl">💍</div>`}
@@ -260,11 +353,12 @@ window.sectionComponents.hero = {
             `;
         } else if (layout === 'luxury') {
             return `
-                <div class="relative py-20 px-6" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #f5e6d3;">
-                    <div class="absolute inset-0 opacity-10">
+                <div class="relative py-20 px-6 overflow-hidden" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #f5e6d3;">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 opacity-10 z-0">
                         <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle, ${accent} 1px, transparent 1px); background-size: 30px 30px;"></div>
                     </div>
-                    <div class="relative max-w-2xl mx-auto text-center">
+                    <div class="relative z-10 max-w-2xl mx-auto text-center">
                         <div class="mb-8">
                             <div class="inline-block relative p-1 rounded-full" style="background: linear-gradient(135deg, #FFD700, #FFA500);">
                                 ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]} border-4 border-white">` : `<div class="text-8xl p-4">💍</div>`}
@@ -299,11 +393,14 @@ window.sectionComponents.hero = {
         } else {
             // Centered Classic (default)
             return `
-                <div class="text-center py-16 px-6" style="background: ${bg}; color: ${text}">
-                    ${data.image ? `<img src="${data.image}" class="${imgClass} mx-auto mb-6 ${shadows[shadow]}" style="border-color: ${accent};">` : `<div class="text-6xl mb-4">💍</div>`}
-                    <h1 class="${fonts.title} font-bold mb-2">We're Engaged!</h1>
-                    <p class="${fonts.subtitle}">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</p>
-                    ${data.date ? `<p class="${fonts.date} mt-3 opacity-90">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
+                <div class="relative text-center py-16 px-6 overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10">
+                        ${data.image ? `<img src="${data.image}" class="${imgClass} mx-auto mb-6 ${shadows[shadow]}" style="border-color: ${accent};">` : `<div class="text-6xl mb-4">💍</div>`}
+                        <h1 class="${fonts.title} font-bold mb-2">We're Engaged!</h1>
+                        <p class="${fonts.subtitle}">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</p>
+                        ${data.date ? `<p class="${fonts.date} mt-3 opacity-90">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
+                    </div>
                 </div>
             `;
         }
