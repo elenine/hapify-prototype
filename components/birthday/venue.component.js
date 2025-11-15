@@ -50,6 +50,10 @@ window.sectionComponents.venue = {
                     <option value="list">Simple List</option>
                     <option value="map">Map Focus</option>
                     <option value="compact">Compact</option>
+                    <option value="modern-gradient">Modern Gradient</option>
+                    <option value="elegant">Elegant Frame</option>
+                    <option value="bold">Bold Statement</option>
+                    <option value="glassmorphism">Glassmorphism</option>
                 </select>
             </div>
         </div>
@@ -115,6 +119,227 @@ window.sectionComponents.venue = {
                                 ${data.phone ? `<div class="text-gray-600 text-sm">📞 ${data.phone}</div>` : ''}
                             </div>
                             ${data.mapLink ? `<a href="${data.mapLink}" target="_blank" class="px-4 py-2 rounded-lg text-white text-sm font-semibold hover:opacity-90 whitespace-nowrap" style="background: ${accentColor}">📍 Map</a>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modern Gradient
+        if (layout === 'modern-gradient') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="bg-gradient-to-br from-pink-500 to-purple-600 rounded-2xl p-8 shadow-2xl text-white">
+                            <div class="text-center mb-6">
+                                <div class="text-5xl mb-3">📍</div>
+                                <h2 class="text-3xl font-bold">Visit Us Here</h2>
+                            </div>
+
+                            <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6 space-y-4">
+                                ${data.venueName ? `
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider opacity-90 mb-1">Venue</div>
+                                        <div class="text-2xl font-bold">${data.venueName}</div>
+                                    </div>
+                                ` : ''}
+                                ${data.address ? `
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider opacity-90 mb-1">Address</div>
+                                        <div class="text-lg">${data.address.replace(/\n/g, '<br>')}</div>
+                                    </div>
+                                ` : ''}
+                                ${data.phone ? `
+                                    <div class="flex items-center gap-2">
+                                        <span>📞</span>
+                                        <span>${data.phone}</span>
+                                    </div>
+                                ` : ''}
+                                ${data.parking ? `
+                                    <div class="pt-4 border-t border-white border-opacity-30">
+                                        <div class="text-xs uppercase tracking-wider opacity-90 mb-1">🅿️ Parking</div>
+                                        <div class="text-sm opacity-95">${data.parking}</div>
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            ${data.mapLink ? `
+                                <div class="mt-6 text-center">
+                                    <a href="${data.mapLink}" target="_blank" class="inline-block bg-white text-pink-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition shadow-lg">
+                                        Get Directions 🗺️
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Elegant Frame
+        if (layout === 'elegant') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="border-4 rounded-2xl p-8 bg-white shadow-xl" style="border-color: ${accentColor}">
+                            <div class="text-center mb-8">
+                                <div class="text-5xl mb-3">📍</div>
+                                <h2 class="text-3xl font-bold mb-2" style="color: ${accentColor}">Location</h2>
+                                <div class="w-24 h-1 mx-auto" style="background: ${accentColor}; opacity: 0.5;"></div>
+                            </div>
+
+                            <div class="space-y-6 text-center">
+                                ${data.venueName ? `
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider mb-2" style="color: ${accentColor}">Venue</div>
+                                        <div class="text-2xl font-bold text-gray-900">${data.venueName}</div>
+                                    </div>
+                                ` : ''}
+                                ${data.address ? `
+                                    <div>
+                                        <div class="text-xs uppercase tracking-wider mb-2" style="color: ${accentColor}">Address</div>
+                                        <div class="text-gray-700 leading-relaxed">${data.address.replace(/\n/g, '<br>')}</div>
+                                    </div>
+                                ` : ''}
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                                    ${data.phone ? `
+                                        <div class="p-4 rounded-lg" style="background: ${accentColor}15;">
+                                            <div class="text-2xl mb-2">📞</div>
+                                            <div class="text-sm text-gray-700">${data.phone}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.mapLink ? `
+                                        <div class="p-4 rounded-lg" style="background: ${accentColor}15;">
+                                            <div class="text-2xl mb-2">🗺️</div>
+                                            <a href="${data.mapLink}" target="_blank" class="text-sm font-semibold hover:underline" style="color: ${accentColor}">View Map</a>
+                                        </div>
+                                    ` : ''}
+                                </div>
+
+                                ${data.parking || data.directions ? `
+                                    <div class="pt-6 border-t space-y-3 text-left" style="border-color: ${accentColor}30;">
+                                        ${data.parking ? `
+                                            <div>
+                                                <div class="text-xs font-semibold uppercase tracking-wider mb-1" style="color: ${accentColor}">Parking Information</div>
+                                                <div class="text-sm text-gray-600">${data.parking}</div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.directions ? `
+                                            <div>
+                                                <div class="text-xs font-semibold uppercase tracking-wider mb-1" style="color: ${accentColor}">Directions</div>
+                                                <div class="text-sm text-gray-600">${data.directions}</div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Bold Statement
+        if (layout === 'bold') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%);">
+                    <div class="max-w-3xl mx-auto text-white text-center">
+                        <div class="text-7xl mb-4">📍</div>
+                        <h2 class="text-4xl md:text-5xl font-black mb-8 uppercase tracking-tight">Find Us Here</h2>
+
+                        ${data.venueName ? `<div class="text-3xl md:text-4xl font-bold mb-4">${data.venueName}</div>` : ''}
+                        ${data.address ? `<div class="text-xl md:text-2xl mb-8 opacity-95 leading-relaxed">${data.address.replace(/\n/g, '<br>')}</div>` : ''}
+
+                        <div class="flex flex-wrap gap-4 justify-center mb-8">
+                            ${data.phone ? `
+                                <div class="bg-white bg-opacity-20 backdrop-blur-sm px-6 py-4 rounded-xl">
+                                    <div class="text-3xl mb-1">📞</div>
+                                    <div class="text-lg font-semibold">${data.phone}</div>
+                                </div>
+                            ` : ''}
+                            ${data.parking ? `
+                                <div class="bg-white bg-opacity-20 backdrop-blur-sm px-6 py-4 rounded-xl max-w-sm">
+                                    <div class="text-3xl mb-1">🅿️</div>
+                                    <div class="text-sm font-medium">${data.parking}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+
+                        ${data.mapLink ? `
+                            <a href="${data.mapLink}" target="_blank" class="inline-block bg-white px-10 py-5 rounded-2xl font-black text-2xl hover:scale-105 transition-transform shadow-2xl" style="color: ${accentColor}">
+                                GET DIRECTIONS
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Glassmorphism
+        if (layout === 'glassmorphism') {
+            return `
+                <div class="py-16 px-6" style="background: linear-gradient(135deg, ${accentColor}20 0%, ${accentColor}10 100%);">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="bg-white bg-opacity-40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white border-opacity-50">
+                            <div class="text-center mb-6">
+                                <div class="text-6xl mb-3">📍</div>
+                                <h2 class="text-3xl font-bold text-gray-900">Venue Location</h2>
+                            </div>
+
+                            <div class="space-y-5">
+                                ${data.venueName ? `
+                                    <div class="bg-white bg-opacity-60 backdrop-blur-md rounded-2xl p-5 shadow-lg">
+                                        <div class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: ${accentColor}">Venue Name</div>
+                                        <div class="text-2xl font-bold text-gray-900">${data.venueName}</div>
+                                    </div>
+                                ` : ''}
+
+                                ${data.address ? `
+                                    <div class="bg-white bg-opacity-60 backdrop-blur-md rounded-2xl p-5 shadow-lg">
+                                        <div class="text-xs font-semibold uppercase tracking-wider mb-2" style="color: ${accentColor}">Address</div>
+                                        <div class="text-gray-800">${data.address.replace(/\n/g, '<br>')}</div>
+                                    </div>
+                                ` : ''}
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    ${data.phone ? `
+                                        <div class="bg-white bg-opacity-60 backdrop-blur-md rounded-2xl p-4 shadow-lg text-center">
+                                            <div class="text-3xl mb-2">📞</div>
+                                            <div class="text-sm font-semibold text-gray-800">${data.phone}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.mapLink ? `
+                                        <div class="bg-white bg-opacity-60 backdrop-blur-md rounded-2xl p-4 shadow-lg text-center">
+                                            <div class="text-3xl mb-2">🗺️</div>
+                                            <a href="${data.mapLink}" target="_blank" class="text-sm font-bold hover:underline" style="color: ${accentColor}">Open Map</a>
+                                        </div>
+                                    ` : ''}
+                                </div>
+
+                                ${data.parking || data.directions ? `
+                                    <div class="bg-white bg-opacity-60 backdrop-blur-md rounded-2xl p-5 shadow-lg space-y-3">
+                                        ${data.parking ? `
+                                            <div>
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="text-xl">🅿️</span>
+                                                    <span class="text-xs font-semibold uppercase tracking-wider" style="color: ${accentColor}">Parking</span>
+                                                </div>
+                                                <div class="text-sm text-gray-700">${data.parking}</div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.directions ? `
+                                            <div class="${data.parking ? 'pt-3 border-t border-gray-300' : ''}">
+                                                <div class="flex items-center gap-2 mb-2">
+                                                    <span class="text-xl">🧭</span>
+                                                    <span class="text-xs font-semibold uppercase tracking-wider" style="color: ${accentColor}">Directions</span>
+                                                </div>
+                                                <div class="text-sm text-gray-700">${data.directions}</div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
                         </div>
                     </div>
                 </div>
