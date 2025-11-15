@@ -1,15 +1,15 @@
-// Photo Component
+// Holiday Photo Component
 
 window.sectionComponents = window.sectionComponents || {};
 
 window.sectionComponents.photo = {
-    name: '📸 Photo',
+    name: '🎄 Holiday Photo',
     allowMultiple: true,
     info: `
         <div class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Photo</label>
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-pink-400 cursor-pointer" onclick="this.querySelector('input').click()">
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-emerald-400 cursor-pointer" onclick="this.querySelector('input').click()">
                     <div class="text-3xl mb-2">📸</div>
                     <div class="text-sm text-gray-600">Click to upload photo</div>
                     <input type="file" class="hidden section-data" data-field="photo" accept="image/*" onchange="handleImageUpload(this)">
@@ -17,7 +17,7 @@ window.sectionComponents.photo = {
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Caption (Optional)</label>
-                <input type="text" placeholder="A special moment..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-data" data-field="caption" oninput="updatePreview()">
+                <input type="text" placeholder="Holiday memories..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 section-data" data-field="caption" oninput="updatePreview()">
             </div>
         </div>
     `,
@@ -25,7 +25,7 @@ window.sectionComponents.photo = {
         <div class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="layout" onchange="updatePreview()">
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 section-style" data-style="layout" onchange="updatePreview()">
                     <option value="simple">Simple - Centered Photo</option>
                     <option value="framed">Framed - With Border</option>
                     <option value="polaroid">Polaroid - Instant Photo Style</option>
@@ -38,11 +38,19 @@ window.sectionComponents.photo = {
                     <option value="canvas">Canvas - Gallery Style</option>
                     <option value="stamp">Stamp - Postage Style</option>
                     <option value="torn">Torn Edge - Artistic</option>
+                    <option value="snowframe">Snow Frame - Snowy Border</option>
+                    <option value="ornamentframe">Ornament Frame - Christmas Decoration</option>
+                    <option value="giftphoto">Gift Wrap - Present Style</option>
+                    <option value="wreathframe">Wreath Frame - Holiday Circle</option>
+                    <option value="iceframe">Ice Frame - Frozen Border</option>
+                    <option value="lightsframe">Lights Frame - Holiday Lights</option>
+                    <option value="treephoto">Tree Photo - Christmas Tree Frame</option>
+                    <option value="stockingphoto">Stocking Photo - Hung on Mantel</option>
                 </select>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Photo Size</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="size" onchange="updatePreview()">
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 section-style" data-style="size" onchange="updatePreview()">
                     <option value="small">Small</option>
                     <option value="medium" selected>Medium</option>
                     <option value="large">Large</option>
@@ -51,7 +59,7 @@ window.sectionComponents.photo = {
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Photo Shape</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="shape" onchange="updatePreview()">
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 section-style" data-style="shape" onchange="updatePreview()">
                     <option value="rounded">Rounded</option>
                     <option value="circle">Circle</option>
                     <option value="square">Square</option>
@@ -67,7 +75,7 @@ window.sectionComponents.photo = {
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Filter Effect</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="filter" onchange="updatePreview()">
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 section-style" data-style="filter" onchange="updatePreview()">
                     <option value="none">None</option>
                     <option value="grayscale">Black & White</option>
                     <option value="sepia">Sepia/Vintage</option>
@@ -77,7 +85,7 @@ window.sectionComponents.photo = {
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Caption Style</label>
-                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 section-style" data-style="captionStyle" onchange="updatePreview()">
+                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 section-style" data-style="captionStyle" onchange="updatePreview()">
                     <option value="simple">Simple</option>
                     <option value="italic">Italic</option>
                     <option value="handwritten">Handwritten Style</option>
@@ -132,7 +140,7 @@ window.sectionComponents.photo = {
             return `
                 <div class="py-8 px-6" style="background: ${bgColor}">
                     <div class="${sizeClass} mx-auto text-center">
-                        <img src="${data.photo}" class="${shapeClass} w-full h-auto shadow-lg object-cover" style="${filterStyle}" alt="Birthday photo">
+                        <img src="${data.photo}" class="${shapeClass} w-full h-auto shadow-lg object-cover" style="${filterStyle}" alt="Holiday photo">
                         ${caption}
                     </div>
                 </div>
@@ -327,9 +335,200 @@ window.sectionComponents.photo = {
                 <div class="py-8 px-6" style="background: ${bgColor}">
                     <div class="${sizeClass} mx-auto text-center">
                         <div class="relative inline-block shadow-2xl" style="clip-path: polygon(0% 3%, 2% 0%, 5% 2%, 8% 0%, 12% 1%, 15% 0%, 18% 2%, 22% 0%, 25% 1%, 28% 0%, 32% 2%, 35% 0%, 38% 1%, 42% 0%, 45% 2%, 48% 0%, 52% 1%, 55% 0%, 58% 2%, 62% 0%, 65% 1%, 68% 0%, 72% 2%, 75% 0%, 78% 1%, 82% 0%, 85% 2%, 88% 0%, 92% 1%, 95% 0%, 98% 2%, 100% 0%, 100% 97%, 98% 100%, 95% 98%, 92% 100%, 88% 99%, 85% 100%, 82% 98%, 78% 100%, 75% 99%, 72% 100%, 68% 98%, 65% 100%, 62% 99%, 58% 100%, 55% 98%, 52% 100%, 48% 99%, 45% 100%, 42% 98%, 38% 100%, 35% 99%, 32% 100%, 28% 98%, 25% 100%, 22% 99%, 18% 100%, 15% 98%, 12% 100%, 8% 99%, 5% 100%, 2% 98%, 0% 100%);">
-                            <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
+                            <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
                         </div>
                         ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Snow Frame Layout - Snowy Border
+        if (layout === 'snowframe') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(to bottom, #dbeafe 0%, #eff6ff 100%);">
+                    <div class="${sizeClass} mx-auto text-center relative">
+                        <div class="absolute -inset-4 bg-white rounded-lg shadow-2xl" style="border: 8px solid #e0f2fe;">
+                            <div class="absolute -top-2 left-0 right-0 flex justify-around text-2xl text-blue-200">
+                                <span>❄️</span><span>❄️</span><span>❄️</span><span>❄️</span><span>❄️</span>
+                            </div>
+                            <div class="absolute -bottom-2 left-0 right-0 flex justify-around text-2xl text-blue-200">
+                                <span>❄️</span><span>❄️</span><span>❄️</span><span>❄️</span><span>❄️</span>
+                            </div>
+                        </div>
+                        <div class="relative p-6">
+                            <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ornament Frame Layout - Christmas Decoration
+        if (layout === 'ornamentframe') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center relative">
+                        <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-1 h-12 bg-gradient-to-b from-gray-400 to-gray-600"></div>
+                        <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full" style="background: ${globalStyles.primaryColor};"></div>
+                        <div class="relative inline-block">
+                            <div class="p-6 rounded-full shadow-2xl" style="background: linear-gradient(135deg, ${globalStyles.primaryColor}30 0%, ${globalStyles.secondaryColor}30 100%); border: 6px solid ${globalStyles.primaryColor};">
+                                <img src="${data.photo}" class="rounded-full w-full h-auto object-cover aspect-square" style="${filterStyle}" alt="Holiday photo">
+                            </div>
+                            <div class="absolute top-2 right-2 text-3xl">✨</div>
+                            <div class="absolute bottom-2 left-2 text-3xl">✨</div>
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gift Wrap Layout - Present Style
+        if (layout === 'giftphoto') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="relative bg-gradient-to-br from-red-500 to-red-700 p-6 rounded-lg shadow-2xl">
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-full bg-gradient-to-r from-yellow-400 to-yellow-500"></div>
+                            <div class="absolute top-1/2 left-0 transform -translate-y-1/2 w-full h-12 bg-gradient-to-b from-yellow-400 to-yellow-500"></div>
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                <div class="w-20 h-16 bg-gradient-to-b from-yellow-400 to-yellow-500 rounded-full" style="clip-path: ellipse(50% 50%);"></div>
+                            </div>
+                            <div class="relative z-10">
+                                <div class="bg-white p-2 rounded-lg">
+                                    <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
+                                </div>
+                            </div>
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Wreath Frame Layout - Holiday Circle
+        if (layout === 'wreathframe') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="relative inline-block">
+                            <div class="relative rounded-full p-8 shadow-2xl" style="background: #059669; border: 12px solid #047857;">
+                                <div class="absolute top-0 left-1/4 text-2xl">🔴</div>
+                                <div class="absolute top-0 right-1/4 text-2xl">🎀</div>
+                                <div class="absolute top-1/4 right-0 text-2xl">🔵</div>
+                                <div class="absolute bottom-1/4 right-0 text-2xl">🟡</div>
+                                <div class="absolute bottom-0 right-1/4 text-2xl">🔴</div>
+                                <div class="absolute bottom-0 left-1/4 text-2xl">🌟</div>
+                                <div class="absolute bottom-1/4 left-0 text-2xl">🟢</div>
+                                <div class="absolute top-1/4 left-0 text-2xl">❄️</div>
+                                <img src="${data.photo}" class="rounded-full w-full h-auto object-cover aspect-square" style="${filterStyle}; border: 6px solid white;" alt="Holiday photo">
+                            </div>
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ice Frame Layout - Frozen Border
+        if (layout === 'iceframe') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(to bottom, #0ea5e9 0%, #38bdf8 100%);">
+                    <div class="${sizeClass} mx-auto text-center relative">
+                        <div class="absolute -top-6 left-0 right-0 flex justify-around text-5xl text-cyan-100 opacity-80">
+                            <span class="transform rotate-180">💧</span>
+                            <span class="transform rotate-180">💧</span>
+                            <span class="transform rotate-180">💧</span>
+                        </div>
+                        <div class="relative p-8 bg-white bg-opacity-90 backdrop-blur-sm rounded-lg shadow-2xl" style="border: 6px solid rgba(165, 243, 252, 0.7);">
+                            <div class="absolute -top-4 left-1/4 text-3xl">❄️</div>
+                            <div class="absolute -top-4 right-1/4 text-3xl">❄️</div>
+                            <div class="absolute -bottom-4 left-1/3 text-3xl">❄️</div>
+                            <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Lights Frame Layout - Holiday Lights
+        if (layout === 'lightsframe') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center relative">
+                        <div class="absolute -top-6 left-0 right-0 flex justify-around text-3xl">
+                            <span style="color: #dc2626;">🔴</span>
+                            <span style="color: #d97706;">🟡</span>
+                            <span style="color: #3b82f6;">🔵</span>
+                            <span style="color: #059669;">🟢</span>
+                            <span style="color: #dc2626;">🔴</span>
+                        </div>
+                        <div class="absolute -top-4 left-0 right-0 h-2 rounded" style="background: linear-gradient(to right, #047857 0%, #059669 100%);"></div>
+                        <div class="relative p-6 bg-white rounded-lg shadow-2xl" style="border: 4px solid #059669;">
+                            <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
+                        </div>
+                        <div class="absolute -bottom-6 left-0 right-0 flex justify-around text-3xl">
+                            <span style="color: #3b82f6;">🔵</span>
+                            <span style="color: #dc2626;">🔴</span>
+                            <span style="color: #d97706;">🟡</span>
+                            <span style="color: #059669;">🟢</span>
+                            <span style="color: #3b82f6;">🔵</span>
+                        </div>
+                        <div class="absolute -bottom-4 left-0 right-0 h-2 rounded" style="background: linear-gradient(to right, #059669 0%, #047857 100%);"></div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Tree Photo Layout - Christmas Tree Frame
+        if (layout === 'treephoto') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(to bottom, #1e3a8a 0%, #1e40af 100%);">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="relative inline-block">
+                            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 text-6xl">⭐</div>
+                            <div class="relative" style="background: linear-gradient(to bottom, transparent 0%, #059669 100%); clip-path: polygon(50% 0%, 5% 100%, 95% 100%); padding: 60px 30px 40px;">
+                                <div class="bg-white p-2 rounded-lg">
+                                    <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
+                                </div>
+                                <div class="absolute top-10 left-5 text-2xl">🔴</div>
+                                <div class="absolute top-20 right-8 text-2xl">🟡</div>
+                                <div class="absolute top-32 left-12 text-2xl">🔵</div>
+                            </div>
+                            <div class="w-20 h-12 mx-auto" style="background: #8b4513;"></div>
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Stocking Photo Layout - Hung on Mantel
+        if (layout === 'stockingphoto') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(to bottom, #1f2937 0%, #374151 100%);">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="mb-8 flex justify-around items-end">
+                            <div class="text-4xl transform rotate-12">🧦</div>
+                            <div class="text-4xl transform -rotate-6">🧦</div>
+                        </div>
+                        <div class="bg-gradient-to-b from-amber-900 to-amber-950 rounded-t-2xl p-6 border-t-8 border-amber-800">
+                            <div class="bg-white p-3 rounded-lg">
+                                <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Holiday photo">
+                            </div>
+                            ${caption ? `<p class="mt-4 text-white ${captionClass}">${data.caption}</p>` : ''}
+                        </div>
+                        <div class="relative h-20 bg-gradient-to-b from-orange-600 to-red-700 rounded-b-2xl overflow-hidden">
+                            <div class="absolute inset-0 flex justify-around items-center">
+                                <div class="animate-pulse text-4xl">🔥</div>
+                                <div class="animate-pulse text-5xl" style="animation-delay: 0.3s;">🔥</div>
+                                <div class="animate-pulse text-4xl" style="animation-delay: 0.6s;">🔥</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -339,7 +538,7 @@ window.sectionComponents.photo = {
         return `
             <div class="py-8 px-6" style="background: ${bgColor}">
                 <div class="${sizeClass} mx-auto text-center">
-                    <img src="${data.photo}" class="${shapeClass} w-full h-auto shadow-lg object-cover" style="${filterStyle}" alt="Birthday photo">
+                    <img src="${data.photo}" class="${shapeClass} w-full h-auto shadow-lg object-cover" style="${filterStyle}" alt="Holiday photo">
                     ${caption}
                 </div>
             </div>
