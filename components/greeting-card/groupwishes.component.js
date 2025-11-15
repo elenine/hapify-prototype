@@ -34,6 +34,12 @@ window.sectionComponents.groupwishes = {
                     <option value="grid">Grid Cards - Organized</option>
                     <option value="minimal">Minimal List - Clean</option>
                     <option value="polaroid">Polaroid Style - Fun</option>
+                    <option value="masonry">Masonry Wall - Pinterest style</option>
+                    <option value="carousel">Carousel View - Sliding cards</option>
+                    <option value="stickynotes">Sticky Notes - Bulletin board</option>
+                    <option value="speech">Speech Bubbles - Comic style</option>
+                    <option value="booklet">Booklet Pages - Flip book</option>
+                    <option value="hearts">Floating Hearts - Romantic style</option>
                 </select>
             </div>
             <div>
@@ -272,6 +278,171 @@ window.sectionComponents.groupwishes = {
                                     <p class="text-center text-sm text-gray-700">${wish.message}</p>
                                 </div>
                             `).join('') : '<p class="text-center text-gray-500 col-span-2">Add wishes from friends in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Masonry Wall Layout
+        if (layout === 'masonry') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            ${wishes.length > 0 ? wishes.map((wish, index) => {
+                                const sizes = ['md:col-span-1', 'md:col-span-2', 'md:col-span-1'];
+                                return `
+                                    <div class="${sizes[index % 3]} ${padding} rounded-lg ${shadowClass}" style="background: ${cardBg}">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <div class="w-8 h-8 ${avatarClass} flex items-center justify-center text-sm" style="background: ${accentColor}; color: white">
+                                                ${wish.name.charAt(0).toUpperCase()}
+                                            </div>
+                                            <p class="font-bold" style="color: ${accentColor}">${wish.name}</p>
+                                        </div>
+                                        <p class="text-sm">${wish.message}</p>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500 col-span-3">Add wishes from friends in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Carousel View Layout
+        if (layout === 'carousel') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="relative">
+                            ${wishes.length > 0 ? `
+                                <div class="${padding} rounded-2xl ${shadowClass}" style="background: ${cardBg}">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-16 h-16 ${avatarClass} flex items-center justify-center text-2xl" style="background: ${accentColor}; color: white">
+                                            ${wishes[0].name.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div>
+                                            <p class="font-bold text-lg" style="color: ${accentColor}">${wishes[0].name}</p>
+                                            <p class="text-sm text-gray-500">1 of ${wishes.length}</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-lg">${wishes[0].message}</p>
+                                </div>
+                                <div class="flex justify-center gap-4 mt-6">
+                                    <button class="w-10 h-10 rounded-full ${shadowClass} flex items-center justify-center" style="background: ${accentColor}; color: white">‹</button>
+                                    <button class="w-10 h-10 rounded-full ${shadowClass} flex items-center justify-center" style="background: ${accentColor}; color: white">›</button>
+                                </div>
+                            ` : '<p class="text-center text-gray-500">Add wishes from friends in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Sticky Notes Layout
+        if (layout === 'stickynotes') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-10">${title}</h3>
+                        <div class="flex flex-wrap gap-4 justify-center">
+                            ${wishes.length > 0 ? wishes.map((wish, index) => {
+                                const colors = ['#fef3c7', '#fce7f3', '#dbeafe', '#d1fae5'];
+                                const rotations = [2, -3, 1, -2, 3, -1];
+                                return `
+                                    <div class="w-64 h-64 ${padding} ${shadowClass} transform rotate-${rotations[index % 6]}" style="background: ${colors[index % 4]}">
+                                        <div class="h-full flex flex-col">
+                                            <p class="font-bold mb-2" style="color: ${accentColor}">- ${wish.name}</p>
+                                            <p class="text-sm flex-1">${wish.message}</p>
+                                            <div class="text-right text-xl">📌</div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add wishes from friends in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Speech Bubbles Layout
+        if (layout === 'speech') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="space-y-6">
+                            ${wishes.length > 0 ? wishes.map((wish, index) => {
+                                const isLeft = index % 2 === 0;
+                                return `
+                                    <div class="flex ${isLeft ? '' : 'flex-row-reverse'} items-start gap-3">
+                                        <div class="w-12 h-12 ${avatarClass} flex items-center justify-center flex-shrink-0" style="background: ${accentColor}; color: white">
+                                            ${wish.name.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div class="relative max-w-sm ${padding} rounded-2xl ${shadowClass}" style="background: ${cardBg}">
+                                            <div class="font-bold mb-1" style="color: ${accentColor}">${wish.name}</div>
+                                            <p>${wish.message}</p>
+                                            <div class="absolute ${isLeft ? '-left-2' : '-right-2'} top-4 w-0 h-0 border-t-8 border-b-8 border-transparent ${isLeft ? 'border-r-8' : 'border-l-8'}" style="${isLeft ? 'border-right-color' : 'border-left-color'}: ${cardBg}"></div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500">Add wishes from friends in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Booklet Pages Layout
+        if (layout === 'booklet') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            ${wishes.length > 0 ? wishes.map((wish, index) => `
+                                <div class="relative ${padding} rounded-r-xl ${shadowClass}" style="background: ${cardBg}; border-left: 4px solid ${accentColor}">
+                                    <div class="absolute -left-1 top-8 bottom-8 w-1" style="background: repeating-linear-gradient(to bottom, ${accentColor} 0px, ${accentColor} 10px, transparent 10px, transparent 20px)"></div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <span class="text-2xl">💌</span>
+                                        <p class="font-bold" style="color: ${accentColor}">${wish.name}</p>
+                                    </div>
+                                    <p class="text-sm italic">"${wish.message}"</p>
+                                    <div class="mt-3 text-right text-xs text-gray-500">Page ${index + 1}</div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500 col-span-2">Add wishes from friends in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Floating Hearts Layout
+        if (layout === 'hearts') {
+            return `
+                <div class="py-12 px-6 relative" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                        ${[...Array(15)].map((_, i) => `
+                            <div class="absolute text-2xl opacity-20" style="left: ${Math.random() * 100}%; top: ${Math.random() * 100}%; color: ${accentColor}">💖</div>
+                        `).join('')}
+                    </div>
+                    <div class="max-w-3xl mx-auto relative z-10">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="space-y-6">
+                            ${wishes.length > 0 ? wishes.map(wish => `
+                                <div class="${padding} rounded-2xl ${shadowClass}" style="background: ${cardBg}">
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-3xl">💝</span>
+                                        <div class="flex-1">
+                                            <p class="font-bold mb-2" style="color: ${accentColor}">${wish.name}</p>
+                                            <p>${wish.message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add wishes from friends in the editor</p>'}
                         </div>
                     </div>
                 </div>

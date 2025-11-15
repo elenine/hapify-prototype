@@ -15,6 +15,12 @@ window.sectionComponents.gallery = {
                     <option value="polaroidWall">Polaroid Wall - Scattered polaroids</option>
                     <option value="filmStrip">Film Strip - Horizontal film roll</option>
                     <option value="lightbox">Lightbox - Minimalist gallery</option>
+                    <option value="circleGallery">Circle Gallery - Photos in circular frames</option>
+                    <option value="diamondPattern">Diamond Pattern - Diamond-shaped arrangement</option>
+                    <option value="waveLayout">Wave Layout - Flowing wave pattern</option>
+                    <option value="hexagonGrid">Hexagon Grid - Hexagonal photo tiles</option>
+                    <option value="stackedCards">Stacked Cards - Layered card effect</option>
+                    <option value="spiralGallery">Spiral Gallery - Spiral arrangement</option>
                 </select>
             </div>
             <div>
@@ -196,6 +202,179 @@ window.sectionComponents.gallery = {
                             `).join('')}
                         </div>
                         <p class="text-center text-gray-600 mt-6">Minimalist lightbox gallery</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'circleGallery') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="flex flex-wrap gap-6 justify-center">
+                            <div class="w-32 h-32 rounded-full ${shadowClass} flex items-center justify-center border-4" style="background: rgba(99, 102, 241, 0.1); border-color: ${accentColor}">
+                                <div class="text-4xl">🖼️</div>
+                            </div>
+                            <div class="w-32 h-32 rounded-full ${shadowClass} flex items-center justify-center border-4" style="background: rgba(99, 102, 241, 0.1); border-color: ${accentColor}">
+                                <div class="text-4xl">📸</div>
+                            </div>
+                            <div class="w-32 h-32 rounded-full ${shadowClass} flex items-center justify-center border-4" style="background: rgba(99, 102, 241, 0.1); border-color: ${accentColor}">
+                                <div class="text-4xl">🎨</div>
+                            </div>
+                            <div class="w-32 h-32 rounded-full ${shadowClass} flex items-center justify-center border-4" style="background: rgba(99, 102, 241, 0.1); border-color: ${accentColor}">
+                                <div class="text-4xl">🌟</div>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-600 mt-6">Circular frame gallery</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'diamondPattern') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="flex gap-4">
+                                <div class="w-28 h-28 ${shadowClass} flex items-center justify-center transform rotate-45" style="background: rgba(99, 102, 241, 0.1)">
+                                    <div class="text-3xl -rotate-45" style="color: ${accentColor}">🖼️</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-28 h-28 ${shadowClass} flex items-center justify-center transform rotate-45" style="background: rgba(99, 102, 241, 0.1)">
+                                    <div class="text-3xl -rotate-45" style="color: ${accentColor}">📸</div>
+                                </div>
+                                <div class="w-28 h-28 ${shadowClass} flex items-center justify-center transform rotate-45" style="background: rgba(99, 102, 241, 0.1)">
+                                    <div class="text-3xl -rotate-45" style="color: ${accentColor}">🎨</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-28 h-28 ${shadowClass} flex items-center justify-center transform rotate-45" style="background: rgba(99, 102, 241, 0.1)">
+                                    <div class="text-3xl -rotate-45" style="color: ${accentColor}">🌟</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-600 mt-6">Diamond-shaped gallery</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'waveLayout') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 justify-center" style="transform: translateY(0)">
+                                <div class="w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1))">
+                                    <div class="text-3xl" style="color: ${accentColor}">🖼️</div>
+                                </div>
+                                <div class="w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); transform: translateY(12px)">
+                                    <div class="text-3xl" style="color: ${accentColor}">📸</div>
+                                </div>
+                                <div class="w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1))">
+                                    <div class="text-3xl" style="color: ${accentColor}">🎨</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 justify-center" style="transform: translateY(-8px)">
+                                <div class="w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); transform: translateY(12px)">
+                                    <div class="text-3xl" style="color: ${accentColor}">🌟</div>
+                                </div>
+                                <div class="w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1))">
+                                    <div class="text-3xl" style="color: ${accentColor}">🎭</div>
+                                </div>
+                                <div class="w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); transform: translateY(12px)">
+                                    <div class="text-3xl" style="color: ${accentColor}">🎪</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-600 mt-6">Wave pattern gallery</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'hexagonGrid') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="flex flex-col items-center gap-2">
+                            <div class="flex gap-2">
+                                <div class="w-28 h-32 ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.1); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)">
+                                    <div class="text-3xl" style="color: ${accentColor}">🖼️</div>
+                                </div>
+                                <div class="w-28 h-32 ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.1); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)">
+                                    <div class="text-3xl" style="color: ${accentColor}">📸</div>
+                                </div>
+                            </div>
+                            <div class="flex gap-2" style="transform: translateX(30px)">
+                                <div class="w-28 h-32 ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.1); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)">
+                                    <div class="text-3xl" style="color: ${accentColor}">🎨</div>
+                                </div>
+                                <div class="w-28 h-32 ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.1); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)">
+                                    <div class="text-3xl" style="color: ${accentColor}">🌟</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-600 mt-6">Hexagonal tile gallery</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'stackedCards') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="relative h-80 flex items-center justify-center">
+                            <div class="absolute w-64 h-64 ${borderRadius} ${shadowClass} flex items-center justify-center transform rotate-6" style="background: rgba(99, 102, 241, 0.15); top: 20px">
+                                <div class="text-4xl" style="color: ${accentColor}">🎨</div>
+                            </div>
+                            <div class="absolute w-64 h-64 ${borderRadius} ${shadowClass} flex items-center justify-center transform -rotate-3" style="background: rgba(99, 102, 241, 0.2); top: 30px">
+                                <div class="text-4xl" style="color: ${accentColor}">📸</div>
+                            </div>
+                            <div class="absolute w-64 h-64 ${borderRadius} ${shadowClass} flex items-center justify-center bg-white" style="top: 40px; border: 2px solid ${accentColor}">
+                                <div class="text-5xl" style="color: ${accentColor}">🖼️</div>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-600 mt-6">Stacked card gallery</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'spiralGallery') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="relative h-96">
+                            <div class="absolute top-1/2 left-1/2 w-28 h-28 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.1); transform: translate(-50%, -50%)">
+                                <div class="text-4xl" style="color: ${accentColor}">🖼️</div>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15); transform: translate(-50%, -50%) translate(60px, -60px)">
+                                <div class="text-3xl" style="color: ${accentColor}">📸</div>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15); transform: translate(-50%, -50%) translate(80px, 20px)">
+                                <div class="text-3xl" style="color: ${accentColor}">🎨</div>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15); transform: translate(-50%, -50%) translate(20px, 80px)">
+                                <div class="text-3xl" style="color: ${accentColor}">🌟</div>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15); transform: translate(-50%, -50%) translate(-60px, 60px)">
+                                <div class="text-3xl" style="color: ${accentColor}">🎭</div>
+                            </div>
+                            <div class="absolute top-1/2 left-1/2 w-24 h-24 ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: rgba(99, 102, 241, 0.15); transform: translate(-50%, -50%) translate(-80px, -20px)">
+                                <div class="text-3xl" style="color: ${accentColor}">🎪</div>
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-600 mt-6">Spiral arrangement gallery</p>
                     </div>
                 </div>
             `;

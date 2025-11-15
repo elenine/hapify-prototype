@@ -15,6 +15,12 @@ window.sectionComponents.music = {
                     <option value="visualizer">Visualizer - Waveform visualization</option>
                     <option value="albumCover">Album Cover - Large album art</option>
                     <option value="minimal">Minimal - Clean minimalist player</option>
+                    <option value="cassette">Cassette Tape - Retro cassette player</option>
+                    <option value="boombox">Boombox - 90s boombox style</option>
+                    <option value="jukebox">Jukebox - Classic jukebox design</option>
+                    <option value="equalizer">Equalizer - Audio equalizer bars</option>
+                    <option value="neonClub">Neon Club - Nightclub neon style</option>
+                    <option value="soundwave">Soundwave - Modern soundwave pattern</option>
                 </select>
             </div>
             <div>
@@ -187,6 +193,165 @@ window.sectionComponents.music = {
                             <span class="text-4xl">▶</span>
                         </button>
                         <p class="text-gray-600 mt-6">Music player will appear here</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'cassette') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-md mx-auto text-center">
+                        <h3 class="text-2xl font-bold mb-6" style="color: ${textColor}">${title}</h3>
+                        <div class="p-6 rounded-lg ${shadowClass}" style="background: linear-gradient(145deg, #e5e7eb, #d1d5db)">
+                            <div class="bg-white rounded p-4 ${shadowClass}">
+                                <div class="flex justify-center gap-16 mb-4">
+                                    <div class="w-16 h-16 rounded-full border-8" style="border-color: ${playerColor}"></div>
+                                    <div class="w-16 h-16 rounded-full border-8" style="border-color: ${playerColor}"></div>
+                                </div>
+                                <div class="space-y-2">
+                                    ${[...Array(4)].map(() => `
+                                        <div class="h-1 rounded" style="background: ${playerColor}; opacity: 0.3"></div>
+                                    `).join('')}
+                                </div>
+                                <div class="flex justify-center gap-3 mt-4">
+                                    <button class="px-3 py-1 rounded text-white text-xs" style="background: ${playerColor}">⏮</button>
+                                    <button class="px-3 py-1 rounded text-white text-xs" style="background: ${playerColor}">▶</button>
+                                    <button class="px-3 py-1 rounded text-white text-xs" style="background: ${playerColor}">⏭</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mt-4">Retro cassette player</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'boombox') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <h3 class="text-2xl font-bold mb-6" style="color: ${textColor}">${title}</h3>
+                        <div class="p-8 rounded-xl ${shadowClass}" style="background: linear-gradient(145deg, #1f2937, #374151)">
+                            <div class="flex justify-center gap-8 mb-6">
+                                <div class="w-32 h-32 rounded-full border-8 border-gray-600 ${shadowClass} flex items-center justify-center" style="background: #111">
+                                    <div class="text-4xl">🔊</div>
+                                </div>
+                                <div class="w-32 h-32 rounded-full border-8 border-gray-600 ${shadowClass} flex items-center justify-center" style="background: #111">
+                                    <div class="text-4xl">🔊</div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-800 p-4 rounded-lg mb-4">
+                                <div class="flex justify-center gap-4">
+                                    <button class="w-12 h-12 rounded ${shadowClass} flex items-center justify-center" style="background: ${playerColor}; color: white">⏮</button>
+                                    <button class="w-16 h-16 rounded ${shadowClass} flex items-center justify-center text-2xl" style="background: ${playerColor}; color: white">▶</button>
+                                    <button class="w-12 h-12 rounded ${shadowClass} flex items-center justify-center" style="background: ${playerColor}; color: white">⏭</button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mt-4">90s boombox style</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'jukebox') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-md mx-auto text-center">
+                        <h3 class="text-2xl font-bold mb-6" style="color: ${textColor}">${title}</h3>
+                        <div class="p-6 rounded-t-3xl ${shadowClass}" style="background: linear-gradient(180deg, #dc2626, #991b1b)">
+                            <div class="bg-yellow-400 rounded-lg p-6 mb-4">
+                                <div class="text-6xl mb-4">🎵</div>
+                                <div class="font-bold text-xl" style="color: ${textColor}">Now Playing</div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                ${[...Array(9)].map((_, i) => `
+                                    <button class="aspect-square rounded-lg ${shadowClass} flex items-center justify-center font-bold text-white" style="background: ${playerColor}">${i + 1}</button>
+                                `).join('')}
+                            </div>
+                            <button class="w-full py-3 rounded-full ${shadowClass} text-white font-bold text-xl" style="background: ${playerColor}">▶ PLAY</button>
+                        </div>
+                        <p class="text-gray-600 mt-4">Classic jukebox</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'equalizer') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${textColor}">${title}</h3>
+                        <div class="p-8 ${borderRadius} ${shadowClass}" style="background: white">
+                            <div class="flex items-end justify-between gap-1 h-48 mb-6">
+                                ${[...Array(32)].map((_, i) => {
+                                    const height = 20 + Math.random() * 80;
+                                    return `<div class="flex-1 rounded-t transition-all" style="background: ${playerColor}; height: ${height}%; opacity: ${0.5 + Math.random() * 0.5}"></div>`;
+                                }).join('')}
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="w-14 h-14 rounded-full ${shadowClass} flex items-center justify-center" style="background: ${playerColor}; color: white">▶</button>
+                                <div class="flex-1">
+                                    <div class="h-2 rounded-full" style="background: ${playerColor}; opacity: 0.3"></div>
+                                </div>
+                                <span class="text-sm font-mono" style="color: ${textColor}">3:42</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'neonClub') {
+            return `
+                <div class="py-12 px-6" style="background: #000">
+                    <div class="max-w-xl mx-auto text-center">
+                        <h3 class="text-3xl font-bold mb-8 text-white" style="text-shadow: 0 0 20px ${playerColor}">${title}</h3>
+                        <div class="relative p-8 rounded-2xl ${shadowClass}" style="background: rgba(0, 0, 0, 0.8); border: 2px solid ${playerColor}; box-shadow: 0 0 40px ${playerColor}, inset 0 0 40px rgba(255,255,255,0.05)">
+                            <div class="absolute inset-0 rounded-2xl blur-xl opacity-50" style="background: ${playerColor}"></div>
+                            <div class="relative">
+                                <div class="text-8xl mb-6" style="filter: drop-shadow(0 0 20px ${playerColor})">🎵</div>
+                                <div class="flex justify-center gap-6 mb-4">
+                                    ${[...Array(5)].map(() => `
+                                        <div class="h-16 w-2 rounded-full" style="background: ${playerColor}; box-shadow: 0 0 10px ${playerColor}; opacity: ${0.3 + Math.random() * 0.7}"></div>
+                                    `).join('')}
+                                </div>
+                                <button class="w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl text-white" style="background: ${playerColor}; box-shadow: 0 0 30px ${playerColor}">▶</button>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mt-4">Neon nightclub style</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'soundwave') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${textColor}">${title}</h3>
+                        <div class="p-6 ${borderRadius} ${shadowClass}" style="background: white">
+                            <div class="flex items-center h-24 mb-6 relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    ${[...Array(100)].map((_, i) => {
+                                        const amplitude = Math.sin(i * 0.2) * 40 + 10;
+                                        return `<div class="w-1" style="height: ${amplitude}px; background: ${playerColor}; opacity: ${i < 50 ? 1 : 0.3}"></div>`;
+                                    }).join('')}
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <button class="w-12 h-12 rounded-full ${shadowClass} flex items-center justify-center" style="background: ${playerColor}; color: white">▶</button>
+                                <div class="flex-1">
+                                    <div class="text-sm font-semibold mb-1" style="color: ${textColor}">${title}</div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="text-xs text-gray-500">1:23</span>
+                                        <div class="flex-1 h-1 rounded-full" style="background: ${playerColor}; opacity: 0.3"></div>
+                                        <span class="text-xs text-gray-500">3:45</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
