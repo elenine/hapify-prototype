@@ -43,6 +43,9 @@ window.sectionComponents.venue = {
                     <option value="map">Map - Featured Location</option>
                     <option value="split">Split - Info & Map</option>
                     <option value="minimal">Minimal - Simple Text</option>
+                    <option value="compact">Compact - Dense Information</option>
+                    <option value="elegant">Elegant - Bordered Frame</option>
+                    <option value="banner">Banner - Full Width</option>
                 </select>
             </div>
             <div>
@@ -420,6 +423,225 @@ window.sectionComponents.venue = {
                                 <a href="${data.mapLink}" target="_blank" class="inline-flex items-center gap-2 px-8 py-3 rounded-full font-semibold text-white transition hover:scale-105 shadow-md" style="background: ${accentColor}">
                                     <span>📱</span>
                                     <span>View Map</span>
+                                </a>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Compact Layout - Dense Information
+        if (layout === 'compact') {
+            return `
+                <div class="py-10 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <div class="bg-white rounded-xl shadow-${shadow} p-6">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b" style="border-color: ${accentColor}20">
+                                <div class="text-3xl">📍</div>
+                                <h2 class="text-xl font-bold">Venue Details</h2>
+                            </div>
+                            <div class="space-y-3">
+                                ${data.venueName ? `
+                                    <div class="flex items-start gap-2">
+                                        <div class="text-lg mt-0.5">🏛️</div>
+                                        <div class="flex-1">
+                                            <div class="text-xs text-gray-500 uppercase">Venue</div>
+                                            <div class="font-bold" style="color: ${accentColor}">${data.venueName}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.address ? `
+                                    <div class="flex items-start gap-2">
+                                        <div class="text-lg mt-0.5">📮</div>
+                                        <div class="flex-1">
+                                            <div class="text-xs text-gray-500 uppercase">Address</div>
+                                            <div class="text-sm text-gray-700">${data.address.replace(/\n/g, '<br>')}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.phone ? `
+                                    <div class="flex items-start gap-2">
+                                        <div class="text-lg mt-0.5">📞</div>
+                                        <div class="flex-1">
+                                            <div class="text-xs text-gray-500 uppercase">Phone</div>
+                                            <div class="text-sm text-gray-700">${data.phone}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.parking ? `
+                                    <div class="flex items-start gap-2">
+                                        <div class="text-lg mt-0.5">🅿️</div>
+                                        <div class="flex-1">
+                                            <div class="text-xs text-gray-500 uppercase">Parking</div>
+                                            <div class="text-xs text-gray-600">${data.parking}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.directions ? `
+                                    <div class="flex items-start gap-2">
+                                        <div class="text-lg mt-0.5">🗺️</div>
+                                        <div class="flex-1">
+                                            <div class="text-xs text-gray-500 uppercase">Directions</div>
+                                            <div class="text-xs text-gray-600">${data.directions}</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.mapLink ? `
+                                    <div class="pt-3 mt-3 border-t" style="border-color: ${accentColor}20">
+                                        <a href="${data.mapLink}" target="_blank" class="flex items-center justify-center gap-2 py-2 rounded-lg font-semibold text-white text-sm transition" style="background: ${accentColor}">
+                                            <span>📱</span>
+                                            <span>Open Map</span>
+                                        </a>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Elegant Layout - Bordered Frame
+        if (layout === 'elegant') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="border-4 rounded-2xl p-10 bg-white shadow-${shadow}" style="border-color: ${accentColor}">
+                            <div class="text-center mb-8">
+                                <div class="inline-block p-5 rounded-full mb-4" style="background: ${accentColor}15">
+                                    <div class="text-5xl">📍</div>
+                                </div>
+                                <h2 class="text-3xl font-bold mb-3" style="color: ${accentColor}">Venue Location</h2>
+                                <div class="w-24 h-1 mx-auto" style="background: ${accentColor}30"></div>
+                            </div>
+
+                            ${data.venueName ? `
+                                <div class="text-center mb-8">
+                                    <div class="text-2xl font-bold" style="color: ${accentColor}">${data.venueName}</div>
+                                </div>
+                            ` : ''}
+
+                            <div class="space-y-5">
+                                ${data.address ? `
+                                    <div class="p-5 rounded-xl" style="background: ${accentColor}10">
+                                        <div class="flex items-start gap-4">
+                                            <div class="text-3xl">📮</div>
+                                            <div>
+                                                <div class="text-xs uppercase tracking-wide font-bold mb-2" style="color: ${accentColor}">Address</div>
+                                                <div class="text-gray-800">${data.address.replace(/\n/g, '<br>')}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.phone || data.parking || data.directions ? `
+                                    <div class="grid gap-4">
+                                        ${data.phone ? `
+                                            <div class="p-4 rounded-xl" style="background: ${accentColor}05">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="text-2xl">📞</div>
+                                                    <div>
+                                                        <div class="text-xs uppercase font-bold" style="color: ${accentColor}">Phone</div>
+                                                        <div class="text-gray-700">${data.phone}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.parking ? `
+                                            <div class="p-4 rounded-xl" style="background: ${accentColor}05">
+                                                <div class="flex items-start gap-3">
+                                                    <div class="text-2xl">🅿️</div>
+                                                    <div>
+                                                        <div class="text-xs uppercase font-bold mb-1" style="color: ${accentColor}">Parking</div>
+                                                        <div class="text-gray-700 text-sm">${data.parking}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.directions ? `
+                                            <div class="p-4 rounded-xl" style="background: ${accentColor}05">
+                                                <div class="flex items-start gap-3">
+                                                    <div class="text-2xl">🗺️</div>
+                                                    <div>
+                                                        <div class="text-xs uppercase font-bold mb-1" style="color: ${accentColor}">Directions</div>
+                                                        <div class="text-gray-700 text-sm">${data.directions}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            ${data.mapLink ? `
+                                <div class="mt-8 text-center">
+                                    <a href="${data.mapLink}" target="_blank" class="inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-white transition hover:scale-105 shadow-lg" style="background: ${accentColor}">
+                                        <span class="text-2xl">📱</span>
+                                        <span>Get Directions</span>
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Banner Layout - Full Width
+        if (layout === 'banner') {
+            return `
+                <div class="py-16 px-6" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}90)">
+                    <div class="max-w-3xl mx-auto text-center text-white">
+                        <div class="text-6xl mb-4">📍</div>
+                        <h2 class="text-4xl font-bold mb-8">Find Us Here</h2>
+                        ${data.venueName ? `
+                            <div class="inline-block px-8 py-4 bg-white/20 backdrop-blur-sm rounded-full mb-8">
+                                <div class="text-3xl font-bold">${data.venueName}</div>
+                            </div>
+                        ` : ''}
+                        <div class="grid md:grid-cols-2 gap-6 text-left max-w-2xl mx-auto">
+                            ${data.address ? `
+                                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="text-2xl">📮</div>
+                                        <div class="text-sm uppercase tracking-wide font-bold">Address</div>
+                                    </div>
+                                    <div class="text-white/90">${data.address.replace(/\n/g, '<br>')}</div>
+                                </div>
+                            ` : ''}
+                            ${data.phone ? `
+                                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="text-2xl">📞</div>
+                                        <div class="text-sm uppercase tracking-wide font-bold">Phone</div>
+                                    </div>
+                                    <div class="text-white/90">${data.phone}</div>
+                                </div>
+                            ` : ''}
+                            ${data.parking ? `
+                                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="text-2xl">🅿️</div>
+                                        <div class="text-sm uppercase tracking-wide font-bold">Parking</div>
+                                    </div>
+                                    <div class="text-white/90 text-sm">${data.parking}</div>
+                                </div>
+                            ` : ''}
+                            ${data.directions ? `
+                                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <div class="text-2xl">🗺️</div>
+                                        <div class="text-sm uppercase tracking-wide font-bold">Directions</div>
+                                    </div>
+                                    <div class="text-white/90 text-sm">${data.directions}</div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        ${data.mapLink ? `
+                            <div class="mt-10">
+                                <a href="${data.mapLink}" target="_blank" class="inline-flex items-center gap-3 px-12 py-5 bg-white rounded-full font-bold text-2xl transition hover:scale-105 shadow-2xl" style="color: ${accentColor}">
+                                    <span>📱</span>
+                                    <span>Open in Maps</span>
                                 </a>
                             </div>
                         ` : ''}

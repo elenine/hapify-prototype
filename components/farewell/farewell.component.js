@@ -243,6 +243,84 @@ window.sectionComponents.farewell = {
                         `;
                     }
 
+                    // Modern Layout - Gradient Card
+                    if (layout === 'modern') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <div class="rounded-3xl overflow-hidden shadow-${shadow}">
+                                        <!-- Gradient Header -->
+                                        <div class="p-10 text-center text-white" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd)">
+                                            ${reasonInfo ? `
+                                                <div class="text-7xl mb-4">${reasonInfo.icon}</div>
+                                                <h3 class="text-3xl font-bold mb-2">${reasonInfo.text}</h3>
+                                            ` : '<div class="text-7xl mb-4">✈️</div>'}
+                                            <div class="w-24 h-1 mx-auto opacity-50" style="background: white"></div>
+                                        </div>
+                                        <!-- Content Area -->
+                                        <div class="p-8 bg-white">
+                                            <h2 class="text-2xl font-bold text-center mb-6">${data.title || 'New Adventures Await'}</h2>
+                                            ${data.details ? `<p class="text-gray-700 leading-relaxed text-center">${data.details}</p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Minimal Layout - Clean Layout
+                    if (layout === 'minimal') {
+                        return `
+                            <div class="py-10 px-6" style="background: ${bg}">
+                                <div class="max-w-md mx-auto ${alignClass}">
+                                    ${reasonInfo ? `
+                                        <div class="inline-block w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-4" style="background: ${accentColor}15">
+                                            ${reasonInfo.icon}
+                                        </div>
+                                    ` : ''}
+                                    <h2 class="text-2xl font-bold mb-3">${data.title || 'New Adventures Await'}</h2>
+                                    <div class="w-16 h-0.5 ${align === 'center' ? 'mx-auto' : ''} mb-4" style="background: ${accentColor}"></div>
+                                    ${reasonInfo ? `
+                                        <div class="mb-4">
+                                            <div class="text-sm uppercase tracking-wide font-semibold mb-1" style="color: ${accentColor}">${reasonInfo.text}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.details ? `<p class="text-gray-700 leading-relaxed">${data.details}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // Elegant Layout - Bordered Frame
+                    if (layout === 'elegant') {
+                        return `
+                            <div class="py-12 px-6" style="background: ${bg}">
+                                <div class="max-w-2xl mx-auto">
+                                    <div class="border-4 rounded-2xl p-10 bg-white shadow-${shadow} ${alignClass}" style="border-color: ${accentColor}">
+                                        <div class="${align === 'center' ? 'mx-auto' : ''} mb-6">
+                                            <div class="inline-block p-5 rounded-full" style="background: ${accentColor}15">
+                                                ${reasonInfo ? `
+                                                    <div class="text-5xl">${reasonInfo.icon}</div>
+                                                ` : '<div class="text-5xl">✈️</div>'}
+                                            </div>
+                                        </div>
+                                        <h2 class="text-3xl font-bold mb-4" style="color: ${accentColor}">${data.title || 'New Adventures Await'}</h2>
+                                        <div class="w-24 h-1 ${align === 'center' ? 'mx-auto' : ''} mb-6" style="background: ${accentColor}30"></div>
+                                        ${reasonInfo ? `
+                                            <div class="mb-6 pb-6 border-b" style="border-color: ${accentColor}20">
+                                                <div class="flex items-center ${align === 'center' ? 'justify-center' : ''} gap-3">
+                                                    <div class="text-xs uppercase tracking-wide text-gray-500">Moving Forward To</div>
+                                                    <div class="font-bold text-lg" style="color: ${accentColor}">${reasonInfo.text}</div>
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                        ${data.details ? `<p class="text-gray-700 leading-relaxed text-lg">${data.details}</p>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
                     return '';
                 }
             };
