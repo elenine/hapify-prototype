@@ -960,6 +960,10 @@
                 info: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="House Tour" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Tour Schedule</label>
                             <input type="text" placeholder="Tours starting at 2 PM" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="schedule" oninput="updatePreview()">
                         </div>
@@ -967,32 +971,132 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Tour Details</label>
                             <textarea placeholder="Feel free to explore all rooms..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="details" oninput="updatePreview()"></textarea>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tour Highlights (one per line)</label>
+                            <textarea placeholder="Living Room&#10;Kitchen&#10;Master Bedroom&#10;Backyard" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="highlights" oninput="updatePreview()"></textarea>
+                        </div>
                     </div>
                 \`,
                 style: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="centered">Centered Classic</option>
+                                <option value="checklist">Checklist Style</option>
+                                <option value="cards">Highlight Cards</option>
+                                <option value="badge">Badge Layout</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
-                    </div>
-                \`,
-                render: (data, style) => \`
-                    <div class="py-12 px-6" style="background: \${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto text-center">
-                            <div class="text-5xl mb-4">🚪</div>
-                            <h2 class="text-2xl font-bold mb-4">House Tour</h2>
-                            \${data.schedule ? \`<p class="text-lg text-gray-700 mb-4">\${data.schedule}</p>\` : ''}
-                            \${data.details ? \`<div class="p-4 bg-orange-50 rounded-lg"><p class="text-gray-600 text-sm">\${data.details}</p></div>\` : ''}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                     </div>
-                \`
+                \`,
+                render: (data, style) => {
+                    const layout = style.layout || 'centered';
+                    const bg = style.bg || '#ffffff';
+                    const accent = style.accent || '#f97316';
+                    const title = data.title || 'House Tour';
+                    const highlights = data.highlights ? data.highlights.split('\n').filter(h => h.trim()) : [];
+
+                    if (layout === 'centered') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto text-center">
+                                    <div class="text-5xl mb-4">🚪</div>
+                                    <h2 class="text-2xl font-bold mb-4">\${title}</h2>
+                                    \${data.schedule ? \`<p class="text-lg mb-4" style="color: \${accent}">\${data.schedule}</p>\` : ''}
+                                    \${data.details ? \`<div class="p-4 rounded-lg mb-4" style="background: \${accent}20"><p class="text-gray-600 text-sm">\${data.details}</p></div>\` : ''}
+                                    \${highlights.length > 0 ? \`
+                                        <div class="mt-6 space-y-2">
+                                            \${highlights.map(h => \`<div class="text-gray-700">🏠 \${h}</div>\`).join('')}
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'checklist') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <h2 class="text-2xl font-bold mb-2 text-center">\${title}</h2>
+                                    \${data.schedule ? \`<p class="text-center mb-6 text-sm" style="color: \${accent}">\${data.schedule}</p>\` : ''}
+                                    \${data.details ? \`<p class="text-gray-600 text-center text-sm mb-6">\${data.details}</p>\` : ''}
+                                    \${highlights.length > 0 ? \`
+                                        <div class="space-y-3">
+                                            \${highlights.map(h => \`
+                                                <div class="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+                                                    <div class="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs" style="background: \${accent}">✓</div>
+                                                    <span class="text-gray-700">\${h}</span>
+                                                </div>
+                                            \`).join('')}
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'cards') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <h2 class="text-2xl font-bold mb-2 text-center">\${title}</h2>
+                                    \${data.schedule ? \`<p class="text-center mb-4" style="color: \${accent}">\${data.schedule}</p>\` : ''}
+                                    \${data.details ? \`<p class="text-gray-600 text-center text-sm mb-6">\${data.details}</p>\` : ''}
+                                    \${highlights.length > 0 ? \`
+                                        <div class="grid grid-cols-2 gap-3">
+                                            \${highlights.map(h => \`
+                                                <div class="p-4 bg-white rounded-lg shadow-sm text-center border-t-4" style="border-color: \${accent}">
+                                                    <div class="text-2xl mb-2">🚪</div>
+                                                    <div class="text-sm font-medium">\${h}</div>
+                                                </div>
+                                            \`).join('')}
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'badge') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-lg mx-auto text-center">
+                                    <div class="text-4xl mb-3">🚪</div>
+                                    <h2 class="text-2xl font-bold mb-4">\${title}</h2>
+                                    \${data.schedule ? \`<p class="mb-4" style="color: \${accent}">\${data.schedule}</p>\` : ''}
+                                    \${data.details ? \`<p class="text-gray-600 text-sm mb-6">\${data.details}</p>\` : ''}
+                                    \${highlights.length > 0 ? \`
+                                        <div class="flex flex-wrap justify-center gap-2">
+                                            \${highlights.map(h => \`
+                                                <span class="px-4 py-2 rounded-full text-white text-sm font-medium" style="background: \${accent}">
+                                                    \${h}
+                                                </span>
+                                            \`).join('')}
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             directions: {
                 name: '🗺️ Directions & Parking',
                 allowMultiple: false,
                 info: \`
                     <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                            <input type="text" placeholder="Directions & Parking" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="title" oninput="updatePreview()">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                            <input type="text" placeholder="123 Main Street, City, State" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="address" oninput="updatePreview()">
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Driving Directions</label>
                             <textarea placeholder="From highway, take exit 5..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="directions" oninput="updatePreview()"></textarea>
@@ -1001,39 +1105,144 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Parking Info</label>
                             <textarea placeholder="Street parking available, driveway..." rows="2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="parking" oninput="updatePreview()"></textarea>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Public Transit</label>
+                            <input type="text" placeholder="Bus line 12, Metro station nearby" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="transit" oninput="updatePreview()">
+                        </div>
                     </div>
                 \`,
                 style: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="cards">Info Cards</option>
+                                <option value="list">Simple List</option>
+                                <option value="boxes">Icon Boxes</option>
+                                <option value="compact">Compact View</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#fff7ed" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
-                    </div>
-                \`,
-                render: (data, style) => \`
-                    <div class="py-12 px-6" style="background: \${style.bg || '#fff7ed'}">
-                        <h2 class="text-2xl font-bold text-center mb-8">Directions & Parking</h2>
-                        <div class="max-w-md mx-auto space-y-4">
-                            \${data.directions ? \`
-                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">🗺️</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Directions</div>
-                                    <div class="text-sm">\${data.directions}</div>
-                                </div>
-                            </div>\` : ''}
-                            \${data.parking ? \`
-                            <div class="flex items-start gap-4 p-4 bg-white rounded-lg">
-                                <div class="text-2xl">🚗</div>
-                                <div>
-                                    <div class="text-xs text-gray-500 mb-1">Parking</div>
-                                    <div class="text-sm">\${data.parking}</div>
-                                </div>
-                            </div>\` : ''}
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                     </div>
-                \`
+                \`,
+                render: (data, style) => {
+                    const layout = style.layout || 'cards';
+                    const bg = style.bg || '#fff7ed';
+                    const accent = style.accent || '#f97316';
+                    const title = data.title || 'Directions & Parking';
+
+                    if (layout === 'cards') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <h2 class="text-2xl font-bold text-center mb-8">\${title}</h2>
+                                <div class="max-w-md mx-auto space-y-4">
+                                    \${data.address ? \`
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm">
+                                        <div class="text-2xl">📍</div>
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Address</div>
+                                            <div class="text-sm font-medium">\${data.address}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.directions ? \`
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm">
+                                        <div class="text-2xl">🗺️</div>
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Directions</div>
+                                            <div class="text-sm">\${data.directions}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.parking ? \`
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm">
+                                        <div class="text-2xl">🚗</div>
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Parking</div>
+                                            <div class="text-sm">\${data.parking}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.transit ? \`
+                                    <div class="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm">
+                                        <div class="text-2xl">🚇</div>
+                                        <div>
+                                            <div class="text-xs text-gray-500 mb-1">Public Transit</div>
+                                            <div class="text-sm">\${data.transit}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'list') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <h2 class="text-2xl font-bold mb-6 text-center">\${title}</h2>
+                                    <div class="space-y-4 text-sm">
+                                        \${data.address ? \`<div><span style="color: \${accent}; font-weight: 600;">📍 Address:</span> \${data.address}</div>\` : ''}
+                                        \${data.directions ? \`<div><span style="color: \${accent}; font-weight: 600;">🗺️ Directions:</span> \${data.directions}</div>\` : ''}
+                                        \${data.parking ? \`<div><span style="color: \${accent}; font-weight: 600;">🚗 Parking:</span> \${data.parking}</div>\` : ''}
+                                        \${data.transit ? \`<div><span style="color: \${accent}; font-weight: 600;">🚇 Transit:</span> \${data.transit}</div>\` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'boxes') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <h2 class="text-2xl font-bold mb-6 text-center">\${title}</h2>
+                                <div class="max-w-md mx-auto space-y-3">
+                                    \${data.address ? \`
+                                    <div class="p-4 bg-white rounded-lg border-l-4 text-center" style="border-color: \${accent}">
+                                        <div class="text-3xl mb-2">📍</div>
+                                        <div class="text-xs text-gray-500 mb-1">Address</div>
+                                        <div class="text-sm font-medium">\${data.address}</div>
+                                    </div>\` : ''}
+                                    \${data.directions ? \`
+                                    <div class="p-4 bg-white rounded-lg text-sm">
+                                        <div class="flex items-start gap-2">
+                                            <span class="text-xl">🗺️</span>
+                                            <div><span class="font-medium">Directions:</span> \${data.directions}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.parking ? \`
+                                    <div class="p-4 bg-white rounded-lg text-sm">
+                                        <div class="flex items-start gap-2">
+                                            <span class="text-xl">🚗</span>
+                                            <div><span class="font-medium">Parking:</span> \${data.parking}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                    \${data.transit ? \`
+                                    <div class="p-4 bg-white rounded-lg text-sm">
+                                        <div class="flex items-start gap-2">
+                                            <span class="text-xl">🚇</span>
+                                            <div><span class="font-medium">Transit:</span> \${data.transit}</div>
+                                        </div>
+                                    </div>\` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'compact') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto bg-white rounded-xl p-6 shadow-md">
+                                    <h2 class="text-xl font-bold mb-4 text-center" style="color: \${accent}">\${title}</h2>
+                                    <div class="space-y-3 text-sm">
+                                        \${data.address ? \`<div class="pb-3 border-b"><div class="text-xs text-gray-500 mb-1">📍 Address</div><div class="font-medium">\${data.address}</div></div>\` : ''}
+                                        \${data.directions ? \`<div class="pb-3 border-b"><div class="text-xs text-gray-500 mb-1">🗺️ Directions</div><div>\${data.directions}</div></div>\` : ''}
+                                        \${data.parking ? \`<div class="pb-3 border-b"><div class="text-xs text-gray-500 mb-1">🚗 Parking</div><div>\${data.parking}</div></div>\` : ''}
+                                        \${data.transit ? \`<div><div class="text-xs text-gray-500 mb-1">🚇 Public Transit</div><div>\${data.transit}</div></div>\` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             whattobring: {
                 name: '🎁 What to Bring',
@@ -1048,25 +1257,117 @@
                             <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
                             <textarea placeholder="Your presence is the best gift! If you'd like to bring something..." rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="message" oninput="updatePreview()"></textarea>
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Suggested Items (one per line)</label>
+                            <textarea placeholder="Drinks&#10;Snacks&#10;Desserts" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-data" data-field="items" oninput="updatePreview()"></textarea>
+                        </div>
                     </div>
                 \`,
                 style: \`
                     <div class="space-y-4">
                         <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 section-style" data-style="layout" onchange="updatePreview()">
+                                <option value="simple">Simple Message</option>
+                                <option value="list">Item List</option>
+                                <option value="cards">Item Cards</option>
+                                <option value="elegant">Elegant Card</option>
+                            </select>
+                        </div>
+                        <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
                             <input type="color" value="#ffffff" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="bg" oninput="updatePreview()">
                         </div>
-                    </div>
-                \`,
-                render: (data, style) => \`
-                    <div class="py-12 px-6 text-center" style="background: \${style.bg || '#ffffff'}">
-                        <div class="max-w-md mx-auto">
-                            <div class="text-5xl mb-4">🎁</div>
-                            <h2 class="text-2xl font-bold mb-4">\${data.title || 'What to Bring'}</h2>
-                            <p class="text-gray-700">\${data.message || 'Your presence is the best gift!'}</p>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Accent Color</label>
+                            <input type="color" value="#f97316" class="w-full h-12 rounded-lg cursor-pointer section-style" data-style="accent" oninput="updatePreview()">
                         </div>
                     </div>
-                \`
+                \`,
+                render: (data, style) => {
+                    const layout = style.layout || 'simple';
+                    const bg = style.bg || '#ffffff';
+                    const accent = style.accent || '#f97316';
+                    const title = data.title || 'What to Bring';
+                    const items = data.items ? data.items.split('\n').filter(i => i.trim()) : [];
+
+                    if (layout === 'simple') {
+                        return \`
+                            <div class="py-12 px-6 text-center" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <div class="text-5xl mb-4">🎁</div>
+                                    <h2 class="text-2xl font-bold mb-4">\${title}</h2>
+                                    <p class="text-gray-700">\${data.message || 'Your presence is the best gift!'}</p>
+                                    \${items.length > 0 ? \`
+                                        <div class="mt-6 text-sm text-gray-600">
+                                            <p class="mb-2">Suggested items:</p>
+                                            <div class="space-y-1">
+                                                \${items.map(item => \`<div>• \${item}</div>\`).join('')}
+                                            </div>
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'list') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto">
+                                    <h2 class="text-2xl font-bold mb-4 text-center">\${title}</h2>
+                                    \${data.message ? \`<p class="text-gray-700 text-center mb-6 text-sm">\${data.message}</p>\` : ''}
+                                    \${items.length > 0 ? \`
+                                        <div class="space-y-3">
+                                            \${items.map(item => \`
+                                                <div class="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+                                                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-white" style="background: \${accent}">🎁</div>
+                                                    <span class="text-gray-700">\${item}</span>
+                                                </div>
+                                            \`).join('')}
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'cards') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-lg mx-auto">
+                                    <h2 class="text-2xl font-bold mb-4 text-center">\${title}</h2>
+                                    \${data.message ? \`<p class="text-gray-700 text-center mb-6 text-sm">\${data.message}</p>\` : ''}
+                                    \${items.length > 0 ? \`
+                                        <div class="grid grid-cols-2 gap-3">
+                                            \${items.map(item => \`
+                                                <div class="p-4 bg-white rounded-lg shadow-sm text-center border-t-4" style="border-color: \${accent}">
+                                                    <div class="text-2xl mb-2">🎁</div>
+                                                    <div class="text-sm font-medium">\${item}</div>
+                                                </div>
+                                            \`).join('')}
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    } else if (layout === 'elegant') {
+                        return \`
+                            <div class="py-12 px-6" style="background: \${bg}">
+                                <div class="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8">
+                                    <div class="text-center mb-6">
+                                        <div class="text-5xl mb-3">🎁</div>
+                                        <h2 class="text-2xl font-bold mb-3" style="color: \${accent}">\${title}</h2>
+                                        \${data.message ? \`<p class="text-gray-600 text-sm italic">\${data.message}</p>\` : ''}
+                                    </div>
+                                    \${items.length > 0 ? \`
+                                        <div class="pt-6 border-t">
+                                            <div class="space-y-2 text-sm">
+                                                \${items.map(item => \`<div class="flex items-center gap-2 text-gray-700"><span style="color: \${accent}">✓</span> \${item}</div>\`).join('')}
+                                            </div>
+                                        </div>
+                                    \` : ''}
+                                </div>
+                            </div>
+                        \`;
+                    }
+                }
             },
             rsvp: {
                 name: '✉️ RSVP',
