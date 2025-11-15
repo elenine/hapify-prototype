@@ -30,6 +30,9 @@ window.sectionComponents.agenda = {
                                 <option value="gradient">Gradient Cards</option>
                                 <option value="table">Table Format</option>
                                 <option value="badges">Badge Timeline</option>
+                                <option value="zigzag">Zigzag Flow</option>
+                                <option value="accordion">Accordion Style</option>
+                                <option value="pills">Time Pills</option>
                             </select>
                         </div>
                         <div>
@@ -273,6 +276,95 @@ window.sectionComponents.agenda = {
                                                                 ${time || item}
                                                             </div>
                                                             <div class="text-sm font-semibold text-gray-900">${session || ''}</div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'zigzag':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-4">
+                                        ${scheduleItems.map((item, index) => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            const isEven = index % 2 === 0;
+                                            return `
+                                                <div class="flex items-center gap-3 ${isEven ? '' : 'flex-row-reverse'}">
+                                                    <div class="flex-shrink-0 ${isEven ? 'text-right' : 'text-left'}" style="min-width: 80px;">
+                                                        <div class="inline-block px-3 py-2 ${radius} ${shadow} text-xs font-bold" style="background: linear-gradient(135deg, ${isEven ? accentColor : secondaryColor}, ${isEven ? accentColor : secondaryColor}dd); color: white;">
+                                                            ${time || item}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-1 p-4 bg-white ${radius} ${shadow} transform ${isEven ? 'translate-x-0' : 'translate-x-0'}">
+                                                        <div class="text-sm font-semibold text-gray-900">${session || ''}</div>
+                                                    </div>
+                                                    <div class="flex-shrink-0 w-3 h-3 ${radius === 'rounded-none' ? '' : 'rounded-full'}" style="background: ${isEven ? accentColor : secondaryColor};"></div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'accordion':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto space-y-2">
+                                        ${scheduleItems.map((item, index) => {
+                                            const [time, session] = item.split('-').map(s => s.trim());
+                                            return `
+                                                <div class="bg-white ${radius} ${shadow} overflow-hidden">
+                                                    <div class="p-4" style="background: linear-gradient(90deg, ${accentColor}15, transparent);">
+                                                        <div class="flex items-center gap-3">
+                                                            <div class="flex-shrink-0 w-12 h-12 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center ${shadow}" style="background: ${accentColor}; color: white;">
+                                                                <span class="text-sm font-bold">${String(index + 1).padStart(2, '0')}</span>
+                                                            </div>
+                                                            <div class="flex-1">
+                                                                <div class="text-xs font-bold uppercase tracking-wide mb-1" style="color: ${accentColor};">${time || item}</div>
+                                                                <div class="text-sm font-semibold text-gray-900">${session || ''}</div>
+                                                            </div>
+                                                            <div class="flex-shrink-0 text-2xl" style="color: ${accentColor};">›</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'pills':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Event Schedule'}</h2>
+                                    <div class="max-w-md mx-auto">
+                                        <div class="flex flex-wrap gap-3 justify-center mb-6">
+                                            ${scheduleItems.map((item, index) => {
+                                                const [time, session] = item.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="inline-block px-4 py-2 ${radius === 'rounded-none' ? '' : 'rounded-full'} ${shadow} text-xs font-bold" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor}); color: white;">
+                                                        ${time || item}
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                        <div class="space-y-3">
+                                            ${scheduleItems.map((item, index) => {
+                                                const [time, session] = item.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="flex items-start gap-3 p-4 bg-white ${radius} ${shadow}">
+                                                        <div class="flex-shrink-0 w-8 h-8 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center text-xs font-bold" style="background: ${accentColor}20; color: ${accentColor};">
+                                                            ${index + 1}
+                                                        </div>
+                                                        <div class="flex-1 pt-0.5">
+                                                            <div class="text-xs font-semibold mb-1" style="color: ${accentColor};">${time || item}</div>
+                                                            <div class="text-sm font-medium text-gray-900">${session || ''}</div>
                                                         </div>
                                                     </div>
                                                 `;
