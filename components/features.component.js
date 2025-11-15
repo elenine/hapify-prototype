@@ -14,17 +14,7 @@ window.sectionComponents.features = {
                         <div class="border-t pt-4 mt-4">
                             <div class="flex justify-between items-center mb-3">
                                 <h4 class="font-medium text-gray-700">Features</h4>
-                                <button onclick="addDynamicItem('${sectionId}', 'features', (id, num) => \`
-                                    <div class='flex justify-between items-center mb-3'>
-                                        <h5 class='font-medium text-gray-600'>Feature \${num}</h5>
-                                        <button onclick='removeDynamicItem(this)' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
-                                    </div>
-                                    <div class='space-y-3'>
-                                        <input type='text' placeholder='Icon (emoji)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-icon-\${id}' oninput='updatePreview()'>
-                                        <input type='text' placeholder='Feature Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-title-\${id}' oninput='updatePreview()'>
-                                        <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='feature-desc-\${id}' oninput='updatePreview()'></textarea>
-                                    </div>
-                                \`); return false;" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Feature</button>
+                                <button onclick="addDynamicItem('${sectionId}', 'features'); return false;" type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">+ Add Feature</button>
                             </div>
                             <div data-items-container="features"></div>
                         </div>
