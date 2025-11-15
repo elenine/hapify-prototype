@@ -38,6 +38,10 @@ window.sectionComponents.contact = {
                                 <option value="gradient">Gradient Cards</option>
                                 <option value="timeline">Timeline Style</option>
                                 <option value="floating">Floating Badges</option>
+                                <option value="split-cards">Split Design Cards</option>
+                                <option value="compact-badges">Compact Badges</option>
+                                <option value="feature-box">Featured Box</option>
+                                <option value="circular-icons">Circular Icon Grid</option>
                             </select>
                         </div>
                         <div>
@@ -353,6 +357,157 @@ window.sectionComponents.contact = {
                                                 </div>
                                             </div>` : ''}
                                             ${!hasInfo ? '<div class="text-center text-gray-500 text-sm w-full">Add contact information</div>' : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'split-cards':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto space-y-3">
+                                        ${email ? `
+                                        <div class="flex items-stretch ${radius} ${shadowClass} overflow-hidden bg-white">
+                                            <div class="w-20 flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd);">
+                                                📧
+                                            </div>
+                                            <div class="flex-1 p-4">
+                                                <div class="text-xs uppercase tracking-wide mb-1 font-semibold" style="color: ${accentColor};">Email Address</div>
+                                                <div class="font-medium text-sm text-gray-800">${email}</div>
+                                            </div>
+                                        </div>` : ''}
+                                        ${phone ? `
+                                        <div class="flex items-stretch ${radius} ${shadowClass} overflow-hidden bg-white">
+                                            <div class="w-20 flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, ${secondaryColor}, ${secondaryColor}dd);">
+                                                📞
+                                            </div>
+                                            <div class="flex-1 p-4">
+                                                <div class="text-xs uppercase tracking-wide mb-1 font-semibold" style="color: ${secondaryColor};">Phone Number</div>
+                                                <div class="font-medium text-sm text-gray-800">${phone}</div>
+                                            </div>
+                                        </div>` : ''}
+                                        ${address ? `
+                                        <div class="flex items-stretch ${radius} ${shadowClass} overflow-hidden bg-white">
+                                            <div class="w-20 flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd);">
+                                                📍
+                                            </div>
+                                            <div class="flex-1 p-4">
+                                                <div class="text-xs uppercase tracking-wide mb-1 font-semibold" style="color: ${accentColor};">Location</div>
+                                                <div class="font-medium text-sm text-gray-800">${address}</div>
+                                            </div>
+                                        </div>` : ''}
+                                        ${!hasInfo ? '<div class="text-center text-gray-500 text-sm">Add contact information</div>' : ''}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'compact-badges':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="flex flex-wrap gap-2 justify-center">
+                                            ${email ? `
+                                            <div class="inline-flex items-center gap-2 px-4 py-3 ${radius} ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);">
+                                                <span class="text-lg">📧</span>
+                                                <span class="text-xs font-bold text-gray-800">${email}</span>
+                                            </div>` : ''}
+                                            ${phone ? `
+                                            <div class="inline-flex items-center gap-2 px-4 py-3 ${radius} ${shadowClass}" style="background: linear-gradient(135deg, ${secondaryColor}20, ${secondaryColor}40);">
+                                                <span class="text-lg">📞</span>
+                                                <span class="text-xs font-bold text-gray-800">${phone}</span>
+                                            </div>` : ''}
+                                            ${address ? `
+                                            <div class="inline-flex items-center gap-2 px-4 py-3 ${radius} ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}40);">
+                                                <span class="text-lg">📍</span>
+                                                <span class="text-xs font-bold text-gray-800">${address}</span>
+                                            </div>` : ''}
+                                            ${!hasInfo ? '<div class="text-center text-gray-500 text-sm w-full">Add contact information</div>' : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'feature-box':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative ${radius} ${shadowClass} overflow-hidden" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor});">
+                                            <div class="absolute top-0 right-0 text-9xl opacity-10 -mt-6 -mr-8">📞</div>
+                                            <div class="relative p-8 space-y-5">
+                                                <div class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs font-bold text-white uppercase tracking-wide mb-2">
+                                                    Contact Information
+                                                </div>
+                                                ${email ? `
+                                                <div class="flex items-center gap-3 p-4 bg-white bg-opacity-15 backdrop-blur-sm ${radius}">
+                                                    <span class="text-2xl">📧</span>
+                                                    <div class="flex-1">
+                                                        <div class="text-xs text-white opacity-80 uppercase tracking-wide">Email</div>
+                                                        <div class="font-semibold text-white">${email}</div>
+                                                    </div>
+                                                </div>` : ''}
+                                                ${phone ? `
+                                                <div class="flex items-center gap-3 p-4 bg-white bg-opacity-15 backdrop-blur-sm ${radius}">
+                                                    <span class="text-2xl">📞</span>
+                                                    <div class="flex-1">
+                                                        <div class="text-xs text-white opacity-80 uppercase tracking-wide">Phone</div>
+                                                        <div class="font-semibold text-white">${phone}</div>
+                                                    </div>
+                                                </div>` : ''}
+                                                ${address ? `
+                                                <div class="flex items-center gap-3 p-4 bg-white bg-opacity-15 backdrop-blur-sm ${radius}">
+                                                    <span class="text-2xl">📍</span>
+                                                    <div class="flex-1">
+                                                        <div class="text-xs text-white opacity-80 uppercase tracking-wide">Address</div>
+                                                        <div class="font-semibold text-white">${address}</div>
+                                                    </div>
+                                                </div>` : ''}
+                                                ${!hasInfo ? '<div class="text-center text-white text-sm">Add contact information</div>' : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'circular-icons':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    ${headerHtml}
+                                    <div class="max-w-md mx-auto">
+                                        <div class="grid gap-6">
+                                            ${email ? `
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-2xl ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd); color: white;">
+                                                    📧
+                                                </div>
+                                                <div class="flex-1 bg-white p-4 ${radius} ${shadowClass}">
+                                                    <div class="text-xs uppercase tracking-wide mb-1" style="color: ${accentColor};">Email Address</div>
+                                                    <div class="font-bold text-sm text-gray-800">${email}</div>
+                                                </div>
+                                            </div>` : ''}
+                                            ${phone ? `
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-2xl ${shadowClass}" style="background: linear-gradient(135deg, ${secondaryColor}, ${secondaryColor}dd); color: white;">
+                                                    📞
+                                                </div>
+                                                <div class="flex-1 bg-white p-4 ${radius} ${shadowClass}">
+                                                    <div class="text-xs uppercase tracking-wide mb-1" style="color: ${secondaryColor};">Phone Number</div>
+                                                    <div class="font-bold text-sm text-gray-800">${phone}</div>
+                                                </div>
+                                            </div>` : ''}
+                                            ${address ? `
+                                            <div class="flex items-center gap-4">
+                                                <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center text-2xl ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd); color: white;">
+                                                    📍
+                                                </div>
+                                                <div class="flex-1 bg-white p-4 ${radius} ${shadowClass}">
+                                                    <div class="text-xs uppercase tracking-wide mb-1" style="color: ${accentColor};">Our Location</div>
+                                                    <div class="font-bold text-sm text-gray-800">${address}</div>
+                                                </div>
+                                            </div>` : ''}
+                                            ${!hasInfo ? '<div class="text-center text-gray-500 text-sm">Add contact information</div>' : ''}
                                         </div>
                                     </div>
                                 </div>
