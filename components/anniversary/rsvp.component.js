@@ -35,6 +35,12 @@ window.sectionComponents.rsvp = {
                     <option value="framed">Framed - Bordered Style</option>
                     <option value="floating">Floating - Elevated Card</option>
                     <option value="modern">Modern - Sleek Design</option>
+                    <option value="ticket">Ticket - Event Style</option>
+                    <option value="postcard">Postcard - Vintage Style</option>
+                    <option value="neon">Neon - Glowing CTA</option>
+                    <option value="banner">Banner - Wide Display</option>
+                    <option value="dual-button">Dual Button - Yes/No Choice</option>
+                    <option value="countdown">Countdown - With Deadline</option>
                 </select>
             </div>
             <div>
@@ -411,6 +417,146 @@ window.sectionComponents.rsvp = {
                                 ${buttonElement(buttonStyle)}
                             </div>
                         </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ticket Layout
+        if (layout === 'ticket') {
+            return `
+                <div class="${spacingClasses[spacing]}" style="background: ${bg}">
+                    <div class="max-w-lg mx-auto">
+                        <div class="relative overflow-hidden ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${cardBg} 0%, ${secondaryColor}22 100%); border-left: 4px dashed ${buttonColor}; border-right: 4px dashed ${buttonColor};">
+                            <div class="absolute top-0 left-0 w-full h-2" style="background: repeating-linear-gradient(90deg, ${buttonColor} 0px, ${buttonColor} 15px, transparent 15px, transparent 30px);"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-2" style="background: repeating-linear-gradient(90deg, ${buttonColor} 0px, ${buttonColor} 15px, transparent 15px, transparent 30px);"></div>
+                            <div class="p-8 text-center">
+                                <div class="text-xs uppercase tracking-widest mb-2" style="color: ${buttonColor}">You're Invited</div>
+                                ${decorationMap[decorations] ? `<div class="${iconSizes[iconSize]} mb-4">${decorationMap[decorations]}</div>` : ''}
+                                <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-4" style="color: ${buttonColor}">${data.title || 'Please RSVP'}</h2>
+                                <p class="text-gray-600 mb-6">${data.message || "Let us know if you can join our celebration"}</p>
+                                ${deadlineStr ? `<div class="text-sm mb-6 p-3 ${borderRadiusClasses[borderRadius]}" style="background: ${buttonColor}11; color: ${buttonColor};">
+                                    <span class="font-semibold">RSVP by:</span> ${deadlineStr}
+                                </div>` : ''}
+                                ${buttonElement(buttonStyle)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Postcard Layout
+        if (layout === 'postcard') {
+            return `
+                <div class="${spacingClasses[spacing]}" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="relative ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} overflow-hidden" style="background: ${cardBg}; border: 8px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                            <div class="absolute top-4 right-4 w-20 h-16 border-4 ${borderRadiusClasses[borderRadius]}" style="border-color: ${buttonColor};">
+                                <div class="text-center pt-2">
+                                    <div class="text-xs" style="color: ${buttonColor};">STAMP</div>
+                                </div>
+                            </div>
+                            <div class="p-8">
+                                <div class="text-xs uppercase tracking-widest mb-6" style="color: ${buttonColor};">~ Please Respond ~</div>
+                                ${decorationMap[decorations] ? `<div class="${iconSizes[iconSize]} mb-4">${decorationMap[decorations]}</div>` : ''}
+                                <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-4" style="color: ${buttonColor}">${data.title || 'Please RSVP'}</h2>
+                                <p class="text-gray-600 mb-6 italic">${data.message || "Let us know if you can join our celebration"}</p>
+                                ${deadlineStr ? `<p class="text-sm text-gray-500 mb-6">Please reply by ${deadlineStr}</p>` : ''}
+                                <div class="border-t-2 border-dashed pt-6 mt-6" style="border-color: ${buttonColor}33">
+                                    ${buttonElement(buttonStyle)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Neon Layout
+        if (layout === 'neon') {
+            return `
+                <div class="${spacingClasses[spacing]}" style="background: #0a0a0a;">
+                    <div class="max-w-md mx-auto text-center p-8 ${borderRadiusClasses[borderRadius]}" style="background: #1a1a1a; border: 2px solid ${buttonColor}; box-shadow: 0 0 20px ${buttonColor}44, inset 0 0 20px ${buttonColor}11;">
+                        ${decorationMap[decorations] ? `<div class="${iconSizes[iconSize]} mb-6" style="filter: drop-shadow(0 0 10px ${buttonColor});">${decorationMap[decorations]}</div>` : ''}
+                        <h2 class="text-3xl ${fontWeightClasses[fontWeight]} mb-6 text-white" style="text-shadow: 0 0 20px ${buttonColor}, 0 0 40px ${buttonColor};">${data.title || 'Please RSVP'}</h2>
+                        <p class="text-gray-300 mb-8">${data.message || "Let us know if you can join our celebration"}</p>
+                        ${deadlineStr ? `<div class="text-sm mb-8 p-3 ${borderRadiusClasses[borderRadius]}" style="background: ${buttonColor}22; border: 1px solid ${buttonColor}; box-shadow: 0 0 10px ${buttonColor}44; color: ${secondaryColor};">
+                            <span class="${fontWeightClasses[fontWeight]}">Deadline:</span> ${deadlineStr}
+                        </div>` : ''}
+                        <button class="${buttonClasses[buttonStyle]} ${buttonSizeClasses[buttonSize]} ${fontWeightClasses[fontWeight]} text-white transition-all" style="background: ${buttonColor}; box-shadow: 0 0 20px ${buttonColor}66, inset 0 0 10px ${buttonColor}33; text-shadow: 0 0 10px white;">
+                            RSVP Now
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Banner Layout
+        if (layout === 'banner') {
+            return `
+                <div class="${spacingClasses[spacing]}" style="background: ${bg}">
+                    <div class="max-w-4xl mx-auto ${borderRadiusClasses[borderRadius]} overflow-hidden ${shadowClasses[shadow]}" style="background: linear-gradient(90deg, ${buttonColor} 0%, ${secondaryColor} 100%);">
+                        <div class="px-8 py-6 md:flex items-center justify-between gap-6 text-white">
+                            <div class="flex-1 text-center md:text-left mb-6 md:mb-0">
+                                ${decorationMap[decorations] ? `<div class="${iconSizes[iconSize]} mb-3">${decorationMap[decorations]}</div>` : ''}
+                                <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-2">${data.title || 'Please RSVP'}</h2>
+                                <p class="text-white opacity-90">${data.message || "Let us know if you can join our celebration"}</p>
+                                ${deadlineStr ? `<p class="text-xs mt-2 opacity-75">Reply by ${deadlineStr}</p>` : ''}
+                            </div>
+                            <div class="text-center">
+                                <button class="${buttonClasses[buttonStyle]} ${buttonSizeClasses[buttonSize]} ${fontWeightClasses[fontWeight]} bg-white hover:shadow-xl transition" style="color: ${buttonColor}">
+                                    RSVP Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Dual Button Layout
+        if (layout === 'dual-button') {
+            return `
+                <div class="${spacingClasses[spacing]}" style="background: ${bg}">
+                    <div class="max-w-md mx-auto text-center">
+                        ${decorationMap[decorations] ? `<div class="${iconSizes[iconSize]} mb-4">${decorationMap[decorations]}</div>` : ''}
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-4" style="color: ${buttonColor}">${data.title || 'Will You Join Us?'}</h2>
+                        <p class="text-gray-600 mb-6">${data.message || "Let us know if you can join our celebration"}</p>
+                        ${deadlineStr ? `<p class="text-sm text-gray-500 mb-8">Please respond by ${deadlineStr}</p>` : ''}
+                        <div class="flex gap-4 justify-center">
+                            <button class="${buttonClasses[buttonStyle]} ${buttonSizeClasses[buttonSize]} ${fontWeightClasses[fontWeight]} text-white ${shadowClasses[shadow]} hover:shadow-xl transition flex-1 max-w-xs" style="background: ${buttonColor}">
+                                ✓ Yes, I'll Be There
+                            </button>
+                            <button class="${buttonClasses[buttonStyle]} ${buttonSizeClasses[buttonSize]} ${fontWeightClasses[fontWeight]} border-2 hover:bg-gray-50 transition flex-1 max-w-xs" style="color: ${buttonColor}; border-color: ${buttonColor}">
+                                ✗ Can't Make It
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Countdown Layout
+        if (layout === 'countdown') {
+            const daysUntil = deadlineStr ? Math.ceil((new Date(data.deadline) - new Date()) / (1000 * 60 * 60 * 24)) : 0;
+            return `
+                <div class="${spacingClasses[spacing]}" style="background: ${bg}">
+                    <div class="max-w-lg mx-auto text-center">
+                        ${decorationMap[decorations] ? `<div class="${iconSizes[iconSize]} mb-4">${decorationMap[decorations]}</div>` : ''}
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-6" style="color: ${buttonColor}">${data.title || 'Please RSVP'}</h2>
+                        ${deadlineStr ? `
+                        <div class="mb-8">
+                            <div class="inline-block p-6 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${buttonColor}11 0%, ${secondaryColor}11 100%); border: 2px solid ${buttonColor};">
+                                <div class="text-xs uppercase tracking-widest mb-2" style="color: ${buttonColor}">RSVP Deadline</div>
+                                <div class="text-5xl ${fontWeightClasses[fontWeight]} mb-2" style="color: ${buttonColor}">${daysUntil > 0 ? daysUntil : 0}</div>
+                                <div class="text-sm text-gray-600">Days Remaining</div>
+                                <div class="text-xs text-gray-500 mt-2">${deadlineStr}</div>
+                            </div>
+                        </div>
+                        ` : ''}
+                        <p class="text-gray-600 mb-8">${data.message || "Let us know if you can join our celebration"}</p>
+                        ${buttonElement(buttonStyle)}
                     </div>
                 </div>
             `;

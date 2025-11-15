@@ -36,6 +36,12 @@ window.sectionComponents.milestone = {
                     <option value="modern">Modern - Asymmetric Layout</option>
                     <option value="vintage">Vintage - Classic Style</option>
                     <option value="confetti">Confetti - Festive Design</option>
+                    <option value="neon">Neon - Glowing Effect</option>
+                    <option value="ribbon">Ribbon - Award Style</option>
+                    <option value="counter">Counter - Digital Display</option>
+                    <option value="medal">Medal - Achievement Badge</option>
+                    <option value="stamp">Stamp - Commemorative</option>
+                    <option value="ticket">Ticket - Event Style</option>
                 </select>
             </div>
             <div>
@@ -407,6 +413,148 @@ window.sectionComponents.milestone = {
                             ${data.description ? `<p class="text-gray-700 mt-4">${data.description}</p>` : ''}
                             ${decorationMap[decorations] ? `<div class="text-3xl mt-6">${decorationMap[decorations]}</div>` : ''}
                             <div class="text-4xl mt-4">💕 ❤️ 💕</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Neon Layout
+        if (layout === 'neon') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: #0a0a0a;">
+                    <div class="max-w-md mx-auto text-center">
+                        <h2 class="text-3xl ${fontWeightClasses[fontWeight]} mb-8" style="color: ${numberColor}; text-shadow: 0 0 20px ${numberColor}, 0 0 40px ${numberColor};">Milestone</h2>
+                        ${decorationMap[decorations] ? `<div class="text-3xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                        <div class="relative inline-block p-12 ${cardClasses[cardStyle]}" style="background: #1a1a1a; border: 3px solid ${numberColor}; box-shadow: 0 0 20px ${numberColor}, inset 0 0 20px ${numberColor}33;">
+                            <div class="${numberSizeClasses[numberSize]} ${fontWeightClasses[fontWeight]} ${animationClasses[animation]} mb-4" style="color: ${numberColor}; text-shadow: 0 0 30px ${numberColor}, 0 0 60px ${numberColor}, 0 0 90px ${numberColor};">${data.years || '0'}</div>
+                            <div class="text-2xl ${fontWeightClasses[fontWeight]} uppercase tracking-widest" style="color: ${accentColor}; text-shadow: 0 0 10px ${accentColor};">Years</div>
+                        </div>
+                        ${dateStr ? `<p class="text-white mt-6">Married ${dateStr}</p>` : ''}
+                        ${data.description ? `<p class="text-gray-300 mt-6">${data.description}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ribbon Layout
+        if (layout === 'ribbon') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-8">Milestone Achievement</h2>
+                        ${decorationMap[decorations] ? `<div class="text-3xl text-center mb-6">${decorationMap[decorations]}</div>` : ''}
+                        <div class="relative">
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full flex items-center justify-center ${shadowClasses[shadow]}" style="background: ${numberColor}; border: 4px solid ${accentColor};">
+                                <span class="text-2xl">🏆</span>
+                            </div>
+                            <div class="relative pt-12 pb-8 px-8 text-center" style="background: linear-gradient(135deg, ${cardBg} 0%, ${accentColor}22 100%); clip-path: polygon(0 0, 100% 0, 95% 100%, 50% 85%, 5% 100%);">
+                                <div class="${numberSizeClasses[numberSize]} ${fontWeightClasses[fontWeight]} ${animationClasses[animation]} mb-2" style="color: ${numberColor}">${data.years || '0'}</div>
+                                <div class="text-xl ${fontWeightClasses[fontWeight]} uppercase tracking-wide mb-4">Years Together</div>
+                                ${dateStr ? `<div class="text-sm text-gray-600">Since ${dateStr}</div>` : ''}
+                                ${data.description ? `<p class="text-gray-700 mt-4 text-sm">${data.description}</p>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Counter Layout
+        if (layout === 'counter') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-xl mx-auto text-center">
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-8">Anniversary Counter</h2>
+                        <div class="inline-block p-8 ${cardClasses[cardStyle]} ${shadowClasses[shadow]}" style="background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%); border: 2px solid ${numberColor};">
+                            <div class="flex items-center justify-center gap-2 mb-4">
+                                ${decorationMap[decorations] ? `<div class="text-2xl">${decorationMap[decorations]}</div>` : ''}
+                            </div>
+                            <div class="font-mono ${numberSizeClasses[numberSize]} ${fontWeightClasses[fontWeight]} ${animationClasses[animation]} px-6 py-4 rounded ${shadowClasses[shadow]}" style="background: #000; color: ${numberColor}; text-shadow: 0 0 20px ${numberColor}; border: 2px solid ${numberColor}44; letter-spacing: 0.1em;">
+                                ${String(data.years || '0').padStart(2, '0')}
+                            </div>
+                            <div class="text-lg ${fontWeightClasses[fontWeight]} uppercase tracking-wider mt-4 text-gray-300">Years Together</div>
+                            ${dateStr ? `<div class="text-xs text-gray-500 mt-4">Since ${dateStr}</div>` : ''}
+                        </div>
+                        ${data.description ? `<p class="text-gray-700 mt-8 max-w-md mx-auto">${data.description}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Medal Layout
+        if (layout === 'medal') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-sm mx-auto text-center">
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} mb-8">Achievement Unlocked</h2>
+                        ${decorationMap[decorations] ? `<div class="text-3xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                        <div class="relative inline-block">
+                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-20 h-8 ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${numberColor} 0%, ${accentColor} 100%); clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);"></div>
+                            <div class="relative w-48 h-48 rounded-full flex items-center justify-center ${shadowClasses[shadow]} ${animationClasses[animation]}" style="background: radial-gradient(circle at 30% 30%, ${accentColor} 0%, ${numberColor} 100%); border: 6px solid ${bg}; box-shadow: 0 0 0 4px ${numberColor}, 0 10px 30px rgba(0,0,0,0.3);">
+                                <div class="text-center">
+                                    <div class="text-white ${numberSizeClasses[numberSize]} ${fontWeightClasses[fontWeight]}" style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);">${data.years || '0'}</div>
+                                    <div class="text-white text-sm ${fontWeightClasses[fontWeight]} uppercase tracking-widest">YEARS</div>
+                                </div>
+                            </div>
+                        </div>
+                        ${dateStr ? `<p class="text-lg mt-8">Since ${dateStr}</p>` : ''}
+                        ${data.description ? `<p class="text-gray-700 mt-6">${data.description}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Stamp Layout
+        if (layout === 'stamp') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-8">Commemorative Stamp</h2>
+                        <div class="relative p-2" style="background: repeating-linear-gradient(90deg, ${numberColor} 0px, ${numberColor} 10px, transparent 10px, transparent 20px), repeating-linear-gradient(0deg, ${numberColor} 0px, ${numberColor} 10px, transparent 10px, transparent 20px);">
+                            <div class="p-8 text-center ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${cardBg} 0%, ${accentColor}22 100%);">
+                                ${decorationMap[decorations] ? `<div class="text-3xl mb-4">${decorationMap[decorations]}</div>` : ''}
+                                <div class="border-4 border-dashed p-6 mb-4" style="border-color: ${numberColor};">
+                                    <div class="${numberSizeClasses[numberSize]} ${fontWeightClasses[fontWeight]} ${animationClasses[animation]}" style="color: ${numberColor}">${data.years || '0'}</div>
+                                </div>
+                                <div class="text-xl ${fontWeightClasses[fontWeight]} uppercase tracking-widest mb-2">Years Together</div>
+                                ${dateStr ? `<div class="text-sm text-gray-600 italic">Est. ${dateStr}</div>` : ''}
+                                ${data.description ? `<p class="text-gray-700 mt-4 text-sm italic">${data.description}</p>` : ''}
+                                <div class="mt-6 pt-4 border-t-2 border-dashed" style="border-color: ${numberColor}33">
+                                    <div class="text-xs uppercase tracking-widest text-gray-500">Anniversary Edition</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Ticket Layout
+        if (layout === 'ticket') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-lg mx-auto">
+                        <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-8">Anniversary Ticket</h2>
+                        <div class="relative overflow-hidden ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${cardBg} 0%, ${accentColor}22 100%); border-left: 4px dashed ${numberColor}; border-right: 4px dashed ${numberColor};">
+                            <div class="absolute top-0 left-0 w-full h-2" style="background: repeating-linear-gradient(90deg, ${numberColor} 0px, ${numberColor} 15px, transparent 15px, transparent 30px);"></div>
+                            <div class="absolute bottom-0 left-0 w-full h-2" style="background: repeating-linear-gradient(90deg, ${numberColor} 0px, ${numberColor} 15px, transparent 15px, transparent 30px);"></div>
+
+                            <div class="grid grid-cols-3 gap-0">
+                                <div class="col-span-2 p-8 border-r-4 border-dashed" style="border-color: ${numberColor}33">
+                                    <div class="text-xs uppercase tracking-widest mb-2" style="color: ${numberColor}">Admit One To</div>
+                                    <h3 class="text-2xl ${fontWeightClasses[fontWeight]} mb-6">Anniversary Celebration</h3>
+                                    ${dateStr ? `<div class="mb-4"><span class="text-xs uppercase text-gray-500">Date:</span> <span class="font-medium">${dateStr}</span></div>` : ''}
+                                    ${data.description ? `<p class="text-sm text-gray-700">${data.description}</p>` : ''}
+                                    ${decorationMap[decorations] ? `<div class="text-2xl mt-4">${decorationMap[decorations]}</div>` : ''}
+                                </div>
+                                <div class="col-span-1 flex items-center justify-center p-6" style="background: linear-gradient(135deg, ${numberColor} 0%, ${accentColor} 100%);">
+                                    <div class="text-center transform -rotate-90">
+                                        <div class="text-white ${fontWeightClasses[fontWeight]} text-5xl mb-2 ${animationClasses[animation]}">${data.years || '0'}</div>
+                                        <div class="text-white text-xs uppercase tracking-widest">YEARS</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
