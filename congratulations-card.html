@@ -3,126 +3,612 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Congratulations Card - InviteGen</title>
+    <title>Congratulations Card Creator - InviteGen</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="text-2xl hover:scale-110 transition-transform">🎨</a>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
+                            InviteGen
+                        </h1>
+                        <p class="text-xs text-gray-500">Congratulations Card</p>
+                    </div>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="previewFullscreen()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        👁️ Preview
+                    </button>
+                    <button onclick="generateQR()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition">
+                        📱 QR Code
+                    </button>
+                    <button onclick="publishProject()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg text-sm font-medium hover:shadow-lg transition">
+                        🚀 Publish
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!--
-    ============================================
-    CONGRATULATIONS CARD TEMPLATE
-    ============================================
+    <!-- Main Container -->
+    <div class="flex h-[calc(100vh-73px)]">
+        <!-- Left Panel - Editor -->
+        <div class="w-full lg:w-5/12 bg-white border-r overflow-y-auto">
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Create Congratulations Card</h2>
+                    <p class="text-sm text-gray-600 mt-1">Celebrate achievements with style</p>
+                </div>
 
-    PURPOSE:
-    This template is for celebrating achievements, milestones, and successes.
-    Perfect for congratulating someone on a new job, promotion, graduation,
-    engagement, new home, new baby, award, or any significant accomplishment.
+                <!-- Sections Container -->
+                <div id="sectionsContainer" class="space-y-4">
+                    <!-- Sections will be added here dynamically -->
+                </div>
 
-    STRUCTURE TO FOLLOW:
-    Please follow the exact structure from business-portfolio.html:
+                <!-- Add Section Button -->
+                <button onclick="openSectionModal()" class="w-full mt-6 py-4 border-2 border-dashed border-gray-300 rounded-xl text-amber-600 font-semibold hover:border-amber-400 hover:bg-amber-50 transition flex items-center justify-center gap-2">
+                    <span class="text-xl">+</span>
+                    Add Section
+                </button>
+            </div>
+        </div>
 
-    1. HEADER (Sticky Navigation)
-       - Logo and title
-       - Action buttons (Publish, Preview, QR)
-       - Use gradient: from-yellow-400 to-amber-500 (matching home page card)
+        <!-- Right Panel - Preview -->
+        <div class="hidden lg:flex w-7/12 bg-gradient-to-br from-gray-100 to-gray-200 p-8 overflow-y-auto justify-center">
+            <div class="h-fit">
+                <div class="flex justify-between items-center mb-6 max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold text-gray-700">Live Preview</h3>
+                    <div class="flex gap-2">
+                        <button onclick="setDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn active" data-device="mobile">
+                            📱
+                        </button>
+                        <button onclick="setDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition device-btn" data-device="tablet">
+                            💻
+                        </button>
+                    </div>
+                </div>
 
-    2. MAIN CONTAINER (Split Layout)
-       - Left Panel: Editor Interface
-       - Right Panel: Live Preview
-
-    3. SECTION TEMPLATES OBJECT (JavaScript)
-       Create 9 section types appropriate for congratulations messages:
-
-       Suggested sections for Congratulations Cards:
-       a) coverMessage - Main congratulations message with recipient name
-       b) achievement - Specific achievement being celebrated
-       c) photo - Photo of the accomplishment or celebratory image
-       d) praise - Words of admiration and recognition
-       e) journey - Acknowledge the hard work that led to this moment
-       f) quote - Motivational or celebratory quote
-       g) futureWishes - Best wishes for continued success
-       h) celebration - Suggest celebration or next steps
-       i) signature - Personal closing from sender
-
-    4. INFO/STYLE TABS PATTERN
-       Each section should have:
-       - Info Tab: Content fields (achievement details, recipient name, etc.)
-       - Style Tab: Visual customization (vibrant colors, bold fonts)
-
-    5. CORE FUNCTIONS (JavaScript)
-       - Same as business-portfolio.html
-       - openSectionModal() / closeSectionModal()
-       - addSection(type)
-       - removeSection(id)
-       - switchTab(event, id, tab)
-       - getSectionData(section)
-       - updatePreview()
-       - handleImageUpload(input)
-       - setDevice(device)
-       - previewFullscreen()
-       - generateQR()
-       - copyUrl()
-       - publishProject()
-
-    6. MODALS
-       - Section Selection Modal (9 section types grid)
-       - QR Code Modal (for sharing)
-
-    COLOR SCHEME:
-    - Primary gradient: from-yellow-400 to-amber-500
-    - Accent colors: yellow-600, amber-600
-    - Bright, celebratory, energetic tones
-
-    KEY CHARACTERISTICS:
-    - Enthusiastic and celebratory tone
-    - Focus on the specific achievement
-    - Acknowledge effort and hard work
-    - Express genuine pride and happiness
-    - Versatile for many types of accomplishments
-
-    COMMON USE CASES:
-    - New job or promotion
-    - Graduation (different from graduation ceremony invitation)
-    - Engagement or wedding
-    - New home purchase
-    - Baby birth
-    - Award or recognition
-    - Business success
-    - Personal milestone
-    - Competition win
-    - Project completion
-
-    PREVIEW RENDERING:
-    Congratulations cards should render with:
-    - Bold, celebratory typography
-    - Bright, energetic colors
-    - Eye-catching design elements
-    - Confetti or celebration graphics (optional)
-    - Clear focus on the achievement
-
-    TONE GUIDELINES:
-    - Be genuinely enthusiastic
-    - Personalize the message to the specific achievement
-    - Acknowledge the effort behind the success
-    - Keep it positive and forward-looking
-    - Balance praise with humility
-
-    ============================================
--->
-
-<!-- TODO: Implement the full structure following business-portfolio.html -->
-
-<div class="min-h-screen flex items-center justify-center">
-    <div class="text-center">
-        <div class="text-6xl mb-4">🎉</div>
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">Congratulations Card</h1>
-        <p class="text-gray-600 mb-4">Template structure coming soon...</p>
-        <p class="text-sm text-gray-500">Follow business-portfolio.html structure</p>
-        <a href="index.html" class="inline-block mt-6 bg-gradient-to-r from-yellow-400 to-amber-500 text-white px-6 py-3 rounded-lg hover:shadow-lg transition">
-            ← Back to Home
-        </a>
+                <!-- Mobile Frame -->
+                <div id="mobileFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl mx-auto">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="previewContent">
+                        <div class="flex items-center justify-center h-full text-center p-8">
+                            <div>
+                                <div class="text-6xl mb-4">🎉</div>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                                <p class="text-gray-600 text-sm">Add sections to build your congratulations card</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 
+    <!-- Add Section Modal -->
+    <div id="sectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b flex justify-between items-center bg-white">
+                <h3 class="text-2xl font-bold">Add New Section</h3>
+                <button onclick="closeSectionModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="border-b flex bg-gray-50">
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn active" onclick="switchModalTab(event, 'most-used')">
+                    ⭐ Most Used
+                </button>
+                <button class="flex-1 px-6 py-4 text-sm font-medium modal-tab-btn" onclick="switchModalTab(event, 'more')">
+                    ➕ More Sections
+                </button>
+            </div>
+
+            <!-- Tab Content Container -->
+            <div class="overflow-y-auto flex-1">
+                <!-- Most Used Tab -->
+                <div class="modal-tab-content p-6" data-modal-tab="most-used">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="coverMessage" onclick="addSection('coverMessage')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎉</div>
+                            <div class="font-semibold text-sm">Cover Message</div>
+                        </button>
+                        <button data-section-type="achievement" onclick="addSection('achievement')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🏆</div>
+                            <div class="font-semibold text-sm">Achievement</div>
+                        </button>
+                        <button data-section-type="praise" onclick="addSection('praise')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">⭐</div>
+                            <div class="font-semibold text-sm">Praise</div>
+                        </button>
+                        <button data-section-type="photo" onclick="addSection('photo')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">📸</div>
+                            <div class="font-semibold text-sm">Photo</div>
+                        </button>
+                        <button data-section-type="signature" onclick="addSection('signature')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">✍️</div>
+                            <div class="font-semibold text-sm">Signature</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- More Sections Tab -->
+                <div class="modal-tab-content p-6 hidden" data-modal-tab="more">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button data-section-type="journey" onclick="addSection('journey')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🚀</div>
+                            <div class="font-semibold text-sm">Journey</div>
+                        </button>
+                        <button data-section-type="quote" onclick="addSection('quote')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💭</div>
+                            <div class="font-semibold text-sm">Quote</div>
+                        </button>
+                        <button data-section-type="futureWishes" onclick="addSection('futureWishes')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🌟</div>
+                            <div class="font-semibold text-sm">Future Wishes</div>
+                        </button>
+                        <button data-section-type="celebration" onclick="addSection('celebration')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎊</div>
+                            <div class="font-semibold text-sm">Celebration</div>
+                        </button>
+                        <button data-section-type="memories" onclick="addSection('memories')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💭</div>
+                            <div class="font-semibold text-sm">Memories</div>
+                        </button>
+                        <button data-section-type="teamMessages" onclick="addSection('teamMessages')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">👥</div>
+                            <div class="font-semibold text-sm">Team Messages</div>
+                        </button>
+                        <button data-section-type="successTimeline" onclick="addSection('successTimeline')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">📅</div>
+                            <div class="font-semibold text-sm">Timeline</div>
+                        </button>
+                        <button data-section-type="advice" onclick="addSection('advice')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">💡</div>
+                            <div class="font-semibold text-sm">Advice</div>
+                        </button>
+                        <button data-section-type="video" onclick="addSection('video')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🎥</div>
+                            <div class="font-semibold text-sm">Video</div>
+                        </button>
+                        <button data-section-type="gallery" onclick="addSection('gallery')" class="p-6 border-2 border-gray-200 rounded-xl hover:border-amber-500 hover:bg-amber-50 transition text-center">
+                            <div class="text-4xl mb-2">🖼️</div>
+                            <div class="font-semibold text-sm">Gallery</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Preview Button (Mobile Only) -->
+    <button onclick="openMobilePreview()" class="lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center text-2xl">
+        👁️
+    </button>
+
+    <!-- Mobile Preview Modal -->
+    <div id="mobilePreviewModal" class="hidden fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4">
+        <div class="w-full h-full flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="text-lg font-semibold text-white">Live Preview</h3>
+                <button onclick="closeMobilePreview()" class="text-white hover:text-gray-300 text-3xl w-10 h-10 flex items-center justify-center">×</button>
+            </div>
+
+            <!-- Device Toggle -->
+            <div class="flex gap-2 justify-center mb-4">
+                <button onclick="setMobilePreviewDevice('mobile')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn active" data-device="mobile">
+                    📱 Mobile
+                </button>
+                <button onclick="setMobilePreviewDevice('tablet')" class="p-2 bg-white rounded-lg shadow-sm hover:shadow transition mobile-preview-device-btn" data-device="tablet">
+                    💻 Tablet
+                </button>
+            </div>
+
+            <!-- Mobile Frame -->
+            <div class="flex-1 flex items-center justify-center overflow-auto">
+                <div id="mobilePreviewFrame" class="w-[375px] h-[667px] bg-gray-900 rounded-[36px] p-3 shadow-2xl">
+                    <div class="w-full h-full bg-white rounded-[28px] overflow-y-auto" id="mobilePreviewContent">
+                        <!-- Preview content will be copied here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">QR Code Generated</h3>
+                <button onclick="closeQRModal()" class="text-gray-400 hover:text-gray-600 text-2xl">×</button>
+            </div>
+            <div class="text-center">
+                <div class="w-64 h-64 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📱</div>
+                        <div class="text-sm text-gray-600">QR Code</div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-3 rounded-lg mb-4 font-mono text-sm break-all" id="shareUrl">
+                    https://invitegen.com/view/congrats123
+                </div>
+                <button onclick="copyUrl()" class="w-full bg-amber-600 text-white py-3 rounded-lg font-semibold hover:bg-amber-700 transition">
+                    📋 Copy URL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Component System -->
+    <script src="components/congratulations/dynamic-templates.js"></script>
+    <script src="components/congratulations/layout.component.js"></script>
+    <script src="components/congratulations/coverMessage.component.js"></script>
+    <script src="components/congratulations/achievement.component.js"></script>
+    <script src="components/congratulations/photo.component.js"></script>
+    <script src="components/congratulations/praise.component.js"></script>
+    <script src="components/congratulations/journey.component.js"></script>
+    <script src="components/congratulations/quote.component.js"></script>
+    <script src="components/congratulations/futureWishes.component.js"></script>
+    <script src="components/congratulations/celebration.component.js"></script>
+    <script src="components/congratulations/signature.component.js"></script>
+    <script src="components/congratulations/memories.component.js"></script>
+    <script src="components/congratulations/teamMessages.component.js"></script>
+    <script src="components/congratulations/successTimeline.component.js"></script>
+    <script src="components/congratulations/advice.component.js"></script>
+    <script src="components/congratulations/video.component.js"></script>
+    <script src="components/congratulations/gallery.component.js"></script>
+    <script src="components/congratulations/components-loader.js"></script>
+
+    <script>
+        let sectionCounter = 0;
+        let sectionTemplates = {};
+
+        function openSectionModal() {
+            updateSectionAvailability();
+            document.getElementById('sectionModal').classList.remove('hidden');
+        }
+
+        function updateSectionAvailability() {
+            const addedSections = {};
+            document.querySelectorAll('.section-item').forEach(section => {
+                const type = section.dataset.type;
+                addedSections[type] = (addedSections[type] || 0) + 1;
+            });
+
+            document.querySelectorAll('[data-section-type]').forEach(button => {
+                const type = button.dataset.sectionType;
+                const template = sectionTemplates[type];
+
+                if (!template) return;
+
+                const isAdded = addedSections[type] > 0;
+                const allowMultiple = template.allowMultiple !== false;
+
+                if (isAdded && !allowMultiple) {
+                    button.disabled = true;
+                    button.classList.add('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.remove('hover:border-amber-500', 'hover:bg-amber-50');
+
+                    if (!button.querySelector('.added-badge')) {
+                        const badge = document.createElement('span');
+                        badge.className = 'added-badge absolute top-2 right-2 text-xs bg-green-500 text-white px-2 py-1 rounded';
+                        badge.textContent = '✓ Added';
+                        button.style.position = 'relative';
+                        button.appendChild(badge);
+                    }
+                } else {
+                    button.disabled = false;
+                    button.classList.remove('opacity-50', 'cursor-not-allowed', 'bg-gray-100');
+                    button.classList.add('hover:border-amber-500', 'hover:bg-amber-50');
+
+                    const badge = button.querySelector('.added-badge');
+                    if (badge) badge.remove();
+                }
+            });
+        }
+
+        function switchModalTab(event, tabName) {
+            document.querySelectorAll('.modal-tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-amber-600', 'border-b-2', 'border-amber-600', 'bg-white');
+            });
+
+            document.querySelectorAll('.modal-tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            event.target.classList.add('active', 'text-amber-600', 'border-b-2', 'border-amber-600', 'bg-white');
+            document.querySelector(`[data-modal-tab="${tabName}"]`).classList.remove('hidden');
+        }
+
+        function closeSectionModal() {
+            document.getElementById('sectionModal').classList.add('hidden');
+        }
+
+        function addSection(type) {
+            const template = sectionTemplates[type];
+            const id = `section-${sectionCounter++}`;
+            const isLayout = type === 'layout';
+
+            const canRemove = !isLayout;
+            const removeButton = canRemove ? `<button onclick="removeSection('${id}')" class="text-gray-400 hover:text-red-600 transition">✕</button>` : '';
+            const dragHandle = isLayout ? '' : `<span class="cursor-move text-gray-400">⋮⋮</span>`;
+
+            const sectionHTML = `
+                <div class="border border-gray-200 rounded-xl overflow-hidden section-item ${isLayout ? 'border-amber-300 bg-amber-50' : ''}" data-id="${id}" data-type="${type}" ${isLayout ? 'data-permanent="true"' : ''}>
+                    <div class="bg-gray-50 border-b px-4 py-3 flex justify-between items-center ${isLayout ? 'bg-amber-100' : ''}">
+                        <div class="flex items-center gap-2">
+                            ${dragHandle}
+                            <span class="font-semibold text-sm">${template.name}</span>
+                            ${isLayout ? '<span class="ml-2 text-xs bg-amber-200 text-amber-700 px-2 py-1 rounded">Global Settings</span>' : ''}
+                        </div>
+                        ${removeButton}
+                    </div>
+                    <div class="border-b flex">
+                        <button class="flex-1 px-4 py-3 text-sm font-medium border-r tab-btn active" onclick="switchTab(event, '${id}', 'info')">
+                            Info
+                        </button>
+                        <button class="flex-1 px-4 py-3 text-sm font-medium tab-btn" onclick="switchTab(event, '${id}', 'style')">
+                            Style
+                        </button>
+                    </div>
+                    <div class="p-4 tab-content" data-tab="info">
+                        ${typeof template.info === 'function' ? template.info(id) : template.info}
+                    </div>
+                    <div class="p-4 tab-content hidden" data-tab="style">
+                        ${template.style}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('sectionsContainer').insertAdjacentHTML('beforeend', sectionHTML);
+            if (!isLayout) {
+                closeSectionModal();
+            }
+            updatePreview();
+        }
+
+        function removeSection(id) {
+            const section = document.querySelector(`[data-id="${id}"]`);
+            if (section && section.dataset.permanent === 'true') {
+                alert('The Layout section contains global settings and cannot be removed.');
+                return;
+            }
+            if (confirm('Remove this section?')) {
+                section.remove();
+                updatePreview();
+            }
+        }
+
+        function switchTab(event, sectionId, tab) {
+            const section = document.querySelector(`[data-id="${sectionId}"]`);
+            section.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-amber-600', 'border-b-2', 'border-amber-600'));
+            section.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            event.target.classList.add('active', 'text-amber-600', 'border-b-2', 'border-amber-600');
+            section.querySelector(`[data-tab="${tab}"]`).classList.remove('hidden');
+        }
+
+        function getSectionData(section) {
+            const data = {};
+            const style = {};
+
+            section.querySelectorAll('.section-data').forEach(input => {
+                const field = input.dataset.field;
+                if (input.type === 'file' && input.dataset.imageData) {
+                    data[field] = input.dataset.imageData;
+                } else {
+                    data[field] = input.value;
+                }
+            });
+
+            section.querySelectorAll('.section-style').forEach(input => {
+                style[input.dataset.style] = input.value;
+            });
+
+            return { data, style };
+        }
+
+        function updatePreview() {
+            const sections = document.querySelectorAll('.section-item');
+            let html = '';
+            let globalStyles = {};
+
+            const layoutSection = document.querySelector('[data-type="layout"]');
+            if (layoutSection) {
+                const { style } = getSectionData(layoutSection);
+                globalStyles = style;
+            }
+
+            globalStyles = {
+                primaryColor: globalStyles.primaryColor || '#f59e0b',
+                secondaryColor: globalStyles.secondaryColor || '#ea580c',
+                bgColor: globalStyles.bgColor || '#ffffff',
+                textColor: globalStyles.textColor || '#1f2937',
+                fontFamily: globalStyles.fontFamily || 'system-ui, -apple-system, sans-serif',
+                borderRadius: globalStyles.borderRadius || '8px',
+                spacing: globalStyles.spacing || 'normal'
+            };
+
+            if (sections.length === 0 || sections.length === 1) {
+                html = `
+                    <div class="flex items-center justify-center h-full text-center p-8">
+                        <div>
+                            <div class="text-6xl mb-4">🎉</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Start Creating</h3>
+                            <p class="text-gray-600 text-sm">Add sections to build your congratulations card</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                sections.forEach(section => {
+                    const type = section.dataset.type;
+                    if (type === 'layout') return;
+                    const template = sectionTemplates[type];
+                    const { data, style } = getSectionData(section);
+                    html += template.render(data, style, globalStyles);
+                });
+            }
+
+            const styledHtml = `
+                <div style="font-family: ${globalStyles.fontFamily}; color: ${globalStyles.textColor}; background: ${globalStyles.bgColor};">
+                    ${html}
+                </div>
+            `;
+
+            document.getElementById('previewContent').innerHTML = styledHtml;
+
+            const mobilePreview = document.getElementById('mobilePreviewContent');
+            if (mobilePreview && !document.getElementById('mobilePreviewModal').classList.contains('hidden')) {
+                mobilePreview.innerHTML = styledHtml;
+            }
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    input.dataset.imageData = e.target.result;
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setDevice(device) {
+            document.querySelectorAll('.device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-amber-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-amber-600', 'text-white');
+
+            const frame = document.getElementById('mobileFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function previewFullscreen() {
+            window.open('', '_blank');
+            alert('Full screen preview would open here');
+        }
+
+        function generateQR() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+        }
+
+        function copyUrl() {
+            const url = document.getElementById('shareUrl').textContent;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('URL copied to clipboard!');
+            });
+        }
+
+        function publishProject() {
+            if (confirm('Publish your congratulations card?')) {
+                alert('✅ Published successfully!\n\nYour congratulations card is now live!');
+            }
+        }
+
+        function openMobilePreview() {
+            const previewContent = document.getElementById('previewContent').innerHTML;
+            document.getElementById('mobilePreviewContent').innerHTML = previewContent;
+            document.getElementById('mobilePreviewModal').classList.remove('hidden');
+        }
+
+        function closeMobilePreview() {
+            document.getElementById('mobilePreviewModal').classList.add('hidden');
+        }
+
+        function setMobilePreviewDevice(device) {
+            document.querySelectorAll('.mobile-preview-device-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-amber-600', 'text-white');
+            });
+            event.target.classList.add('active', 'bg-amber-600', 'text-white');
+
+            const frame = document.getElementById('mobilePreviewFrame');
+            if (device === 'tablet') {
+                frame.style.width = '768px';
+                frame.style.height = '1024px';
+            } else {
+                frame.style.width = '375px';
+                frame.style.height = '667px';
+            }
+        }
+
+        function initializeLayout() {
+            addSection('layout');
+        }
+
+        function initializeDefaultSections() {
+            const defaultSections = ['coverMessage', 'achievement', 'praise', 'signature'];
+            defaultSections.forEach(sectionType => addSection(sectionType));
+        }
+
+        function initializeApp() {
+            sectionTemplates = window.sectionComponents || {};
+            console.log('Components loaded:', Object.keys(sectionTemplates).length);
+
+            initializeLayout();
+            initializeDefaultSections();
+
+            document.getElementById('sectionModal').addEventListener('click', (e) => {
+                if (e.target.id === 'sectionModal') closeSectionModal();
+            });
+            document.getElementById('qrModal').addEventListener('click', (e) => {
+                if (e.target.id === 'qrModal') closeQRModal();
+            });
+            document.getElementById('mobilePreviewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'mobilePreviewModal') closeMobilePreview();
+            });
+        }
+
+        let appInitialized = false;
+
+        function safeInitializeApp() {
+            if (appInitialized) {
+                console.log('⚠️ App already initialized, skipping...');
+                return;
+            }
+
+            if (!window.sectionComponents || Object.keys(window.sectionComponents).length === 0) {
+                console.warn('⚠️ Cannot initialize: components not loaded yet');
+                return;
+            }
+
+            appInitialized = true;
+            console.log('✅ Initializing app with', Object.keys(window.sectionComponents).length, 'components');
+            initializeApp();
+        }
+
+        window.addEventListener('componentsReady', () => {
+            console.log('✅ Components ready event received');
+            safeInitializeApp();
+        });
+
+        if (window.sectionComponents && Object.keys(window.sectionComponents).length > 0) {
+            console.log('✅ Components already loaded, initializing immediately');
+            safeInitializeApp();
+        } else {
+            setTimeout(() => {
+                if (!appInitialized) {
+                    console.log('⚠️ Fallback: checking for components after timeout');
+                    safeInitializeApp();
+                }
+            }, 150);
+        }
+    </script>
 </body>
 </html>
