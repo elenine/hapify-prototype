@@ -250,8 +250,16 @@
         </div>
     </div>
 
+    <!-- Load Shared Components -->
+    <script src="components/photo.component.js"></script>
+    <script src="components/quote.component.js"></script>
+    <script src="components/signature.component.js"></script>
+
     <script>
         let sectionCounter = 0;
+
+        // Initialize section components if not already done
+        window.sectionComponents = window.sectionComponents || {};
 
         const sectionTemplates = {
             hero: {
@@ -704,114 +712,6 @@
                     }
                 }
             },
-            photo: {
-                name: '📷 Photo',
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Photo</label>
-                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="image" onchange="handleImageUpload(this)">
-                            <p class="text-xs text-gray-500 mt-1">Upload a photo of the gift, event, or memory</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Caption (Optional)</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="caption" onchange="updatePreview()" placeholder="Enjoying the wonderful gift you gave me">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
-                                <option value="standard">Standard</option>
-                                <option value="framed">Framed</option>
-                                <option value="polaroid">Polaroid</option>
-                                <option value="collage">Full Width</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Shape</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="imageStyle" onchange="updatePreview()">
-                                <option value="rounded">Rounded</option>
-                                <option value="circle">Circle</option>
-                                <option value="square">Square</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Frame Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="frameColor" value="#f59e0b" onchange="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Shadow</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="shadow" onchange="updatePreview()">
-                                <option value="none">None</option>
-                                <option value="small">Small</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="large">Large</option>
-                            </select>
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => {
-                    const imageStyle = style.imageStyle || 'rounded';
-                    const layout = style.layout || 'standard';
-                    const bgColor = style.bgColor || '#ffffff';
-                    const frameColor = style.frameColor || '#f59e0b';
-                    const shadow = style.shadow || 'medium';
-                    const caption = data.caption || '';
-                    const image = data.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23fef3c7" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="60"%3E🙏%3C/text%3E%3C/svg%3E';
-
-                    const borderRadius = imageStyle === 'circle' ? '50%' : imageStyle === 'rounded' ? '12px' : '0';
-                    const shadows = {
-                        none: '',
-                        small: 'shadow',
-                        medium: 'shadow-lg',
-                        large: 'shadow-2xl'
-                    };
-                    const shadowClass = shadows[shadow] || 'shadow-lg';
-
-                    if (layout === 'framed') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-md mx-auto p-4 ${shadowClass}" style="background-color: ${frameColor}; border-radius: 16px;">
-                                    <img src="${image}" alt="Photo" class="w-full h-64 object-cover" style="border-radius: ${borderRadius};">
-                                    ${caption ? `<p class="text-center text-white mt-4 font-medium">${caption}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'polaroid') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-xs mx-auto bg-white p-4 pb-12 ${shadowClass}" style="border-radius: 4px;">
-                                    <img src="${image}" alt="Photo" class="w-full h-64 object-cover mb-4" style="border-radius: ${borderRadius};">
-                                    ${caption ? `<p class="text-center text-gray-700 italic">${caption}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'collage') {
-                        return `
-                            <div style="background-color: ${bgColor};">
-                                <img src="${image}" alt="Photo" class="w-full h-80 object-cover ${shadowClass}">
-                                ${caption ? `<p class="text-center text-gray-700 mt-4 pb-4">${caption}</p>` : ''}
-                            </div>
-                        `;
-                    } else {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-md mx-auto">
-                                    <img src="${image}" alt="Photo" class="w-full h-64 object-cover ${shadowClass}" style="border-radius: ${borderRadius};">
-                                    ${caption ? `<p class="text-center text-gray-600 mt-4">${caption}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            },
             memory: {
                 name: '✨ Special Memory',
                 info: `
@@ -982,195 +882,6 @@
                                     <div class="text-4xl mb-4">🎁</div>
                                     <h3 class="text-xl font-semibold mb-3 text-gray-900">Thank you for ${giftName}</h3>
                                     <p class="text-gray-700">${enjoyment}</p>
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            },
-            quote: {
-                name: '💭 Gratitude Quote',
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Text</label>
-                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 section-data" data-field="quote" rows="3" onchange="updatePreview()" placeholder="Gratitude is the memory of the heart."></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Author (Optional)</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="author" onchange="updatePreview()" placeholder="Jean Baptiste Massieu">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
-                                <option value="classic">Classic</option>
-                                <option value="modern">Modern</option>
-                                <option value="elegant">Elegant Box</option>
-                                <option value="minimal">Minimal</option>
-                                <option value="decorated">Decorated</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#fef9e7" onchange="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="quoteColor" value="#92400e" onchange="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => {
-                    const bgColor = style.bgColor || '#fef9e7';
-                    const quoteColor = style.quoteColor || '#92400e';
-                    const layout = style.layout || 'classic';
-                    const quote = data.quote || 'Feeling gratitude and not expressing it is like wrapping a present and not giving it.';
-                    const author = data.author || 'William Arthur Ward';
-
-                    if (layout === 'modern') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-lg mx-auto border-l-4 pl-6" style="border-color: ${quoteColor};">
-                                    <div class="text-3xl mb-3">💭</div>
-                                    <blockquote class="text-xl italic mb-3" style="color: ${quoteColor};">"${quote}"</blockquote>
-                                    ${author ? `<p class="text-gray-600 font-medium">— ${author}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'elegant') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-lg mx-auto bg-white rounded-xl p-8 shadow-lg border-t-4" style="border-color: ${quoteColor};">
-                                    <div class="text-4xl mb-4 text-center">💭</div>
-                                    <blockquote class="text-lg italic text-center mb-4" style="color: ${quoteColor};">"${quote}"</blockquote>
-                                    ${author ? `<p class="text-gray-600 text-center">— ${author}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'minimal') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-lg mx-auto text-center">
-                                    <blockquote class="text-2xl font-light mb-4" style="color: ${quoteColor};">"${quote}"</blockquote>
-                                    ${author ? `<p class="text-gray-500 text-sm">— ${author}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'decorated') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-lg mx-auto text-center">
-                                    <div class="text-6xl mb-2 opacity-30" style="color: ${quoteColor};">"</div>
-                                    <blockquote class="text-xl italic mb-2" style="color: ${quoteColor};">${quote}</blockquote>
-                                    <div class="text-6xl opacity-30" style="color: ${quoteColor};">"</div>
-                                    ${author ? `<p class="text-gray-600 mt-4">— ${author}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        // classic
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-lg mx-auto text-center">
-                                    <div class="text-4xl mb-4">💭</div>
-                                    <blockquote class="text-xl italic text-gray-700 mb-3">"${quote}"</blockquote>
-                                    ${author ? `<p class="text-gray-600">— ${author}</p>` : ''}
-                                </div>
-                            </div>
-                        `;
-                    }
-                }
-            },
-            signature: {
-                name: '✍️ Signature',
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Closing Message</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="closing" onchange="updatePreview()" placeholder="With heartfelt thanks">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="name" onchange="updatePreview()" placeholder="Your Name">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Layout Style</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="layout" onchange="updatePreview()">
-                                <option value="standard">Standard</option>
-                                <option value="handwritten">Handwritten Style</option>
-                                <option value="formal">Formal</option>
-                                <option value="modern">Modern</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="textColor" value="#1f2937" onchange="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
-                                <option value="center">Center</option>
-                                <option value="left">Left</option>
-                                <option value="right">Right</option>
-                            </select>
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => {
-                    const bgColor = style.bgColor || '#ffffff';
-                    const textColor = style.textColor || '#1f2937';
-                    const align = style.align || 'center';
-                    const layout = style.layout || 'standard';
-                    const closing = data.closing || 'With gratitude';
-                    const name = data.name || 'Your Friend';
-
-                    if (layout === 'handwritten') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
-                                <div class="max-w-lg mx-auto">
-                                    <p class="text-xl font-serif italic mb-3" style="color: ${textColor};">${closing},</p>
-                                    <p class="text-2xl font-serif italic" style="color: ${textColor};">${name}</p>
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'formal') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
-                                <div class="max-w-lg mx-auto border-t-2 border-gray-300 pt-6">
-                                    <p class="text-base uppercase tracking-wide text-gray-600 mb-2">${closing}</p>
-                                    <p class="text-2xl font-bold" style="color: ${textColor};">${name}</p>
-                                </div>
-                            </div>
-                        `;
-                    } else if (layout === 'modern') {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor};">
-                                <div class="max-w-lg mx-auto">
-                                    <div class="inline-block px-6 py-4 rounded-xl" style="background-color: ${textColor}10; text-align: ${align};">
-                                        <p class="text-sm mb-1 opacity-70" style="color: ${textColor};">${closing}</p>
-                                        <p class="text-xl font-bold" style="color: ${textColor};">${name}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        return `
-                            <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
-                                <div class="max-w-lg mx-auto">
-                                    <p class="text-lg mb-2" style="color: ${textColor};">${closing},</p>
-                                    <p class="text-xl font-semibold" style="color: ${textColor};">${name}</p>
                                 </div>
                             </div>
                         `;
@@ -2286,6 +1997,9 @@
                 }
             }
         };
+
+        // Merge shared components into sectionTemplates
+        Object.assign(sectionTemplates, window.sectionComponents);
 
         function openSectionModal() {
             document.getElementById('sectionModal').classList.remove('hidden');

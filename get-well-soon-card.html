@@ -202,8 +202,16 @@
         </div>
     </div>
 
+    <!-- Load Shared Components -->
+    <script src="components/photo.component.js"></script>
+    <script src="components/quote.component.js"></script>
+    <script src="components/signature.component.js"></script>
+
     <script>
         let sectionCounter = 0;
+
+        // Initialize section components if not already done
+        window.sectionComponents = window.sectionComponents || {};
 
         const sectionTemplates = {
             hero: {
@@ -301,50 +309,6 @@
                     `;
                 }
             },
-            photo: {
-                name: '📷 Photo',
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Upload Photo</label>
-                            <input type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="image" onchange="handleImageUpload(this)">
-                            <p class="text-xs text-gray-500 mt-1">Upload a cheerful photo or leave blank for default</p>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Caption (Optional)</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="caption" onchange="updatePreview()" placeholder="Sending sunshine your way">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Style</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="imageStyle" onchange="updatePreview()">
-                                <option value="rounded">Rounded</option>
-                                <option value="circle">Circle</option>
-                                <option value="square">Square</option>
-                            </select>
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => {
-                    const imageStyle = style.imageStyle || 'rounded';
-                    const caption = data.caption || '';
-                    const image = data.image || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23d1fae5" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="60"%3E🌺%3C/text%3E%3C/svg%3E';
-
-                    const borderRadius = imageStyle === 'circle' ? '50%' : imageStyle === 'rounded' ? '12px' : '0';
-
-                    return `
-                        <div class="p-8 bg-white">
-                            <div class="max-w-md mx-auto">
-                                <img src="${image}" alt="Photo" class="w-full h-64 object-cover shadow-lg" style="border-radius: ${borderRadius};">
-                                ${caption ? `<p class="text-center text-gray-600 mt-4">${caption}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }
-            },
             supportMessage: {
                 name: '🤝 Support Message',
                 info: `
@@ -405,44 +369,6 @@
                                 <div class="text-4xl mb-4">✨</div>
                                 <h3 class="text-xl font-semibold mb-3 text-gray-900">A Happy Memory</h3>
                                 <p class="text-gray-700 italic">${memory}</p>
-                            </div>
-                        </div>
-                    `;
-                }
-            },
-            quote: {
-                name: '💭 Inspirational Quote',
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Quote Text</label>
-                            <textarea class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 section-data" data-field="quote" rows="3" onchange="updatePreview()" placeholder="The human spirit is stronger than anything that can happen to it."></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Author (Optional)</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="author" onchange="updatePreview()" placeholder="C.C. Scott">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#f0fdfa" onchange="updatePreview()">
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => {
-                    const bgColor = style.bgColor || '#f0fdfa';
-                    const quote = data.quote || 'Healing is a matter of time, but it is sometimes also a matter of opportunity.';
-                    const author = data.author || '';
-
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor};">
-                            <div class="max-w-lg mx-auto text-center">
-                                <div class="text-4xl mb-4">💭</div>
-                                <blockquote class="text-xl italic text-gray-700 mb-3">"${quote}"</blockquote>
-                                ${author ? `<p class="text-gray-600">— ${author}</p>` : ''}
                             </div>
                         </div>
                     `;
@@ -511,54 +437,11 @@
                         </div>
                     `;
                 }
-            },
-            signature: {
-                name: '✍️ Signature',
-                info: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Closing Message</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="closing" onchange="updatePreview()" placeholder="With love and best wishes">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg section-data" data-field="name" onchange="updatePreview()" placeholder="Your Name">
-                        </div>
-                    </div>
-                `,
-                style: `
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                            <input type="color" class="w-full h-10 rounded-lg section-style" data-style="bgColor" value="#ffffff" onchange="updatePreview()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Text Alignment</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg section-style" data-style="align" onchange="updatePreview()">
-                                <option value="center">Center</option>
-                                <option value="left">Left</option>
-                                <option value="right">Right</option>
-                            </select>
-                        </div>
-                    </div>
-                `,
-                render: (data, style) => {
-                    const bgColor = style.bgColor || '#ffffff';
-                    const align = style.align || 'center';
-                    const closing = data.closing || 'With love';
-                    const name = data.name || 'Your Friend';
-
-                    return `
-                        <div class="p-8" style="background-color: ${bgColor}; text-align: ${align};">
-                            <div class="max-w-lg mx-auto">
-                                <p class="text-lg text-gray-700 mb-2">${closing},</p>
-                                <p class="text-xl font-semibold text-gray-900">${name}</p>
-                            </div>
-                        </div>
-                    `;
-                }
             }
         };
+
+        // Merge shared components into sectionTemplates
+        Object.assign(sectionTemplates, window.sectionComponents);
 
         function openSectionModal() {
             document.getElementById('sectionModal').classList.remove('hidden');
