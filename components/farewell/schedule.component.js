@@ -32,6 +32,9 @@ window.sectionComponents.schedule = {
                     <option value="list">List - Clean Simple</option>
                     <option value="modern">Modern - Alternating</option>
                     <option value="minimal">Minimal - Text Only</option>
+                    <option value="compact">Compact - Dense Display</option>
+                    <option value="elegant">Elegant - Bordered Frame</option>
+                    <option value="badge">Badge - Numbered Tags</option>
                 </select>
             </div>
             <div>
@@ -240,6 +243,106 @@ window.sectionComponents.schedule = {
                                     <div class="flex-1">
                                         ${item.time ? `<div class="font-bold mb-1" style="color: ${accentColor}">${item.time}</div>` : ''}
                                         <div class="text-gray-700">${item.activity}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Compact Layout - Dense Display
+        if (layout === 'compact') {
+            return `
+                <div class="py-10 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background: ${accentColor}15">
+                                📅
+                            </div>
+                            <h2 class="text-xl font-bold">${data.title || 'Party Schedule'}</h2>
+                        </div>
+                        <div class="rounded-xl shadow-${shadow} p-4 space-y-3" style="background: ${cardColor}">
+                            ${parsedItems.map((item, index) => `
+                                <div class="flex items-center gap-3 ${index !== parsedItems.length - 1 ? 'pb-3 border-b' : ''}" style="border-color: ${accentColor}15">
+                                    <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white" style="background: ${accentColor}">
+                                        ${index + 1}
+                                    </div>
+                                    ${item.time ? `
+                                        <div class="flex-shrink-0 text-xs font-bold px-2 py-1 rounded" style="background: ${accentColor}15; color: ${accentColor}">
+                                            ${item.time}
+                                        </div>
+                                    ` : ''}
+                                    <div class="flex-1 text-sm text-gray-700">${item.activity}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Elegant Layout - Bordered Frame
+        if (layout === 'elegant') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto border-4 rounded-2xl p-8 bg-white shadow-${shadow}" style="border-color: ${accentColor}">
+                        <div class="text-center mb-8">
+                            <div class="inline-block p-4 rounded-full mb-4" style="background: ${accentColor}15">
+                                <div class="text-4xl">📅</div>
+                            </div>
+                            <h2 class="text-3xl font-bold mb-3" style="color: ${accentColor}">${data.title || 'Party Schedule'}</h2>
+                            <div class="w-24 h-1 mx-auto" style="background: ${accentColor}30"></div>
+                            ${data.description ? `<p class="text-gray-600 mt-4">${data.description}</p>` : ''}
+                        </div>
+                        <div class="space-y-5">
+                            ${parsedItems.map((item, index) => `
+                                <div class="relative pl-12">
+                                    <div class="absolute left-0 top-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shadow-md" style="background: ${accentColor}">
+                                        ${index + 1}
+                                    </div>
+                                    <div class="p-4 rounded-lg border-2" style="border-color: ${accentColor}20">
+                                        ${item.time ? `<div class="font-bold text-sm mb-2 flex items-center gap-2" style="color: ${accentColor}"><span>🕐</span>${item.time}</div>` : ''}
+                                        <div class="text-gray-800 font-medium">${item.activity}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Badge Layout - Numbered Tags
+        if (layout === 'badge') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(to bottom, ${bg}, white)">
+                    <div class="max-w-3xl mx-auto">
+                        <div class="text-center mb-10">
+                            <div class="text-6xl mb-4">📅</div>
+                            <h2 class="text-4xl font-bold mb-3">${data.title || 'Party Schedule'}</h2>
+                            ${data.description ? `<p class="text-gray-600 text-lg mt-2">${data.description}</p>` : ''}
+                        </div>
+                        <div class="grid gap-5">
+                            ${parsedItems.map((item, index) => `
+                                <div class="relative">
+                                    <div class="flex items-start gap-5 p-6 rounded-2xl shadow-${shadow}" style="background: ${index % 2 === 0 ? cardColor : accentColor + '08'}">
+                                        <div class="relative">
+                                            <div class="absolute inset-0 rounded-full blur-md opacity-30" style="background: ${accentColor}"></div>
+                                            <div class="relative w-14 h-14 rounded-full flex items-center justify-center text-white font-black text-xl shadow-lg" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}90)">
+                                                ${index + 1}
+                                            </div>
+                                        </div>
+                                        <div class="flex-1">
+                                            ${item.time ? `
+                                                <div class="inline-flex items-center gap-2 mb-3 px-4 py-2 rounded-full shadow-sm" style="background: ${accentColor}; color: white">
+                                                    <span class="text-lg">🕐</span>
+                                                    <span class="font-bold">${item.time}</span>
+                                                </div>
+                                            ` : ''}
+                                            <div class="text-gray-800 font-semibold text-lg leading-relaxed">${item.activity}</div>
+                                        </div>
                                     </div>
                                 </div>
                             `).join('')}
