@@ -27,6 +27,13 @@ window.sectionComponents.careerhighlights = {
                     <option value="grid">Grid Layout</option>
                     <option value="minimal">Minimal List</option>
                     <option value="badges">Badge Style</option>
+                    <option value="numbered">Numbered List</option>
+                    <option value="stacked">Stacked Cards</option>
+                    <option value="checkmarks">Checkmark List</option>
+                    <option value="circular">Circular Badges</option>
+                    <option value="ribbons">Award Ribbons</option>
+                    <option value="stepped">Stepped Elevation</option>
+                    <option value="zigzag">Zigzag Layout</option>
                 </select>
             </div>
             <div>
@@ -135,6 +142,132 @@ window.sectionComponents.careerhighlights = {
                                     </div>
                                 `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
                             </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'numbered':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${highlights.length > 0 ? highlights.map((highlight, index) => `
+                                <div class="flex items-start gap-4 p-4 rounded-lg shadow-sm" style="background: ${accentColor}10;">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: ${accentColor};">
+                                        ${index + 1}
+                                    </div>
+                                    <div class="pt-1">${highlight}</div>
+                                </div>
+                            `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
+                        </div>
+                    </div>
+                `;
+
+            case 'stacked':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto space-y-2">
+                            ${highlights.length > 0 ? highlights.map((highlight, index) => `
+                                <div class="p-4 rounded-lg shadow-md" style="background: ${accentColor}; color: white; margin-left: ${index * 8}px; margin-right: ${(highlights.length - index - 1) * 8}px;">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xl">⭐</span>
+                                        <span class="font-medium">${highlight}</span>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
+                        </div>
+                    </div>
+                `;
+
+            case 'checkmarks':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto space-y-3">
+                            ${highlights.length > 0 ? highlights.map(highlight => `
+                                <div class="flex items-start gap-3 p-3 rounded-lg" style="background: ${accentColor}08;">
+                                    <div class="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5" style="background: ${accentColor}; color: white;">
+                                        <span class="text-xs">✓</span>
+                                    </div>
+                                    <div>${highlight}</div>
+                                </div>
+                            `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
+                        </div>
+                    </div>
+                `;
+
+            case 'circular':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto">
+                            <div class="grid grid-cols-2 gap-4">
+                                ${highlights.length > 0 ? highlights.map(highlight => `
+                                    <div class="text-center">
+                                        <div class="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl shadow-lg" style="background: ${accentColor}; color: white;">
+                                            ⭐
+                                        </div>
+                                        <p class="text-xs font-medium leading-tight">${highlight}</p>
+                                    </div>
+                                `).join('') : '<p class="text-center opacity-50 col-span-2">Add career highlights</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbons':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${highlights.length > 0 ? highlights.map(highlight => `
+                                <div class="relative">
+                                    <div class="pl-6 pr-4 py-3 rounded-r-lg shadow-md" style="background: ${accentColor}; color: white;">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xl">⭐</span>
+                                            <span class="font-medium text-sm">${highlight}</span>
+                                        </div>
+                                    </div>
+                                    <div class="absolute left-0 top-0 bottom-0 w-2 rounded-l" style="background: linear-gradient(to bottom, ${accentColor} 0%, ${textColor}40 100%);"></div>
+                                </div>
+                            `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
+                        </div>
+                    </div>
+                `;
+
+            case 'stepped':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto space-y-3">
+                            ${highlights.length > 0 ? highlights.map((highlight, index) => `
+                                <div class="p-4 rounded-lg" style="background: ${accentColor}${Math.min(10 + index * 10, 40)}; box-shadow: 0 ${index * 2}px ${4 + index * 2}px rgba(0,0,0,0.1);">
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-xl">⭐</span>
+                                        <span>${highlight}</span>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
+                        </div>
+                    </div>
+                `;
+
+            case 'zigzag':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor};">
+                        <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Career Highlights'}</h2>
+                        <div class="max-w-md mx-auto space-y-4">
+                            ${highlights.length > 0 ? highlights.map((highlight, index) => `
+                                <div class="${index % 2 === 0 ? 'text-left' : 'text-right'}">
+                                    <div class="inline-block p-4 rounded-lg shadow-sm max-w-[85%]" style="background: ${accentColor}20;">
+                                        <div class="flex items-start gap-3 ${index % 2 === 0 ? '' : 'flex-row-reverse'}">
+                                            <span style="color: ${accentColor};">⭐</span>
+                                            <span class="text-sm">${highlight}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center opacity-50">Add career highlights</p>'}
                         </div>
                     </div>
                 `;
