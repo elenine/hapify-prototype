@@ -28,6 +28,12 @@ window.sectionComponents.balloons = {
                     <option value="scattered">Scattered - Playful</option>
                     <option value="bouquet">Balloon Bouquet</option>
                     <option value="minimal">Minimal - Clean</option>
+                    <option value="sky">Sky - Flying High</option>
+                    <option value="string">String - Tied Together</option>
+                    <option value="cluster">Cluster - Grouped Bundle</option>
+                    <option value="release">Release - Magical Moment</option>
+                    <option value="party">Party - Confetti Blast</option>
+                    <option value="gradient">Gradient - Color Fade</option>
                 </select>
             </div>
             <div>
@@ -147,6 +153,156 @@ window.sectionComponents.balloons = {
                     <div class="text-4xl mb-4">🎈</div>
                     <h3 class="text-2xl font-bold mb-4">${title}</h3>
                     <p class="text-base max-w-md mx-auto">${message}</p>
+                </div>
+            `;
+        }
+
+        if (layout === 'sky') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: linear-gradient(to bottom, ${bgColor} 0%, #e0f2fe 100%); color: ${textColor}">
+                    <div class="absolute top-4 left-1/4 text-6xl opacity-80 ${animationClass} animate-pulse" style="animation-delay: 0s">🎈</div>
+                    <div class="absolute top-12 right-1/3 text-5xl opacity-70 ${animationClass} animate-pulse" style="animation-delay: 0.5s">🎈</div>
+                    <div class="absolute top-20 left-1/2 text-7xl opacity-90 ${animationClass} animate-pulse" style="animation-delay: 1s">🎈</div>
+                    <div class="absolute top-8 right-1/4 text-4xl opacity-60 ${animationClass} animate-pulse" style="animation-delay: 1.5s">🎈</div>
+                    <div class="absolute top-32 left-1/3 text-5xl opacity-75 ${animationClass} animate-pulse" style="animation-delay: 2s">🎈</div>
+                    <div class="relative z-10 pt-40 text-center">
+                        <div class="bg-white bg-opacity-90 rounded-2xl p-8 max-w-xl mx-auto shadow-xl">
+                            <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                            <p class="text-lg leading-relaxed">${message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'string') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto text-center">
+                        <div class="relative mb-8">
+                            <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-30"></div>
+                            <div class="flex justify-around items-start pt-4">
+                                <div class="flex flex-col items-center ${animationClass}">
+                                    <div class="w-0.5 h-16 bg-current opacity-30"></div>
+                                    <div class="text-5xl">🎈</div>
+                                </div>
+                                <div class="flex flex-col items-center ${animationClass}" style="padding-top: 20px">
+                                    <div class="w-0.5 h-12 bg-current opacity-30"></div>
+                                    <div class="text-6xl">🎈</div>
+                                </div>
+                                <div class="flex flex-col items-center ${animationClass}">
+                                    <div class="w-0.5 h-16 bg-current opacity-30"></div>
+                                    <div class="text-5xl">🎈</div>
+                                </div>
+                                <div class="flex flex-col items-center ${animationClass}" style="padding-top: 10px">
+                                    <div class="w-0.5 h-14 bg-current opacity-30"></div>
+                                    <div class="text-5xl">🎈</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                        <p class="text-lg leading-relaxed">${message}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'cluster') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="flex justify-center items-end mb-8 gap-2">
+                            <div class="flex flex-col items-center">
+                                <div class="text-6xl ${animationClass}">🎈</div>
+                                <div class="text-5xl -mt-4 ${animationClass}">🎈</div>
+                            </div>
+                            <div class="flex flex-col items-center -mb-4">
+                                <div class="text-7xl ${animationClass}">🎈</div>
+                                <div class="text-6xl -mt-4 ${animationClass}">🎈</div>
+                                <div class="text-5xl -mt-4 ${animationClass}">🎈</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="text-6xl ${animationClass}">🎈</div>
+                                <div class="text-5xl -mt-4 ${animationClass}">🎈</div>
+                            </div>
+                        </div>
+                        <div class="text-center bg-white bg-opacity-20 rounded-2xl p-6 backdrop-blur-sm">
+                            <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                            <p class="text-lg leading-relaxed">${message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'release') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: linear-gradient(to top, ${bgColor} 0%, #fef3c7 100%); color: ${textColor}">
+                    <div class="absolute bottom-20 left-1/4 text-5xl opacity-90 ${animationClass}" style="animation: float-up 3s ease-in-out infinite; animation-delay: 0s">🎈</div>
+                    <div class="absolute bottom-16 right-1/3 text-6xl opacity-80 ${animationClass}" style="animation: float-up 3s ease-in-out infinite; animation-delay: 0.5s">🎈</div>
+                    <div class="absolute bottom-24 left-1/2 text-7xl opacity-95 ${animationClass}" style="animation: float-up 3s ease-in-out infinite; animation-delay: 1s">🎈</div>
+                    <div class="absolute bottom-20 right-1/4 text-5xl opacity-85 ${animationClass}" style="animation: float-up 3s ease-in-out infinite; animation-delay: 1.5s">🎈</div>
+                    <style>
+                        @keyframes float-up {
+                            0% { transform: translateY(0) rotate(0deg); }
+                            50% { transform: translateY(-30px) rotate(5deg); }
+                            100% { transform: translateY(0) rotate(0deg); }
+                        }
+                    </style>
+                    <div class="relative z-10 text-center pt-48">
+                        <div class="inline-block bg-white bg-opacity-95 rounded-3xl px-8 py-6 shadow-2xl">
+                            <div class="text-6xl mb-4">✨</div>
+                            <h3 class="text-2xl font-bold mb-4">${title}</h3>
+                            <p class="text-lg leading-relaxed max-w-lg">${message}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'party') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                    ${[...Array(20)].map((_, i) => {
+                        const emojis = ['🎊', '🎉', '✨', '⭐', '💫', '🎈'];
+                        const emoji = emojis[i % emojis.length];
+                        const top = Math.random() * 100;
+                        const left = Math.random() * 100;
+                        const rotation = Math.random() * 360;
+                        const size = Math.random() > 0.5 ? 'text-3xl' : 'text-2xl';
+                        const opacity = 0.3 + Math.random() * 0.4;
+                        return `<div class="absolute ${size}" style="top: ${top}%; left: ${left}%; transform: rotate(${rotation}deg); opacity: ${opacity}">${emoji}</div>`;
+                    }).join('')}
+                    <div class="relative z-10 text-center">
+                        <div class="text-7xl mb-6 ${animationClass}">${balloons}</div>
+                        <div class="bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-2xl p-8 max-w-xl mx-auto shadow-2xl transform hover:scale-105 transition-transform">
+                            <h3 class="text-3xl font-bold mb-4 drop-shadow-lg">${title}</h3>
+                            <p class="text-lg leading-relaxed drop-shadow">${message}</p>
+                        </div>
+                        <div class="text-7xl mt-6 ${animationClass}">${balloons}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'gradient') {
+            return `
+                <div class="py-12 px-6 text-center" style="background: linear-gradient(135deg, ${bgColor} 0%, #ec4899 25%, #8b5cf6 50%, #3b82f6 75%, #10b981 100%); color: white">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="relative mb-8">
+                            <div class="absolute inset-0 bg-white opacity-10 rounded-3xl blur-xl"></div>
+                            <div class="relative bg-white bg-opacity-20 backdrop-blur-md rounded-3xl p-8 border border-white border-opacity-30">
+                                <div class="flex justify-center gap-3 mb-6 text-6xl ${animationClass}">
+                                    <span style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.8))">🎈</span>
+                                    <span style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.8))">🎊</span>
+                                    <span style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.8))">🎉</span>
+                                    <span style="filter: drop-shadow(0 0 10px rgba(255,255,255,0.8))">🎈</span>
+                                </div>
+                                <h3 class="text-3xl font-bold mb-4 drop-shadow-lg">${title}</h3>
+                                <p class="text-lg leading-relaxed drop-shadow">${message}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `;
         }

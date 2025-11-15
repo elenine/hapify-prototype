@@ -54,6 +54,12 @@ window.sectionComponents.horoscope = {
                     <option value="bannerStyle">Banner Style - Full-width banner with gradient</option>
                     <option value="compactBoxes">Compact Boxes - Grid layout with info boxes</option>
                     <option value="cosmicTheme">Cosmic Theme - Starry background theme</option>
+                    <option value="mystical">Mystical Glow - Magical aura effects</option>
+                    <option value="constellation">Constellation Map - Star pattern design</option>
+                    <option value="fortune">Fortune Card - Fortune cookie style</option>
+                    <option value="crystal">Crystal Ball - Crystal sphere aesthetic</option>
+                    <option value="scroll">Ancient Scroll - Vintage parchment look</option>
+                    <option value="zodiacWheel">Zodiac Wheel - Circular wheel design</option>
                 </select>
             </div>
             <div>
@@ -318,6 +324,217 @@ window.sectionComponents.horoscope = {
                                         <div class="text-xl font-bold text-white">${data.luckyColor}</div>
                                     </div>
                                 ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'mystical') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${data.title || 'Your Birthday Horoscope'}</h3>
+                        <div class="${radiusClass} ${shadowClass} p-8 relative overflow-hidden" style="background: ${cardBg}; border: 3px solid ${accentColor}; box-shadow: 0 0 40px ${accentColor}66, inset 0 0 20px ${accentColor}11">
+                            <div class="absolute top-0 left-0 w-full h-full opacity-10" style="background: radial-gradient(circle at 50% 50%, ${accentColor}, transparent)"></div>
+                            <div class="relative z-10 text-center">
+                                <div class="${symbolSize} mb-4 animate-pulse" style="color: ${accentColor}; text-shadow: 0 0 20px ${accentColor}66">${zodiacSymbol}</div>
+                                <h4 class="text-2xl font-bold mb-4">${zodiacName}</h4>
+                                ${data.message ? `<p class="text-lg leading-relaxed mb-6">${data.message}</p>` : ''}
+                                <div class="grid grid-cols-2 gap-4 mt-6">
+                                    ${data.luckyNumber ? `
+                                        <div class="p-4 rounded-xl ${shadowClass}" style="background: ${bgColor}; border: 2px solid ${accentColor}">
+                                            <div class="text-xs font-semibold text-gray-500 mb-1">LUCKY NUMBER</div>
+                                            <div class="text-3xl font-bold" style="color: ${accentColor}">${data.luckyNumber}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.luckyColor ? `
+                                        <div class="p-4 rounded-xl ${shadowClass}" style="background: ${bgColor}; border: 2px solid ${accentColor}">
+                                            <div class="text-xs font-semibold text-gray-500 mb-1">LUCKY COLOR</div>
+                                            <div class="text-xl font-bold" style="color: ${accentColor}">${data.luckyColor}</div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'constellation') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white">
+                    <div class="absolute inset-0 opacity-30">
+                        ${[...Array(20)].map((_, i) => `<div class="absolute w-1 h-1 bg-white rounded-full" style="left: ${Math.random() * 100}%; top: ${Math.random() * 100}%"></div>`).join('')}
+                    </div>
+                    <div class="max-w-2xl mx-auto relative z-10">
+                        <h3 class="text-3xl font-bold text-center mb-8">${data.title || 'Your Birthday Horoscope'}</h3>
+                        <div class="${radiusClass} ${shadowClass} p-8 text-center" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2)">
+                            <div class="${symbolSize} mb-4" style="color: ${accentColor}">${zodiacSymbol}</div>
+                            <h4 class="text-2xl font-bold mb-4">${zodiacName}</h4>
+                            ${data.message ? `<p class="text-lg leading-relaxed mb-6 opacity-90">${data.message}</p>` : ''}
+                            <div class="flex gap-4 justify-center mt-6">
+                                ${data.luckyNumber ? `
+                                    <div class="px-6 py-4 rounded-full ${shadowClass}" style="background: rgba(255,255,255,0.2)">
+                                        <div class="text-xs font-semibold opacity-80 mb-1">NUMBER</div>
+                                        <div class="text-3xl font-bold">${data.luckyNumber}</div>
+                                    </div>
+                                ` : ''}
+                                ${data.luckyColor ? `
+                                    <div class="px-6 py-4 rounded-full ${shadowClass}" style="background: rgba(255,255,255,0.2)">
+                                        <div class="text-xs font-semibold opacity-80 mb-1">COLOR</div>
+                                        <div class="text-xl font-bold">${data.luckyColor}</div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'fortune') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${data.title || 'Your Birthday Horoscope'}</h3>
+                        <div class="relative">
+                            <div class="${radiusClass} ${shadowClass} p-8" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd); transform: perspective(1000px) rotateX(-5deg)">
+                                <div class="text-center">
+                                    <div class="${symbolSize} mb-4 text-white">${zodiacSymbol}</div>
+                                    <h4 class="text-2xl font-bold text-white mb-4">${zodiacName}</h4>
+                                </div>
+                            </div>
+                            <div class="${radiusClass} ${shadowClass} p-8 mt-4" style="background: ${cardBg}">
+                                ${data.message ? `
+                                    <p class="text-lg leading-relaxed text-center mb-6 italic">${data.message}</p>
+                                ` : ''}
+                                <div class="flex gap-4 justify-center">
+                                    ${data.luckyNumber ? `
+                                        <div class="text-center">
+                                            <div class="text-xs font-semibold text-gray-500 mb-1">LUCKY</div>
+                                            <div class="text-4xl font-bold" style="color: ${accentColor}">${data.luckyNumber}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.luckyColor ? `
+                                        <div class="w-px bg-gray-300"></div>
+                                        <div class="text-center">
+                                            <div class="text-xs font-semibold text-gray-500 mb-1">COLOR</div>
+                                            <div class="text-2xl font-bold" style="color: ${accentColor}">${data.luckyColor}</div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'crystal') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${data.title || 'Your Birthday Horoscope'}</h3>
+                        <div class="flex justify-center mb-8">
+                            <div class="relative w-48 h-48">
+                                <div class="absolute inset-0 rounded-full ${shadowClass}" style="background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), ${accentColor}66); border: 4px solid ${accentColor}"></div>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="${symbolSize}" style="color: ${accentColor}">${zodiacSymbol}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="${radiusClass} ${shadowClass} p-8 text-center" style="background: ${cardBg}">
+                            <h4 class="text-2xl font-bold mb-4" style="color: ${accentColor}">${zodiacName}</h4>
+                            ${data.message ? `<p class="text-lg leading-relaxed mb-6">${data.message}</p>` : ''}
+                            <div class="grid grid-cols-2 gap-4 mt-6">
+                                ${data.luckyNumber ? `
+                                    <div class="p-4 rounded-lg" style="background: ${bgColor}">
+                                        <div class="text-xs font-semibold text-gray-500 mb-1">LUCKY NUMBER</div>
+                                        <div class="text-3xl font-bold" style="color: ${accentColor}">${data.luckyNumber}</div>
+                                    </div>
+                                ` : ''}
+                                ${data.luckyColor ? `
+                                    <div class="p-4 rounded-lg" style="background: ${bgColor}">
+                                        <div class="text-xs font-semibold text-gray-500 mb-1">LUCKY COLOR</div>
+                                        <div class="text-xl font-bold" style="color: ${accentColor}">${data.luckyColor}</div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'scroll') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${data.title || 'Your Birthday Horoscope'}</h3>
+                        <div class="relative ${shadowClass}" style="background: linear-gradient(to bottom, #f5e6d3, #efe0ce); border-radius: 20px; padding: 40px 30px">
+                            <div class="absolute top-0 left-0 right-0 h-8 rounded-t-3xl" style="background: linear-gradient(to bottom, #8b7355, #a0826d); box-shadow: inset 0 -2px 4px rgba(0,0,0,0.3)"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-8 rounded-b-3xl" style="background: linear-gradient(to top, #8b7355, #a0826d); box-shadow: inset 0 2px 4px rgba(0,0,0,0.3)"></div>
+                            <div class="relative pt-4 pb-4">
+                                <div class="text-center mb-6">
+                                    <div class="${symbolSize} mb-3" style="color: ${accentColor}">${zodiacSymbol}</div>
+                                    <h4 class="text-2xl font-bold mb-4" style="font-family: serif">${zodiacName}</h4>
+                                </div>
+                                ${data.message ? `
+                                    <p class="text-lg leading-relaxed mb-6 text-center" style="font-family: serif">${data.message}</p>
+                                ` : ''}
+                                <div class="flex gap-8 justify-center mt-6">
+                                    ${data.luckyNumber ? `
+                                        <div class="text-center">
+                                            <div class="text-xs font-semibold mb-2" style="color: ${accentColor}">Lucky Number</div>
+                                            <div class="text-4xl font-bold" style="font-family: serif; color: ${accentColor}">${data.luckyNumber}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.luckyColor ? `
+                                        <div class="text-center">
+                                            <div class="text-xs font-semibold mb-2" style="color: ${accentColor}">Lucky Color</div>
+                                            <div class="text-2xl font-bold" style="font-family: serif; color: ${accentColor}">${data.luckyColor}</div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'zodiacWheel') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${data.title || 'Your Birthday Horoscope'}</h3>
+                        <div class="flex flex-col items-center">
+                            <div class="relative w-64 h-64 mb-8">
+                                <div class="absolute inset-0 rounded-full ${shadowClass}" style="background: conic-gradient(from 0deg, ${accentColor}, ${accentColor}dd, ${accentColor}, ${accentColor}dd, ${accentColor}); border: 6px solid ${cardBg}"></div>
+                                <div class="absolute inset-8 rounded-full flex items-center justify-center ${shadowClass}" style="background: ${cardBg}">
+                                    <div class="${symbolSize}" style="color: ${accentColor}">${zodiacSymbol}</div>
+                                </div>
+                            </div>
+                            <div class="${radiusClass} ${shadowClass} p-8 text-center w-full" style="background: ${cardBg}">
+                                <h4 class="text-2xl font-bold mb-4">${zodiacName}</h4>
+                                ${data.message ? `<p class="text-lg leading-relaxed mb-6">${data.message}</p>` : ''}
+                                <div class="flex gap-6 justify-center mt-6">
+                                    ${data.luckyNumber ? `
+                                        <div class="p-4 rounded-full ${shadowClass}" style="background: ${accentColor}; color: white; min-width: 100px">
+                                            <div class="text-xs font-semibold mb-1">NUMBER</div>
+                                            <div class="text-3xl font-bold">${data.luckyNumber}</div>
+                                        </div>
+                                    ` : ''}
+                                    ${data.luckyColor ? `
+                                        <div class="p-4 rounded-full ${shadowClass}" style="background: ${accentColor}; color: white; min-width: 100px">
+                                            <div class="text-xs font-semibold mb-1">COLOR</div>
+                                            <div class="text-xl font-bold">${data.luckyColor}</div>
+                                        </div>
+                                    ` : ''}
+                                </div>
                             </div>
                         </div>
                     </div>

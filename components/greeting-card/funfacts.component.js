@@ -34,6 +34,12 @@ window.sectionComponents.funfacts = {
                     <option value="icons">Icon Cards - Playful</option>
                     <option value="minimal">Minimal - Simple</option>
                     <option value="bubbles">Bubble Style - Fun</option>
+                    <option value="polaroid">Polaroid Cards - Photo-like cards</option>
+                    <option value="timeline">Timeline View - Chronological style</option>
+                    <option value="masonry">Masonry Grid - Pinterest style</option>
+                    <option value="stacked">Stacked Cards - Layered effect</option>
+                    <option value="neon">Neon Signs - Glowing neon style</option>
+                    <option value="comic">Comic Strips - Comic book style</option>
                 </select>
             </div>
             <div>
@@ -222,6 +228,148 @@ window.sectionComponents.funfacts = {
                                     </div>
                                 </div>
                             `).join('') : '<p class="text-center text-gray-500">Add fun facts in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Polaroid Cards Layout
+        if (layout === 'polaroid') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="flex flex-wrap justify-center gap-6">
+                            ${funfacts.length > 0 ? funfacts.map((fact, index) => `
+                                <div class="p-4 bg-white shadow-xl transform ${index % 3 === 0 ? 'rotate-2' : index % 3 === 1 ? '-rotate-2' : 'rotate-1'}" style="max-width: 280px">
+                                    <div class="aspect-square rounded flex items-center justify-center mb-3 text-5xl" style="background: ${cardBg}">
+                                        ${icon}
+                                    </div>
+                                    <p class="text-center text-sm">${fact}</p>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add fun facts in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Timeline View Layout
+        if (layout === 'timeline') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-12">${title}</h3>
+                        <div class="relative">
+                            <div class="absolute left-8 top-0 bottom-0 w-1" style="background: ${accentColor}"></div>
+                            <div class="space-y-8">
+                                ${funfacts.length > 0 ? funfacts.map((fact, index) => `
+                                    <div class="relative pl-20">
+                                        <div class="absolute left-4 w-8 h-8 rounded-full flex items-center justify-center font-bold text-white" style="background: ${accentColor}">
+                                            ${index + 1}
+                                        </div>
+                                        <div class="${padding} rounded-lg shadow-md" style="background: ${cardBg}">
+                                            <div class="flex items-start gap-3">
+                                                <span class="text-xl">${icon}</span>
+                                                <p>${fact}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('') : '<p class="text-center text-gray-500">Add fun facts in the editor</p>'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Masonry Grid Layout
+        if (layout === 'masonry') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            ${funfacts.length > 0 ? funfacts.map((fact, index) => {
+                                const heights = ['h-32', 'h-40', 'h-36', 'h-44'];
+                                const height = heights[index % heights.length];
+                                return `
+                                    <div class="${padding} ${height} rounded-xl shadow-lg flex flex-col justify-center" style="background: ${cardBg}">
+                                        <div class="text-3xl text-center mb-2">${icon}</div>
+                                        <p class="text-sm text-center">${fact}</p>
+                                    </div>
+                                `;
+                            }).join('') : '<p class="text-center text-gray-500 col-span-3">Add fun facts in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Stacked Cards Layout
+        if (layout === 'stacked') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="space-y-6">
+                            ${funfacts.length > 0 ? funfacts.map((fact, index) => `
+                                <div class="relative" style="margin-left: ${index * 20}px">
+                                    <div class="${padding} rounded-xl shadow-xl" style="background: ${cardBg}">
+                                        <div class="flex items-start gap-3">
+                                            <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style="background: ${accentColor}; color: white">
+                                                ${index + 1}
+                                            </div>
+                                            <p class="flex-1">${fact}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500">Add fun facts in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Neon Signs Layout
+        if (layout === 'neon') {
+            return `
+                <div class="py-12 px-6" style="background: #1a1a1a; color: white">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8" style="color: ${accentColor}; text-shadow: 0 0 20px ${accentColor}">${title}</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            ${funfacts.length > 0 ? funfacts.map((fact) => `
+                                <div class="${padding} rounded-lg" style="background: rgba(0,0,0,0.5); border: 2px solid ${accentColor}; box-shadow: 0 0 20px ${accentColor}, inset 0 0 20px rgba(255,255,255,0.05)">
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-2xl" style="color: ${accentColor}; filter: drop-shadow(0 0 10px ${accentColor})">${icon}</span>
+                                        <p style="text-shadow: 0 0 10px rgba(255,255,255,0.5)">${fact}</p>
+                                    </div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500 col-span-2">Add fun facts in the editor</p>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Comic Strips Layout
+        if (layout === 'comic') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold text-center mb-8">${title}</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            ${funfacts.length > 0 ? funfacts.map((fact) => `
+                                <div class="${padding} rounded-lg relative" style="background: ${cardBg}; border: 4px solid ${accentColor}">
+                                    <div class="absolute -top-3 left-4 px-3 py-1 text-xs font-bold rounded-full" style="background: ${accentColor}; color: white">POW!</div>
+                                    <div class="flex items-start gap-3">
+                                        <span class="text-3xl">${icon}</span>
+                                        <p class="font-semibold">${fact}</p>
+                                    </div>
+                                    <div class="absolute -right-2 top-6 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8" style="border-top-color: ${accentColor}"></div>
+                                </div>
+                            `).join('') : '<p class="text-center text-gray-500 col-span-2">Add fun facts in the editor</p>'}
                         </div>
                     </div>
                 </div>

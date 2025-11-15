@@ -15,6 +15,12 @@ window.sectionComponents.footer = {
                     <option value="decorative">Decorative - With icons and embellishments</option>
                     <option value="wave">Wave - Wave pattern decoration</option>
                     <option value="minimal">Minimal - Ultra minimalist</option>
+                    <option value="confetti">Confetti - Floating confetti particles</option>
+                    <option value="badge">Badge - With badge decoration</option>
+                    <option value="ribbon">Ribbon - Ribbon banner style</option>
+                    <option value="stamp">Stamp - Postage stamp style</option>
+                    <option value="sparkle">Sparkle - Sparkling decoration</option>
+                    <option value="heartBeat">Heart Beat - Beating heart animation</option>
                 </select>
             </div>
             <div>
@@ -144,6 +150,97 @@ window.sectionComponents.footer = {
             return `
                 <div class="${padding} px-6 text-center" style="background: ${bgColor}">
                     <p class="${textSize}" style="color: ${textColor}; opacity: 0.6">${message}</p>
+                </div>
+            `;
+        }
+
+        if (layout === 'confetti') {
+            return `
+                <div class="${padding} px-6 text-center relative" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                        ${[...Array(15)].map((_, i) => {
+                            const left = Math.random() * 100;
+                            const top = Math.random() * 100;
+                            const colors = [accentColor, '#fbbf24', '#34d399', '#60a5fa'];
+                            const color = colors[i % colors.length];
+                            return `<div class="absolute w-2 h-2 rounded-full" style="left: ${left}%; top: ${top}%; background: ${color}; opacity: 0.6"></div>`;
+                        }).join('')}
+                    </div>
+                    <p class="${textSize} relative z-10">${message}</p>
+                </div>
+            `;
+        }
+
+        if (layout === 'badge') {
+            return `
+                <div class="${padding} px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full" style="background: ${accentColor}; box-shadow: 0 4px 14px rgba(0,0,0,0.15)">
+                            <span class="text-xl">🏆</span>
+                            <p class="${textSize} font-semibold text-white">${message}</p>
+                            <span class="text-xl">🏆</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'ribbon') {
+            return `
+                <div class="${padding} px-6 text-center relative" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-md mx-auto">
+                        <div class="relative">
+                            <div class="px-8 py-3 relative" style="background: ${accentColor}; clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%)">
+                                <p class="${textSize} font-semibold text-white">${message}</p>
+                            </div>
+                            <div class="absolute -left-2 top-0 w-4 h-full" style="background: ${accentColor}; opacity: 0.7; transform: skewX(-10deg)"></div>
+                            <div class="absolute -right-2 top-0 w-4 h-full" style="background: ${accentColor}; opacity: 0.7; transform: skewX(10deg)"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'stamp') {
+            return `
+                <div class="${padding} px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="max-w-xs mx-auto p-4 relative" style="border: 3px dashed ${accentColor}; background: white">
+                        <div class="absolute -top-2 -left-2 w-4 h-4 rounded-full" style="background: ${bgColor}"></div>
+                        <div class="absolute -top-2 -right-2 w-4 h-4 rounded-full" style="background: ${bgColor}"></div>
+                        <div class="absolute -bottom-2 -left-2 w-4 h-4 rounded-full" style="background: ${bgColor}"></div>
+                        <div class="absolute -bottom-2 -right-2 w-4 h-4 rounded-full" style="background: ${bgColor}"></div>
+                        <div class="text-3xl mb-2" style="color: ${accentColor}">★</div>
+                        <p class="${textSize} font-semibold" style="color: ${accentColor}">${message}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'sparkle') {
+            return `
+                <div class="${padding} px-6 text-center relative" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="relative inline-block">
+                        ${[...Array(8)].map((_, i) => {
+                            const angle = (i * 45) * Math.PI / 180;
+                            const distance = 40;
+                            const x = Math.cos(angle) * distance;
+                            const y = Math.sin(angle) * distance;
+                            return `<div class="absolute text-xl" style="left: 50%; top: 50%; transform: translate(calc(-50% + ${x}px), calc(-50% + ${y}px)); color: ${accentColor}; opacity: ${0.3 + Math.random() * 0.4}">✨</div>`;
+                        }).join('')}
+                        <p class="${textSize} relative z-10">${message}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'heartBeat') {
+            return `
+                <div class="${padding} px-6 text-center" style="background: ${bgColor}; color: ${textColor}">
+                    <div class="flex items-center justify-center gap-3">
+                        <span class="text-2xl animate-pulse" style="color: ${accentColor}">💖</span>
+                        <p class="${textSize}">${message}</p>
+                        <span class="text-2xl animate-pulse" style="color: ${accentColor}; animation-delay: 0.5s">💖</span>
+                    </div>
                 </div>
             `;
         }

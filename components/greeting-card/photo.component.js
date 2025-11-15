@@ -32,6 +32,12 @@ window.sectionComponents.photo = {
                     <option value="floating">Floating - With Shadow</option>
                     <option value="tilted">Tilted - Rotated Angle</option>
                     <option value="collage">Collage - Multi-frame Style</option>
+                    <option value="scrapbook">Scrapbook - Memory Book</option>
+                    <option value="film">Film Strip - Camera Roll</option>
+                    <option value="magazine">Magazine - Editorial Layout</option>
+                    <option value="canvas">Canvas - Gallery Style</option>
+                    <option value="stamp">Stamp - Postage Style</option>
+                    <option value="torn">Torn Edge - Artistic</option>
                 </select>
             </div>
             <div>
@@ -202,6 +208,126 @@ window.sectionComponents.photo = {
                             <div class="relative p-2 bg-white ${shapeClass} shadow-xl">
                                 <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
                             </div>
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Scrapbook Layout - Memory Book
+        if (layout === 'scrapbook') {
+            return `
+                <div class="py-8 px-6" style="background: linear-gradient(135deg, #f5e6d3 0%, #e8d4ba 100%);">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="relative inline-block">
+                            <div class="absolute -inset-2 bg-yellow-100 transform rotate-1 rounded"></div>
+                            <div class="absolute -inset-1 bg-pink-100 transform -rotate-2 rounded"></div>
+                            <div class="relative bg-white p-2 shadow-xl" style="border: 1px dashed #ccc;">
+                                <img src="${data.photo}" class="${shapeClass} w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
+                            </div>
+                            <div class="absolute top-2 right-2 text-4xl transform rotate-12">📌</div>
+                            <div class="absolute -bottom-6 -left-6 text-3xl transform -rotate-12">🎨</div>
+                        </div>
+                        ${caption}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Film Strip Layout - Camera Roll
+        if (layout === 'film') {
+            return `
+                <div class="py-8 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="bg-black p-4 rounded shadow-2xl">
+                            <div class="relative">
+                                <div class="absolute -left-2 top-0 bottom-0 w-6 flex flex-col justify-around">
+                                    ${[...Array(8)].map(() => '<div class="w-4 h-3 bg-gray-800 border border-gray-700"></div>').join('')}
+                                </div>
+                                <div class="absolute -right-2 top-0 bottom-0 w-6 flex flex-col justify-around">
+                                    ${[...Array(8)].map(() => '<div class="w-4 h-3 bg-gray-800 border border-gray-700"></div>').join('')}
+                                </div>
+                                <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
+                            </div>
+                            ${data.caption ? `<p class="mt-4 text-white text-sm font-mono">${data.caption}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Magazine Layout - Editorial Layout
+        if (layout === 'magazine') {
+            return `
+                <div class="py-8 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto">
+                        <div class="relative overflow-hidden shadow-2xl" style="clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);">
+                            <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
+                            ${data.caption ? `
+                                <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 p-6">
+                                    <p class="text-white text-lg font-bold uppercase tracking-wide">${data.caption}</p>
+                                    <div class="mt-2 h-1 w-20 bg-pink-500"></div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Canvas Layout - Gallery Style
+        if (layout === 'canvas') {
+            return `
+                <div class="py-8 px-6" style="background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="relative inline-block">
+                            <div class="absolute -inset-8 bg-gradient-to-br from-amber-900 to-amber-700 shadow-2xl"></div>
+                            <div class="absolute -inset-6 bg-gradient-to-br from-amber-800 to-amber-600"></div>
+                            <div class="relative">
+                                <div class="p-6 bg-white">
+                                    <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}; border: 2px solid #f0f0f0;" alt="Birthday photo">
+                                </div>
+                            </div>
+                        </div>
+                        ${data.caption ? `<p class="mt-6 text-white text-sm italic">${data.caption}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Stamp Layout - Postage Style
+        if (layout === 'stamp') {
+            return `
+                <div class="py-8 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="inline-block p-6 bg-white shadow-xl relative" style="background: radial-gradient(circle at 0 0, transparent 8px, white 8px, white 12px, transparent 12px) -12px -12px / 24px 24px, radial-gradient(circle at 100% 0, transparent 8px, white 8px, white 12px, transparent 12px) 12px -12px / 24px 24px, radial-gradient(circle at 0 100%, transparent 8px, white 8px, white 12px, transparent 12px) -12px 12px / 24px 24px, radial-gradient(circle at 100% 100%, transparent 8px, white 8px, white 12px, transparent 12px) 12px 12px / 24px 24px, white;">
+                            <div class="border-4 border-dashed" style="border-color: ${globalStyles.primaryColor}; padding: 8px;">
+                                <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
+                            </div>
+                            ${data.caption ? `
+                                <div class="mt-4 text-center">
+                                    <p class="text-sm font-bold uppercase tracking-wide" style="color: ${globalStyles.primaryColor}">${data.caption}</p>
+                                    <div class="mt-2 flex justify-center gap-1">
+                                        <div class="w-2 h-2 rounded-full" style="background: ${globalStyles.primaryColor}"></div>
+                                        <div class="w-2 h-2 rounded-full" style="background: ${globalStyles.primaryColor}"></div>
+                                        <div class="w-2 h-2 rounded-full" style="background: ${globalStyles.primaryColor}"></div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Torn Edge Layout - Artistic
+        if (layout === 'torn') {
+            return `
+                <div class="py-8 px-6" style="background: ${bgColor}">
+                    <div class="${sizeClass} mx-auto text-center">
+                        <div class="relative inline-block shadow-2xl" style="clip-path: polygon(0% 3%, 2% 0%, 5% 2%, 8% 0%, 12% 1%, 15% 0%, 18% 2%, 22% 0%, 25% 1%, 28% 0%, 32% 2%, 35% 0%, 38% 1%, 42% 0%, 45% 2%, 48% 0%, 52% 1%, 55% 0%, 58% 2%, 62% 0%, 65% 1%, 68% 0%, 72% 2%, 75% 0%, 78% 1%, 82% 0%, 85% 2%, 88% 0%, 92% 1%, 95% 0%, 98% 2%, 100% 0%, 100% 97%, 98% 100%, 95% 98%, 92% 100%, 88% 99%, 85% 100%, 82% 98%, 78% 100%, 75% 99%, 72% 100%, 68% 98%, 65% 100%, 62% 99%, 58% 100%, 55% 98%, 52% 100%, 48% 99%, 45% 100%, 42% 98%, 38% 100%, 35% 99%, 32% 100%, 28% 98%, 25% 100%, 22% 99%, 18% 100%, 15% 98%, 12% 100%, 8% 99%, 5% 100%, 2% 98%, 0% 100%);">
+                            <img src="${data.photo}" class="w-full h-auto object-cover" style="${filterStyle}" alt="Birthday photo">
                         </div>
                         ${caption}
                     </div>

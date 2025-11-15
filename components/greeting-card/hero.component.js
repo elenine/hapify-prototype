@@ -44,6 +44,12 @@ window.sectionComponents.hero = {
                     <option value="fun">Fun - Playful</option>
                     <option value="bold">Bold - Dramatic</option>
                     <option value="split">Split - Image & Text Side by Side</option>
+                    <option value="vintage">Vintage - Retro Style</option>
+                    <option value="neon">Neon - Glowing Effect</option>
+                    <option value="confetti">Confetti - Festive Party</option>
+                    <option value="geometric">Geometric - Modern Patterns</option>
+                    <option value="polaroid">Polaroid - Photo Frame</option>
+                    <option value="magazine">Magazine - Editorial Style</option>
                 </select>
             </div>
             <div>
@@ -316,6 +322,146 @@ window.sectionComponents.hero = {
                         <h1 class="${sizes.greeting} font-bold mb-4" style="${textShadow}">${data.greeting || 'Happy Birthday!'}</h1>
                         <p class="${sizes.name} font-semibold" style="${textShadow}">${data.name || 'Name'}</p>
                         <div class="mt-6 text-4xl">🎉🎈🎁</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Vintage Layout - Retro Style
+        if (layout === 'vintage') {
+            return `
+                <div class="relative text-center ${padding} overflow-hidden" style="background: linear-gradient(135deg, ${bgColor}ee 0%, ${bgColor} 100%); color: ${textColor}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10">
+                        <div class="border-8 border-double p-8 max-w-2xl mx-auto" style="border-color: ${textColor}88">
+                            <div class="mb-4 flex items-center justify-center gap-3">
+                                <span class="text-3xl">✦</span>
+                                <span class="text-3xl">❖</span>
+                                <span class="text-3xl">✦</span>
+                            </div>
+                            <div class="mb-6">${imageHtml}</div>
+                            <h1 class="${sizes.greeting} font-serif italic mb-4" style="${textShadow}; letter-spacing: 0.05em;">${data.greeting || 'Happy Birthday!'}</h1>
+                            <div class="flex items-center justify-center gap-4 mb-3">
+                                <div style="width: 60px; height: 2px; background: ${textColor}"></div>
+                                <span class="text-2xl">❖</span>
+                                <div style="width: 60px; height: 2px; background: ${textColor}"></div>
+                            </div>
+                            <p class="${sizes.name} font-serif" style="${textShadow}">${data.name || 'Name'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Neon Layout - Glowing Effect
+        if (layout === 'neon') {
+            return `
+                <div class="relative text-center ${padding} overflow-hidden" style="background: #0a0a0a; color: ${textColor}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10">
+                        <div class="mb-6">${imageHtml}</div>
+                        <h1 class="${sizes.greeting} font-bold mb-4" style="${textShadow}; text-shadow: 0 0 10px ${bgColor}, 0 0 20px ${bgColor}, 0 0 30px ${bgColor}, 0 0 40px ${bgColor}; color: ${bgColor};">${data.greeting || 'Happy Birthday!'}</h1>
+                        <p class="${sizes.name} font-semibold tracking-widest" style="text-shadow: 0 0 8px ${bgColor}, 0 0 15px ${bgColor}; color: ${bgColor};">${data.name || 'Name'}</p>
+                        <div class="mt-6 flex justify-center gap-4">
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: ${bgColor}; box-shadow: 0 0 20px ${bgColor}, 0 0 40px ${bgColor};"></div>
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: ${bgColor}; box-shadow: 0 0 20px ${bgColor}, 0 0 40px ${bgColor};"></div>
+                            <div style="width: 40px; height: 40px; border-radius: 50%; background: ${bgColor}; box-shadow: 0 0 20px ${bgColor}, 0 0 40px ${bgColor};"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Confetti Layout - Festive Party
+        if (layout === 'confetti') {
+            return `
+                <div class="relative text-center ${padding} overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+                        <div class="absolute" style="top: 10%; left: 10%; width: 10px; height: 20px; background: #ff6b9d; transform: rotate(45deg);"></div>
+                        <div class="absolute" style="top: 20%; right: 15%; width: 15px; height: 15px; background: #feca57; border-radius: 50%;"></div>
+                        <div class="absolute" style="top: 30%; left: 20%; width: 12px; height: 12px; background: #48dbfb; border-radius: 50%;"></div>
+                        <div class="absolute" style="top: 40%; right: 25%; width: 8px; height: 25px; background: #ff9ff3; transform: rotate(-30deg);"></div>
+                        <div class="absolute" style="top: 15%; left: 70%; width: 10px; height: 20px; background: #54a0ff; transform: rotate(60deg);"></div>
+                        <div class="absolute" style="bottom: 30%; left: 15%; width: 15px; height: 15px; background: #00d2d3; border-radius: 50%;"></div>
+                        <div class="absolute" style="bottom: 20%; right: 20%; width: 12px; height: 25px; background: #ee5a6f; transform: rotate(20deg);"></div>
+                        <div class="absolute" style="bottom: 40%; left: 80%; width: 10px; height: 10px; background: #feca57; border-radius: 50%;"></div>
+                        <div class="absolute" style="top: 50%; left: 5%; width: 8px; height: 20px; background: #ff6b9d; transform: rotate(-45deg);"></div>
+                        <div class="absolute" style="bottom: 10%; right: 10%; width: 15px; height: 15px; background: #48dbfb; border-radius: 50%;"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="mb-6 transform hover:scale-110 transition-transform duration-300">${imageHtml}</div>
+                        <h1 class="${sizes.greeting} font-bold mb-4" style="${textShadow}">${data.greeting || 'Happy Birthday!'}</h1>
+                        <p class="${sizes.name} font-semibold" style="${textShadow}">${data.name || 'Name'}</p>
+                        <div class="mt-6 text-4xl">🎊🎉🎈</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Geometric Layout - Modern Patterns
+        if (layout === 'geometric') {
+            return `
+                <div class="relative text-center ${padding} overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 pointer-events-none z-0 opacity-10">
+                        <div class="absolute top-0 left-0 w-32 h-32 border-4" style="border-color: ${textColor}; transform: rotate(45deg);"></div>
+                        <div class="absolute top-20 right-0 w-40 h-40 rounded-full border-4" style="border-color: ${textColor};"></div>
+                        <div class="absolute bottom-0 left-20 w-36 h-36 border-4" style="border-color: ${textColor}; transform: rotate(30deg);"></div>
+                        <div class="absolute bottom-20 right-20 w-28 h-28 rounded-full border-4" style="border-color: ${textColor};"></div>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="mb-6 relative inline-block">
+                            <div class="absolute -inset-4 border-2 rounded-full opacity-30" style="border-color: ${textColor};"></div>
+                            ${imageHtml}
+                        </div>
+                        <h1 class="${sizes.greeting} font-bold mb-4 uppercase tracking-wider" style="${textShadow}">${data.greeting || 'Happy Birthday!'}</h1>
+                        <div class="inline-block px-8 py-2 border-2 mb-2" style="border-color: ${textColor}">
+                            <p class="${sizes.name} font-semibold" style="${textShadow}">${data.name || 'Name'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Polaroid Layout - Photo Frame
+        if (layout === 'polaroid') {
+            return `
+                <div class="relative text-center ${padding} overflow-hidden" style="background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); color: #333">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-md mx-auto">
+                        <div class="bg-white p-4 pb-16 shadow-2xl transform hover:rotate-2 transition-transform duration-300" style="box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                            ${data.image
+                                ? `<img src="${data.image}" class="w-full h-auto object-cover mb-4" style="aspect-ratio: 1/1;">`
+                                : '<div class="w-full bg-gray-200 flex items-center justify-center text-6xl" style="aspect-ratio: 1/1;">🎂</div>'}
+                            <h1 class="${sizes.greeting} font-bold mb-2" style="color: #333; font-family: 'Courier New', monospace;">${data.greeting || 'Happy Birthday!'}</h1>
+                            <p class="${sizes.name} italic" style="color: #666; font-family: 'Courier New', monospace;">${data.name || 'Name'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Magazine Layout - Editorial Style
+        if (layout === 'magazine') {
+            return `
+                <div class="relative ${padding} overflow-hidden" style="background: ${bgColor}; color: ${textColor}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-4xl mx-auto">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="order-2 md:order-1">
+                                <div class="text-xs uppercase tracking-widest mb-2 opacity-70">Special Edition</div>
+                                <h1 class="text-5xl md:text-6xl font-black uppercase mb-4 leading-none" style="${textShadow}; letter-spacing: -0.02em;">${data.greeting || 'Happy Birthday!'}</h1>
+                                <div class="h-1 w-20 mb-4" style="background: ${textColor}"></div>
+                                <p class="text-2xl md:text-3xl font-light tracking-wide" style="${textShadow}">${data.name || 'Name'}</p>
+                                <div class="mt-6 text-xs uppercase tracking-widest opacity-70">Celebrating You</div>
+                            </div>
+                            <div class="order-1 md:order-2">
+                                ${data.image
+                                    ? `<img src="${data.image}" class="w-full h-auto object-cover shadow-2xl" style="clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);">`
+                                    : '<div class="w-full bg-white bg-opacity-20 flex items-center justify-center text-8xl aspect-square shadow-2xl">🎂</div>'}
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;

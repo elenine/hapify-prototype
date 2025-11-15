@@ -15,6 +15,12 @@ window.sectionComponents.video = {
                     <option value="featured">Featured - Large hero video</option>
                     <option value="playlist">Playlist - Video collection style</option>
                     <option value="minimal">Minimal - Clean minimalist</option>
+                    <option value="splitScreen">Split Screen - Video with info panel</option>
+                    <option value="floatingPlayer">Floating Player - Floating video frame</option>
+                    <option value="retroTV">Retro TV - Vintage TV set style</option>
+                    <option value="popout">Pop-out - 3D popping video frame</option>
+                    <option value="borderFrame">Border Frame - Decorative frame around video</option>
+                    <option value="glowEffect">Glow Effect - Glowing neon video player</option>
                 </select>
             </div>
             <div>
@@ -163,6 +169,111 @@ window.sectionComponents.video = {
                             </div>
                         </div>
                         ${url ? `<p class="mt-4 text-sm text-center" style="color: ${accentColor}">Video URL: ${url}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'splitScreen') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="grid md:grid-cols-2 gap-6 items-center">
+                            <div class="aspect-video ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: ${playerBg}">
+                                <div class="text-6xl">🎥</div>
+                            </div>
+                            <div class="p-6 ${borderRadius} ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}10)">
+                                <h3 class="text-3xl font-bold mb-4" style="color: ${titleColor}">${title}</h3>
+                                <p class="text-gray-600 mb-4">Watch this special video message created just for you!</p>
+                                <button class="px-6 py-3 ${borderRadius} font-semibold text-white" style="background: ${accentColor}">▶ Play Video</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'floatingPlayer') {
+            return `
+                <div class="py-16 px-6" style="background: ${bgColor}">
+                    <div class="max-w-4xl mx-auto">
+                        <h3 class="text-3xl font-bold mb-12 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="relative">
+                            <div class="absolute inset-0 ${borderRadius} ${shadowClass} transform translate-x-4 translate-y-4" style="background: ${accentColor}40"></div>
+                            <div class="relative aspect-video ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: ${playerBg}">
+                                <div class="text-7xl">🎥</div>
+                            </div>
+                        </div>
+                        ${url ? `<p class="mt-6 text-sm text-center" style="color: ${accentColor}">Video: ${url}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'retroTV') {
+            return `
+                <div class="py-12 px-6" style="background: linear-gradient(180deg, ${bgColor}, #1f2937)">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <h3 class="text-2xl font-bold mb-8 text-white">${title}</h3>
+                        <div class="p-8 ${borderRadius} ${shadowClass}" style="background: linear-gradient(145deg, #8B4513, #654321)">
+                            <div class="aspect-video rounded flex items-center justify-center relative" style="background: #1a1a1a; border: 8px solid #2a2a2a">
+                                <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)"></div>
+                                <div class="text-6xl relative z-10">📺</div>
+                            </div>
+                            <div class="mt-4 flex justify-center gap-4">
+                                <div class="w-8 h-8 rounded-full" style="background: #444"></div>
+                                <div class="w-8 h-8 rounded-full" style="background: #444"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'popout') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="relative" style="perspective: 1000px">
+                            <div class="aspect-video ${borderRadius} ${shadowClass} flex items-center justify-center" style="background: ${playerBg}; transform: rotateY(-5deg) rotateX(2deg); box-shadow: 20px 20px 40px rgba(0,0,0,0.3)">
+                                <div class="text-7xl">🎬</div>
+                            </div>
+                        </div>
+                        ${url ? `<p class="mt-6 text-sm text-center" style="color: ${accentColor}">Video Source: ${url}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'borderFrame') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center" style="color: ${titleColor}">${title}</h3>
+                        <div class="p-8 ${borderRadius} ${shadowClass}" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}80); border: 4px solid ${accentColor}">
+                            <div class="aspect-video ${borderRadius} flex items-center justify-center bg-white" style="border: 6px solid white; box-shadow: inset 0 0 20px rgba(0,0,0,0.1)">
+                                <div class="text-7xl">🎥</div>
+                            </div>
+                        </div>
+                        ${url ? `<p class="mt-6 text-sm text-center" style="color: ${accentColor}">${url}</p>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'glowEffect') {
+            return `
+                <div class="py-12 px-6" style="background: #0a0a0a">
+                    <div class="max-w-3xl mx-auto">
+                        <h3 class="text-2xl font-bold mb-8 text-center text-white">${title}</h3>
+                        <div class="relative">
+                            <div class="absolute inset-0 ${borderRadius} blur-2xl opacity-75" style="background: ${accentColor}"></div>
+                            <div class="relative aspect-video ${borderRadius} flex items-center justify-center" style="background: ${playerBg}; border: 2px solid ${accentColor}; box-shadow: 0 0 30px ${accentColor}, inset 0 0 20px rgba(255,255,255,0.1)">
+                                <div class="text-7xl">🎥</div>
+                            </div>
+                        </div>
+                        ${url ? `<p class="mt-6 text-sm text-center" style="color: ${accentColor}">Video: ${url}</p>` : ''}
                     </div>
                 </div>
             `;

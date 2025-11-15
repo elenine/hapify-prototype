@@ -15,6 +15,12 @@ window.sectionComponents.memories = {
                     <option value="timeline">Timeline - Timeline entry look</option>
                     <option value="photoFrame">Photo Frame - Framed memory style</option>
                     <option value="vintage">Vintage - Retro nostalgic theme</option>
+                    <option value="polaroid">Polaroid - Photo snapshot style</option>
+                    <option value="journal">Journal - Diary entry</option>
+                    <option value="postcard">Postcard - Travel card</option>
+                    <option value="album">Album - Photo album page</option>
+                    <option value="clouds">Clouds - Dreamy memory</option>
+                    <option value="heartfelt">Heartfelt - Heart-themed</option>
                 </select>
             </div>
             <div>
@@ -145,6 +151,112 @@ window.sectionComponents.memories = {
                         <div class="p-8 rounded-lg ${shadowClass}" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border: 4px double ${accentColor}">
                             <h3 class="text-2xl font-bold mb-4 text-center font-serif" style="color: ${accentColor}">${title}</h3>
                             <p class="${textSize} leading-relaxed font-serif" style="color: ${textColor}">${memory}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'polaroid') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-sm mx-auto">
+                        <div class="p-4 pb-16 bg-white ${shadowClass} transform hover:rotate-2 transition-transform" style="box-shadow: 0 10px 30px rgba(0,0,0,0.3)">
+                            <div class="p-6 rounded-sm" style="background: ${cardBg}; border: 1px solid #e5e7eb">
+                                <h3 class="text-xl font-bold mb-3 text-center" style="color: ${accentColor}">${title}</h3>
+                                <p class="${textSize} leading-relaxed text-center" style="color: ${textColor}">${memory}</p>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <span class="text-sm italic" style="color: ${accentColor}">Special Memory</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'journal') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="p-8 rounded-lg ${shadowClass}" style="background: ${cardBg}; background-image: repeating-linear-gradient(transparent, transparent 35px, #e5e7eb 35px, #e5e7eb 36px)">
+                            <div class="flex items-start gap-4 mb-4">
+                                <span class="text-3xl" style="color: ${accentColor}">📝</span>
+                                <h3 class="text-2xl font-bold" style="color: ${accentColor}">${title}</h3>
+                            </div>
+                            <p class="${textSize} leading-9" style="color: ${textColor}">${memory}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'postcard') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="grid grid-cols-2 ${shadowClass}" style="background: ${cardBg}">
+                            <div class="p-6 border-r-2 border-dashed" style="border-color: ${accentColor}">
+                                <div class="text-6xl mb-4 text-center" style="color: ${accentColor}">🌟</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-lg font-bold mb-3" style="color: ${accentColor}">${title}</h3>
+                                <p class="text-sm leading-relaxed" style="color: ${textColor}">${memory}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'album') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="p-8 rounded-lg ${shadowClass}" style="background: #2d2d2d">
+                            <div class="p-6 rounded" style="background: ${cardBg}">
+                                <h3 class="text-2xl font-bold mb-4 text-center" style="color: ${accentColor}">${title}</h3>
+                                <p class="${textSize} leading-relaxed text-center" style="color: ${textColor}">${memory}</p>
+                            </div>
+                            <div class="mt-4 flex justify-center gap-4">
+                                <div class="w-3 h-3 rounded-full" style="background: ${accentColor}"></div>
+                                <div class="w-3 h-3 rounded-full" style="background: ${accentColor}"></div>
+                                <div class="w-3 h-3 rounded-full" style="background: ${accentColor}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'clouds') {
+            return `
+                <div class="py-12 px-6 relative overflow-hidden" style="background: linear-gradient(to bottom, ${bgColor}, #e0f2fe)">
+                    <div class="absolute top-8 left-10 text-6xl opacity-40">☁️</div>
+                    <div class="absolute top-16 right-16 text-5xl opacity-30">☁️</div>
+                    <div class="absolute bottom-12 left-20 text-4xl opacity-35">☁️</div>
+                    <div class="relative z-10 max-w-2xl mx-auto">
+                        <div class="p-8 rounded-3xl ${shadowClass}" style="background: rgba(255,255,255,0.9); backdrop-filter: blur(10px)">
+                            <h3 class="text-2xl font-bold mb-4 text-center" style="color: ${accentColor}">${title}</h3>
+                            <p class="${textSize} leading-relaxed text-center" style="color: ${textColor}">${memory}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        if (layout === 'heartfelt') {
+            return `
+                <div class="py-12 px-6" style="background: ${bgColor}">
+                    <div class="max-w-2xl mx-auto relative">
+                        <div class="absolute -top-4 -right-4 text-6xl opacity-20 transform rotate-12">💖</div>
+                        <div class="absolute -bottom-4 -left-4 text-5xl opacity-20 transform -rotate-12">❤️</div>
+                        <div class="p-8 rounded-2xl ${shadowClass} relative z-10" style="background: ${cardBg}; border: 3px solid ${accentColor}">
+                            <div class="text-center mb-4">
+                                <span class="text-4xl">💕</span>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-4 text-center" style="color: ${accentColor}">${title}</h3>
+                            <p class="${textSize} leading-relaxed text-center" style="color: ${textColor}">${memory}</p>
                         </div>
                     </div>
                 </div>
