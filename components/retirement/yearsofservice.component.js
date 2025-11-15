@@ -35,6 +35,11 @@ window.sectionComponents.yearsofservice = {
                     <option value="timeline">Timeline View</option>
                     <option value="circular">Circular Progress</option>
                     <option value="minimal">Minimal Elegant</option>
+                    <option value="certificate">Certificate Style</option>
+                    <option value="counter">Digital Counter</option>
+                    <option value="ribbon">Ribbon Award</option>
+                    <option value="milestone">Milestone Marker</option>
+                    <option value="modern">Modern Minimalist</option>
                 </select>
             </div>
             <div>
@@ -164,6 +169,121 @@ window.sectionComponents.yearsofservice = {
                             <div class="flex justify-center gap-8 text-sm">
                                 ${startFormatted ? `<div><p class="font-semibold mb-1">Started</p><p class="text-gray-600">${startFormatted}</p></div>` : ''}
                                 ${retireFormatted ? `<div><p class="font-semibold mb-1">Retiring</p><p class="text-gray-600">${retireFormatted}</p></div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'certificate':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="border-8 p-8 bg-white shadow-2xl" style="border-color: ${accentColor};">
+                                <div class="border-2 border-dashed p-6" style="border-color: ${accentColor};">
+                                    <div class="text-center">
+                                        <div class="text-xs uppercase tracking-widest mb-3" style="color: ${accentColor};">Certificate of Appreciation</div>
+                                        <div class="text-6xl font-bold mb-4" style="color: ${accentColor};">${data.years || '0'}</div>
+                                        <div class="text-2xl font-serif mb-4">Years of Dedication</div>
+                                        ${data.company ? `<div class="text-lg mb-4">${data.company}</div>` : ''}
+                                        <div class="flex justify-center gap-1 mb-4">
+                                            <div class="w-3 h-3 rounded-full" style="background: ${accentColor};"></div>
+                                            <div class="w-3 h-3 rounded-full" style="background: ${accentColor};"></div>
+                                            <div class="w-3 h-3 rounded-full" style="background: ${accentColor};"></div>
+                                        </div>
+                                        ${startFormatted && retireFormatted ? `<div class="text-sm text-gray-600">${startFormatted} - ${retireFormatted}</div>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'counter':
+                return `
+                    <div class="py-16 px-6" style="background: linear-gradient(135deg, ${bgColor} 0%, ${accentColor}20 100%);">
+                        <div class="max-w-md mx-auto text-center">
+                            <h2 class="text-2xl font-bold mb-8">Years of Service</h2>
+                            <div class="bg-gray-900 rounded-2xl p-8 shadow-2xl">
+                                <div class="font-mono text-7xl font-bold mb-4" style="color: ${accentColor}; text-shadow: 0 0 20px ${accentColor}50;">
+                                    ${String(data.years || '0').padStart(2, '0')}
+                                </div>
+                                <div class="text-white text-sm uppercase tracking-widest">YEARS</div>
+                            </div>
+                            ${data.company ? `<p class="text-xl font-semibold mt-6" style="color: ${accentColor};">${data.company}</p>` : ''}
+                            <div class="flex justify-center gap-6 mt-6 text-sm">
+                                ${startFormatted ? `<div class="text-gray-600"><span class="font-semibold">From:</span> ${startFormatted}</div>` : ''}
+                                ${retireFormatted ? `<div class="text-gray-600"><span class="font-semibold">To:</span> ${retireFormatted}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'ribbon':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor};">
+                        <div class="max-w-md mx-auto text-center">
+                            <div class="relative inline-block mb-8">
+                                <div class="relative w-40 h-40 rounded-full flex items-center justify-center text-white shadow-2xl" style="background: ${accentColor};">
+                                    <div>
+                                        <div class="text-5xl font-bold">${data.years || '0'}</div>
+                                        <div class="text-xs uppercase tracking-wider">YEARS</div>
+                                    </div>
+                                </div>
+                                <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-16 h-20" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background: ${accentColor}; opacity: 0.8;"></div>
+                            </div>
+                            <h2 class="text-2xl font-bold mb-4 mt-8">Outstanding Service</h2>
+                            ${data.company ? `<p class="text-xl mb-4" style="color: ${accentColor};">${data.company}</p>` : ''}
+                            ${startFormatted && retireFormatted ? `<p class="text-sm text-gray-600">${startFormatted} - ${retireFormatted}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+
+            case 'milestone':
+                return `
+                    <div class="py-12 px-6" style="background: ${bgColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-center mb-8">
+                                <div class="inline-block p-6 rounded-2xl shadow-xl" style="background: ${accentColor};">
+                                    <div class="text-white">
+                                        <div class="text-xs uppercase tracking-widest mb-2">Milestone</div>
+                                        <div class="text-6xl font-bold mb-2">${data.years || '0'}</div>
+                                        <div class="text-sm uppercase tracking-wide">Years</div>
+                                    </div>
+                                </div>
+                            </div>
+                            ${data.company ? `<h3 class="text-2xl font-bold text-center mb-6">${data.company}</h3>` : ''}
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center justify-between">
+                                    ${startFormatted ? `
+                                    <div class="text-center">
+                                        <div class="text-xs font-bold mb-1" style="color: ${accentColor};">START</div>
+                                        <div class="text-sm">${startFormatted}</div>
+                                    </div>` : ''}
+                                    <div class="flex-1 mx-4 h-2 rounded-full" style="background: linear-gradient(to right, ${accentColor} 0%, ${accentColor}40 100%);"></div>
+                                    ${retireFormatted ? `
+                                    <div class="text-center">
+                                        <div class="text-xs font-bold mb-1" style="color: ${accentColor};">RETIRE</div>
+                                        <div class="text-sm">${retireFormatted}</div>
+                                    </div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+            case 'modern':
+                return `
+                    <div class="py-16 px-6" style="background: ${bgColor};">
+                        <div class="max-w-md mx-auto">
+                            <div class="flex items-center gap-6">
+                                <div class="flex-shrink-0 w-24 h-24 rounded-2xl flex items-center justify-center shadow-lg" style="background: ${accentColor};">
+                                    <div class="text-white text-4xl font-black">${data.years || '0'}</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-widest mb-1" style="color: ${accentColor};">Years of Service</div>
+                                    <h3 class="text-2xl font-bold mb-2">${data.company || 'Dedicated Service'}</h3>
+                                    ${startFormatted && retireFormatted ? `<p class="text-sm text-gray-600">${startFormatted.split(',')[0]} → ${retireFormatted.split(',')[0]}</p>` : ''}
+                                </div>
                             </div>
                         </div>
                     </div>
