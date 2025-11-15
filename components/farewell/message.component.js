@@ -42,6 +42,9 @@ window.sectionComponents.message = {
                     <option value="callout">Callout - Alert Style</option>
                     <option value="minimal">Minimal - Simple Text</option>
                     <option value="bordered">Bordered - Framed</option>
+                    <option value="compact">Compact - Dense Info</option>
+                    <option value="highlight">Highlight - Attention Grabber</option>
+                    <option value="note">Note - Sticky Style</option>
                 </select>
             </div>
             <div>
@@ -162,6 +165,65 @@ window.sectionComponents.message = {
                                 ` : ''}
                                 <h3 class="text-2xl font-bold mb-6" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
                                 <div class="w-24 h-1 mx-auto mb-6" style="background: ${accentColor}30"></div>
+                                <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content || 'Add important notes or instructions here...'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Compact Layout - Dense Info
+        if (layout === 'compact') {
+            return `
+                <div class="py-8 px-6" style="background: ${bg}">
+                    <div class="max-w-xl mx-auto">
+                        <div class="rounded-lg p-5 shadow-${shadow}" style="background: ${cardColor}; border-left: 6px solid ${accentColor}">
+                            <div class="flex items-center gap-3 mb-3">
+                                ${icon ? `<div class="text-3xl">${icon}</div>` : ''}
+                                <h3 class="text-lg font-bold" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                            </div>
+                            <div class="text-gray-700 text-sm leading-relaxed whitespace-pre-line">${data.content || 'Add important notes or instructions here...'}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Highlight Layout - Attention Grabber
+        if (layout === 'highlight') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="rounded-2xl p-8 shadow-${shadow}" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}05); border: 2px solid ${accentColor}">
+                            <div class="text-center">
+                                ${icon ? `
+                                    <div class="inline-block w-16 h-16 rounded-full flex items-center justify-center mb-4 shadow-lg" style="background: ${accentColor}; color: white;">
+                                        <div class="text-3xl">${icon}</div>
+                                    </div>
+                                ` : ''}
+                                <h3 class="text-3xl font-bold mb-6" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
+                                <div class="text-gray-800 leading-relaxed whitespace-pre-line text-lg font-medium">${data.content || 'Add important notes or instructions here...'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Note Layout - Sticky Style
+        if (layout === 'note') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <div class="max-w-md mx-auto">
+                        <div class="relative">
+                            <!-- Pin decoration -->
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full shadow-md z-10" style="background: ${accentColor}"></div>
+                            <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white z-20"></div>
+
+                            <div class="rounded-lg p-6 shadow-${shadow} transform rotate-1" style="background: ${cardColor}; border: 1px solid ${accentColor}40">
+                                ${icon ? `<div class="text-4xl text-center mb-3">${icon}</div>` : ''}
+                                <h3 class="text-xl font-bold mb-4 text-center" style="color: ${accentColor}">${data.title || 'Important Information'}</h3>
                                 <div class="text-gray-700 leading-relaxed whitespace-pre-line">${data.content || 'Add important notes or instructions here...'}</div>
                             </div>
                         </div>
