@@ -38,6 +38,12 @@ window.sectionComponents.celebration = {
                     <option value="modern">Modern - Clean Design</option>
                     <option value="colorful">Colorful - Vibrant Style</option>
                     <option value="classic">Classic - Traditional Look</option>
+                    <option value="infoboard">Info Board - Bulletin Style</option>
+                    <option value="accordion">Accordion - Expandable View</option>
+                    <option value="metro">Metro - Tile Layout</option>
+                    <option value="polaroid-cards">Polaroid Cards - Photo Style</option>
+                    <option value="neon-signs">Neon Signs - Glowing Display</option>
+                    <option value="postcard">Postcard - Vintage Style</option>
                 </select>
             </div>
             <div>
@@ -529,6 +535,301 @@ window.sectionComponents.celebration = {
                                     <div class="text-gray-800 text-sm">${data.address}</div>
                                 </div>
                             </div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Info Board Layout
+        if (layout === 'infoboard') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <h2 class="text-3xl ${fontWeightClasses[fontWeight]} text-center mb-10">📌 Event Information Board</h2>
+                    <div class="max-w-2xl mx-auto p-8 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${cardBg} 0%, ${secondaryColor}22 100%); border: 8px solid ${accentColor};">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            ${dateStr ? `
+                            <div class="p-4 bg-yellow-100 ${borderRadiusClasses[borderRadius]} transform rotate-1 ${shadowClasses[shadow]}">
+                                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 -translate-y-6 text-2xl" style="color: ${accentColor};">📍</div>
+                                <div class="${iconSizes[iconSize]} mb-2" style="color: ${accentColor};">📅</div>
+                                <div class="text-xs uppercase tracking-wider ${fontWeightClasses[fontWeight]} mb-1">Date</div>
+                                <div class="text-gray-800">${dateStr}</div>
+                            </div>` : ''}
+                            ${data.time ? `
+                            <div class="p-4 bg-pink-100 ${borderRadiusClasses[borderRadius]} transform -rotate-1 ${shadowClasses[shadow]}">
+                                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 -translate-y-6 text-2xl" style="color: ${accentColor};">📍</div>
+                                <div class="${iconSizes[iconSize]} mb-2" style="color: ${accentColor};">🕐</div>
+                                <div class="text-xs uppercase tracking-wider ${fontWeightClasses[fontWeight]} mb-1">Time</div>
+                                <div class="text-gray-800">${data.time}</div>
+                            </div>` : ''}
+                            ${data.venue ? `
+                            <div class="p-4 bg-blue-100 ${borderRadiusClasses[borderRadius]} transform rotate-2 ${shadowClasses[shadow]}">
+                                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 -translate-y-6 text-2xl" style="color: ${accentColor};">📍</div>
+                                <div class="${iconSizes[iconSize]} mb-2" style="color: ${accentColor};">🏛️</div>
+                                <div class="text-xs uppercase tracking-wider ${fontWeightClasses[fontWeight]} mb-1">Venue</div>
+                                <div class="text-gray-800">${data.venue}</div>
+                            </div>` : ''}
+                            ${data.address ? `
+                            <div class="p-4 bg-green-100 ${borderRadiusClasses[borderRadius]} transform -rotate-2 ${shadowClasses[shadow]}">
+                                <div class="absolute top-2 left-1/2 transform -translate-x-1/2 -translate-y-6 text-2xl" style="color: ${accentColor};">📍</div>
+                                <div class="${iconSizes[iconSize]} mb-2" style="color: ${accentColor};">📍</div>
+                                <div class="text-xs uppercase tracking-wider ${fontWeightClasses[fontWeight]} mb-1">Address</div>
+                                <div class="text-gray-800 text-sm">${data.address}</div>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Accordion Layout
+        if (layout === 'accordion') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-8">Event Details</h2>
+                    <div class="max-w-lg mx-auto ${spacingClasses[spacing]}">
+                        ${dateStr ? `
+                        <div class="${borderRadiusClasses[borderRadius]} overflow-hidden ${shadowClasses[shadow]} mb-2" style="background: ${cardBg}; border-left: 4px solid ${accentColor};">
+                            <div class="p-4 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 100%);">
+                                    <div class="text-white text-xl">📅</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${accentColor};">Date</div>
+                                    <div class="${fontWeightClasses[fontWeight]}">${dateStr}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.time ? `
+                        <div class="${borderRadiusClasses[borderRadius]} overflow-hidden ${shadowClasses[shadow]} mb-2" style="background: ${cardBg}; border-left: 4px solid ${accentColor};">
+                            <div class="p-4 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 100%);">
+                                    <div class="text-white text-xl">🕐</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${accentColor};">Time</div>
+                                    <div class="${fontWeightClasses[fontWeight]}">${data.time}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.venue ? `
+                        <div class="${borderRadiusClasses[borderRadius]} overflow-hidden ${shadowClasses[shadow]} mb-2" style="background: ${cardBg}; border-left: 4px solid ${accentColor};">
+                            <div class="p-4 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 100%);">
+                                    <div class="text-white text-xl">🏛️</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${accentColor};">Venue</div>
+                                    <div class="${fontWeightClasses[fontWeight]}">${data.venue}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.address ? `
+                        <div class="${borderRadiusClasses[borderRadius]} overflow-hidden ${shadowClasses[shadow]}" style="background: ${cardBg}; border-left: 4px solid ${accentColor};">
+                            <div class="p-4 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 100%);">
+                                    <div class="text-white text-xl">📍</div>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${accentColor};">Address</div>
+                                    <div class="text-sm ${fontWeightClasses[fontWeight]}">${data.address}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Metro Layout
+        if (layout === 'metro') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <h2 class="text-3xl ${fontWeightClasses[fontWeight]} text-center mb-10">Celebration Details</h2>
+                    <div class="max-w-3xl mx-auto grid grid-cols-2 gap-3">
+                        ${dateStr ? `
+                        <div class="col-span-2 md:col-span-1 p-8 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} text-white" style="background: linear-gradient(135deg, ${accentColor} 0%, ${secondaryColor} 100%);">
+                            <div class="${iconSizes[iconSize]} mb-3">📅</div>
+                            <div class="text-xs uppercase tracking-wider mb-2 opacity-90">Date</div>
+                            <div class="text-xl ${fontWeightClasses[fontWeight]}">${dateStr}</div>
+                        </div>` : ''}
+                        ${data.time ? `
+                        <div class="p-8 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]}" style="background: ${cardBg}; border: 2px solid ${accentColor};">
+                            <div class="${iconSizes[iconSize]} mb-3" style="color: ${accentColor};">🕐</div>
+                            <div class="text-xs uppercase tracking-wider mb-2 text-gray-500">Time</div>
+                            <div class="text-xl ${fontWeightClasses[fontWeight]}">${data.time}</div>
+                        </div>` : ''}
+                        ${data.venue ? `
+                        <div class="col-span-2 p-8 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]}" style="background: ${secondaryColor}; color: white;">
+                            <div class="${iconSizes[iconSize]} mb-3">🏛️</div>
+                            <div class="text-xs uppercase tracking-wider mb-2 opacity-90">Venue</div>
+                            <div class="text-xl ${fontWeightClasses[fontWeight]}">${data.venue}</div>
+                        </div>` : ''}
+                        ${data.address ? `
+                        <div class="col-span-2 p-8 ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]}" style="background: ${cardBg}; border: 2px solid ${secondaryColor};">
+                            <div class="${iconSizes[iconSize]} mb-3" style="color: ${accentColor};">📍</div>
+                            <div class="text-xs uppercase tracking-wider mb-2 text-gray-500">Address</div>
+                            <div class="${fontWeightClasses[fontWeight]}">${data.address}</div>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Polaroid Cards Layout
+        if (layout === 'polaroid-cards') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-10">Celebration Snapshots</h2>
+                    <div class="max-w-2xl mx-auto grid md:grid-cols-2 gap-8">
+                        ${dateStr ? `
+                        <div class="bg-white p-4 pb-12 ${shadowClasses[shadow]} transform rotate-2 hover:rotate-0 transition-transform">
+                            <div class="bg-gradient-to-br from-red-100 to-red-200 p-8 ${borderRadiusClasses[borderRadius]} text-center">
+                                <div class="${iconSizes[iconSize]} mb-4">📅</div>
+                                <div class="${fontWeightClasses[fontWeight]} text-gray-800">${dateStr}</div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="text-xs uppercase tracking-wider text-gray-500">Date</div>
+                            </div>
+                        </div>` : ''}
+                        ${data.time ? `
+                        <div class="bg-white p-4 pb-12 ${shadowClasses[shadow]} transform -rotate-2 hover:rotate-0 transition-transform">
+                            <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-8 ${borderRadiusClasses[borderRadius]} text-center">
+                                <div class="${iconSizes[iconSize]} mb-4">🕐</div>
+                                <div class="${fontWeightClasses[fontWeight]} text-gray-800">${data.time}</div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="text-xs uppercase tracking-wider text-gray-500">Time</div>
+                            </div>
+                        </div>` : ''}
+                        ${data.venue ? `
+                        <div class="bg-white p-4 pb-12 ${shadowClasses[shadow]} transform rotate-1 hover:rotate-0 transition-transform">
+                            <div class="bg-gradient-to-br from-green-100 to-green-200 p-8 ${borderRadiusClasses[borderRadius]} text-center">
+                                <div class="${iconSizes[iconSize]} mb-4">🏛️</div>
+                                <div class="${fontWeightClasses[fontWeight]} text-gray-800">${data.venue}</div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="text-xs uppercase tracking-wider text-gray-500">Venue</div>
+                            </div>
+                        </div>` : ''}
+                        ${data.address ? `
+                        <div class="bg-white p-4 pb-12 ${shadowClasses[shadow]} transform -rotate-1 hover:rotate-0 transition-transform">
+                            <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-8 ${borderRadiusClasses[borderRadius]} text-center">
+                                <div class="${iconSizes[iconSize]} mb-4">📍</div>
+                                <div class="text-sm ${fontWeightClasses[fontWeight]} text-gray-800">${data.address}</div>
+                            </div>
+                            <div class="text-center mt-4">
+                                <div class="text-xs uppercase tracking-wider text-gray-500">Address</div>
+                            </div>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Neon Signs Layout
+        if (layout === 'neon-signs') {
+            return `
+                <div class="py-12 px-6" style="background: #0a0a0a;">
+                    <h2 class="text-3xl ${fontWeightClasses[fontWeight]} text-center mb-10 text-white" style="text-shadow: 0 0 20px ${accentColor};">Event Details</h2>
+                    <div class="max-w-md mx-auto ${spacingClasses[spacing]}">
+                        ${dateStr ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]}" style="background: #1a1a1a; border: 2px solid ${accentColor}; box-shadow: 0 0 20px ${accentColor}44, inset 0 0 20px ${accentColor}11;">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]}" style="color: ${accentColor}; filter: drop-shadow(0 0 10px ${accentColor});">📅</div>
+                                <div>
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${secondaryColor}; text-shadow: 0 0 10px ${secondaryColor};">Date</div>
+                                    <div class="text-white ${fontWeightClasses[fontWeight]}" style="text-shadow: 0 0 10px ${accentColor}88;">${dateStr}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.time ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]}" style="background: #1a1a1a; border: 2px solid ${accentColor}; box-shadow: 0 0 20px ${accentColor}44, inset 0 0 20px ${accentColor}11;">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]}" style="color: ${accentColor}; filter: drop-shadow(0 0 10px ${accentColor});">🕐</div>
+                                <div>
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${secondaryColor}; text-shadow: 0 0 10px ${secondaryColor};">Time</div>
+                                    <div class="text-white ${fontWeightClasses[fontWeight]}" style="text-shadow: 0 0 10px ${accentColor}88;">${data.time}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.venue ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]}" style="background: #1a1a1a; border: 2px solid ${accentColor}; box-shadow: 0 0 20px ${accentColor}44, inset 0 0 20px ${accentColor}11;">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]}" style="color: ${accentColor}; filter: drop-shadow(0 0 10px ${accentColor});">🏛️</div>
+                                <div>
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${secondaryColor}; text-shadow: 0 0 10px ${secondaryColor};">Venue</div>
+                                    <div class="text-white ${fontWeightClasses[fontWeight]}" style="text-shadow: 0 0 10px ${accentColor}88;">${data.venue}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                        ${data.address ? `
+                        <div class="p-6 ${borderRadiusClasses[borderRadius]}" style="background: #1a1a1a; border: 2px solid ${accentColor}; box-shadow: 0 0 20px ${accentColor}44, inset 0 0 20px ${accentColor}11;">
+                            <div class="flex items-center gap-4">
+                                <div class="${iconSizes[iconSize]}" style="color: ${accentColor}; filter: drop-shadow(0 0 10px ${accentColor});">📍</div>
+                                <div>
+                                    <div class="text-xs uppercase tracking-wider mb-1" style="color: ${secondaryColor}; text-shadow: 0 0 10px ${secondaryColor};">Address</div>
+                                    <div class="text-white text-sm ${fontWeightClasses[fontWeight]}" style="text-shadow: 0 0 10px ${accentColor}88;">${data.address}</div>
+                                </div>
+                            </div>
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Postcard Layout
+        if (layout === 'postcard') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}">
+                    <h2 class="text-2xl ${fontWeightClasses[fontWeight]} text-center mb-10">Invitation Postcard</h2>
+                    <div class="max-w-2xl mx-auto">
+                        <div class="relative ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} overflow-hidden" style="background: linear-gradient(135deg, ${cardBg} 0%, ${secondaryColor}22 100%); border: 8px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                            <div class="absolute top-4 right-4 w-20 h-16 border-4 ${borderRadiusClasses[borderRadius]}" style="border-color: ${accentColor};">
+                                <div class="text-center pt-2">
+                                    <div class="text-xs" style="color: ${accentColor};">STAMP</div>
+                                </div>
+                            </div>
+                            <div class="p-8">
+                                <div class="text-xs uppercase tracking-widest mb-6" style="color: ${accentColor};">~ Celebration Details ~</div>
+                                <div class="${spacingClasses[spacing]}">
+                                    ${dateStr ? `
+                                    <div class="flex items-start gap-4">
+                                        <div class="${iconSizes[iconSize]}" style="color: ${accentColor};">📅</div>
+                                        <div>
+                                            <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Date</div>
+                                            <div class="${fontWeightClasses[fontWeight]} italic">${dateStr}</div>
+                                        </div>
+                                    </div>` : ''}
+                                    ${data.time ? `
+                                    <div class="flex items-start gap-4">
+                                        <div class="${iconSizes[iconSize]}" style="color: ${accentColor};">🕐</div>
+                                        <div>
+                                            <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Time</div>
+                                            <div class="${fontWeightClasses[fontWeight]} italic">${data.time}</div>
+                                        </div>
+                                    </div>` : ''}
+                                    ${data.venue ? `
+                                    <div class="flex items-start gap-4">
+                                        <div class="${iconSizes[iconSize]}" style="color: ${accentColor};">🏛️</div>
+                                        <div>
+                                            <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Venue</div>
+                                            <div class="${fontWeightClasses[fontWeight]} italic">${data.venue}</div>
+                                        </div>
+                                    </div>` : ''}
+                                    ${data.address ? `
+                                    <div class="flex items-start gap-4">
+                                        <div class="${iconSizes[iconSize]}" style="color: ${accentColor};">📍</div>
+                                        <div>
+                                            <div class="text-xs uppercase tracking-wider mb-1 text-gray-500">Address</div>
+                                            <div class="text-sm italic">${data.address}</div>
+                                        </div>
+                                    </div>` : ''}
+                                </div>
+                                <div class="mt-8 pt-6 border-t-2 border-dashed" style="border-color: ${accentColor}33">
+                                    <div class="text-center text-xs text-gray-500">Looking forward to celebrating with you!</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -48,6 +48,14 @@ window.sectionComponents.hero = {
                     <option value="artistic">Artistic - Creative Layout</option>
                     <option value="magazine">Magazine - Editorial Style</option>
                     <option value="romantic">Romantic - Soft & Dreamy</option>
+                    <option value="floating">Floating - Cards Effect</option>
+                    <option value="elegant-split">Elegant Split - Asymmetric</option>
+                    <option value="circle-frame">Circle Frame - Ring Design</option>
+                    <option value="waves">Waves - Flowing Background</option>
+                    <option value="spotlight">Spotlight - Focus Effect</option>
+                    <option value="polaroid">Polaroid - Photo Frame</option>
+                    <option value="diagonal">Diagonal - Angled Layout</option>
+                    <option value="hearts-bg">Hearts Background - Romantic</option>
                 </select>
             </div>
             <div>
@@ -541,6 +549,179 @@ window.sectionComponents.hero = {
                         <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4" style="color: ${text}">${data.title || 'Happy Anniversary'}</h1>
                         <p class="text-2xl italic" style="color: ${text}">${data.names || 'Couple Names'}</p>
                         ${decorationMap[decorations] ? `<div class="text-3xl mt-6">${decorationMap[decorations]}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Floating Cards Layout
+        if (layout === 'floating') {
+            return `
+                <div class="relative ${paddingClasses[padding]} overflow-hidden" style="background: linear-gradient(135deg, ${bg} 0%, ${secondaryBg} 100%); color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-2xl mx-auto">
+                        <div class="text-center ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} p-8 backdrop-blur-sm" style="background: rgba(255,255,255,0.1);">
+                            ${decorationMap[decorations] ? `<div class="text-3xl mb-4">${decorationMap[decorations]}</div>` : ''}
+                            <div class="inline-block ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} p-2 mb-6" style="background: ${accentColor};">
+                                ${data.image ? `<img src="${data.image}" class="${imageClass}">` : '<div class="text-6xl p-4">❤️</div>'}
+                            </div>
+                            <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4 drop-shadow-lg">${data.title || 'Happy Anniversary'}</h1>
+                            <p class="text-2xl">${data.names || 'Couple Names'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Elegant Split Layout
+        if (layout === 'elegant-split') {
+            return `
+                <div class="relative grid md:grid-cols-5 gap-0 overflow-hidden min-h-[400px]" style="color: ${text};">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 md:col-span-2 ${paddingClasses[padding]} flex items-center justify-center" style="background: ${bg};">
+                        <div class="text-center">
+                            ${decorationMap[decorations] ? `<div class="text-3xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                            <div class="inline-block ${shadowClasses[shadow]}">
+                                ${imageElement}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative z-10 md:col-span-3 ${paddingClasses[padding]} flex items-center" style="background: ${secondaryBg};">
+                        <div class="w-full">
+                            <div class="border-l-4 pl-6" style="border-color: ${accentColor};">
+                                <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4">${data.title || 'Happy Anniversary'}</h1>
+                                <p class="text-2xl">${data.names || 'Couple Names'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Circle Frame Layout
+        if (layout === 'circle-frame') {
+            return `
+                <div class="relative ${paddingClasses[padding]} overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-2xl mx-auto text-center">
+                        ${decorationMap[decorations] ? `<div class="text-3xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                        <div class="relative inline-block">
+                            <div class="absolute inset-0 rounded-full border-8 animate-pulse" style="border-color: ${accentColor}; transform: scale(1.1);"></div>
+                            <div class="relative rounded-full p-4 ${shadowClasses[shadow]}" style="background: linear-gradient(135deg, ${secondaryBg} 0%, ${accentColor} 100%);">
+                                ${data.image ? `<img src="${data.image}" class="w-48 h-48 rounded-full object-cover border-4 border-white ${shadowClasses[shadow]}">` : '<div class="text-8xl p-8">❤️</div>'}
+                            </div>
+                        </div>
+                        <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mt-8 mb-4">${data.title || 'Happy Anniversary'}</h1>
+                        <p class="text-2xl">${data.names || 'Couple Names'}</p>
+                        ${decorationMap[decorations] ? `<div class="text-3xl mt-6">${decorationMap[decorations]}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Waves Background Layout
+        if (layout === 'waves') {
+            return `
+                <div class="relative ${paddingClasses[padding]} overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <svg class="absolute bottom-0 left-0 w-full opacity-20" viewBox="0 0 1440 320">
+                        <path fill="${secondaryBg}" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                    </svg>
+                    <svg class="absolute bottom-0 left-0 w-full opacity-30" viewBox="0 0 1440 320">
+                        <path fill="${accentColor}" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                    </svg>
+                    <div class="relative z-10 max-w-2xl mx-auto text-center">
+                        ${decorationMap[decorations] ? `<div class="text-4xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                        <div class="inline-block mb-6">
+                            ${imageElement}
+                        </div>
+                        <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4 drop-shadow-lg">${data.title || 'Happy Anniversary'}</h1>
+                        <p class="text-2xl drop-shadow">${data.names || 'Couple Names'}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Spotlight Layout
+        if (layout === 'spotlight') {
+            return `
+                <div class="relative ${paddingClasses[padding]} overflow-hidden min-h-[500px] flex items-center justify-center" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 z-0" style="background: radial-gradient(circle at center, ${accentColor}22 0%, ${bg} 70%);"></div>
+                    <div class="relative z-10 text-center">
+                        ${decorationMap[decorations] ? `<div class="text-4xl mb-6 animate-pulse">${decorationMap[decorations]}</div>` : ''}
+                        <div class="inline-block ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} p-3 mb-8" style="background: linear-gradient(135deg, ${secondaryBg} 0%, ${accentColor} 100%); box-shadow: 0 0 60px ${accentColor}66;">
+                            ${data.image ? `<img src="${data.image}" class="${imageClass} ${shadowClasses[shadow]}">` : '<div class="text-8xl p-4">❤️</div>'}
+                        </div>
+                        <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4" style="text-shadow: 0 0 20px ${accentColor}88;">${data.title || 'Happy Anniversary'}</h1>
+                        <p class="text-2xl" style="text-shadow: 0 0 10px ${accentColor}44;">${data.names || 'Couple Names'}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Polaroid Layout
+        if (layout === 'polaroid') {
+            return `
+                <div class="relative ${paddingClasses[padding]} overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="relative z-10 max-w-md mx-auto text-center">
+                        ${decorationMap[decorations] ? `<div class="text-3xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                        <div class="inline-block bg-white p-4 pb-16 ${shadowClasses[shadow]} transform rotate-2 hover:rotate-0 transition-transform" style="box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                            ${data.image ? `<img src="${data.image}" class="w-64 h-64 object-cover">` : '<div class="w-64 h-64 bg-gray-100 flex items-center justify-center text-6xl">❤️</div>'}
+                            <div class="text-center mt-6">
+                                <h1 class="text-2xl ${fontWeightClasses[fontWeight]} text-gray-800 mb-2">${data.title || 'Happy Anniversary'}</h1>
+                                <p class="text-lg text-gray-600">${data.names || 'Couple Names'}</p>
+                            </div>
+                        </div>
+                        ${decorationMap[decorations] ? `<div class="text-3xl mt-6">${decorationMap[decorations]}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Diagonal Layout
+        if (layout === 'diagonal') {
+            return `
+                <div class="relative overflow-hidden min-h-[450px]" style="color: ${text};">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, ${bg} 0%, ${bg} 45%, ${secondaryBg} 45%, ${secondaryBg} 100%);"></div>
+                    <div class="relative z-10 ${paddingClasses[padding]} flex items-center justify-center min-h-[450px]">
+                        <div class="text-center max-w-2xl">
+                            ${decorationMap[decorations] ? `<div class="text-4xl mb-6">${decorationMap[decorations]}</div>` : ''}
+                            <div class="inline-block ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} p-4 mb-6" style="background: ${accentColor};">
+                                ${data.image ? `<img src="${data.image}" class="${imageClass}">` : '<div class="text-7xl p-2">❤️</div>'}
+                            </div>
+                            <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4 drop-shadow-lg">${data.title || 'Happy Anniversary'}</h1>
+                            <div class="h-1 w-24 mx-auto mb-4" style="background: ${accentColor};"></div>
+                            <p class="text-2xl">${data.names || 'Couple Names'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Hearts Background Layout
+        if (layout === 'hearts-bg') {
+            return `
+                <div class="relative ${paddingClasses[padding]} overflow-hidden" style="background: ${bg}; color: ${text}">
+                    ${generateBanner(bannerMode)}
+                    <div class="absolute inset-0 z-0 opacity-10">
+                        <div class="absolute top-10 left-10 text-5xl animate-pulse">💕</div>
+                        <div class="absolute top-20 right-16 text-6xl">❤️</div>
+                        <div class="absolute top-40 left-1/4 text-4xl animate-pulse">💖</div>
+                        <div class="absolute top-60 right-1/3 text-5xl">💗</div>
+                        <div class="absolute bottom-20 left-20 text-6xl animate-pulse">💕</div>
+                        <div class="absolute bottom-32 right-12 text-4xl">❤️</div>
+                        <div class="absolute bottom-10 left-1/3 text-5xl animate-pulse">💖</div>
+                    </div>
+                    <div class="relative z-10 max-w-2xl mx-auto text-center">
+                        <div class="inline-block ${borderRadiusClasses[borderRadius]} ${shadowClasses[shadow]} p-6 mb-8" style="background: linear-gradient(135deg, ${secondaryBg}dd 0%, ${accentColor}dd 100%); backdrop-filter: blur(10px);">
+                            ${imageElement}
+                        </div>
+                        ${decorationMap[decorations] ? `<div class="text-4xl mb-4">${decorationMap[decorations]}</div>` : ''}
+                        <h1 class="${titleSizeClasses[titleSize]} ${fontWeightClasses[fontWeight]} mb-4">${data.title || 'Happy Anniversary'}</h1>
+                        <p class="text-2xl italic">${data.names || 'Couple Names'}</p>
                     </div>
                 </div>
             `;
