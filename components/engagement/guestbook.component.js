@@ -32,6 +32,9 @@ window.sectionComponents.guestbook = {
                     <option value="modern">Modern CTA</option>
                     <option value="book">Book Style</option>
                     <option value="banner">Banner Call-to-Action</option>
+                    <option value="classic">Classic Guest Book</option>
+                    <option value="minimal">Minimal Invitation</option>
+                    <option value="journal">Journal Entry</option>
                 </select>
             </div>
             <div>
@@ -159,6 +162,88 @@ window.sectionComponents.guestbook = {
                                     <span class="font-semibold">Form link coming soon</span>
                                 </div>
                             `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'classic') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="relative p-12 rounded-lg shadow-2xl" style="background: ${cardBg}; border: 1px solid ${accent}20;">
+                            <div class="absolute -top-1 -left-1 w-20 h-20 border-t-4 border-l-4 rounded-tl-lg" style="border-color: ${accent};"></div>
+                            <div class="absolute -top-1 -right-1 w-20 h-20 border-t-4 border-r-4 rounded-tr-lg" style="border-color: ${accent};"></div>
+                            <div class="absolute -bottom-1 -left-1 w-20 h-20 border-b-4 border-l-4 rounded-bl-lg" style="border-color: ${accent};"></div>
+                            <div class="absolute -bottom-1 -right-1 w-20 h-20 border-b-4 border-r-4 rounded-br-lg" style="border-color: ${accent};"></div>
+                            <div class="text-center">
+                                <div class="text-5xl mb-6">✍️</div>
+                                <h2 class="text-3xl font-bold mb-4" style="font-family: 'Georgia', serif;">${data.title || 'Leave Us a Message'}</h2>
+                                <div class="w-24 h-px mx-auto mb-6" style="background: ${accent};"></div>
+                                ${data.description ? `<p class="text-gray-700 mb-8 leading-relaxed italic">${data.description}</p>` : ''}
+                                ${data.formLink ? `
+                                    <a href="${data.formLink}" target="_blank" class="inline-block px-10 py-4 rounded-lg font-bold hover:shadow-xl transition text-white shadow-lg" style="background: ${accent};">
+                                        📝 Sign the Guest Book
+                                    </a>
+                                ` : `
+                                    <p class="text-sm text-gray-500">Guest book link coming soon</p>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'minimal') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-md mx-auto">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="text-5xl">✍️</div>
+                            <div class="flex-1">
+                                <h2 class="text-2xl font-bold">${data.title || 'Leave Us a Message'}</h2>
+                                ${data.description ? `<p class="text-sm text-gray-600 mt-1">${data.description}</p>` : ''}
+                            </div>
+                        </div>
+                        ${data.formLink ? `
+                            <a href="${data.formLink}" target="_blank" class="block w-full text-center px-6 py-4 rounded-xl font-bold hover:opacity-90 transition text-white shadow-md" style="background: ${accent};">
+                                Leave a Message →
+                            </a>
+                        ` : `
+                            <div class="p-6 rounded-xl text-center" style="background: ${cardBg};">
+                                <p class="text-sm text-gray-500">Form link coming soon</p>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'journal') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-lg mx-auto">
+                        <div class="relative">
+                            <div class="absolute -inset-4 rounded-2xl opacity-10" style="background: ${accent};"></div>
+                            <div class="relative p-10 rounded-2xl shadow-xl" style="background: ${cardBg}; border-left: 6px solid ${accent};">
+                                <div class="flex items-start gap-6 mb-6">
+                                    <div class="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center shadow-lg" style="background: ${accent};">
+                                        <span class="text-3xl text-white">✍️</span>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold mb-2" style="font-family: 'Georgia', serif;">${data.title || 'Leave Us a Message'}</h2>
+                                        ${data.description ? `<p class="text-gray-600 leading-relaxed italic">${data.description}</p>` : ''}
+                                    </div>
+                                </div>
+                                <div class="pl-22">
+                                    ${data.formLink ? `
+                                        <div class="p-6 rounded-lg mb-4" style="background: white; border: 2px dashed ${accent}30;">
+                                            <p class="text-sm text-gray-700 mb-4">We'd love to hear your thoughts and well wishes. Share your message in our guest book!</p>
+                                            <a href="${data.formLink}" target="_blank" class="inline-block px-8 py-3 rounded-lg font-bold hover:opacity-90 transition text-white shadow-md" style="background: ${accent};">
+                                                Write in Guest Book
+                                            </a>
+                                        </div>
+                                    ` : `
+                                        <p class="text-sm text-gray-500 italic">Guest book form will be available soon</p>
+                                    `}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

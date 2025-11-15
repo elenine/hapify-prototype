@@ -36,6 +36,9 @@ window.sectionComponents.faq = {
                     <option value="numbered">Numbered List</option>
                     <option value="modern">Modern Boxes</option>
                     <option value="twocolumn">Two Column</option>
+                    <option value="elegant">Elegant Q&A</option>
+                    <option value="minimal">Minimal Clean</option>
+                    <option value="bubble">Speech Bubbles</option>
                 </select>
             </div>
             <div>
@@ -125,6 +128,53 @@ window.sectionComponents.faq = {
                             </div>
                             <div class="text-sm text-gray-600 leading-relaxed">
                                 ${faq.answer}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else if (layout === 'elegant') {
+                faqHtml = faqs.map((faq, index) => `
+                    <div class="mb-8">
+                        <div class="flex items-start gap-4 mb-3">
+                            <div class="flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, ${accent} 0%, ${accent}80 100%); color: white;">
+                                <span class="text-xl font-bold">Q</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="font-bold text-lg mb-3" style="color: ${textColor}; font-family: 'Georgia', serif;">${faq.question}</div>
+                                <div class="pl-4 border-l-2" style="border-color: ${accent}30;">
+                                    <div class="flex items-start gap-2 mb-2">
+                                        <span class="text-sm font-bold" style="color: ${accent};">A:</span>
+                                        <p class="text-sm text-gray-700 leading-relaxed flex-1">${faq.answer}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ${index < faqs.length - 1 ? `<div class="mt-6 h-px" style="background: linear-gradient(90deg, transparent 0%, ${accent}20 50%, transparent 100%);"></div>` : ''}
+                    </div>
+                `).join('');
+            } else if (layout === 'minimal') {
+                faqHtml = faqs.map((faq, index) => `
+                    <div class="py-5 ${index < faqs.length - 1 ? 'border-b' : ''}" style="border-color: ${accent}15;">
+                        <div class="mb-3">
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold text-white mr-2" style="background: ${accent};">Q${index + 1}</span>
+                            <span class="font-semibold" style="color: ${textColor};">${faq.question}</span>
+                        </div>
+                        <div class="pl-12 text-sm text-gray-700 leading-relaxed">${faq.answer}</div>
+                    </div>
+                `).join('');
+            } else if (layout === 'bubble') {
+                faqHtml = faqs.map((faq, index) => `
+                    <div class="flex flex-col gap-3 mb-6">
+                        <div class="flex justify-end">
+                            <div class="max-w-xs p-4 rounded-2xl rounded-tr-sm shadow-md" style="background: ${accent}; color: white;">
+                                <div class="text-xs font-bold mb-1 opacity-90">QUESTION</div>
+                                <div class="font-medium">${faq.question}</div>
+                            </div>
+                        </div>
+                        <div class="flex justify-start">
+                            <div class="max-w-md p-4 rounded-2xl rounded-tl-sm shadow-md border" style="background: ${cardBg}; border-color: ${accent}20;">
+                                <div class="text-xs font-bold mb-1" style="color: ${accent};">ANSWER</div>
+                                <div class="text-sm text-gray-700 leading-relaxed">${faq.answer}</div>
                             </div>
                         </div>
                     </div>

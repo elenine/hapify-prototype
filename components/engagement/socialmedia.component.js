@@ -41,6 +41,9 @@ window.sectionComponents.socialmedia = {
                     <option value="modern">Modern Social</option>
                     <option value="gradient">Gradient Banner</option>
                     <option value="phone">Phone Mockup</option>
+                    <option value="neon">Neon Sign</option>
+                    <option value="minimal">Minimal Tag</option>
+                    <option value="card">Social Card</option>
                 </select>
             </div>
             <div>
@@ -184,6 +187,93 @@ window.sectionComponents.socialmedia = {
                             </div>
                             <div class="mt-6 text-sm text-gray-600">
                                 Share your moments with us!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'neon') {
+            return `
+                <div class="relative py-16 px-6 overflow-hidden" style="background: #1a1a1a; color: white;">
+                    <div class="absolute inset-0 opacity-20">
+                        <div class="absolute top-10 left-10 text-6xl animate-pulse" style="color: ${accent};">📱</div>
+                        <div class="absolute bottom-10 right-10 text-6xl animate-pulse" style="color: ${accent}; animation-delay: 0.5s;">📸</div>
+                    </div>
+                    <div class="relative max-w-2xl mx-auto text-center">
+                        <h2 class="text-5xl font-bold mb-8" style="color: ${accent}; text-shadow: 0 0 20px ${accent}, 0 0 40px ${accent};">${data.title || 'Share the Love'}</h2>
+                        ${data.message ? `<p class="text-xl mb-10 opacity-90">${data.message}</p>` : ''}
+                        ${data.hashtag ? `
+                            <div class="inline-block px-12 py-6 rounded-2xl shadow-2xl mb-8" style="background: #000; border: 3px solid ${accent}; box-shadow: 0 0 30px ${accent};">
+                                <div class="text-5xl font-black" style="color: ${accent}; text-shadow: 0 0 15px ${accent};">#${data.hashtag}</div>
+                            </div>
+                        ` : ''}
+                        ${data.instagram ? `
+                            <div class="mt-8">
+                                <a href="https://instagram.com/${data.instagram}" target="_blank" class="inline-block px-10 py-4 rounded-full font-bold text-2xl transform hover:scale-110 transition" style="background: ${accent}; color: white; box-shadow: 0 0 20px ${accent};">@${data.instagram}</a>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'minimal') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-md mx-auto">
+                        <div class="text-center">
+                            ${data.hashtag ? `
+                                <div class="mb-8">
+                                    <div class="text-5xl font-black mb-2" style="color: ${accent};">#${data.hashtag}</div>
+                                    ${data.message ? `<p class="text-sm text-gray-600">${data.message}</p>` : ''}
+                                </div>
+                            ` : ''}
+                            ${data.instagram ? `
+                                <div class="inline-flex items-center gap-2 px-6 py-3 rounded-lg" style="background: ${cardBg};">
+                                    <span class="text-2xl">📸</span>
+                                    <a href="https://instagram.com/${data.instagram}" target="_blank" class="font-bold text-lg hover:opacity-80 transition" style="color: ${accent};">@${data.instagram}</a>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'card') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-lg mx-auto">
+                        <div class="p-10 rounded-3xl shadow-2xl" style="background: ${cardBg};">
+                            <div class="flex items-center gap-4 mb-8">
+                                <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-xl" style="background: ${accent};">
+                                    <span class="text-4xl">📱</span>
+                                </div>
+                                <div>
+                                    <h2 class="text-2xl font-bold">${data.title || 'Share the Love'}</h2>
+                                </div>
+                            </div>
+                            ${data.message ? `<p class="text-gray-700 mb-8 leading-relaxed">${data.message}</p>` : ''}
+                            <div class="space-y-4">
+                                ${data.hashtag ? `
+                                    <div class="p-4 rounded-xl border-2" style="border-color: ${accent}30; background: white;">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-2xl">#️⃣</span>
+                                            <div>
+                                                <div class="text-xs text-gray-600 mb-1">Event Hashtag</div>
+                                                <div class="font-bold text-lg" style="color: ${accent};">#${data.hashtag}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${data.instagram ? `
+                                    <div class="p-4 rounded-xl border-2" style="border-color: ${accent}30; background: white;">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-2xl">📸</span>
+                                            <div class="flex-1">
+                                                <div class="text-xs text-gray-600 mb-1">Follow Us</div>
+                                                <a href="https://instagram.com/${data.instagram}" target="_blank" class="font-bold text-lg hover:opacity-80 transition" style="color: ${accent};">@${data.instagram}</a>
+                                            </div>
+                                            <div class="px-4 py-2 rounded-lg font-semibold text-sm text-white" style="background: ${accent};">Follow</div>
+                                        </div>
+                                    </div>
+                                ` : ''}
                             </div>
                         </div>
                     </div>

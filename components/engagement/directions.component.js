@@ -47,6 +47,9 @@ window.sectionComponents.directions = {
                     <option value="modern">Modern Icons</option>
                     <option value="map">Map Focus</option>
                     <option value="grid">Icon Grid</option>
+                    <option value="elegant">Elegant Route</option>
+                    <option value="compact">Compact Guide</option>
+                    <option value="illustrated">Illustrated Directions</option>
                 </select>
             </div>
             <div>
@@ -182,6 +185,106 @@ window.sectionComponents.directions = {
                             ${data.parking ? `<div class="p-6 rounded-xl shadow-lg" style="background: ${cardBg};"><div class="text-4xl mb-3">🅿️</div><div class="font-bold mb-2">Parking</div><p class="text-sm text-gray-600">${data.parking}</p></div>` : ''}
                             ${data.transit ? `<div class="p-6 rounded-xl shadow-lg" style="background: ${cardBg};"><div class="text-4xl mb-3">🚌</div><div class="font-bold mb-2">Public Transit</div><p class="text-sm text-gray-600">${data.transit}</p></div>` : ''}
                             ${data.notes ? `<div class="md:col-span-2 p-6 rounded-xl shadow-lg" style="background: ${cardBg};"><div class="flex gap-4"><span class="text-4xl">ℹ️</span><div><div class="font-bold mb-2">Additional Information</div><p class="text-sm text-gray-600">${data.notes}</p></div></div></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'elegant') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-2xl mx-auto">
+                        <div class="text-center mb-10">
+                            <div class="inline-block mb-4">
+                                <div class="flex items-center justify-center gap-3">
+                                    <div class="w-12 h-px" style="background: ${accent};"></div>
+                                    <span class="text-5xl">🗺️</span>
+                                    <div class="w-12 h-px" style="background: ${accent};"></div>
+                                </div>
+                            </div>
+                            <h2 class="text-3xl font-bold" style="font-family: 'Georgia', serif; letter-spacing: 0.05em;">${data.title || 'Getting There'}</h2>
+                        </div>
+
+                        ${data.venueName || data.address ? `
+                            <div class="mb-8 p-8 rounded-2xl shadow-xl text-center" style="background: ${cardBg};">
+                                ${data.venueName ? `<div class="text-2xl font-bold mb-3" style="color: ${accent}; font-family: 'Georgia', serif;">${data.venueName}</div>` : ''}
+                                ${data.address ? `<div class="text-gray-700 mb-6">${data.address}</div>` : ''}
+                                ${data.mapsLink ? `<a href="${data.mapsLink}" target="_blank" class="inline-block px-8 py-3 rounded-full font-bold hover:shadow-xl transition text-white shadow-lg" style="background: ${accent};">View on Map</a>` : ''}
+                            </div>
+                        ` : ''}
+
+                        <div class="grid md:grid-cols-3 gap-4">
+                            ${data.parking ? `<div class="p-5 rounded-xl shadow-md text-center" style="background: white; border-top: 3px solid ${accent};"><div class="text-3xl mb-2">🅿️</div><div class="font-semibold text-sm mb-2">Parking</div><p class="text-xs text-gray-600">${data.parking}</p></div>` : ''}
+                            ${data.transit ? `<div class="p-5 rounded-xl shadow-md text-center" style="background: white; border-top: 3px solid ${accent};"><div class="text-3xl mb-2">🚌</div><div class="font-semibold text-sm mb-2">Transit</div><p class="text-xs text-gray-600">${data.transit}</p></div>` : ''}
+                            ${data.notes ? `<div class="md:col-span-3 p-5 rounded-xl shadow-md text-center" style="background: white; border-top: 3px solid ${accent};"><div class="text-3xl mb-2">ℹ️</div><div class="font-semibold text-sm mb-2">Note</div><p class="text-xs text-gray-600">${data.notes}</p></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'compact') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-lg mx-auto">
+                        <h2 class="text-2xl font-bold mb-6 flex items-center gap-3"><span class="text-3xl">🗺️</span>${data.title || 'Getting There'}</h2>
+
+                        <div class="space-y-3">
+                            ${data.venueName || data.address ? `
+                                <div class="p-4 rounded-lg border-l-4" style="background: ${cardBg}; border-left-color: ${accent};">
+                                    ${data.venueName ? `<div class="font-bold mb-1">${data.venueName}</div>` : ''}
+                                    ${data.address ? `<div class="text-sm text-gray-700 mb-2">${data.address}</div>` : ''}
+                                    ${data.mapsLink ? `<a href="${data.mapsLink}" target="_blank" class="text-sm font-semibold hover:opacity-80 transition" style="color: ${accent};">View Map →</a>` : ''}
+                                </div>
+                            ` : ''}
+                            ${data.parking ? `<div class="flex items-start gap-3 p-3 rounded-lg" style="background: ${cardBg};"><span class="text-xl">🅿️</span><div class="flex-1"><div class="text-xs font-semibold text-gray-700">Parking</div><p class="text-xs text-gray-600">${data.parking}</p></div></div>` : ''}
+                            ${data.transit ? `<div class="flex items-start gap-3 p-3 rounded-lg" style="background: ${cardBg};"><span class="text-xl">🚌</span><div class="flex-1"><div class="text-xs font-semibold text-gray-700">Transit</div><p class="text-xs text-gray-600">${data.transit}</p></div></div>` : ''}
+                            ${data.notes ? `<div class="flex items-start gap-3 p-3 rounded-lg" style="background: ${cardBg};"><span class="text-xl">ℹ️</span><div class="flex-1"><div class="text-xs font-semibold text-gray-700">Note</div><p class="text-xs text-gray-600">${data.notes}</p></div></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'illustrated') {
+            return `
+                <div class="py-16 px-6" style="background: ${bg}; color: ${textColor};">
+                    <div class="max-w-3xl mx-auto text-center">
+                        <div class="text-6xl mb-6">🗺️</div>
+                        <h2 class="text-3xl font-bold mb-10">${data.title || 'Getting There'}</h2>
+
+                        ${data.venueName || data.address ? `
+                            <div class="relative mb-10 p-10 rounded-3xl shadow-2xl" style="background: ${cardBg}; border: 3px dashed ${accent}30;">
+                                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full shadow-lg text-white font-bold" style="background: ${accent};">📍 VENUE</div>
+                                ${data.venueName ? `<div class="text-2xl font-bold mb-4 mt-2">${data.venueName}</div>` : ''}
+                                ${data.address ? `<div class="text-lg text-gray-700 mb-6">${data.address}</div>` : ''}
+                                ${data.mapsLink ? `<a href="${data.mapsLink}" target="_blank" class="inline-block px-10 py-4 rounded-xl font-bold hover:shadow-xl transition text-white text-lg shadow-lg" style="background: ${accent};">🧭 Navigate Here</a>` : ''}
+                            </div>
+                        ` : ''}
+
+                        <div class="grid md:grid-cols-3 gap-6">
+                            ${data.parking ? `
+                                <div class="p-8 rounded-2xl shadow-lg transform hover:scale-105 transition" style="background: white;">
+                                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md" style="background: ${accent}20;">
+                                        <span class="text-4xl">🅿️</span>
+                                    </div>
+                                    <div class="font-bold text-lg mb-3">Parking</div>
+                                    <p class="text-sm text-gray-700 leading-relaxed">${data.parking}</p>
+                                </div>
+                            ` : ''}
+                            ${data.transit ? `
+                                <div class="p-8 rounded-2xl shadow-lg transform hover:scale-105 transition" style="background: white;">
+                                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md" style="background: ${accent}20;">
+                                        <span class="text-4xl">🚌</span>
+                                    </div>
+                                    <div class="font-bold text-lg mb-3">Public Transit</div>
+                                    <p class="text-sm text-gray-700 leading-relaxed">${data.transit}</p>
+                                </div>
+                            ` : ''}
+                            ${data.notes ? `
+                                <div class="md:col-span-3 p-8 rounded-2xl shadow-lg" style="background: white;">
+                                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md" style="background: ${accent}20;">
+                                        <span class="text-4xl">ℹ️</span>
+                                    </div>
+                                    <div class="font-bold text-lg mb-3">Important Info</div>
+                                    <p class="text-sm text-gray-700 leading-relaxed max-w-2xl mx-auto">${data.notes}</p>
+                                </div>
+                            ` : ''}
                         </div>
                     </div>
                 </div>

@@ -39,6 +39,9 @@ window.sectionComponents.accommodations = {
                     <option value="minimal">Minimal List</option>
                     <option value="featured">Featured Hotels</option>
                     <option value="grid">Grid View</option>
+                    <option value="modern">Modern Cards</option>
+                    <option value="compact">Compact List</option>
+                    <option value="luxury">Luxury Showcase</option>
                 </select>
             </div>
             <div>
@@ -139,6 +142,65 @@ window.sectionComponents.accommodations = {
                         ${hotel.website ? `<div class="text-center"><a href="${hotel.website}" target="_blank" class="inline-block px-4 py-2 rounded-lg text-xs font-semibold hover:opacity-90 transition text-white" style="background: ${accent};">Book</a></div>` : ''}
                     </div>
                 `).join('')}</div>`;
+            } else if (layout === 'modern') {
+                hotelsHtml = accommodations.map(hotel => `
+                    <div class="overflow-hidden rounded-2xl shadow-xl border" style="background: ${cardBg}; border-color: ${accent}10; color: ${textColor};">
+                        <div class="p-6">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="flex-shrink-0 w-14 h-14 rounded-xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, ${accent} 0%, ${accent}80 100%); color: white;">
+                                    <span class="text-2xl">🏨</span>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-bold text-xl mb-1">${hotel.name}</div>
+                                    ${hotel.code ? `<div class="inline-block px-3 py-1 rounded-full text-xs font-bold text-white" style="background: ${accent};">Code: ${hotel.code}</div>` : ''}
+                                </div>
+                            </div>
+                            <div class="space-y-2 mb-4">
+                                ${hotel.address ? `<div class="flex items-start gap-2 text-sm text-gray-600"><span>📍</span><span>${hotel.address}</span></div>` : ''}
+                                ${hotel.phone ? `<div class="flex items-center gap-2 text-sm text-gray-600"><span>📞</span><span>${hotel.phone}</span></div>` : ''}
+                            </div>
+                            ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="block w-full text-center px-6 py-3 rounded-xl font-bold hover:opacity-90 transition shadow-md text-white" style="background: ${accent};">Reserve Now</a>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            } else if (layout === 'compact') {
+                hotelsHtml = accommodations.map((hotel, index) => `
+                    <div class="flex items-center gap-4 py-3 ${index < accommodations.length - 1 ? 'border-b' : ''}" style="border-color: ${accent}20; color: ${textColor};">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-xl" style="background: ${accent}20;">🏨</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="font-bold truncate">${hotel.name}</div>
+                            ${hotel.address ? `<div class="text-xs text-gray-600 truncate">${hotel.address}</div>` : ''}
+                            ${hotel.code ? `<div class="text-xs font-semibold mt-1" style="color: ${accent};">Code: ${hotel.code}</div>` : ''}
+                        </div>
+                        ${hotel.website ? `<a href="${hotel.website}" target="_blank" class="flex-shrink-0 px-4 py-2 rounded-lg text-xs font-semibold hover:opacity-90 transition text-white" style="background: ${accent};">Book</a>` : ''}
+                    </div>
+                `).join('');
+            } else if (layout === 'luxury') {
+                hotelsHtml = accommodations.map(hotel => `
+                    <div class="relative overflow-hidden rounded-3xl shadow-2xl mb-6" style="background: linear-gradient(135deg, ${accent}15 0%, ${cardBg} 100%);">
+                        <div class="absolute top-6 right-6 text-7xl opacity-10">🏨</div>
+                        <div class="relative p-10">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-px flex-shrink-0" style="background: ${accent};"></div>
+                                <h3 class="text-3xl font-bold" style="color: ${textColor}; font-family: 'Georgia', serif;">${hotel.name}</h3>
+                            </div>
+                            ${hotel.code ? `
+                                <div class="inline-block px-6 py-2 rounded-full text-sm font-bold text-white shadow-lg mb-6" style="background: ${accent};">
+                                    Exclusive Group Code: ${hotel.code}
+                                </div>
+                            ` : ''}
+                            <div class="space-y-3 mb-8">
+                                ${hotel.address ? `<div class="flex items-start gap-3 text-gray-700"><span class="text-xl">📍</span><span class="text-lg">${hotel.address}</span></div>` : ''}
+                                ${hotel.phone ? `<div class="flex items-center gap-3 text-gray-700"><span class="text-xl">📞</span><span class="text-lg">${hotel.phone}</span></div>` : ''}
+                            </div>
+                            ${hotel.website ? `
+                                <a href="${hotel.website}" target="_blank" class="inline-block px-10 py-4 rounded-xl font-bold hover:shadow-2xl transition text-white text-lg shadow-xl transform hover:scale-105" style="background: linear-gradient(135deg, ${accent} 0%, ${accent}80 100%);">
+                                    Reserve Your Stay
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
+                `).join('');
             } else {
                 // Simple Cards (default)
                 hotelsHtml = accommodations.map(hotel => `
