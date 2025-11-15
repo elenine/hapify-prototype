@@ -207,6 +207,101 @@ window.sectionComponents.registration = {
                                 </div>
                             `;
 
+                        case 'modern':
+                            const secondaryColor = style.secondary || '#10b981';
+                            return `
+                                <div class="py-12 px-6" style="background: #f9fafb;">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                                            <div class="absolute inset-0" style="background: linear-gradient(135deg, ${bgColor}, ${secondaryColor});"></div>
+                                            <div class="absolute inset-0 opacity-10">
+                                                <div class="absolute top-0 right-0 text-9xl -mt-8 -mr-8">🎟️</div>
+                                                <div class="absolute bottom-0 left-0 text-9xl -mb-8 -ml-8">🎟️</div>
+                                            </div>
+                                            <div class="relative p-8 text-center" style="color: ${textColor};">
+                                                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full mb-5 bg-white bg-opacity-20 backdrop-blur-sm shadow-lg">
+                                                    <span class="text-4xl">🎟️</span>
+                                                </div>
+                                                <h2 class="text-3xl font-bold mb-4">${headline}</h2>
+                                                <p class="text-lg mb-6 opacity-95">${description}</p>
+                                                ${price ? `
+                                                    <div class="inline-flex items-center gap-2 px-5 py-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-sm font-bold mb-6">
+                                                        <span>💰</span>
+                                                        <span>${price}</span>
+                                                    </div>
+                                                ` : '<div class="mb-6"></div>'}
+                                                <a href="${url}" class="inline-block px-10 py-4 rounded-xl font-bold text-lg shadow-2xl hover:shadow-3xl transition transform hover:scale-105" style="background: ${buttonBg}; color: ${buttonText};">
+                                                    ${buttonLabel} →
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'floating':
+                            return `
+                                <div class="py-12 px-6" style="background: linear-gradient(to bottom, ${bgColor}10, transparent);">
+                                    <div class="max-w-md mx-auto">
+                                        <div class="bg-white rounded-3xl shadow-2xl p-8 transform hover:scale-105 transition-transform">
+                                            <div class="text-center">
+                                                <div class="relative inline-block mb-5">
+                                                    <div class="w-24 h-24 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, ${bgColor}, ${bgColor}dd); color: white;">
+                                                        <span class="text-5xl">🎟️</span>
+                                                    </div>
+                                                    <div class="absolute -top-2 -right-2 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shadow-lg" style="background: ${bgColor}; color: white;">
+                                                        ✨
+                                                    </div>
+                                                </div>
+                                                <h2 class="text-3xl font-bold text-gray-900 mb-3">${headline}</h2>
+                                                <p class="text-gray-600 mb-5">${description}</p>
+                                                ${price ? `
+                                                    <div class="inline-block mb-6">
+                                                        <div class="px-6 py-3 rounded-xl border-2" style="border-color: ${bgColor}30; background: ${bgColor}10;">
+                                                            <div class="text-xs font-bold text-gray-500 uppercase mb-1">Pricing</div>
+                                                            <div class="text-sm font-bold" style="color: ${bgColor};">${price}</div>
+                                                        </div>
+                                                    </div>
+                                                ` : '<div class="mb-6"></div>'}
+                                                <a href="${url}" class="block w-full py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition" style="background: ${bgColor}; color: white;">
+                                                    ${buttonLabel}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'banner':
+                            return `
+                                <div class="relative py-16 px-6 overflow-hidden" style="background: linear-gradient(135deg, ${bgColor}, ${bgColor}dd); color: ${textColor};">
+                                    <div class="absolute inset-0 opacity-10">
+                                        <div class="absolute top-0 left-0 w-64 h-64 rounded-full -mt-32 -ml-32" style="background: ${buttonBg};"></div>
+                                        <div class="absolute bottom-0 right-0 w-64 h-64 rounded-full -mb-32 -mr-32" style="background: ${buttonBg};"></div>
+                                    </div>
+                                    <div class="max-w-md mx-auto relative">
+                                        <div class="flex flex-col items-center text-center">
+                                            <div class="text-7xl mb-5">🎟️</div>
+                                            <div class="inline-block px-4 py-1.5 bg-white bg-opacity-20 backdrop-blur-sm rounded-full text-xs font-bold uppercase tracking-wide mb-4">
+                                                Don't Miss Out
+                                            </div>
+                                            <h2 class="text-4xl font-black mb-4 leading-tight">${headline}</h2>
+                                            <p class="text-xl mb-6 opacity-95 max-w-sm">${description}</p>
+                                            ${price ? `
+                                                <div class="flex items-center gap-2 mb-6 px-6 py-3 bg-white bg-opacity-15 backdrop-blur-sm rounded-full">
+                                                    <span class="text-2xl">💳</span>
+                                                    <span class="text-lg font-bold">${price}</span>
+                                                </div>
+                                            ` : '<div class="mb-6"></div>'}
+                                            <a href="${url}" class="inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-black text-xl shadow-2xl hover:shadow-3xl transition-all transform hover:scale-105" style="background: ${buttonBg}; color: ${buttonText};">
+                                                <span>${buttonLabel}</span>
+                                                <span class="text-2xl">→</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
                         default:
                             return `
                                 <div class="py-16 px-6 text-center" style="background: ${bgColor}; color: ${textColor}">

@@ -30,6 +30,9 @@ window.sectionComponents.speakers = {
                                 <option value="circles">Circle Profiles</option>
                                 <option value="timeline">Timeline Format</option>
                                 <option value="badges">Badge Style</option>
+                                <option value="compact">Compact Stack</option>
+                                <option value="avatars">Avatar Row</option>
+                                <option value="spotlight">Spotlight Cards</option>
                             </select>
                         </div>
                         <div>
@@ -93,7 +96,7 @@ window.sectionComponents.speakers = {
                                         ${speakers.map(speaker => {
                                             const [name, title] = speaker.split('-').map(s => s.trim());
                                             return `
-                                                <div class="p-5 bg-white rounded-xl border-l-4 ${shadowClass} hover:shadow-xl transition-shadow" style="border-left-color: ${accentColor}">
+                                                <div class="p-5 bg-white rounded-xl border-l-4 ${shadow} hover:shadow-xl transition-shadow" style="border-left-color: ${accentColor}">
                                                     <div class="flex items-start gap-4">
                                                         <div class="flex-shrink-0 w-16 h-16 rounded-lg flex items-center justify-center text-3xl" style="background: ${accentColor}20">
                                                             🎤
@@ -160,7 +163,7 @@ window.sectionComponents.speakers = {
                                         ${speakers.map((speaker, index) => {
                                             const [name, title] = speaker.split('-').map(s => s.trim());
                                             return `
-                                                <div class="relative p-6 rounded-2xl ${shadowClass} overflow-hidden" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)">
+                                                <div class="relative p-6 rounded-2xl ${shadow} overflow-hidden" style="background: linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)">
                                                     <div class="absolute top-0 right-0 text-9xl opacity-10 -mt-8 -mr-4">🎤</div>
                                                     <div class="relative">
                                                         <div class="inline-block px-3 py-1 bg-white bg-opacity-20 rounded-full text-xs text-white font-medium mb-3">
@@ -277,6 +280,95 @@ window.sectionComponents.speakers = {
                                                                 <div class="font-bold text-lg leading-tight mb-1">${name || speaker}</div>
                                                                 ${title ? `<div class="text-sm opacity-90">${title}</div>` : ''}
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'compact':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Featured Speakers'}</h2>
+                                    <div class="max-w-md mx-auto">
+                                        <div class="bg-white ${radius} ${shadow} overflow-hidden divide-y divide-gray-200">
+                                            ${speakers.map((speaker, index) => {
+                                                const [name, title] = speaker.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="p-4 flex items-center gap-3 hover:bg-gray-50 transition">
+                                                        <div class="flex-shrink-0 w-10 h-10 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center text-lg font-bold" style="background: ${index % 2 === 0 ? accentColor : secondaryColor}; color: white;">
+                                                            ${index + 1}
+                                                        </div>
+                                                        <div class="flex-1 min-w-0">
+                                                            <div class="font-bold text-base text-gray-900 truncate">${name || speaker}</div>
+                                                            ${title ? `<div class="text-xs text-gray-500 truncate">${title}</div>` : ''}
+                                                        </div>
+                                                        <div class="flex-shrink-0">
+                                                            <span class="text-2xl">🎤</span>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'avatars':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Featured Speakers'}</h2>
+                                    <div class="max-w-md mx-auto">
+                                        <div class="flex justify-center -space-x-4 mb-6">
+                                            ${speakers.slice(0, 5).map((speaker, index) => {
+                                                return `
+                                                    <div class="w-16 h-16 ${radius === 'rounded-none' ? '' : 'rounded-full'} border-4 border-white ${shadow} flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor}); color: white; z-index: ${5 - index};">
+                                                        🎤
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                        <div class="space-y-3">
+                                            ${speakers.map(speaker => {
+                                                const [name, title] = speaker.split('-').map(s => s.trim());
+                                                return `
+                                                    <div class="text-center p-4 ${radius} hover:${shadow} transition" style="background: ${accentColor}05;">
+                                                        <div class="font-bold text-base text-gray-900">${name || speaker}</div>
+                                                        ${title ? `<div class="text-sm text-gray-600 mt-1">${title}</div>` : ''}
+                                                    </div>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'spotlight':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor}">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Featured Speakers'}</h2>
+                                    <div class="max-w-md mx-auto space-y-5">
+                                        ${speakers.map((speaker, index) => {
+                                            const [name, title] = speaker.split('-').map(s => s.trim());
+                                            const isEven = index % 2 === 0;
+                                            return `
+                                                <div class="relative ${radius} overflow-hidden ${shadow} bg-white">
+                                                    <div class="absolute inset-0" style="background: linear-gradient(${isEven ? '135deg' : '-135deg'}, ${accentColor}10, transparent);"></div>
+                                                    <div class="relative p-5 flex items-center gap-4">
+                                                        <div class="relative">
+                                                            <div class="w-20 h-20 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center text-3xl ${shadow}" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor}); color: white;">
+                                                                🎤
+                                                            </div>
+                                                            <div class="absolute -bottom-1 -right-1 w-8 h-8 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center text-xs font-bold ${shadow}" style="background: ${isEven ? accentColor : secondaryColor}; color: white;">
+                                                                ${index + 1}
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <div class="font-bold text-lg text-gray-900 mb-1">${name || speaker}</div>
+                                                            ${title ? `<div class="text-sm text-gray-600">${title}</div>` : ''}
                                                         </div>
                                                     </div>
                                                 </div>

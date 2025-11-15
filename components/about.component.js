@@ -34,6 +34,9 @@ window.sectionComponents.about = {
                                 <option value="timeline">Timeline Style</option>
                                 <option value="minimal">Minimal Clean</option>
                                 <option value="featured">Featured Panel</option>
+                                <option value="stacked">Stacked Cards</option>
+                                <option value="diagonal">Diagonal Split</option>
+                                <option value="badges">Badge Grid</option>
                             </select>
                         </div>
                         <div>
@@ -287,6 +290,88 @@ window.sectionComponents.about = {
                                                 ` : ''}
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'stacked':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor};">
+                                    <div class="max-w-md mx-auto">
+                                        <h2 class="text-3xl font-bold text-center mb-8" style="color: ${accentColor};">${title}</h2>
+                                        <div class="space-y-4">
+                                            <div class="bg-white ${radius} ${shadow} p-6 transform -rotate-1">
+                                                <p class="text-gray-700 leading-relaxed">${description}</p>
+                                            </div>
+                                            ${highlights.length > 0 ? `
+                                                <div class="bg-white ${radius} ${shadow} p-6 transform rotate-1">
+                                                    <h3 class="text-sm font-bold uppercase tracking-wide mb-4" style="color: ${accentColor};">Key Highlights</h3>
+                                                    <div class="grid grid-cols-2 gap-3">
+                                                        ${highlights.map((h, i) => `
+                                                            <div class="flex items-center gap-2 p-2 ${radius === 'rounded-none' ? '' : 'rounded-lg'}" style="background: ${accentColor}${i % 2 === 0 ? '15' : '10'};">
+                                                                <span style="color: ${accentColor};">✓</span>
+                                                                <span class="text-xs font-medium text-gray-700">${h}</span>
+                                                            </div>
+                                                        `).join('')}
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'diagonal':
+                            return `
+                                <div class="py-12 px-6 relative overflow-hidden" style="background: ${bgColor};">
+                                    <div class="absolute top-0 right-0 w-full h-32 transform -skew-y-3" style="background: linear-gradient(135deg, ${accentColor}20, ${accentColor}10);"></div>
+                                    <div class="max-w-md mx-auto relative z-10">
+                                        <div class="bg-white ${radius} ${shadow} overflow-hidden">
+                                            <div class="p-6" style="background: linear-gradient(135deg, ${accentColor}10, transparent);">
+                                                <div class="flex items-center gap-4 mb-4">
+                                                    <div class="w-16 h-16 ${radius === 'rounded-none' ? '' : 'rounded-xl'} flex items-center justify-center text-3xl ${shadow}" style="background: ${accentColor}; color: white; transform: rotate(-10deg);">
+                                                        ℹ️
+                                                    </div>
+                                                    <h2 class="text-2xl font-bold flex-1" style="color: ${accentColor};">${title}</h2>
+                                                </div>
+                                                <p class="text-gray-700 leading-relaxed mb-6">${description}</p>
+                                                ${highlights.length > 0 ? `
+                                                    <div class="space-y-2">
+                                                        ${highlights.map((h, i) => `
+                                                            <div class="flex items-start gap-3 p-3 ${radius} transform ${i % 2 === 0 ? 'translate-x-0' : 'translate-x-2'} transition" style="background: ${accentColor}${i % 2 === 0 ? '10' : '05'};">
+                                                                <span class="flex-shrink-0 w-6 h-6 ${radius === 'rounded-none' ? '' : 'rounded-full'} flex items-center justify-center text-xs font-bold" style="background: ${accentColor}; color: white;">
+                                                                    ${i + 1}
+                                                                </span>
+                                                                <span class="text-sm font-medium text-gray-700 pt-0.5">${h}</span>
+                                                            </div>
+                                                        `).join('')}
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'badges':
+                            return `
+                                <div class="py-14 px-6" style="background: ${bgColor};">
+                                    <div class="max-w-md mx-auto text-center">
+                                        <div class="inline-flex items-center justify-center w-16 h-16 ${radius === 'rounded-none' ? '' : 'rounded-full'} mb-4 ${shadow}" style="background: ${accentColor}; color: white;">
+                                            <span class="text-3xl">ℹ️</span>
+                                        </div>
+                                        <h2 class="text-3xl font-bold mb-4" style="color: ${accentColor};">${title}</h2>
+                                        <p class="text-gray-700 leading-relaxed mb-8 max-w-sm mx-auto">${description}</p>
+                                        ${highlights.length > 0 ? `
+                                            <div class="flex flex-wrap justify-center gap-3">
+                                                ${highlights.map(h => `
+                                                    <div class="inline-flex items-center gap-2 px-4 py-2 ${radius} ${shadow} bg-white" style="border: 2px solid ${accentColor}20;">
+                                                        <div class="w-2 h-2 ${radius === 'rounded-none' ? '' : 'rounded-full'}" style="background: ${accentColor};"></div>
+                                                        <span class="text-sm font-semibold text-gray-700">${h}</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        ` : ''}
                                     </div>
                                 </div>
                             `;

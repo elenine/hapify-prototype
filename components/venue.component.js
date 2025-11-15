@@ -257,6 +257,145 @@ window.sectionComponents.venue = {
                                 </div>
                             `;
 
+                        case 'gradient':
+                            const secondaryColor = style.secondary || '#10b981';
+                            return `
+                                <div class="py-14 px-6 relative overflow-hidden" style="background: linear-gradient(135deg, ${accentColor}20, ${secondaryColor}10);">
+                                    <div class="absolute top-0 right-0 text-9xl opacity-5 -mt-8 -mr-8">📍</div>
+                                    <div class="max-w-md mx-auto">
+                                        <h2 class="text-2xl font-bold text-center mb-8" style="color: ${accentColor};">${data.title || 'Venue & Location'}</h2>
+                                        <div class="bg-white rounded-2xl shadow-xl p-8 backdrop-blur-sm">
+                                            <div class="text-center mb-6">
+                                                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 shadow-lg" style="background: linear-gradient(135deg, ${accentColor}, ${secondaryColor}); color: white;">
+                                                    <span class="text-3xl">📍</span>
+                                                </div>
+                                                <h3 class="text-xl font-bold text-gray-900">${data.venueName || 'Venue Name'}</h3>
+                                            </div>
+                                            ${addressLines.length > 0 ? `
+                                                <div class="mb-5 pb-5 border-b border-gray-200">
+                                                    <div class="flex items-start gap-3">
+                                                        <span class="text-xl flex-shrink-0">🗺️</span>
+                                                        <div class="text-sm text-gray-700 space-y-0.5">
+                                                            ${addressLines.map(line => `<div>${line}</div>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                            ${infoLines.length > 0 ? `
+                                                <div class="space-y-2">
+                                                    ${infoLines.map(line => `
+                                                        <div class="flex items-start gap-2 p-2 rounded-lg" style="background: ${accentColor}10;">
+                                                            <span class="flex-shrink-0 text-sm mt-0.5" style="color: ${accentColor};">✓</span>
+                                                            <span class="text-sm text-gray-700">${line}</span>
+                                                        </div>
+                                                    `).join('')}
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'timeline':
+                            const radius = style.radius || 'rounded-lg';
+                            const shadow = style.shadow || 'shadow-md';
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor};">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Venue & Location'}</h2>
+                                    <div class="max-w-md mx-auto relative pl-10">
+                                        <div class="absolute left-4 top-0 bottom-0 w-0.5" style="background: ${accentColor}30;"></div>
+                                        <div class="space-y-6">
+                                            <div class="relative">
+                                                <div class="absolute left-[-2rem] top-2 w-6 h-6 rounded-full ${shadow}" style="background: ${accentColor}; border: 3px solid white;"></div>
+                                                <div class="bg-white p-5 ${radius} ${shadow}">
+                                                    <div class="flex items-center gap-3 mb-2">
+                                                        <span class="text-2xl">📍</span>
+                                                        <h3 class="text-sm font-bold text-gray-500 uppercase">Venue Name</h3>
+                                                    </div>
+                                                    <p class="text-base font-semibold text-gray-900">${data.venueName || 'Venue Name'}</p>
+                                                </div>
+                                            </div>
+                                            ${addressLines.length > 0 ? `
+                                                <div class="relative">
+                                                    <div class="absolute left-[-2rem] top-2 w-6 h-6 rounded-full ${shadow}" style="background: ${accentColor}; border: 3px solid white;"></div>
+                                                    <div class="bg-white p-5 ${radius} ${shadow}">
+                                                        <div class="flex items-center gap-3 mb-2">
+                                                            <span class="text-2xl">🗺️</span>
+                                                            <h3 class="text-sm font-bold text-gray-500 uppercase">Location</h3>
+                                                        </div>
+                                                        <div class="text-sm text-gray-700 space-y-1">
+                                                            ${addressLines.map(line => `<div>${line}</div>`).join('')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                            ${infoLines.length > 0 ? `
+                                                <div class="relative">
+                                                    <div class="absolute left-[-2rem] top-2 w-6 h-6 rounded-full ${shadow}" style="background: ${accentColor}; border: 3px solid white;"></div>
+                                                    <div class="bg-white p-5 ${radius} ${shadow}">
+                                                        <div class="flex items-center gap-3 mb-3">
+                                                            <span class="text-2xl">ℹ️</span>
+                                                            <h3 class="text-sm font-bold text-gray-500 uppercase">Getting Here</h3>
+                                                        </div>
+                                                        <div class="space-y-2">
+                                                            ${infoLines.map(line => `
+                                                                <div class="flex items-start gap-2 text-sm text-gray-600">
+                                                                    <span class="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5" style="background: ${accentColor};"></span>
+                                                                    <span>${line}</span>
+                                                                </div>
+                                                            `).join('')}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
+                        case 'modern':
+                            return `
+                                <div class="py-12 px-6" style="background: ${bgColor};">
+                                    <h2 class="text-2xl font-bold text-center mb-8">${data.title || 'Venue & Location'}</h2>
+                                    <div class="max-w-md mx-auto">
+                                        <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+                                            <div class="absolute inset-0" style="background: linear-gradient(135deg, ${accentColor}15, transparent);"></div>
+                                            <div class="relative bg-white p-8">
+                                                <div class="flex items-start gap-5">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, ${accentColor}, ${accentColor}dd); color: white;">
+                                                            <span class="text-4xl">📍</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-1 pt-2">
+                                                        <h3 class="text-2xl font-bold text-gray-900 mb-2">${data.venueName || 'Venue Name'}</h3>
+                                                        ${addressLines.length > 0 ? `
+                                                            <div class="text-sm text-gray-600 space-y-0.5 mb-4">
+                                                                ${addressLines.map(line => `<div>${line}</div>`).join('')}
+                                                            </div>
+                                                        ` : ''}
+                                                    </div>
+                                                </div>
+                                                ${infoLines.length > 0 ? `
+                                                    <div class="mt-6 pt-6 border-t border-gray-200">
+                                                        <div class="grid gap-3">
+                                                            ${infoLines.map(line => `
+                                                                <div class="flex items-center gap-3 p-3 rounded-lg" style="background: ${accentColor}10;">
+                                                                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm" style="background: ${accentColor}; color: white;">
+                                                                        ✓
+                                                                    </div>
+                                                                    <span class="text-sm font-medium text-gray-700 flex-1">${line}</span>
+                                                                </div>
+                                                            `).join('')}
+                                                        </div>
+                                                    </div>
+                                                ` : ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+
                         default:
                             return `
                                 <div class="py-12 px-6" style="background: ${bgColor}">
