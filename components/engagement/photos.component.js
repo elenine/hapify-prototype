@@ -27,6 +27,9 @@ window.sectionComponents.photos = {
                     <option value="carousel">Carousel Preview</option>
                     <option value="polaroid">Polaroid Stack</option>
                     <option value="modern">Modern Cards</option>
+                    <option value="scrapbook">Scrapbook Style</option>
+                    <option value="film">Film Strip</option>
+                    <option value="collage">Artistic Collage</option>
                 </select>
             </div>
             <div>
@@ -177,6 +180,84 @@ window.sectionComponents.photos = {
                             <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         ` : ''}
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'scrapbook') {
+            return `
+                <div class="py-16 px-6" style="background: linear-gradient(135deg, ${bg} 0%, #fff5e6 100%);">
+                    <h2 class="text-3xl font-bold text-center mb-4" style="font-family: 'Georgia', serif;">${data.title || 'Our Journey'}</h2>
+                    ${data.description ? `<p class="text-center text-gray-600 mb-10" style="font-family: 'Georgia', serif;">${data.description}</p>` : ''}
+                    <div class="max-w-4xl mx-auto">
+                        <div class="relative">
+                            <div class="absolute top-4 left-4 w-12 h-12 opacity-30 transform -rotate-12">📌</div>
+                            <div class="absolute top-8 right-8 w-12 h-12 opacity-30 transform rotate-12">📌</div>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 p-8">
+                                <div class="relative transform rotate-2 hover:rotate-0 transition-transform">
+                                    <div class="bg-white p-4 shadow-xl ${borderStyles[borderStyle]}">
+                                        <div class="aspect-square flex items-center justify-center text-5xl mb-3" style="background: ${photoBg};">📸</div>
+                                        <div class="text-xs text-gray-500 italic" style="font-family: 'Georgia', serif;">Moment 1</div>
+                                        <div class="absolute -top-2 -right-2 text-2xl">📌</div>
+                                    </div>
+                                </div>
+                                <div class="relative transform -rotate-1 hover:rotate-0 transition-transform">
+                                    <div class="bg-white p-4 shadow-xl ${borderStyles[borderStyle]}">
+                                        <div class="aspect-square flex items-center justify-center text-5xl mb-3" style="background: ${photoBg};">📸</div>
+                                        <div class="text-xs text-gray-500 italic" style="font-family: 'Georgia', serif;">Moment 2</div>
+                                        <div class="absolute -top-2 -right-2 text-2xl">📌</div>
+                                    </div>
+                                </div>
+                                <div class="relative transform rotate-1 hover:rotate-0 transition-transform">
+                                    <div class="bg-white p-4 shadow-xl ${borderStyles[borderStyle]}">
+                                        <div class="aspect-square flex items-center justify-center text-5xl mb-3" style="background: ${photoBg};">📸</div>
+                                        <div class="text-xs text-gray-500 italic" style="font-family: 'Georgia', serif;">Moment 3</div>
+                                        <div class="absolute -top-2 -right-2 text-2xl">📌</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'film') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg};">
+                    <h2 class="text-2xl font-bold text-center mb-4">${data.title || 'Our Journey'}</h2>
+                    ${data.description ? `<p class="text-center text-gray-600 mb-8">${data.description}</p>` : ''}
+                    <div class="max-w-4xl mx-auto">
+                        <div class="relative p-6 rounded-lg" style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);">
+                            <div class="absolute top-0 left-0 right-0 h-8 flex items-center justify-between px-2" style="background: #1a1a1a;">
+                                ${[...Array(12)].map((_, i) => `<div class="w-3 h-6 bg-gray-700 rounded-sm"></div>`).join('')}
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 h-8 flex items-center justify-between px-2" style="background: #1a1a1a;">
+                                ${[...Array(12)].map((_, i) => `<div class="w-3 h-6 bg-gray-700 rounded-sm"></div>`).join('')}
+                            </div>
+                            <div class="pt-8 pb-8">
+                                <div class="flex ${spacings[spacing]} overflow-x-auto scrollbar-hide">
+                                    <div class="flex-shrink-0 w-48 aspect-[3/4] ${borderStyles[borderStyle]} flex items-center justify-center text-4xl shadow-lg" style="background: ${photoBg};">📸</div>
+                                    <div class="flex-shrink-0 w-48 aspect-[3/4] ${borderStyles[borderStyle]} flex items-center justify-center text-4xl shadow-lg" style="background: ${photoBg};">📸</div>
+                                    <div class="flex-shrink-0 w-48 aspect-[3/4] ${borderStyles[borderStyle]} flex items-center justify-center text-4xl shadow-lg" style="background: ${photoBg};">📸</div>
+                                    <div class="flex-shrink-0 w-48 aspect-[3/4] ${borderStyles[borderStyle]} flex items-center justify-center text-4xl shadow-lg" style="background: ${photoBg};">📸</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-xs text-gray-500 mt-4">Swipe to view more</p>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'collage') {
+            return `
+                <div class="py-12 px-6" style="background: ${bg};">
+                    <h2 class="text-3xl font-bold text-center mb-4">${data.title || 'Our Journey'}</h2>
+                    ${data.description ? `<p class="text-center text-gray-600 mb-10">${data.description}</p>` : ''}
+                    <div class="max-w-4xl mx-auto">
+                        <div class="grid grid-cols-6 grid-rows-4 gap-3 h-[600px]">
+                            <div class="col-span-3 row-span-2 ${borderStyles[borderStyle]} flex items-center justify-center text-6xl shadow-xl transform hover:scale-105 transition-transform" style="background: ${photoBg};">📸</div>
+                            <div class="col-span-2 row-span-2 ${borderStyles[borderStyle]} flex items-center justify-center text-5xl shadow-lg transform hover:scale-105 transition-transform" style="background: ${photoBg};">📸</div>
+                            <div class="col-span-1 row-span-4 ${borderStyles[borderStyle]} flex items-center justify-center text-4xl shadow-lg transform hover:scale-105 transition-transform" style="background: ${photoBg};">📸</div>
+                            <div class="col-span-2 row-span-2 ${borderStyles[borderStyle]} flex items-center justify-center text-4xl shadow-lg transform hover:scale-105 transition-transform" style="background: ${photoBg};">📸</div>
+                            <div class="col-span-3 row-span-2 ${borderStyles[borderStyle]} flex items-center justify-center text-6xl shadow-xl transform hover:scale-105 transition-transform" style="background: ${photoBg};">📸</div>
+                        </div>
                     </div>
                 </div>
             `;

@@ -40,6 +40,9 @@ window.sectionComponents.hero = {
                     <option value="dramatic">Dramatic Overlay</option>
                     <option value="split">Split Design</option>
                     <option value="modern">Modern Bold</option>
+                    <option value="artistic">Artistic Frame</option>
+                    <option value="romantic">Romantic Floral</option>
+                    <option value="luxury">Luxury Gold</option>
                 </select>
             </div>
             <div>
@@ -188,6 +191,107 @@ window.sectionComponents.hero = {
                                 <h1 class="${fonts.title} font-extrabold mb-2">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</h1>
                                 ${data.date ? `<p class="${fonts.date} opacity-80">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
                             </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'artistic') {
+            return `
+                <div class="relative py-20 px-6 overflow-hidden" style="background: ${bg}; color: ${text}">
+                    <div class="absolute inset-0 opacity-5">
+                        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="hearts" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                                    <text x="50" y="50" font-size="40" text-anchor="middle" fill="${accent}">💕</text>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#hearts)"/>
+                        </svg>
+                    </div>
+                    <div class="relative max-w-3xl mx-auto text-center">
+                        <div class="relative inline-block mb-8">
+                            <div class="absolute -inset-4 rounded-full border-4 border-dashed opacity-30" style="border-color: ${accent}; animation: spin 20s linear infinite;"></div>
+                            ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]}" style="border-color: ${accent};">` : `<div class="text-8xl">💍</div>`}
+                        </div>
+                        <div class="relative p-8 rounded-3xl" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 2px solid ${accent};">
+                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 px-6 py-2 rounded-full ${fonts.date} font-bold" style="background: ${accent};">We're Engaged!</div>
+                            <h1 class="${fonts.title} font-bold mb-3 mt-4" style="font-family: 'Georgia', serif;">${data.partner1 || 'Sarah'} & ${data.partner2 || 'John'}</h1>
+                            ${data.date ? `<p class="${fonts.date} opacity-90">${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}</p>` : ''}
+                        </div>
+                    </div>
+                    <style>
+                        @keyframes spin {
+                            from { transform: rotate(0deg); }
+                            to { transform: rotate(360deg); }
+                        }
+                    </style>
+                </div>
+            `;
+        } else if (layout === 'romantic') {
+            return `
+                <div class="relative py-24 px-6 overflow-hidden" style="background: linear-gradient(to bottom, ${bg}, ${accent}20); color: ${text}">
+                    <div class="absolute top-10 left-10 text-6xl opacity-20 animate-pulse">🌹</div>
+                    <div class="absolute top-20 right-20 text-5xl opacity-20 animate-pulse" style="animation-delay: 1s;">🌺</div>
+                    <div class="absolute bottom-20 left-20 text-5xl opacity-20 animate-pulse" style="animation-delay: 2s;">🌷</div>
+                    <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-pulse" style="animation-delay: 3s;">🌸</div>
+                    <div class="relative max-w-2xl mx-auto text-center">
+                        <div class="mb-6">
+                            <div class="inline-block relative">
+                                ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]}" style="border-color: ${accent}; border-width: 6px;">` : `<div class="text-8xl">💍</div>`}
+                                <div class="absolute -bottom-2 -right-2 text-4xl">🌹</div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="text-xl font-light tracking-widest opacity-75" style="font-family: 'Georgia', serif;">Together Forever</div>
+                            <h1 class="${fonts.title} font-bold" style="font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">${data.partner1 || 'Sarah'}</h1>
+                            <div class="flex items-center justify-center gap-4">
+                                <div class="w-16 h-0.5 opacity-50" style="background: ${accent};"></div>
+                                <span class="text-3xl">💕</span>
+                                <div class="w-16 h-0.5 opacity-50" style="background: ${accent};"></div>
+                            </div>
+                            <h1 class="${fonts.title} font-bold" style="font-family: 'Georgia', serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">${data.partner2 || 'John'}</h1>
+                            ${data.date ? `
+                            <div class="mt-6 inline-block px-8 py-3 rounded-full ${fonts.date} font-semibold ${shadows[shadow]}" style="background: ${accent};">
+                                ${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}
+                            </div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (layout === 'luxury') {
+            return `
+                <div class="relative py-20 px-6" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #f5e6d3;">
+                    <div class="absolute inset-0 opacity-10">
+                        <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle, ${accent} 1px, transparent 1px); background-size: 30px 30px;"></div>
+                    </div>
+                    <div class="relative max-w-2xl mx-auto text-center">
+                        <div class="mb-8">
+                            <div class="inline-block relative p-1 rounded-full" style="background: linear-gradient(135deg, #FFD700, #FFA500);">
+                                ${data.image ? `<img src="${data.image}" class="${imgClass} ${shadows[shadow]} border-4 border-white">` : `<div class="text-8xl p-4">💍</div>`}
+                            </div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="text-sm uppercase tracking-[0.3em] font-light" style="color: #FFD700;">Eternally United</div>
+                            <div>
+                                <h1 class="${fonts.title} font-bold tracking-wider mb-2" style="font-family: 'Georgia', serif; color: #FFD700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);">
+                                    ${data.partner1 || 'Sarah'}
+                                </h1>
+                                <div class="flex items-center justify-center gap-3 my-4">
+                                    <div class="w-12 h-px" style="background: linear-gradient(to right, transparent, #FFD700);"></div>
+                                    <span class="text-2xl" style="color: #FFD700;">✦</span>
+                                    <div class="w-12 h-px" style="background: linear-gradient(to left, transparent, #FFD700);"></div>
+                                </div>
+                                <h1 class="${fonts.title} font-bold tracking-wider" style="font-family: 'Georgia', serif; color: #FFD700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);">
+                                    ${data.partner2 || 'John'}
+                                </h1>
+                            </div>
+                            ${data.date ? `
+                            <div class="mt-8">
+                                <div class="inline-block px-8 py-4 rounded-lg ${fonts.date} font-semibold" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #1a1a1a; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);">
+                                    ${new Date(data.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'})}
+                                </div>
+                            </div>` : ''}
+                            <div class="text-xs uppercase tracking-widest opacity-75" style="color: #FFD700;">We're Engaged</div>
                         </div>
                     </div>
                 </div>
