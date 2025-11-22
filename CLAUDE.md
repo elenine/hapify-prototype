@@ -10,7 +10,7 @@ This is a **single-template application** focused exclusively on creating busine
 
 ### Template: Business Portfolio
 
-A comprehensive professional portfolio builder with 18 specialized section types:
+A comprehensive professional portfolio builder with 24 specialized section types:
 
 **Core Business Sections:**
 - **💼 Hero Banner** - Eye-catching landing section with business headline
@@ -22,6 +22,10 @@ A comprehensive professional portfolio builder with 18 specialized section types
 - **👥 Team** - Team member profiles
 - **🏆 Awards** - Recognition and achievements
 - **📊 Statistics** - Key metrics and accomplishments
+- **⏱️ Timeline** - Company history and milestones
+- **🎓 Certifications** - Professional credentials and licenses
+- **💎 Values & Mission** - Core values and mission statement
+- **📍 Locations** - Office locations and contact points
 
 **Engagement Sections:**
 - **💰 Pricing Plans** - Service packages and pricing tiers
@@ -31,6 +35,8 @@ A comprehensive professional portfolio builder with 18 specialized section types
 - **🖼️ Gallery** - Image galleries and photo showcases
 - **💬 Testimonials** - Client reviews and feedback
 - **🤝 Clients & Partners** - Client logos and partnerships
+- **📰 Press & Media** - Media mentions and press coverage
+- **📝 Blog & News** - Latest articles and updates
 
 **Utility Sections:**
 - **📞 Contact** - Contact forms and information
@@ -472,7 +478,7 @@ The Layout component (`components/layout.component.js`) controls navigation. To 
 
 When working with this codebase, you are maintaining a **focused single-template application** with:
 - **1 portfolio builder template** (business-portfolio.html)
-- **18 section components** across shared and business-specific directories
+- **24 section components** across shared and business-specific directories
 - **Component-based architecture** with all sections in separate `.component.js` files
 - **No build system** - all files must work directly in browsers
 - **~8,251 lines total** (manageable and maintainable)
@@ -644,17 +650,17 @@ The application was refocused to serve a single, well-defined purpose: **creatin
 
 - **Templates**: 1 (Business Portfolio)
 - **HTML Files**: 2 (index.html + business-portfolio.html)
-- **Component Files**: 18 total
-  - 17 shared business components
+- **Component Files**: 24 total
+  - 23 shared business components
   - 1 business-specific hero component
-- **Total Sections**: 18 section types
+- **Total Sections**: 24 section types
 - **Total Code**: ~8,251 lines (1,429 HTML + ~6,822 components)
 - **Architecture**: Fully component-based
 - **Dependencies**: Zero (Tailwind CSS via CDN only)
 
 ### Available Sections
 
-All 18 sections are production-ready and fully tested:
+All 24 sections are production-ready and fully tested:
 
 | Component | File | Purpose |
 |-----------|------|---------|
@@ -667,6 +673,10 @@ All 18 sections are production-ready and fully tested:
 | 👥 Team | team.component.js | Team profiles |
 | 🏆 Awards | awards.component.js | Recognition |
 | 📊 Statistics | stats.component.js | Key metrics |
+| ⏱️ Timeline | timeline.component.js | Company history |
+| 🎓 Certifications | certifications.component.js | Credentials |
+| 💎 Values & Mission | values.component.js | Core values |
+| 📍 Locations | locations.component.js | Office locations |
 | 💰 Pricing Plans | pricing.component.js | Service pricing |
 | 🔄 Process | process.component.js | Workflow |
 | ✨ Features | features.component.js | Feature lists |
@@ -674,6 +684,8 @@ All 18 sections are production-ready and fully tested:
 | 🖼️ Gallery | gallery.component.js | Photo galleries |
 | 💬 Testimonials | testimonials.component.js | Reviews |
 | 🤝 Clients & Partners | clients.component.js | Client logos |
+| 📰 Press & Media | press.component.js | Media mentions |
+| 📝 Blog & News | blog.component.js | Latest articles |
 | 📞 Contact | contact.component.js | Contact forms |
 | 🔗 Social Media | social.component.js | Social links |
 | ❓ FAQ | faq.component.js | FAQs |
@@ -763,9 +775,9 @@ For questions or contributions, please refer to the project repository guideline
 
 **Last Updated:** 2025-11-22
 **Project:** Business Portfolio Creator
-**Version:** 2.0 (Focused Edition)
+**Version:** 2.1 (Enhanced Edition)
 **Template:** 1 (Business Portfolio)
-**Sections:** 18 professional portfolio sections
-**Architecture:** Component-based (18 modular components)
+**Sections:** 24 professional portfolio sections
+**Architecture:** Component-based (24 modular components)
 **Total Code:** ~8,251 lines
 **Dependencies:** Zero (Tailwind CSS CDN only)

@@ -11,7 +11,8 @@ const componentFiles = [
     'layout', 'hero', 'about', 'services', 'portfolio', 'team',
     'testimonials', 'contact', 'social', 'cta', 'skills', 'pricing',
     'faq', 'stats', 'gallery', 'clients', 'awards', 'video',
-    'features', 'process', 'photo', 'quote', 'signature'
+    'features', 'process', 'casestudy', 'timeline', 'certifications',
+    'values', 'locations', 'press', 'blog'
 ];
 
 // Function to check if all components are loaded
