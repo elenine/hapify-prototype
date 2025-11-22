@@ -86,5 +86,73 @@ window.dynamicItemTemplates = {
             <input type='text' placeholder='Moment Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='title' oninput='updatePreview()'>
             <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 section-data' data-field='description' oninput='updatePreview()'></textarea>
         </div>
+    `,
+    milestones: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Milestone ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Year (e.g. 2020)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='milestone-year-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Milestone Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='milestone-title-${id}' oninput='updatePreview()'>
+            <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='milestone-desc-${id}' oninput='updatePreview()'></textarea>
+        </div>
+    `,
+    certifications: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Certification ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Certification Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='cert-name-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Issuing Organization' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='cert-org-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Year Obtained' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='cert-year-${id}' oninput='updatePreview()'>
+        </div>
+    `,
+    values: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Value ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Icon (emoji)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='value-icon-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Value Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='value-title-${id}' oninput='updatePreview()'>
+            <textarea placeholder='Description...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='value-desc-${id}' oninput='updatePreview()'></textarea>
+        </div>
+    `,
+    locations: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Location ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Office Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='location-name-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Address' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='location-address-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Phone Number' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='location-phone-${id}' oninput='updatePreview()'>
+        </div>
+    `,
+    press: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Press Item ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Publication Name' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='press-publication-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Headline' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='press-headline-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Date' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='press-date-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Article URL (optional)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='press-url-${id}' oninput='updatePreview()'>
+        </div>
+    `,
+    blog: (id, num) => `
+        <div class='flex justify-between items-center mb-3'>
+            <h5 class='font-medium text-gray-600'>Blog Post ${num}</h5>
+            <button onclick='removeDynamicItem(this)' type='button' class='text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-300 rounded hover:bg-red-50'>✕ Remove</button>
+        </div>
+        <div class='space-y-3'>
+            <input type='text' placeholder='Post Title' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='blog-title-${id}' oninput='updatePreview()'>
+            <textarea placeholder='Excerpt or summary...' rows='2' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='blog-excerpt-${id}' oninput='updatePreview()'></textarea>
+            <input type='text' placeholder='Date (e.g. March 15, 2024)' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='blog-date-${id}' oninput='updatePreview()'>
+            <input type='text' placeholder='Category/Tag' class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 section-data' data-field='blog-category-${id}' oninput='updatePreview()'>
+        </div>
     `
 };
